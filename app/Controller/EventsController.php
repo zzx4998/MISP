@@ -3815,7 +3815,8 @@ class EventsController extends AppController {
 	}
 	
 	public function exportModule($module, $id) {
-		$result = $this->Event->export($this->Auth->user(), $module, array('eventid' => $id));
+		$this->loadModel('Module');
+		$result = $this->Module->export($this->Auth->user(), $module, array('eventid' => $id));
 		$this->response->body(base64_decode($result['data']));
 		$this->response->type($result['response']);
 		$this->response->download('misp.event.' . $id . '.' . $module . '.export.' . $result['extension']);

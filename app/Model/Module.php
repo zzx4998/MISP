@@ -162,4 +162,24 @@ class Module extends AppModel {
 		}
 		return $result;
 	}
+	
+
+	public function export($user = false, $module = false, $options = array()) {
+		if (empty($user)) return 'Invalid user.';
+		if (empty($module)) return 'Invalid module.';
+		if (!isset($options['scope']) || $options['scope'] != 'attribute') $options['scope'] = 'event';
+		$this->{ucfirst($options['scope'])} = ClassRegistry::init(ucfirst($options['scope']));
+		$module = $this->getEnabledModule($module, 'Export');
+		if (empty($module)) return 'Invalid module.';
+		$dataset = $this->{ucfirst($options['scope'])}->{'fetch' . ucfirst($options['scope'])}($user, $options);
+		if (empty($dataset)) return 'Invalid event.';
+		$modulePayload = array('module' => $module['name']);
+		$modulePayload['data'] = $dataset;
+		$result = $this->queryModuleServer('/query', json_encode($modulePayload, true), false, 'Export');
+		return array(
+				'data' => $result['data'],
+				'extension' => $module['mispattributes']['outputFileExtension'],
+				'response' => $module['mispattributes']['responseType']
+		);
+	}
 }
