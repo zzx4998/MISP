@@ -396,6 +396,20 @@ class Attribute extends AppModel {
 			'Artifacts dropped' => array('File'),
 			'Network activity' => array('CnC'),
 	);
+	
+	public $allowedExportOptions = array(
+			'eventid',
+			'idList',
+			'tags',
+			'from',
+			'to',
+			'last',
+			'to_ids',
+			'includeAttachments',
+			'event_uuid',
+			'distribution',
+			'sharing_group_id'
+	);
 
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
@@ -1888,5 +1902,24 @@ class Attribute extends AppModel {
 			return true;
 		}
 		else return 'Could not save changes.';
+	}
+	
+	public function simpleSearch($options) {
+		$conditions = array();
+		if (isset($options['value']) && !empty($options['value'])) {
+			$conditions = array('OR' => array('value1' => $options['value'], 'value2' => $options['value']));
+		}
+		if (isset($options['category'])) {
+			$conditions = array('category' => $options['category']);
+		}
+		if (isset($options['type'])) {
+			$conditions = array('type' => $options['type']);
+		}
+		if (empty($conditions)) return false;
+		return $this->Attribute->find('list', array(
+			'fields' => array('Attribute.event_id'),
+			'contain' => -1,
+			'order' => array('Attribute.event_id ASC')
+		));
 	}
 }

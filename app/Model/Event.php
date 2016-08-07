@@ -298,6 +298,22 @@ class Event extends AppModel {
 				'foreignKey' => 'sharing_group_id'
 		)
 	);
+	
+	public $allowedExportOptions = array(
+			'eventid',
+			'idList',
+			'tags',
+			'from',
+			'to',
+			'last',
+			'to_ids',
+			'includeAllTags',
+			'includeAttachments',
+			'event_uuid',
+			'distribution',
+			'sharing_group_id',
+			'disableSiteAdmin'
+	);
 
 /**
  * hasMany associations
@@ -1134,7 +1150,7 @@ class Event extends AppModel {
 	// includeAttachments: true will attach the attachments to the attributes in the data field
 	public function fetchEvent($user, $options = array()) {
 		if (isset($options['Event.id'])) $options['eventid'] = $options['Event.id'];
-		$possibleOptions = array('eventid', 'idList', 'tags', 'from', 'to', 'last', 'to_ids', 'includeAllTags', 'includeAttachments', 'event_uuid', 'distribution', 'sharing_group_id', 'disableSiteAdmin');
+		$possibleOptions = array('eventid', 'idList', 'tags', 'from', 'to', 'last', 'to_ids', 'includeAllTags', 'includeAttachments', 'event_uuid', 'distribution', 'sharing_group_id', 'disableSiteAdmin', 'value', 'category', 'type');
 		foreach ($possibleOptions as &$opt) if (!isset($options[$opt])) $options[$opt] = false;
 		if ($options['eventid']) {
 			$conditions['AND'][] = array("Event.id" => $options['eventid']);
@@ -1143,6 +1159,13 @@ class Event extends AppModel {
 		}
 		if (!isset($user['org_id'])) {
 			throw new Exception('There was an error with the user account.');
+		}
+		if (isset($options['value']) || isset($options['category']) || isset($options['type'])) {
+			$attributesFiltered = $this->Attribute->simpleSearch($options);
+			if ($attributesFiltered !== false) {
+				if (empty($attributesFiltered)) return array();
+				else $conditions['AND'][] = array('Event.id' => $attributeFiltered);
+			}
 		}
 		$isSiteAdmin = $user['Role']['perm_site_admin'];
 		if (isset($options['disableSiteAdmin']) && $options['disableSiteAdmin']) $isSiteAdmin = false;

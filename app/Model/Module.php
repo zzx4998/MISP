@@ -42,6 +42,22 @@ class Module extends AppModel {
 		)
 	);
 	
+	public $allowedExportOptionsAttributes = array(
+			'eventid',
+			'idList',
+			'tags',
+			'from',
+			'to',
+			'last',
+			'to_ids',
+			'includeAllTags',
+			'includeAttachments',
+			'event_uuid',
+			'distribution',
+			'sharing_group_id',
+			'disableSiteAdmin'
+	);
+	
 	public function validateIPField($value) {
 		if (!filter_var($value, FILTER_VALIDATE_IP) === false) {
 			return 'Value is not a valid IP.';
