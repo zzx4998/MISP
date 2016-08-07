@@ -314,6 +314,108 @@ class Event extends AppModel {
 			'sharing_group_id',
 			'disableSiteAdmin'
 	);
+	
+	public $built_in_exports = array(
+			'xml' => array(
+					'url' => '/events/restSearch/download/false/false/false/false/false/false/false/false/false/$id/false.xml',
+					'text' => 'MISP XML (metadata + all attributes)',
+					'requiresPublished' => false,
+					'checkbox' => true,
+					'checkbox_text' => 'Encode Attachments',
+					'checkbox_set' => '/events/restSearch/download/false/false/false/false/false/false/false/false/false/$id/true.xml',
+					'checkbox_default' => true
+			),
+			'json' => array(
+					'url' => '/events/restSearch/download/false/false/false/false/false/false/false/false/false/$id/false.json',
+					'text' => 'MISP JSON (metadata + all attributes)',
+					'requiresPublished' => false,
+					'checkbox' => true,
+					'checkbox_text' => 'Encode Attachments',
+					'checkbox_set' => '/events/restSearch/download/false/false/false/false/false/false/false/false/false/$id/true.json',
+					'checkbox_default' => true
+			),
+			'openIOC' => array(
+					'url' => '/events/downloadOpenIOCEvent/$id',
+					'text' => 'OpenIOC (all indicators marked to IDS)',
+					'requiresPublished' => true,
+					'checkbox' => false,
+			),
+			'csv' => array(
+					'url' => '/events/csv/download/$id',
+					'text' => 'CSV',
+					'requiresPublished' => true,
+					'checkbox' => true,
+					'checkbox_text' => 'Include non-IDS marked attributes',
+					'checkbox_set' => '/events/csv/download/$id/1'
+			),
+			'stix_xml' => array(
+					'url' => '/events/stix/download/$id.xml',
+					'text' => 'STIX XML (metadata + all attributes)',
+					'requiresPublished' => true,
+					'checkbox' => true,
+					'checkbox_text' => 'Encode Attachments',
+					'checkbox_set' => '/events/stix/download/$id/true.xml'
+			),
+			'stix_json' => array(
+					'url' => '/events/stix/download/$id.json',
+					'text' => 'STIX JSON (metadata + all attributes)',
+					'requiresPublished' => true,
+					'checkbox' => true,
+					'checkbox_text' => 'Encode Attachments',
+					'checkbox_set' => '/events/stix/download/$id/true.json'
+			),
+			'rpz' => array(
+					'url' => '/attributes/rpz/download/false/$id',
+					'text' => 'RPZ Zone file',
+					'requiresPublished' => true,
+					'checkbox' => false,
+			),
+			'suricata' => array(
+					'url' => '/events/nids/suricata/download/$id',
+					'text' => 'Download Suricata rules',
+					'requiresPublished' => true,
+					'checkbox' => false,
+			),
+			'snort' => array(
+					'url' => '/events/nids/snort/download/$id',
+					'text' => 'Download Snort rules',
+					'requiresPublished' => true,
+					'checkbox' => false,
+			),
+			'text' => array(
+					'url' => '/attributes/text/download/all/false/$id',
+					'text' => 'Export all attribute values as a text file',
+					'requiresPublished' => true,
+					'checkbox' => true,
+					'checkbox_text' => 'Include non-IDS marked attributes',
+					'checkbox_set' => '/attributes/text/download/all/false/$id/true'
+			)
+	);
+	
+	public $built_in_imports = array(
+			'freetext' => array(
+					'url' => '/events/freeTextImport/$id',
+					'text' => 'Freetext Import',
+					'ajax' => true,
+					'target' => 'popover_form'
+			),
+			'template' => array(
+					'url' => '/templates/templateChoices/$id',
+					'text' => 'Populate using a Template',
+					'ajax' => true,
+					'target' => 'popover_form'
+			),
+			'OpenIOC' => array(
+					'url' => '/events/addIOC/$id',
+					'text' => 'OpenIOC Import',
+					'ajax' => false,
+			),
+			'ThreatConnect' => array(
+					'url' => '/attributes/add_threatconnect/$id',
+					'text' => 'ThreatConnect Import',
+					'ajax' => false
+			)
+	);
 
 /**
  * hasMany associations
@@ -1160,11 +1262,11 @@ class Event extends AppModel {
 		if (!isset($user['org_id'])) {
 			throw new Exception('There was an error with the user account.');
 		}
-		if (isset($options['value']) || isset($options['category']) || isset($options['type'])) {
+		if ($options['value'] || $options['category'] || $options['type'] || $options['to_ids']) {
 			$attributesFiltered = $this->Attribute->simpleSearch($options);
 			if ($attributesFiltered !== false) {
 				if (empty($attributesFiltered)) return array();
-				else $conditions['AND'][] = array('Event.id' => $attributeFiltered);
+				else $conditions['AND'][] = array('Event.id' => $attributesFiltered);
 			}
 		}
 		$isSiteAdmin = $user['Role']['perm_site_admin'];
@@ -2800,5 +2902,58 @@ class Event extends AppModel {
 			$resultArray = array_merge($resultArray, $freetextResults);
 		}
 		return $resultArray;
+	}
+	
+	public function getAllExports($event) {
+		$id = $event['Event']['id'];
+		$exports = $this->built_in_exports;
+		foreach ($exports as $export_type => &$export) {
+			if (isset($export['url'])) str_replace('$id', $id, $export['url']);
+			if (isset($export['checkbox_set'])) str_replace('$id', $id, $export['checkbox_set']);
+		}
+		if ($event['Event']['published'] == 0) {
+			foreach ($exports as $k => $export) {
+				if ($export['requiresPublished']) unset($exports[$k]);
+			}
+			$exports['csv'] = array(
+					'url' => '/events/csv/download/' . $id . '/1',
+					'text' => 'CSV (event not published, IDS flag ignored)',
+					'requiresPublished' => false,
+					'checkbox' => false
+			);
+		}
+		$this->Module = ClassRegistry::init('Module');
+		$modules = $this->Module->getEnabledModules(false, 'Export');
+		if (is_array($modules) && !empty($modules)) {
+			foreach ($modules['modules'] as $module) {
+				$exports[$module['name']] = array(
+						'url' => '/events/exportModule/' . $module['name'] . '/' . $id,
+						'text' => Inflector::humanize($module['name']),
+						'requiresPublished' => true,
+						'checkbox' => false,
+				);
+			}
+		}
+		return $exports;
+	}
+	
+	public function getAllImports($event) {
+		$id = $event['Event']['id'];
+		$imports = $this->built_in_imports;
+		foreach ($imports as $import_type => &$import) {
+			if (isset($import['url'])) str_replace('$id', $id, $import['url']);
+		}
+		$this->Module = ClassRegistry::init('Module');
+		$modules = $this->Module->getEnabledModules(false, 'Import');
+		if (is_array($modules) && !empty($modules)) {
+			foreach ($modules['modules'] as $k => $module) {
+				$imports[$module['name']] = array(
+						'url' => '/events/importModule/' . $module['name'] . '/' . $id,
+						'text' => Inflector::humanize($module['name']),
+						'ajax' => false
+				);
+			}
+		}
+		return $imports;
 	}
 }

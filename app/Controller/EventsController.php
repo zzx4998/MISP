@@ -3094,105 +3094,7 @@ class EventsController extends AppController {
 		$event = $this->Event->fetchEvent($this->Auth->user(), array('eventid' => $id));
 		if (empty($event)) throw new NotFoundException('Event not found or you are not authorised to view it.');
 		$event = $event[0];
-		$exports = array(
-			'xml' => array(
-					'url' => '/events/restSearch/download/false/false/false/false/false/false/false/false/false/' . $id . '/false.xml',
-					'text' => 'MISP XML (metadata + all attributes)',
-					'requiresPublished' => false,
-					'checkbox' => true,
-					'checkbox_text' => 'Encode Attachments',
-					'checkbox_set' => '/events/restSearch/download/false/false/false/false/false/false/false/false/false/' . $id . '/true.xml',
-					'checkbox_default' => true
-			),
-			'json' => array(
-					'url' => '/events/restSearch/download/false/false/false/false/false/false/false/false/false/' . $id . '/false.json',
-					'text' => 'MISP JSON (metadata + all attributes)',
-					'requiresPublished' => false,
-					'checkbox' => true,
-					'checkbox_text' => 'Encode Attachments',
-					'checkbox_set' => '/events/restSearch/download/false/false/false/false/false/false/false/false/false/' . $id . '/true.json',
-					'checkbox_default' => true
-			),
-			'openIOC' => array(
-					'url' => '/events/downloadOpenIOCEvent/' . $id,
-					'text' => 'OpenIOC (all indicators marked to IDS)',
-					'requiresPublished' => true,
-					'checkbox' => false,
-			),
-			'csv' => array(
-					'url' => '/events/csv/download/' . $id,
-					'text' => 'CSV',
-					'requiresPublished' => true,
-					'checkbox' => true,
-					'checkbox_text' => 'Include non-IDS marked attributes',
-					'checkbox_set' => '/events/csv/download/' . $id . '/1'
-			),
-			'stix_xml' => array(
-					'url' => '/events/stix/download/' . $id . '.xml',
-					'text' => 'STIX XML (metadata + all attributes)',
-					'requiresPublished' => true,
-					'checkbox' => true,
-					'checkbox_text' => 'Encode Attachments',
-					'checkbox_set' => '/events/stix/download/' . $id . '/true.xml'
-			),
-			'stix_json' => array(
-					'url' => '/events/stix/download/' . $id . '.json',
-					'text' => 'STIX JSON (metadata + all attributes)',
-					'requiresPublished' => true,
-					'checkbox' => true,
-					'checkbox_text' => 'Encode Attachments',
-					'checkbox_set' => '/events/stix/download/' . $id . '/true.json'
-			),
-			'rpz' => array(
-					'url' => '/attributes/rpz/download/false/' . $id,
-					'text' => 'RPZ Zone file',
-					'requiresPublished' => true,
-					'checkbox' => false,
-			),
-			'suricata' => array(
-					'url' => '/events/nids/suricata/download/' . $id,
-					'text' => 'Download Suricata rules',
-					'requiresPublished' => true,
-					'checkbox' => false,
-			),
-			'snort' => array(
-					'url' => '/events/nids/snort/download/' . $id,
-					'text' => 'Download Snort rules',
-					'requiresPublished' => true,
-					'checkbox' => false,
-			),
-			'text' => array(
-					'url' => '/attributes/text/download/all/false/' . $id,
-					'text' => 'Export all attribute values as a text file',
-					'requiresPublished' => true,
-					'checkbox' => true,
-					'checkbox_text' => 'Include non-IDS marked attributes',
-					'checkbox_set' => '/attributes/text/download/all/false/' . $id . '/true'
-			),
-		);
-		if ($event['Event']['published'] == 0) {
-			foreach ($exports as $k => $export) {
-				if ($export['requiresPublished']) unset($exports[$k]);
-			}
-			$exports['csv'] = array(
-				'url' => '/events/csv/download/' . $id . '/1',
-				'text' => 'CSV (event not published, IDS flag ignored)',
-				'requiresPublished' => false,
-				'checkbox' => false
-			);
-		}
-		$this->loadModel('Module');
-		$modules = $this->Module->getEnabledModules(false, 'Export');
-		if (is_array($modules) && !empty($modules)) {
-			foreach ($modules['modules'] as $module) {
-				$exports[$module['name']] = array(
-						'url' => '/events/exportModule/' . $module['name'] . '/' . $id,
-						'text' => Inflector::humanize($module['name']),
-						'requiresPublished' => true,
-						'checkbox' => false,
-				);
-			}
-		}
+		$exports = $this->Event->getAllExports($event);
 		$this->set('exports', $exports);
 		$this->set('id', $id);
 		$this->render('ajax/exportChoice');
@@ -3203,41 +3105,7 @@ class EventsController extends AppController {
 		$event = $this->Event->fetchEvent($this->Auth->user(), array('eventid' => $id));
 		if (empty($event)) throw new NotFoundException('Event not found or you are not authorised to view it.');
 		$event = $event[0];
-		$imports = array(
-				'freetext' => array(
-						'url' => '/events/freeTextImport/' . $id,
-						'text' => 'Freetext Import',
-						'ajax' => true,
-						'target' => 'popover_form'
-				),
-				'template' => array(
-						'url' => '/templates/templateChoices/' . $id,
-						'text' => 'Populate using a Template',
-						'ajax' => true,
-						'target' => 'popover_form'
-				),
-				'OpenIOC' => array(
-						'url' => '/events/addIOC/' . $id,
-						'text' => 'OpenIOC Import',
-						'ajax' => false,
-				),
-				'ThreatConnect' => array(
-						'url' => '/attributes/add_threatconnect/' . $id,
-						'text' => 'ThreatConnect Import',
-						'ajax' => false
-				)
-		);
-		$this->loadModel('Module');
-		$modules = $this->Module->getEnabledModules(false, 'Import');
-		if (is_array($modules) && !empty($modules)) {
-			foreach ($modules['modules'] as $k => $module) {
-				$imports[$module['name']] = array(
-						'url' => '/events/importModule/' . $module['name'] . '/' . $id,
-						'text' => Inflector::humanize($module['name']),
-						'ajax' => false
-				);
-			}
-		}
+		$imports = $this->Event->getAllImports($event);
 		$this->set('imports', $imports);
 		$this->set('id', $id);
 		$this->render('ajax/importChoice');
@@ -3821,5 +3689,13 @@ class EventsController extends AppController {
 		$this->response->type($result['response']);
 		$this->response->download('misp.event.' . $id . '.' . $module . '.export.' . $result['extension']);
 		return $this->response;
+	}
+	
+	public function export2() {
+		if ($this->request->is('post')) {
+			
+		} else {
+			
+		}
 	}
 }

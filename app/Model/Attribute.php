@@ -1906,20 +1906,24 @@ class Attribute extends AppModel {
 	
 	public function simpleSearch($options) {
 		$conditions = array();
-		if (isset($options['value']) && !empty($options['value'])) {
+		if ($options['value']) {
 			$conditions = array('OR' => array('value1' => $options['value'], 'value2' => $options['value']));
 		}
-		if (isset($options['category'])) {
+		if ($options['category']) {
 			$conditions = array('category' => $options['category']);
 		}
-		if (isset($options['type'])) {
+		if ($options['type']) {
 			$conditions = array('type' => $options['type']);
 		}
+		if ($options['to_ids']) {
+			$conditions = array('to_ids' => 1);
+		}
 		if (empty($conditions)) return false;
-		return $this->Attribute->find('list', array(
+		return $this->find('list', array(
 			'fields' => array('Attribute.event_id'),
-			'contain' => -1,
-			'order' => array('Attribute.event_id ASC')
+			'recursive' => -1,
+			'order' => array('Attribute.event_id ASC'),
+			'conditions' => $conditions
 		));
 	}
 }
