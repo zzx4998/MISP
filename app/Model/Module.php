@@ -44,7 +44,6 @@ class Module extends AppModel {
 	
 	public $allowedExportOptionsAttributes = array(
 			'eventid',
-			'idList',
 			'tags',
 			'from',
 			'to',

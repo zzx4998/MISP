@@ -299,19 +299,6 @@ class Event extends AppModel {
 		)
 	);
 	
-	public $allowedExportOptions = array(
-			'eventid' => 'Pass event IDs that should be included in the search.',
-			'tags' => 'Pass a list of tag IDs or names that should be included in the search. Negations work by prepending an ID or name by "!".',
-			'from' => 'The earliest event date that should be included in the search.',
-			'to' => 'The latest event date that should be included in the search.',
-			'last' => 'Define how far back (by event timestamp) the search results should extend (valid options are number + time metric, such as 5d for 5 daysor 30m for 30 minutes).',
-			'to_ids' => 'Only include events with attributes that are marked for IDS exports. Also, non IDS worthy attributes will not be exported if this is set.',
-			'includeAttachments' => 'Encode the attachments in exports that allow for this (such as XML, JSON, STIX).',
-			'event_uuid' => 'Filter the export data set by event UUID.',
-			'distribution' => 'Restrict the distribution settings for exported events/attributes to the provided settings. This does not override the user\'s restrictions.',
-			'sharing_group_id' => 'Restrict the sharing group IDs for exported events/attributes to the provided settings. This does not override the user\'s restrictions.',
-	);
-	
 	public $built_in_exports = array(
 			'xml' => array(
 					'url' => '/events/restSearch/download/false/false/false/false/false/false/false/false/false/$id/false.xml',
@@ -412,6 +399,52 @@ class Event extends AppModel {
 					'text' => 'ThreatConnect Import',
 					'ajax' => false
 			)
+	);
+	
+	public $allowedExportOptions = array(
+			'eventid' => 'Pass event IDs that should be included in the search.',
+			'tags' => 'Pass a list of tag IDs or names that should be included in the search. Negations work by prepending an ID or name by "!".',
+			'from' => 'The earliest event date that should be included in the search.',
+			'to' => 'The latest event date that should be included in the search.',
+			'last' => 'Define how far back (by event timestamp) the search results should extend (valid options are number + time metric, such as 5d for 5 daysor 30m for 30 minutes).',
+			'to_ids' => 'Only include events with attributes that are marked for IDS exports. Also, non IDS worthy attributes will not be exported if this is set.',
+			'includeAttachments' => 'Encode the attachments in exports that allow for this (such as XML, JSON, STIX).',
+			'event_uuid' => 'Filter the export data set by event UUID.',
+			'distribution' => 'Restrict the distribution settings for exported events/attributes to the provided settings. This does not override the user\'s restrictions.',
+			'sharing_group_id' => 'Restrict the sharing group IDs for exported events/attributes to the provided settings. This does not override the user\'s restrictions.',
+	);
+	
+	public $fetcher_options = array(
+			'eventid',
+			'tags',
+			'from',
+			'to',
+			'last',
+			'to_ids',
+			'event_uuid',
+			'distribution',
+			'sharing_group_id',
+			'disableSiteAdmin',
+			'value',
+			'category',
+			'type',
+			'publish_timestamp',
+			'timestamp',
+			'list',
+			'published'
+	);
+	
+	public $simpleFetchOptions = array(
+			'eventid' => 'Event.id',
+			'from' => 'Event.date >=',
+			'to' => 'Event.date <=',
+			'publish_timestamp' => 'Event.publish_timestamp >=',
+			'timestamp' => 'Event.timestamp >=',
+			'event_uuid' => 'Event.uuid',
+			'distribution' => 'Event.distribution',
+			'last' => 'Event.timestamp >=',
+			'sharing_group_id' => 'Event.sharing_group_id',
+			'published' => 'Event.published'
 	);
 
 /**
@@ -1241,18 +1274,6 @@ class Event extends AppModel {
 	public function fetchEventIds($user, $options = array()) {
 		$conditions = array();
 		$possibleOptions = array('eventid', 'tags', 'from', 'to', 'last', 'to_ids', 'event_uuid', 'distribution', 'sharing_group_id', 'disableSiteAdmin', 'value', 'category', 'type', 'publish_timestamp', 'timestamp', 'list', 'published');
-		$simpleOptions = array(
-				'eventid' => 'Event.id',
-				'from' => 'Event.date >=',
-				'to' => 'Event.date <=',
-				'publish_timestamp' => 'Event.publish_timestamp >=',
-				'timestamp' => 'Event.timestamp >=',
-				'event_uuid' => 'Event.uuid',
-				'distribution' => 'Event.distribution',
-				'last' => 'Event.timestamp >=',
-				'sharing_group_id' => 'Event.sharing_group_id',
-				'published' => 'Event.published'
-		);
 		foreach ($possibleOptions as &$opt) if (!isset($options[$opt])) $options[$opt] = false;
 		// restricting to non-private or same org if the user is not a site-admin.
 		if (!$user['Role']['perm_site_admin']) {
@@ -1276,7 +1297,6 @@ class Event extends AppModel {
 					)
 			);
 		}
-		$fields = array('Event.id', 'Event.org_id', 'Event.distribution', 'Event.sharing_group_id');
 		if ($options['value'] || $options['category'] || $options['type'] || $options['to_ids'] !== false) {
 			$attributesFiltered = $this->Attribute->simpleSearch($user, $options);
 			if ($attributesFiltered !== false) {
@@ -1284,7 +1304,7 @@ class Event extends AppModel {
 				else $conditions['AND'][] = array('Event.id' => $attributesFiltered);
 			}
 		}
-		foreach ($simpleOptions as $simpleOption => $query) {
+		foreach ($this->simpleFetchOptions as $simpleOption => $query) {
 			if ($options[$simpleOption] !== false) $conditions['AND'][] = array($query => $options[$simpleOption]);
 		}
 		// If we sent any tags along, load the associated tag names for each attribute
@@ -1311,6 +1331,7 @@ class Event extends AppModel {
 			);
 			$results = array_values($this->find('list', $params));
 		} else {
+			$fields = array('Event.id', 'Event.org_id', 'Event.distribution', 'Event.sharing_group_id');
 			$params = array(
 					'conditions' => $conditions,
 					'recursive' => -1,
@@ -1324,7 +1345,6 @@ class Event extends AppModel {
 	//Once the data about the user is gathered from the appropriate sources, fetchEvent is called from the controller or background process.
 	// Possible options:
 	// eventid: single event ID
-	// idList: array with event IDs
 	// tags: string with the usual tag syntax
 	// from: date string (YYYY-MM-DD)
 	// to: date string (YYYY-MM-DD)
@@ -1332,7 +1352,8 @@ class Event extends AppModel {
 	// includeAttachments: true will attach the attachments to the attributes in the data field
 	public function fetchEvent($user, $options = array(), $sgids = false) {
 		if (isset($options['Event.id'])) $options['eventid'] = $options['Event.id'];
-		$possibleOptions = array('eventid', 'idList', 'tags', 'from', 'to', 'last', 'to_ids', 'includeAllTags', 'includeAttachments', 'event_uuid', 'distribution', 'sharing_group_id', 'disableSiteAdmin', 'value', 'category', 'type');
+		$possibleOptions = $this->fetcher_options;
+		$possibleOptions = array_merge($possibleOptions, array('includeAllTags', 'includeAttachments'));
 		foreach ($possibleOptions as &$opt) if (!isset($options[$opt])) $options[$opt] = false;
 		if ($options['eventid']) {
 			$conditions['AND'][] = array("Event.id" => $options['eventid']);
@@ -1343,7 +1364,7 @@ class Event extends AppModel {
 			throw new Exception('There was an error with the user account.');
 		}
 		if ($options['value'] || $options['category'] || $options['type'] || $options['to_ids']) {
-			$attributesFiltered = $this->Attribute->simpleSearch($options);
+			$attributesFiltered = $this->Attribute->simpleSearch($user, $options);
 			if ($attributesFiltered !== false) {
 				if (empty($attributesFiltered)) return array();
 				else $conditions['AND'][] = array('Event.id' => $attributesFiltered);
@@ -1422,9 +1443,6 @@ class Event extends AppModel {
 			}
 		} else $conditionsAttributes['AND']['Attribute.deleted'] = 0;
 
-		if ($options['idList'] && !$options['tags']) {
-			$conditions['AND'][] = array('Event.id' => $options['idList']);
-		}
 		// If we sent any tags along, load the associated tag names for each attribute
 		if ($options['tags']) {
 			$tag = ClassRegistry::init('Tag');
@@ -2690,7 +2708,7 @@ class Event extends AppModel {
 		$tagIDs = $this->Attribute->dissectArgs($tags);
 		$idList = $this->getAccessibleEventIds($eventIDs[0], $eventIDs[1], $tagIDs[0], $tagIDs[1]);
 		if (empty($idList)) throw new Exception('No matching events found to export.');
-		$events = $this->fetchEvent($user, array('idList' => $idList, 'last' => $last, 'from' => $from, 'to' => $to));
+		$events = $this->fetchEvent($user, array('eventid' => $idList, 'last' => $last, 'from' => $from, 'to' => $to));
 		if (empty($events)) throw new Exception('No matching events found to export.');
 
 		// If a second argument is passed (and it is either "yes", "true", or 1) base64 encode all of the attachments

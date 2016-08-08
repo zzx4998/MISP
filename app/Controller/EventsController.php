@@ -1651,12 +1651,12 @@ class EventsController extends AppController {
 
 	// Grab an event or a list of events for the event view or any of the XML exports. The returned object includes an array of events (or an array that only includes a single event if an ID was given)
 	// Included with the event are the attached attributes, shadow attributes, related events, related attribute information for the event view and the creating user's email address where appropriate
-	private function __fetchEvent($eventid = false, $idList = false, $user = false, $tags = false, $from = false, $to = false) {
+	private function __fetchEvent($eventid = false, $user = false, $tags = false, $from = false, $to = false) {
 		// if we come from automation, we may not be logged in - instead we used an auth key in the URL.
 		if (empty($user)) {
 			$user = $this->Auth->user();
 		}
-		$results = $this->Event->fetchEvent($user, array('eventid' => $eventid, 'idList' => $idList, 'tags' => $tags, 'from' => $from, 'to' => $to));
+		$results = $this->Event->fetchEvent($user, array('eventid' => $eventid, 'tags' => $tags, 'from' => $from, 'to' => $to));
 		return $results;
 	}
 
@@ -2194,7 +2194,7 @@ class EventsController extends AppController {
 				$idList[] = $attribute['Attribute']['event_id'];
 			}
 		}
-		$results = $this->__fetchEvent(null, $idList);
+		$results = $this->__fetchEvent($idList);
 		$this->set('results', $results);
 		if ($this->response->type() === 'application/json') $type = 'json';
 		else $type = 'xml';
