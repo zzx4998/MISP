@@ -162,7 +162,7 @@ class EventShell extends AppShell
 		$this->Job->id = $id;
 		$extra = $this->args[2];
 		$this->Job->saveField('progress', 1);
-		$eventIds = $this->Attribute->Event->fetchEventIds($user, false, false, false, true);
+		$eventIds = $this->Attribute->Event->fetchEventIds($user, array('list' => true));
 		$values = array();
 		$eventCount = count($eventIds);
 		if ($eventCount) {
@@ -270,7 +270,7 @@ class EventShell extends AppShell
 		$id = $this->args[1];
 		$this->Job->id = $id;
 		$format = $this->args[2];
-		$eventIds = array_values($this->Event->fetchEventIds($user, false, false, false, true));
+		$eventIds = array_values($this->Event->fetchEventIds($user, array('list' => true)));
 		$eventCount = count($eventIds);
 		$dir = new Folder(APP . DS . '/tmp/cached_exports/' . $format, true, 0750);
 		if ($user['Role']['perm_site_admin']) {

@@ -1292,7 +1292,7 @@ class Attribute extends AppModel {
 		$typeArray = array($type, 'filename|' . $type);
 		if ($type == 'md5') $typeArray[] = 'malware-sample';
 		$rules = array();
-		$eventIds = $this->Event->fetchEventIds($user, $from, $to, $last);
+		$eventIds = $this->Event->fetchEventIds($user, array('from' => $from, 'to' => $to, 'last' => $last));
 		if ($tags !== '') {
 			$tag = ClassRegistry::init('Tag');
 			$args = $this->dissectArgs($tags);
@@ -1337,7 +1337,7 @@ class Attribute extends AppModel {
 
 	public function nids($user, $format, $id = false, $continue = false, $tags = false, $from = false, $to = false, $last = false) {
 		if (empty($user)) throw new MethodNotAllowedException('Could not read user.');
-		$eventIds = $this->Event->fetchEventIds($user, $from, $to, $last);
+		$eventIds = $this->Event->fetchEventIds($user, array('from' => $from, 'to' => $to, 'last' => $last));
 
 		// If we sent any tags along, load the associated tag names for each attribute
 		if ($tags) {
@@ -1735,7 +1735,7 @@ class Attribute extends AppModel {
 	public function buildConditions($user) {
 		$conditions = array();
 		if (!$user['Role']['perm_site_admin']) {
-			$eventIds = $this->Event->fetchEventIds($user, false, false, false, true);
+			$eventIds = $this->Event->fetchEventIds($user, array('list' => true));
 			$sgsids = $this->SharingGroup->fetchAllAuthorised($user);
 			$conditions = array(
 				'AND' => array(

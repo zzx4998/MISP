@@ -91,7 +91,7 @@
 					<li id='liviewProposals'><a href="<?php echo $baseurl;?>/shadow_attributes/index">View Proposals</a></li>
 					<li id='liviewProposalIndex'><a href="<?php echo $baseurl;?>/events/proposalEventIndex">Events with proposals</a></li>
 					<li class="divider"></li>
-					<li id='liexport'><a href="<?php echo $baseurl;?>/events/export">Export</a></li>
+					<li id='liexport'><a href="<?php echo $baseurl;?>/events/exportPage">Export</a></li>
 					<?php if ($isAclAuth): ?>
 					<li id='liautomation'><a href="<?php echo $baseurl;?>/events/automation">Automation</a></li>
 					<?php endif;

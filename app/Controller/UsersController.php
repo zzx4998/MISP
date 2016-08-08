@@ -1064,8 +1064,8 @@ class UsersController extends AppController {
 		// the last login in the session is not updated after the login - only in the db, so let's fetch it.
 		$lastLogin = $this->Auth->user('last_login');
 		$this->loadModel('Event');
-		$events['changed'] = count($this->Event->fetchEventIds($this->Auth->user(), false, false, false, true, $lastLogin));
-		$events['published'] = count($this->Event->fetchEventIds($this->Auth->user(), false, false, false, true, false, $lastLogin));
+		$events['changed'] = count($this->Event->fetchEventIds($this->Auth->user(), array('list' => true, 'timestamp' => $lastLogin)));
+		$events['published'] = count($this->Event->fetchEventIds($this->Auth->user(), array('list' => true, 'publish_timestamp' => $lastLogin)));
 		$notifications = $this->{$this->modelClass}->populateNotifications($this->Auth->user());
 		$this->set('notifications', $notifications);
 		$this->set('events', $events);

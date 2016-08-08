@@ -42,7 +42,7 @@
 							<li><a href="<?php echo $baseurl;?>/templates/add">Add Template</a></li>
 							<?php endif; ?>
 							<li class="divider"></li>
-							<li><a href="<?php echo $baseurl;?>/events/export">Export</a></li>
+							<li><a href="<?php echo $baseurl;?>/events/exportPage">Export</a></li>
 							<?php if ($isAclAuth): ?>
 							<li><a href="<?php echo $baseurl;?>/events/automation">Automation</a></li>
 							<?php endif;?>

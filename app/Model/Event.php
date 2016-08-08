@@ -300,19 +300,16 @@ class Event extends AppModel {
 	);
 	
 	public $allowedExportOptions = array(
-			'eventid',
-			'idList',
-			'tags',
-			'from',
-			'to',
-			'last',
-			'to_ids',
-			'includeAllTags',
-			'includeAttachments',
-			'event_uuid',
-			'distribution',
-			'sharing_group_id',
-			'disableSiteAdmin'
+			'eventid' => 'Pass event IDs that should be included in the search.',
+			'tags' => 'Pass a list of tag IDs or names that should be included in the search. Negations work by prepending an ID or name by "!".',
+			'from' => 'The earliest event date that should be included in the search.',
+			'to' => 'The latest event date that should be included in the search.',
+			'last' => 'Define how far back (by event timestamp) the search results should extend (valid options are number + time metric, such as 5d for 5 daysor 30m for 30 minutes).',
+			'to_ids' => 'Only include events with attributes that are marked for IDS exports. Also, non IDS worthy attributes will not be exported if this is set.',
+			'includeAttachments' => 'Encode the attachments in exports that allow for this (such as XML, JSON, STIX).',
+			'event_uuid' => 'Filter the export data set by event UUID.',
+			'distribution' => 'Restrict the distribution settings for exported events/attributes to the provided settings. This does not override the user\'s restrictions.',
+			'sharing_group_id' => 'Restrict the sharing group IDs for exported events/attributes to the provided settings. This does not override the user\'s restrictions.',
 	);
 	
 	public $built_in_exports = array(
@@ -1193,7 +1190,7 @@ class Event extends AppModel {
 		}
 	}
 
-	public function fetchEventIds($user, $from = false, $to = false, $last = false, $list = false, $timestamp = false, $publish_timestamp = false) {
+	public function fetchEventIds2($user, $from = false, $to = false, $last = false, $list = false, $timestamp = false, $publish_timestamp = false) {
 		$conditions = array();
 		// restricting to non-private or same org if the user is not a site-admin.
 		if (!$user['Role']['perm_site_admin']) {
@@ -1240,6 +1237,69 @@ class Event extends AppModel {
 		}
 		return $results;
 	}
+	
+	public function fetchEventIds($user, $options = array()) {
+		$conditions = array();
+		$possibleOptions = array('eventid', 'tags', 'from', 'to', 'last', 'to_ids', 'event_uuid', 'distribution', 'sharing_group_id', 'disableSiteAdmin', 'value', 'category', 'type', 'publish_timestamp', 'timestamp', 'list');
+		$simpleOptions = array(
+				'eventid' => 'Event.id',
+				'from' => 'Event.date >=',
+				'to' => 'Event.date <=',
+				'publish_timestamp' => 'Event.publish_timestamp',
+				'timestamp' => 'Event.timestamp',
+		);
+		foreach ($possibleOptions as &$opt) if (!isset($options[$opt])) $options[$opt] = false;
+		// restricting to non-private or same org if the user is not a site-admin.
+		if (!$user['Role']['perm_site_admin']) {
+			$sgids = $this->SharingGroup->fetchAllAuthorised($user);
+			if (empty($sgids)) $sgids = -1;
+			$conditions['AND']['OR'] = array(
+					'Event.org_id' => $user['org_id'],
+					array(
+							'AND' => array(
+									'Event.distribution >' => 0,
+									'Event.distribution <' => 4,
+									Configure::read('MISP.unpublishedprivate') ? array('Event.published =' => 1) : array(),
+							),
+					),
+					array(
+							'AND' => array(
+									'Event.sharing_group_id' => $sgids,
+									'Event.distribution' => 4,
+									Configure::read('MISP.unpublishedprivate') ? array('Event.published =' => 1) : array(),
+							)
+					)
+			);
+		}
+		$fields = array('Event.id', 'Event.org_id', 'Event.distribution', 'Event.sharing_group_id');
+		if ($options['value'] || $options['category'] || $options['type'] || $options['to_ids']) {
+			$attributesFiltered = $this->Attribute->simpleSearch($options);
+			if ($attributesFiltered !== false) {
+				if (empty($attributesFiltered)) return array();
+				else $conditions['AND'][] = array('Event.id' => $attributesFiltered);
+			}
+		}
+		if ($options['from']) $conditions['AND'][] = array('Event.date >=' => $options['from']);
+		if ($options['to']) $conditions['AND'][] = array('Event.date <=' => $options['to']);
+		if ($options['last']) $conditions['AND'][] = array('Event.publish_timestamp >=' => $options['last']);
+		if ($options['timestamp']) $conditions['AND'][] = array('Event.timestamp >=' => $options['timestamp']);
+		if ($options['publish_timestamp']) $conditions['AND'][] = array('Event.publish_timestamp >=' => $options['publish_timestamp']);
+		if ($options['list']) {
+			$params = array(
+					'conditions' => $conditions,
+					'recursive' => -1,
+			);
+			$results = array_values($this->find('list', $params));
+		} else {
+			$params = array(
+					'conditions' => $conditions,
+					'recursive' => -1,
+					'fields' => $fields,
+			);
+			$results = $this->find('all', $params);
+		}
+		return $results;
+	}
 
 	//Once the data about the user is gathered from the appropriate sources, fetchEvent is called from the controller or background process.
 	// Possible options:
@@ -1250,7 +1310,7 @@ class Event extends AppModel {
 	// to: date string (YYYY-MM-DD)
 	// includeAllTags: true will include the tags
 	// includeAttachments: true will attach the attachments to the attributes in the data field
-	public function fetchEvent($user, $options = array()) {
+	public function fetchEvent($user, $options = array(), $sgids = false) {
 		if (isset($options['Event.id'])) $options['eventid'] = $options['Event.id'];
 		$possibleOptions = array('eventid', 'idList', 'tags', 'from', 'to', 'last', 'to_ids', 'includeAllTags', 'includeAttachments', 'event_uuid', 'distribution', 'sharing_group_id', 'disableSiteAdmin', 'value', 'category', 'type');
 		foreach ($possibleOptions as &$opt) if (!isset($options[$opt])) $options[$opt] = false;
@@ -1275,7 +1335,9 @@ class Event extends AppModel {
 
 		// restricting to non-private or same org if the user is not a site-admin.
 		if (!$isSiteAdmin) {
-			$sgids = $this->SharingGroup->fetchAllAuthorised($user);
+			if (!$sgids) {
+				$sgids = $this->SharingGroup->fetchAllAuthorised($user);
+			}
 			if (empty($sgids)) $sgids = array(-1);
 			$conditions['AND']['OR'] = array(
 				'Event.org_id' => $user['org_id'],
@@ -2904,30 +2966,33 @@ class Event extends AppModel {
 		return $resultArray;
 	}
 	
-	public function getAllExports($event) {
-		$id = $event['Event']['id'];
+	public function getAllExports($event = false) {
 		$exports = $this->built_in_exports;
-		foreach ($exports as $export_type => &$export) {
-			if (isset($export['url'])) str_replace('$id', $id, $export['url']);
-			if (isset($export['checkbox_set'])) str_replace('$id', $id, $export['checkbox_set']);
-		}
-		if ($event['Event']['published'] == 0) {
-			foreach ($exports as $k => $export) {
-				if ($export['requiresPublished']) unset($exports[$k]);
+		if ($event) {
+			$id = $event['Event']['id'];
+			foreach ($exports as $export_type => &$export) {
+				if (isset($export['url'])) str_replace('$id', $id, $export['url']);
+				if (isset($export['checkbox_set'])) str_replace('$id', $id, $export['checkbox_set']);
 			}
-			$exports['csv'] = array(
-					'url' => '/events/csv/download/' . $id . '/1',
-					'text' => 'CSV (event not published, IDS flag ignored)',
-					'requiresPublished' => false,
-					'checkbox' => false
-			);
+			if ($event['Event']['published'] == 0) {
+				foreach ($exports as $k => $export) {
+					if ($export['requiresPublished']) unset($exports[$k]);
+				}
+				$exports['csv'] = array(
+						'url' => '/events/csv/download/' . $id . '/1',
+						'text' => 'CSV (event not published, IDS flag ignored)',
+						'requiresPublished' => false,
+						'checkbox' => false
+				);
+			}
 		}
 		$this->Module = ClassRegistry::init('Module');
 		$modules = $this->Module->getEnabledModules(false, 'Export');
 		if (is_array($modules) && !empty($modules)) {
 			foreach ($modules['modules'] as $module) {
+				$appendId = $event ? '/' . $id : '';
 				$exports[$module['name']] = array(
-						'url' => '/events/exportModule/' . $module['name'] . '/' . $id,
+						'url' => '/events/exportModule/' . $module['name'] . $appendId,
 						'text' => Inflector::humanize($module['name']),
 						'requiresPublished' => true,
 						'checkbox' => false,
@@ -2955,5 +3020,103 @@ class Event extends AppModel {
 			}
 		}
 		return $imports;
+	}
+	
+	public function export($user, $type, $options = array()) {
+		
+	}
+	
+	public function exportPage($user) {
+		$now = time();
+	
+		// as a site admin we'll use the ADMIN identifier, not to overwrite the cached files of our own org with a file that includes too much data.
+		if ($user['Role']['perm_site_admin']) {
+			$useOrg = 'ADMIN';
+			$useOrg_id = 0;
+			$conditions = null;
+		} else {
+			$useOrg = $user['Organisation']['name'];
+			$useOrg_id = $user['org_id'];
+			$conditions['OR'][] = array('id' => $this->Event->fetchEventIds($user, array('list' => true)));
+		}
+		$this->recursive = -1;
+		$newestEvent = $this->find('first', array(
+				'conditions' => $conditions,
+				'fields' => 'timestamp',
+				'order' => 'Event.timestamp DESC',
+		));
+		$newestEventPublished = $this->find('first', array(
+				'conditions' => array('AND' => array($conditions, array('published' => 1))),
+				'fields' => 'timestamp',
+				'order' => 'Event.timestamp DESC',
+		));
+		$this->Job = ClassRegistry::init('Job');
+		$export_types = $this->export_types;
+		foreach ($export_types as $k => $type) {
+			if ($type['requiresPublished']) {
+				$tempNewestEvent = $newestEventPublished;
+			} else {
+				$tempNewestEvent = $newestEvent;
+			}
+			$job = $this->Job->find('first', array(
+					'fields' => array('id', 'progress'),
+					'conditions' => array(
+							'job_type' => 'cache_' . $k,
+							'org_id' => $useOrg_id
+					),
+					'order' => array('Job.id' => 'desc')
+			));
+			$dir = new Folder(APP . 'tmp/cached_exports/' . $k);
+			if ($k === 'text') {
+				// Since all of the text export files are generated together, we might as well just check for a single one md5.
+				$file = new File($dir->pwd() . DS . 'misp.text_md5.' . $useOrg . $type['extension']);
+			} else {
+				$file = new File($dir->pwd() . DS . 'misp.' . $k . '.' . $useOrg . $type['extension']);
+			}
+			if (!$file->readable()) {
+				if (empty($tempNewestEvent)) {
+					$lastModified = 'No valid events';
+					$export_types[$k]['recommendation'] = 0;
+				} else {
+					$lastModified = 'N/A';
+					$export_types[$k]['recommendation'] = 1;
+				}
+			} else {
+				$fileChange = $file->lastChange();
+				$lastModified = $this->__timeDifference($now, $fileChange);
+				if (empty($tempNewestEvent) || $fileChange > $tempNewestEvent['Event']['timestamp']) {
+					if (empty($tempNewestEvent)) {
+						$lastModified = 'No valid events';
+					}
+					$export_types[$k]['recommendation'] = 0;
+				} else {
+					$export_types[$k]['recommendation'] = 1;
+				}
+			}
+	
+			$export_types[$k]['lastModified'] = $lastModified;
+			if (!empty($job)) {
+				$export_types[$k]['job_id'] = $job['Job']['id'];
+				$export_types[$k]['progress'] = $job['Job']['progress'];
+			} else {
+				$export_types[$k]['job_id'] = -1;
+				$export_types[$k]['progress'] = 0;
+			}
+		}
+		return array('useOrg' => $useOrg, 'export_types' => $export_types);
+	}
+	
+	private function __timeDifference($now, $then) {
+		$periods = array("second", "minute", "hour", "day", "week", "month", "year");
+		$lengths = array("60","60","24","7","4.35","12");
+		$difference = $now - $then;
+		for ($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
+			$difference /= $lengths[$j];
+		}
+		$difference = round($difference);
+		if ($difference != 1) {
+			$periods[$j].= "s";
+		}
+		return $difference . " " . $periods[$j] . " ago";
 	}
 }

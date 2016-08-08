@@ -1875,7 +1875,7 @@ class AttributesController extends AppController {
 				throw new UnauthorizedException('You have to be logged in to do that.');
 			}
 		}
-		if (false === $eventId) $eventIds = $this->Attribute->Event->fetchEventIds($this->Auth->user(), false, false, false, true);
+		if (false === $eventId) $eventIds = $this->Attribute->Event->fetchEventIds($this->Auth->user(), array('list' => true));
 		else if (is_numeric($eventId)) $eventIds = array($eventId);
 		else throw new MethodNotAllowedException('Invalid event ID format.');
 		$values = array();

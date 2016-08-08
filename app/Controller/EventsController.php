@@ -659,7 +659,7 @@ class EventsController extends AppController {
 		}
 		$conditions = array();
 		if (!$this->_isSiteAdmin()) {
-			$eIds = $this->Event->fetchEventIds($this->Auth->user(), false, false, false, true);
+			$eIds = $this->Event->fetchEventIds($this->Auth->user(), array('list' => true));
 			$conditions['AND'][] = array('Event.id' => $eIds);
 		}
 		$rules = array('published', 'eventid', 'tag', 'date', 'eventinfo', 'threatlevel', 'distribution', 'analysis', 'attribute');
@@ -1539,94 +1539,16 @@ class EventsController extends AppController {
 		$this->set('hashTypes', array_keys($this->Event->Attribute->hashTypes));
 	}
 
-	public function export() {
+	public function exportPage() {
 		if ($this->_isSiteAdmin()) $this->Session->setFlash('Warning, you are logged in as a site admin, any export that you generate will contain the FULL UNRESTRICTED data-set. If you would like to generate an export for your own organisation, please log in with a different user.');
+		$this->set('sigTypes', array_keys($this->Event->Attribute->typeDefinitions));
 		// Check if the background jobs are enabled - if not, fall back to old export page.
 		if (Configure::read('MISP.background_jobs')) {
-			$now = time();
-
-			// as a site admin we'll use the ADMIN identifier, not to overwrite the cached files of our own org with a file that includes too much data.
-			if ($this->_isSiteAdmin()) {
-				$useOrg = 'ADMIN';
-				$useOrg_id = 0;
-				$conditions = null;
-			} else {
-				$useOrg = $this->Auth->user('Organisation')['name'];
-				$useOrg_id = $this->Auth->user('org_id');
-				$conditions['OR'][] = array('id' => $this->Event->fetchEventIds($this->Auth->user(), false, false, false, true));
-			}
-			$this->Event->recursive = -1;
-			$newestEvent = $this->Event->find('first', array(
-				'conditions' => $conditions,
-				'fields' => 'timestamp',
-				'order' => 'Event.timestamp DESC',
-			));
-			$newestEventPublished = $this->Event->find('first', array(
-				'conditions' => array('AND' => array($conditions, array('published' => 1))),
-				'fields' => 'timestamp',
-				'order' => 'Event.timestamp DESC',
-			));
-			$this->loadModel('Job');
-			foreach ($this->Event->export_types as $k => $type) {
-				if ($type['requiresPublished']) {
-					$tempNewestEvent = $newestEventPublished;
-				} else {
-					$tempNewestEvent = $newestEvent;
-				}
-				$job = $this->Job->find('first', array(
-						'fields' => array('id', 'progress'),
-						'conditions' => array(
-								'job_type' => 'cache_' . $k,
-								'org_id' => $useOrg_id
-							),
-						'order' => array('Job.id' => 'desc')
-				));
-				$dir = new Folder(APP . 'tmp/cached_exports/' . $k);
-				if ($k === 'text') {
-					// Since all of the text export files are generated together, we might as well just check for a single one md5.
-					$file = new File($dir->pwd() . DS . 'misp.text_md5.' . $useOrg . $type['extension']);
-				} else {
-					$file = new File($dir->pwd() . DS . 'misp.' . $k . '.' . $useOrg . $type['extension']);
-				}
-				if (!$file->readable()) {
-					if (empty($tempNewestEvent)) {
-						$lastModified = 'No valid events';
-						$this->Event->export_types[$k]['recommendation'] = 0;
-					} else {
-						$lastModified = 'N/A';
-						$this->Event->export_types[$k]['recommendation'] = 1;
-					}
-				} else {
-					$fileChange = $file->lastChange();
-					$lastModified = $this->__timeDifference($now, $fileChange);
-					if (empty($tempNewestEvent) || $fileChange > $tempNewestEvent['Event']['timestamp']) {
-						if (empty($tempNewestEvent)) {
-							$lastModified = 'No valid events';
-						}
-						$this->Event->export_types[$k]['recommendation'] = 0;
-					} else {
-						$this->Event->export_types[$k]['recommendation'] = 1;
-					}
-				}
-
-				$this->Event->export_types[$k]['lastModified'] = $lastModified;
-				if (!empty($job)) {
-					$this->Event->export_types[$k]['job_id'] = $job['Job']['id'];
-					$this->Event->export_types[$k]['progress'] = $job['Job']['progress'];
-				} else {
-					$this->Event->export_types[$k]['job_id'] = -1;
-					$this->Event->export_types[$k]['progress'] = 0;
-				}
-			}
-			$this->set('useOrg', $useOrg);
-			$this->set('export_types', $this->Event->export_types);
-			// generate the list of Attribute types
-			$this->loadModel('Attribute');
-			$this->set('sigTypes', array_keys($this->Attribute->typeDefinitions));
+			$data = $this->Event->exportPage($this->Auth->user());
+			$this->set('useOrg', $data['useOrg']);
+			$this->set('export_types', $data['export_types']);
+			
 		} else {
-			// generate the list of Attribute types
-			$this->loadModel('Attribute');
-			$this->set('sigTypes', array_keys($this->Attribute->typeDefinitions));
 			$this->render('/Events/export_alternate');
 		}
 	}
@@ -1639,20 +1561,6 @@ class EventsController extends AppController {
 		$this->response->type($this->Event->export_types[$type]['extension']);
 		$path = 'tmp/cached_exports/' . $type . DS . 'misp.' . strtolower($this->Event->export_types[$type]['type']) . $extra . '.' . $org . $this->Event->export_types[$type]['extension'];
 		$this->response->file($path, array('download' => true));
-	}
-
-	private function __timeDifference($now, $then) {
-		$periods = array("second", "minute", "hour", "day", "week", "month", "year");
-		$lengths = array("60","60","24","7","4.35","12");
-		$difference = $now - $then;
-		for ($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
-			$difference /= $lengths[$j];
-		}
-		$difference = round($difference);
-		if ($difference != 1) {
-			$periods[$j].= "s";
-		}
-		return $difference . " " . $periods[$j] . " ago";
 	}
 
 	public function xml($key, $eventid = false, $withAttachment = false, $tags = false, $from = false, $to = false, $last = false) {
@@ -1717,7 +1625,7 @@ class EventsController extends AppController {
 		$final = "";
 		$final .= '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL . '<response>' . PHP_EOL;
 		$validEvents = 0;
-		if (!$eventid) $eventIdArray = $this->Event->fetchEventIds($user, $from, $to, $last, true);
+		if (!$eventid) $eventIdArray = $this->Event->fetchEventIds($user, array('list' => true, 'from' => $from, 'to' => $to, 'last' => $last));
 		foreach ($eventIdArray as $currentEventId) {
 			$result = $this->Event->fetchEvent($user, array('eventid' => $currentEventId, 'tags' => $tags, 'from' => $from, 'to' => $to, 'last' => $last));
 			if (empty($result)) continue;
@@ -1874,7 +1782,7 @@ class EventsController extends AppController {
 			}
 			$events = array($eventid);
 		} else if ($eventid === false) {
-			$events = $this->Event->fetchEventIds($this->Auth->user(), $from, $to, $last, true);
+			$events = $this->Event->fetchEventIds($this->Auth->user(), array('from' => $from, 'to' => $to, 'last' => $last, 'list' => true));
 			if (empty($events)) $events = array(0 => -1);
 		} else {
 			$events = array($eventid);
@@ -3089,28 +2997,6 @@ class EventsController extends AppController {
 		}
 	}
 
-	public function exportChoice($id) {
-		if (!is_numeric($id)) throw new MethodNotAllowedException('Invalid ID');
-		$event = $this->Event->fetchEvent($this->Auth->user(), array('eventid' => $id));
-		if (empty($event)) throw new NotFoundException('Event not found or you are not authorised to view it.');
-		$event = $event[0];
-		$exports = $this->Event->getAllExports($event);
-		$this->set('exports', $exports);
-		$this->set('id', $id);
-		$this->render('ajax/exportChoice');
-	}
-	
-	public function importChoice($id) {
-		if (!is_numeric($id)) throw new MethodNotAllowedException('Invalid ID');
-		$event = $this->Event->fetchEvent($this->Auth->user(), array('eventid' => $id));
-		if (empty($event)) throw new NotFoundException('Event not found or you are not authorised to view it.');
-		$event = $event[0];
-		$imports = $this->Event->getAllImports($event);
-		$this->set('imports', $imports);
-		$this->set('id', $id);
-		$this->render('ajax/importChoice');
-	}
-
 	// API for pushing samples to MISP
 	// Either send it to an existing event, or let MISP create a new one automatically
 	public function upload_sample($event_id = null) {
@@ -3587,6 +3473,28 @@ class EventsController extends AppController {
 			$this->render('resolved_attributes');
 		}
 	}
+
+	public function exportChoice($id) {
+		if (!is_numeric($id)) throw new MethodNotAllowedException('Invalid ID');
+		$event = $this->Event->fetchEvent($this->Auth->user(), array('eventid' => $id));
+		if (empty($event)) throw new NotFoundException('Event not found or you are not authorised to view it.');
+		$event = $event[0];
+		$exports = $this->Event->getAllExports($event);
+		$this->set('exports', $exports);
+		$this->set('id', $id);
+		$this->render('ajax/exportChoice');
+	}
+	
+	public function importChoice($id) {
+		if (!is_numeric($id)) throw new MethodNotAllowedException('Invalid ID');
+		$event = $this->Event->fetchEvent($this->Auth->user(), array('eventid' => $id));
+		if (empty($event)) throw new NotFoundException('Event not found or you are not authorised to view it.');
+		$event = $event[0];
+		$imports = $this->Event->getAllImports($event);
+		$this->set('imports', $imports);
+		$this->set('id', $id);
+		$this->render('ajax/importChoice');
+	}
 	
 	public function importModule($module, $eventId) {
 		$this->loadModel('Module');
@@ -3691,11 +3599,36 @@ class EventsController extends AppController {
 		return $this->response;
 	}
 	
-	public function export2() {
+	public function export($module = false, $id = false) {
+		if ($id) {
+			if (!is_numeric($id)) throw new MethodNotAllowedException('Invalid ID');
+			$event = $this->Event->fetchEvent($this->Auth->user(), array('eventid' => $id));
+			if (empty($event)) throw new NotFoundException('Event not found or you are not authorised to view it.');
+			$event = $event[0];
+		} else {
+			$event = false;
+		}
 		if ($this->request->is('post')) {
 			
 		} else {
-			
+			if ($this->request->is('ajax')) {
+				$exports = $this->Event->getAllExports($event);
+				$this->set('exports', $exports);
+				$this->set('id', $id);
+				$this->render('ajax/exportChoice');
+			} else {
+				if ($this->_isRest()) {
+					$response = array(
+							'usage' => 'POST your request to /events/export/[export_type] with the request body containing a JSON with the desired filter parameters',
+							'export_types' => array_keys($this->Event->getAllExports($event)),
+							'filter_options' => $this->Event->allowedExportOptions
+					);
+					$this->set('response', $response);
+					$this->set('_serialize', array('response'));
+				} else {
+					$this->redirect(array('controller' => 'events', 'action' => 'exportPage'));
+				}
+			}
 		}
 	}
 }
