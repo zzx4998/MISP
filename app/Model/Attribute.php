@@ -1904,19 +1904,20 @@ class Attribute extends AppModel {
 		else return 'Could not save changes.';
 	}
 	
-	public function simpleSearch($options) {
+	public function simpleSearch($user, $options) {
+		$conditions = $this->buildConditions($user);
 		$conditions = array();
 		if ($options['value']) {
-			$conditions = array('OR' => array('value1' => $options['value'], 'value2' => $options['value']));
+			$conditions[] = array('OR' => array('value1' => $options['value'], 'value2' => $options['value']));
 		}
 		if ($options['category']) {
-			$conditions = array('category' => $options['category']);
+			$conditions[] = array('category' => $options['category']);
 		}
 		if ($options['type']) {
-			$conditions = array('type' => $options['type']);
+			$conditions[] = array('type' => $options['type']);
 		}
 		if ($options['to_ids']) {
-			$conditions = array('to_ids' => 1);
+			$conditions[] = array('to_ids' => 1);
 		}
 		if (empty($conditions)) return false;
 		return $this->find('list', array(

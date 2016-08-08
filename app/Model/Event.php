@@ -1240,13 +1240,18 @@ class Event extends AppModel {
 	
 	public function fetchEventIds($user, $options = array()) {
 		$conditions = array();
-		$possibleOptions = array('eventid', 'tags', 'from', 'to', 'last', 'to_ids', 'event_uuid', 'distribution', 'sharing_group_id', 'disableSiteAdmin', 'value', 'category', 'type', 'publish_timestamp', 'timestamp', 'list');
+		$possibleOptions = array('eventid', 'tags', 'from', 'to', 'last', 'to_ids', 'event_uuid', 'distribution', 'sharing_group_id', 'disableSiteAdmin', 'value', 'category', 'type', 'publish_timestamp', 'timestamp', 'list', 'published');
 		$simpleOptions = array(
 				'eventid' => 'Event.id',
 				'from' => 'Event.date >=',
 				'to' => 'Event.date <=',
-				'publish_timestamp' => 'Event.publish_timestamp',
-				'timestamp' => 'Event.timestamp',
+				'publish_timestamp' => 'Event.publish_timestamp >=',
+				'timestamp' => 'Event.timestamp >=',
+				'event_uuid' => 'Event.uuid',
+				'distribution' => 'Event.distribution',
+				'last' => 'Event.timestamp >=',
+				'sharing_group_id' => 'Event.sharing_group_id',
+				'published' => 'Event.published'
 		);
 		foreach ($possibleOptions as &$opt) if (!isset($options[$opt])) $options[$opt] = false;
 		// restricting to non-private or same org if the user is not a site-admin.
@@ -1272,18 +1277,33 @@ class Event extends AppModel {
 			);
 		}
 		$fields = array('Event.id', 'Event.org_id', 'Event.distribution', 'Event.sharing_group_id');
-		if ($options['value'] || $options['category'] || $options['type'] || $options['to_ids']) {
-			$attributesFiltered = $this->Attribute->simpleSearch($options);
+		if ($options['value'] || $options['category'] || $options['type'] || $options['to_ids'] !== false) {
+			$attributesFiltered = $this->Attribute->simpleSearch($user, $options);
 			if ($attributesFiltered !== false) {
 				if (empty($attributesFiltered)) return array();
 				else $conditions['AND'][] = array('Event.id' => $attributesFiltered);
 			}
 		}
-		if ($options['from']) $conditions['AND'][] = array('Event.date >=' => $options['from']);
-		if ($options['to']) $conditions['AND'][] = array('Event.date <=' => $options['to']);
+		foreach ($simpleOptions as $simpleOption => $query) {
+			if ($options[$simpleOption] !== false) $conditions['AND'][] = array($query => $options[$simpleOption]);
+		}
+		// If we sent any tags along, load the associated tag names for each attribute
+		if ($options['tags']) {
+			$tag = ClassRegistry::init('Tag');
+			$args = $this->Attribute->dissectArgs($options['tags']);
+			$tagArray = $tag->fetchEventTagIds($args[0], $args[1]);
+			$temp = array();
+			foreach ($tagArray[0] as $accepted) {
+				$temp['OR'][] = array('Event.id' => $accepted);
+			}
+			$conditions['AND'][] = $temp;
+			$temp = array();
+			foreach ($tagArray[1] as $rejected) {
+				$temp['AND'][] = array('Event.id !=' => $rejected);
+			}
+			$conditions['AND'][] = $temp;
+		}
 		if ($options['last']) $conditions['AND'][] = array('Event.publish_timestamp >=' => $options['last']);
-		if ($options['timestamp']) $conditions['AND'][] = array('Event.timestamp >=' => $options['timestamp']);
-		if ($options['publish_timestamp']) $conditions['AND'][] = array('Event.publish_timestamp >=' => $options['publish_timestamp']);
 		if ($options['list']) {
 			$params = array(
 					'conditions' => $conditions,
