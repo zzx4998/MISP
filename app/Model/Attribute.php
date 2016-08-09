@@ -1572,6 +1572,45 @@ class Attribute extends AppModel {
 		$result[1] = $reject;
 		return $result;
 	}
+	
+	public function dissectNegatableFilters($options) {
+		$conditions = array();
+		$filters = array('eventid', 'tags');
+		$or = array();
+		$not = array();
+		foreach ($filters as $filter) {
+			if (!is_array($options[$filter]) && $options[$filter]) $options[$filter] = array($options[$filter]);
+			if (isset($options[$filter]) && !empty($options[$filter])) {
+				$components = $this->dissectArgs($options[$filter]);
+				if ($filter == 'tags') {
+					$tag = ClassRegistry::init('Tag');
+					$components = $tag->fetchEventTagIds($components[0], $components[1]);
+				}
+				if (!empty($components[0])) {
+					if (!empty($or)) {
+						$or = array_intersect($or, $components[0]);
+					} else {
+						$or = $components[0];
+					}
+					
+				}
+				if (!empty($components[1])) {
+					if (!empty($not)) {
+						$not = array_merge($not, $components[1]);
+					} else {
+						$not = $components[1];
+					}
+				}
+			}
+		}
+		if (!empty($or)) {
+			$conditions[] = array('Event.id' => $or);
+		}
+		if (!empty($not)) {
+			$conditions[] = array('NOT' => array('Event.id' => $or));
+		}
+		return $conditions;
+	}
 
 	public function checkForValidationIssues($attribute) {
 		$this->set($attribute);

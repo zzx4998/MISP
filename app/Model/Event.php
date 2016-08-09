@@ -1341,6 +1341,57 @@ class Event extends AppModel {
 		}
 		return $results;
 	}
+	
+	// Convenience function to inject the access conditions for fetcher methods
+	public function buildConditions($user, $sgids = false, $delegations = false) {
+		$conditions = array();
+		$conditionsAttributes = array();
+		if (!$user['Role']['perm_site_admin']) {
+			if (!$sgids) {
+				$sgids = $this->SharingGroup->fetchAllAuthorised($user);
+			}
+			if (empty($sgids)) $sgids = array(-1);
+			$conditions['AND']['OR'] = array(
+					'Event.org_id' => $user['org_id'],
+					array(
+							'AND' => array(
+									'Event.distribution >' => 0,
+									'Event.distribution <' => 4,
+									Configure::read('MISP.unpublishedprivate') ? array('Event.published =' => 1) : array(),
+							),
+					),
+					array(
+							'AND' => array(
+									'Event.sharing_group_id' => $sgids,
+									'Event.distribution' => 4,
+									Configure::read('MISP.unpublishedprivate') ? array('Event.published =' => 1) : array()
+							)
+					)
+			);
+			// if delegations are enabled, check if there is an event that the current user might see because of the request itself
+			if (Configure::read('MISP.delegation') && $delegations) {
+				$this->EventDelegation = ClassRegistry::init('EventDelegation');
+				$delegatedEventIDs = $this->EventDelegation->find('list', array(
+						'conditions' => array('EventDelegation.org_id' => $user['org_id']),
+						'fields' => array('event_id')
+				));
+				$conditions['AND']['OR']['Event.id'] = $delegatedEventIDs;
+			}
+		
+			$conditionsAttributes['AND'][0]['OR'] = array(
+					array('AND' => array(
+							'Attribute.distribution >' => 0,
+							'Attribute.distribution !=' => 4,
+					)),
+					array('AND' => array(
+							'Attribute.distribution' => 4,
+							'Attribute.sharing_group_id' => $sgids,
+					)),
+					'(SELECT events.org_id FROM events WHERE events.id = Attribute.event_id)' => $user['org_id']
+			);
+		}
+		return array('conditionsAttributes' => $conditionsAttributes, 'conditions' => $conditions);
+	}
 
 	//Once the data about the user is gathered from the appropriate sources, fetchEvent is called from the controller or background process.
 	// Possible options:
@@ -1353,13 +1404,14 @@ class Event extends AppModel {
 	public function fetchEvent($user, $options = array(), $sgids = false) {
 		if (isset($options['Event.id'])) $options['eventid'] = $options['Event.id'];
 		$possibleOptions = $this->fetcher_options;
-		$possibleOptions = array_merge($possibleOptions, array('includeAllTags', 'includeAttachments'));
+		$possibleOptions = array_merge($possibleOptions, array('includeAllTags', 'includeAttachments', 'delegations'));
 		foreach ($possibleOptions as &$opt) if (!isset($options[$opt])) $options[$opt] = false;
-		if ($options['eventid']) {
-			$conditions['AND'][] = array("Event.id" => $options['eventid']);
-		} else {
-			$conditions = array();
-		}
+		$conditions = array();
+		$conditionsAttributes = array();
+		$permissionConditions = $this->buildConditions($user, $sgids, $options['delegations']);
+		$conditions['AND'][] = $permissionConditions['conditions'];
+		$conditionsAttributes['AND'][] = $permissionConditions['conditionsAttributes'];
+		$conditions['AND'][] = $this->Attribute->dissectNegatableFilters($options);
 		if (!isset($user['org_id'])) {
 			throw new Exception('There was an error with the user account.');
 		}
@@ -1372,53 +1424,7 @@ class Event extends AppModel {
 		}
 		$isSiteAdmin = $user['Role']['perm_site_admin'];
 		if (isset($options['disableSiteAdmin']) && $options['disableSiteAdmin']) $isSiteAdmin = false;
-		$conditionsAttributes = array();
 
-		// restricting to non-private or same org if the user is not a site-admin.
-		if (!$isSiteAdmin) {
-			if (!$sgids) {
-				$sgids = $this->SharingGroup->fetchAllAuthorised($user);
-			}
-			if (empty($sgids)) $sgids = array(-1);
-			$conditions['AND']['OR'] = array(
-				'Event.org_id' => $user['org_id'],
-				array(
-					'AND' => array(
-						'Event.distribution >' => 0,
-						'Event.distribution <' => 4,
-						Configure::read('MISP.unpublishedprivate') ? array('Event.published =' => 1) : array(),
-					),
-				),
-				array(
-					'AND' => array(
-						'Event.sharing_group_id' => $sgids,
-						'Event.distribution' => 4,
-						Configure::read('MISP.unpublishedprivate') ? array('Event.published =' => 1) : array()
-					)
-				)
-			);
-			// if delegations are enabled, check if there is an event that the current user might see because of the request itself
-			if (Configure::read('MISP.delegation')) {
-				$this->EventDelegation = ClassRegistry::init('EventDelegation');
-				$delegatedEventIDs = $this->EventDelegation->find('list', array(
-					'conditions' => array('EventDelegation.org_id' => $user['org_id']),
-					'fields' => array('event_id')
-				));
-				$conditions['AND']['OR']['Event.id'] = $delegatedEventIDs;
-			}
-
-			$conditionsAttributes['AND'][0]['OR'] = array(
-				array('AND' => array(
-					'Attribute.distribution >' => 0,
-					'Attribute.distribution !=' => 4,
-				)),
-				array('AND' => array(
-					'Attribute.distribution' => 4,
-					'Attribute.sharing_group_id' => $sgids,
-				)),
-				'(SELECT events.org_id FROM events WHERE events.id = Attribute.event_id)' => $user['org_id']
-			);
-		}
 		if ($options['distribution']) {
 			$conditions['AND'][] = array('Event.distribution' => $options['distribution']);
 			$conditionsAttributes['AND'][] = array('Attribute.distribution' => $options['distribution']);
@@ -1443,27 +1449,9 @@ class Event extends AppModel {
 			}
 		} else $conditionsAttributes['AND']['Attribute.deleted'] = 0;
 
-		// If we sent any tags along, load the associated tag names for each attribute
-		if ($options['tags']) {
-			$tag = ClassRegistry::init('Tag');
-			$args = $this->Attribute->dissectArgs($options['tags']);
-			$tagArray = $tag->fetchEventTagIds($args[0], $args[1]);
-			$temp = array();
-			foreach ($tagArray[0] as $accepted) {
-				$temp['OR'][] = array('Event.id' => $accepted);
-			}
-			$conditions['AND'][] = $temp;
-			$temp = array();
-			foreach ($tagArray[1] as $rejected) {
-				$temp['AND'][] = array('Event.id !=' => $rejected);
-			}
-			$conditions['AND'][] = $temp;
-		}
-
 		if ($options['to_ids']) {
 			$conditionsAttributes['AND'][] = array('Attribute.to_ids' => 1);
 		}
-
 		// removing this for now, we export the to_ids == 0 attributes too, since there is a to_ids field indicating it in the .xml
 		// $conditionsAttributes['AND'] = array('Attribute.to_ids =' => 1);
 		// Same idea for the published. Just adjust the tools to check for this
