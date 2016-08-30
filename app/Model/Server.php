@@ -1,12 +1,9 @@
 <?php
 App::uses('AppModel', 'Model');
-/**
- * Server Model
- *
- */
+
 class Server extends AppModel {
 
-	public $name = 'Server';					// TODO general
+	public $name = 'Server';
 
 	public $actsAs = array('SysLogLogable.SysLogLogable' => array(	// TODO Audit, logable, check: 'userModel' and 'userKey' can be removed given default
 			'userModel' => 'User',
@@ -40,18 +37,8 @@ class Server extends AppModel {
 		),
 	);
 
-/**
- * Display field
- *
- * @var string
- */
 	public $displayField = 'url';
 
-/**
- * Validation rules
- *
- * @var array
- */
 	public $validate = array(
 		'url' => array( // TODO add extra validation to refuse multiple time the same url from the same org
 			'url' => array(
@@ -252,6 +239,15 @@ class Server extends AppModel {
 							'errorMessage' => '',
 							'test' => 'testForEmpty',
 							'type' => 'string',
+					),
+					'host_org_id' => array(
+							'level' => 0,
+							'description' => 'The hosting organisation of this instance. If this is not selected then replication instances cannot be added.',
+							'value' => '0',
+							'errorMessage' => '',
+							'test' => 'testLocalOrg',
+							'type' => 'numeric',
+							'optionsSource' => 'LocalOrgs',
 					),
 					'logo' => array(
 							'level' => 3,
@@ -606,6 +602,15 @@ class Server extends AppModel {
 							'type' => 'string',
 							'null' => true,
 					),
+					'tmpdir' => array(
+							'level' => 1,
+							'description' => 'Please indicate the temp directory you wish to use for certain functionalities in MISP. By default this is set to /tmp and will be used among others to store certain temporary files extracted from imports during the import process.',
+							'value' => '/tmp',
+							'errorMessage' => '',
+							'test' => 'testForPath',
+							'type' => 'string',
+							'null' => true,
+					),
 					'custom_css' => array(
 							'level' => 2,
 							'description' => 'If you would like to customise the css, simply drop a css file in the /var/www/MISP/webroot/css directory and enter the name here.',
@@ -897,7 +902,7 @@ class Server extends AppModel {
 						'description' => 'The port that the pub/sub feature will use.',
 						'value' => 50000,
 						'errorMessage' => '',
-						'test' => 'testForPortNumber',
+						'test' => 'testForZMQPortNumber',
 						'type' => 'numeric',
 						'afterHook' => 'zmqAfterHook',
 					),
@@ -1037,7 +1042,7 @@ class Server extends AppModel {
 					'Enrichment_timeout' => array(
 							'level' => 1,
 							'description' => 'Set a timeout for the enrichment services',
-							'value' => 5,
+							'value' => 10,
 							'errorMessage' => '',
 							'test' => 'testForEmpty',
 							'type' => 'numeric'
@@ -1053,7 +1058,7 @@ class Server extends AppModel {
 					'Import_timeout' => array(
 							'level' => 1,
 							'description' => 'Set a timeout for the import services',
-							'value' => 5,
+							'value' => 10,
 							'errorMessage' => '',
 							'test' => 'testForEmpty',
 							'type' => 'numeric'
@@ -1101,7 +1106,7 @@ class Server extends AppModel {
 					'Export_timeout' => array(
 							'level' => 1,
 							'description' => 'Set a timeout for the import services',
-							'value' => 5,
+							'value' => 10,
 							'errorMessage' => '',
 							'test' => 'testForEmpty',
 							'type' => 'numeric'
@@ -1117,7 +1122,7 @@ class Server extends AppModel {
 					'Enrichment_hover_timeout' => array(
 							'level' => 1,
 							'description' => 'Set a timeout for the hover services',
-							'value' => 2,
+							'value' => 5,
 							'errorMessage' => '',
 							'test' => 'testForEmpty',
 							'type' => 'numeric'
@@ -1274,23 +1279,29 @@ class Server extends AppModel {
 								$event['Event']['distribution'] = '1';
 							}
 							// Distribution
-							switch ($event['Event']['distribution']) {
-								case 1:
-								case 'This community only': // backwards compatibility
-									// if community only, downgrade to org only after pull
-									$event['Event']['distribution'] = '0';
-									break;
-								case 2:
-								case 'Connected communities': // backwards compatibility
-									// if connected communities downgrade to community only
-									$event['Event']['distribution'] = '1';
-									break;
-								case 'All communities': // backwards compatibility
-									$event['Event']['distribution'] = '3';
-									break;
-								case 'Your organisation only': // backwards compatibility
-									$event['Event']['distribution'] = '0';
-									break;
+							if (empty(Configure::read('MISP.host_org_id')) || !$server['Server']['internal'] ||  Configure::read('MISP.host_org_id') != $server['Server']['org_id']) {
+								switch ($event['Event']['distribution']) {
+									case 1:
+										// if community only, downgrade to org only after pull
+										$event['Event']['distribution'] = '0';
+										break;
+									case 2:
+										// if connected communities downgrade to community only
+										$event['Event']['distribution'] = '1';
+										break;
+								}
+								if (isset($event['Event']['Attribute']) && !empty($event['Event']['Attribute'])) {
+									foreach ($event['Event']['Attribute'] as &$a) {
+										switch ($a['distribution']) {
+											case '1':
+												$a['distribution'] = '0';
+												break;
+											case '2':
+												$a['distribution'] = '1';
+												break;
+										}
+									}
+								}
 							}
 						} else {
 							$fails[$eventId] = 'Event blocked by blacklist.';
@@ -1312,7 +1323,7 @@ class Server extends AppModel {
 							}
 						} else {
 							$tempUser = $user;
-							$tempUser['Role']['perm_site_admin'] = false;
+							$tempUser['Role']['perm_site_admin'] = 0;
 							$result = $eventModel->_edit($event, $tempUser, $existingEvent['Event']['id'], $jobId);
 							if ($result === true) $successes[] = $eventId;
 							else if (isset($result['error'])) $fails[$eventId] = $result['error'];
@@ -1481,11 +1492,7 @@ class Server extends AppModel {
 	}
 
 
-	/**
-	 * Get an array of event_ids that are present on the remote server
-	 * TODO move this to a component
-	 * @return array of event_ids
-	 */
+	// Get an array of event_ids that are present on the remote server
 	public function getEventIdsFromServer($server, $all = false, $HttpSocket=null, $force_uuid=false, $ignoreFilterRules = false) {
 		$url = $server['Server']['url'];
 		$authkey = $server['Server']['authkey'];
@@ -1940,6 +1947,18 @@ class Server extends AppModel {
 		return true;
 	}
 
+	public function testLocalOrg($value) {
+		$this->Organisation = ClassRegistry::init('Organisation');
+		if ($value == 0) return 'No organisation selected';
+		$local_orgs = $this->Organisation->find('list', array(
+			'conditions' => array('local' => 1),
+			'recursive' => -1,
+			'fields' => array('Organisation.id', 'Organisation.name')
+		));
+		if (in_array($value, array_keys($local_orgs))) return true;
+		return 'Invalid organisation';
+	}
+
 	public function testForEmpty($value) {
 		if ($value === '') return 'Value not set.';
 		return true;
@@ -1947,7 +1966,7 @@ class Server extends AppModel {
 
 	public function testForPath($value) {
 		if ($value === '') return true;
-		if (preg_match('/^[a-z0-9\-\_\:\/]+$/i', $value)) return true;
+		if (preg_match('@^\/?(([a-z0-9_.]+[a-z0-9_.\- ]*[a-z0-9_.\-]|[a-z0-9_.])+\/?)+$@i', $value)) return true;
 		return 'Invalid characters in the path.';
 	}
 
@@ -2011,7 +2030,7 @@ class Server extends AppModel {
 	public function testForTermsFile($value) {
 		return $this->__testForFile($value, APP . 'files' . DS . 'terms');
 	}
-	
+
 	public function testForStyleFile($value) {
 		if (empty($value)) return true;
 		return $this->__testForFile($value, APP . 'webroot' . DS . 'css');
@@ -2029,6 +2048,13 @@ class Server extends AppModel {
 	}
 
 	public function testForPortNumber($value) {
+		$numeric = $this->testForNumeric($value);
+		if ($numeric !== true) return $numeric;
+		if ($value < 21 || $value > 65535) return 'Make sure that you pick a valid port number.';
+		return true;
+	}
+
+	public function testForZMQPortNumber($value) {
 		$numeric = $this->testForNumeric($value);
 		if ($numeric !== true) return $numeric;
 		if ($value < 49152 || $value > 65535) return 'It is recommended that you pick a port number in the dynamic range (49152-65535). However, if you have a valid reason to use a different port, ignore this message.';
@@ -2155,7 +2181,7 @@ class Server extends AppModel {
 	// never come here directly, always go through a secondary check like testForTermsFile in order to also pass along the expected file path
 	private function __testForFile($value, $path) {
 		if ($this->testForEmpty($value) !== true) return $this->testForEmpty($value);
-		if (!preg_match('/^[\w,\s-]+(\.)?[A-Za-z0-9]+$/', $value)) return 'Invalid filename. Valid filenames can only include characters between a-z, A-Z or 0-9. They can also include - and _ and can optionally have an extension.';
+		if (!$this->checkFilename($value)) return 'Invalid filename.';
 		$file = $path . DS . $value;
 		if (!file_exists($file)) return 'Could not find the specified file. Make sure that it is uploaded into the following directory: ' . $path;
 		return true;
@@ -2163,7 +2189,7 @@ class Server extends AppModel {
 
 	public function serverSettingsSaveValue($setting, $value) {
 		Configure::write($setting, $value);
-		Configure::dump('config.php', 'default', array('MISP', 'GnuPG', 'SMIME', 'Proxy', 'SecureAuth', 'Security', 'debug', 'site_admin_debug', 'Plugin'));
+		Configure::dump('config.php', 'default', array('MISP', 'GnuPG', 'SMIME', 'Proxy', 'SecureAuth', 'Security', 'debug', 'site_admin_debug', 'Plugin', 'CertAuth', 'ApacheShibbAuth', 'ApacheSecureAuth'));
 	}
 
 	public function checkVersion($newest) {
@@ -2408,24 +2434,25 @@ class Server extends AppModel {
 		App::uses('Folder', 'Utility');
 		// check writeable directories
 		$writeableDirs = array(
-				'tmp' => 0,
-				'files' => 0,
-				'files' . DS . 'scripts' . DS . 'tmp' => 0,
-				'tmp' . DS . 'csv_all' => 0,
-				'tmp' . DS . 'csv_sig' => 0,
-				'tmp' . DS . 'md5' => 0,
-				'tmp' . DS . 'sha1' => 0,
-				'tmp' . DS . 'snort' => 0,
-				'tmp' . DS . 'suricata' => 0,
-				'tmp' . DS . 'text' => 0,
-				'tmp' . DS . 'xml' => 0,
-				'tmp' . DS . 'files' => 0,
-				'tmp' . DS . 'logs' => 0,
+				'/tmp' => 0,
+				APP . 'tmp' => 0,
+				APP . 'files' => 0,
+				APP . 'files' . DS . 'scripts' . DS . 'tmp' => 0,
+				APP . 'tmp' . DS . 'csv_all' => 0,
+				APP . 'tmp' . DS . 'csv_sig' => 0,
+				APP . 'tmp' . DS . 'md5' => 0,
+				APP . 'tmp' . DS . 'sha1' => 0,
+				APP . 'tmp' . DS . 'snort' => 0,
+				APP . 'tmp' . DS . 'suricata' => 0,
+				APP . 'tmp' . DS . 'text' => 0,
+				APP . 'tmp' . DS . 'xml' => 0,
+				APP . 'tmp' . DS . 'files' => 0,
+				APP . 'tmp' . DS . 'logs' => 0,
 		);
 		foreach ($writeableDirs as $path => &$error) {
-			$dir = new Folder(APP . $path);
+			$dir = new Folder($path);
 			if (is_null($dir->path)) $error = 1;
-			$file = new File(APP . $path . DS . 'test.txt', true);
+			$file = new File($path . DS . 'test.txt', true);
 			if ($error == 0 && !$file->write('test')) $error = 2;
 			if ($error != 0) $diagnostic_errors++;
 			$file->delete();
@@ -2525,6 +2552,21 @@ class Server extends AppModel {
 		return 3;
 	}
 
+	public function moduleDiagnostics(&$diagnostic_errors, $type = 'Enrichment') {
+		$this->Module = ClassRegistry::init('Module');
+		$types = array('Enrichment', 'Import', 'Export');
+		$diagnostic_errors++;
+		if (Configure::read('Plugin.' . $type . '_services_enable')) {
+			$exception = false;
+			$result = $this->Module->getModules(false, $type, $exception);
+			if ($exception) return $exception;
+			if (empty($result)) return 2;
+			$diagnostic_errors--;
+			return 0;
+		}
+		return 1;
+	}
+
 	public function proxyDiagnostics(&$diagnostic_errors) {
 		$proxyStatus = 0;
 		$proxy = Configure::read('Proxy');
@@ -2547,24 +2589,23 @@ class Server extends AppModel {
 		return $proxyStatus;
 	}
 
-	public function sessionDiagnostics(&$diagnostic_errors, &$sessionCount) {
+	public function sessionDiagnostics(&$diagnostic_errors = 0, &$sessionCount = '') {
 		if (Configure::read('Session.defaults') !== 'database') {
 			$sessionCount = 'N/A';
 			return 2;
 		}
-		$sql = 'SELECT COUNT(id) FROM `cake_sessions` WHERE `expires` < ' . time() . ';';
+		$sql = 'SELECT COUNT(id) AS session_count FROM cake_sessions WHERE expires < ' . time() . ';';
 		$sqlResult = $this->query($sql);
-		if (isset($sqlResult[0][0])) $sessionCount = $sqlResult[0][0]['COUNT(id)'];
+		if (isset($sqlResult[0][0])) $sessionCount = $sqlResult[0][0]['session_count'];
 		else {
 			$sessionCount = 'Error';
 			return 3;
 		}
-		$sessionStatus = 0;
-		if ($sessionCount > 100) {
-			$sessionStatus = 1;
+		if ($sessionCount > 1000) {
 			$diagnostic_errors++;
+			return 1;
 		}
-		return $sessionStatus;
+		return 0;
 	}
 
 	public function workerDiagnostics(&$workerIssueCount) {
@@ -2655,7 +2696,7 @@ class Server extends AppModel {
 						'action' => 'remove_dead_workers',
 						'user_id' => $user['id'],
 						'title' => 'Removing a dead worker.',
-						'change' => 'Removind dead worker data. Worker was of type ' . $worker['queue'] . ' with pid ' . $pid
+						'change' => 'Removing dead worker data. Worker was of type ' . $worker['queue'] . ' with pid ' . $pid
 				));
 			}
 			$this->ResqueStatus->removeWorker($pid);
@@ -2684,7 +2725,7 @@ class Server extends AppModel {
 						'action' => 'remove_dead_workers',
 						'user_id' => $user['id'],
 						'title' => 'Removing a dead worker.',
-						'change' => 'Removind dead worker data. Worker was of type ' . $worker['queue'] . ' with pid ' . $pid
+						'change' => 'Removing dead worker data. Worker was of type ' . $worker['queue'] . ' with pid ' . $pid
 				));
 			}
 		}
@@ -2741,8 +2782,8 @@ class Server extends AppModel {
 			$this->Job->saveField('progress', 10);
 			$this->Job->saveField('message', 'Starting the migration of the database to 2.4');
 		}
-		$this->query('UPDATE `roles` SET `perm_template` = 1 WHERE `perm_site_admin` = 1 OR `perm_admin` = 1');
-		$this->query('UPDATE `roles` SET `perm_sharing_group` = 1 WHERE `perm_site_admin` = 1 OR `perm_sync` = 1');
+		$this->query('UPDATE roles SET perm_template = 1 WHERE perm_site_admin = 1 OR perm_admin = 1');
+		$this->query('UPDATE roles SET perm_sharing_group = 1 WHERE perm_site_admin = 1 OR perm_sync = 1');
 		$orgs = array('local' => array(), 'external' => array());
 		$captureRules = array(
 				'events_org' => array('table' => 'events', 'old' => 'org', 'new' => 'org_id'),
@@ -2848,9 +2889,9 @@ class Server extends AppModel {
 		// will result in the same visibility, etc. Once events / attributes get put into a sharing group this will get recorrelated anyway
 		// Also by unsetting the org field after the move the changes we ensure that these correlations won't get hit again by the script if we rerun it
 		// and that we don't accidentally "upgrade" a 2.4 correlation
-		$this->query('UPDATE `correlations` SET `distribution` = 1, `a_distribution` = 1 WHERE `org` != "" AND `private` = 0');
+		$this->query('UPDATE correlations SET distribution = 1, a_distribution = 1 WHERE org != "" AND private = 0');
 		foreach ($orgMapping as $old => $new) {
-			$this->query('UPDATE `correlations` SET `org_id` = "' . $new . '", `org` = "" WHERE `org` = "' . $old . '";');
+			$this->query('UPDATE correlations SET org_id = "' . $new . '", org = "" WHERE org = "' . $old . '";');
 		}
 		if (Configure::read('MISP.background_jobs') && $jobId) {
 			$this->Job->saveField('progress', 60);
@@ -2861,6 +2902,36 @@ class Server extends AppModel {
 			$this->Job->saveField('progress', 100);
 			$this->Job->saveField('message', 'Upgrade complete.');
 		}
+	}
+
+	/* returns an array with the events
+	 * error codes:
+	 * 1: received non json response
+	 * 2: no route to host
+	 * 3: empty result set
+	 */
+	public function getRemoteVersion($id) {
+		$server = $this->find('first', array(
+				'conditions' => array('Server.id' => $id),
+		));
+		if (empty($server)) {
+			return 2;
+		}
+		App::uses('SyncTool', 'Tools');
+		$syncTool = new SyncTool();
+		$HttpSocket = $syncTool->setupHttpSocket($server);
+		$response = $HttpSocket->get($server['Server']['url'] . '/servers/getVersion', $data = '', $request);
+		if ($response->code == 200) {
+			try {
+				$data = json_decode($response->body, true);
+			} catch (Exception $e) {
+				return 1;
+			}
+			if (isset($data['version']) && !empty($data['version'])) {
+				return $data['version'];
+			} else return 3;
+			return $events;
+		} return 2;
 	}
 
 
@@ -2874,6 +2945,9 @@ class Server extends AppModel {
 		$server = $this->find('first', array(
 			'conditions' => array('Server.id' => $id),
 		));
+		if (empty($server)) {
+			return 2;
+		}
 		App::uses('SyncTool', 'Tools');
 		$syncTool = new SyncTool();
 		$HttpSocket = $syncTool->setupHttpSocket($server);
@@ -2918,6 +2992,9 @@ class Server extends AppModel {
 		$server = $this->find('first', array(
 				'conditions' => array('Server.id' => $serverId),
 		));
+		if (empty($server)) {
+			return 2;
+		}
 		App::uses('SyncTool', 'Tools');
 		$syncTool = new SyncTool();
 		$HttpSocket = $syncTool->setupHttpSocket($server);

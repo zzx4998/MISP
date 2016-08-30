@@ -1,8 +1,11 @@
 <?php
 App::uses('AppModel', 'Model');
 class Warninglist extends AppModel{
+
 	public $useTable = 'warninglists';
+
 	public $recursive = -1;
+
 	public $actsAs = array(
 			'Containable',
 	);
@@ -65,10 +68,10 @@ class Warninglist extends AppModel{
 	}
 
 	private function __updateList($list, $current) {
-		$list['enabled'] = false;
+		$list['enabled'] = 0;
 		$warninglist = array();
 		if (!empty($current)) {
-			if ($current['Warninglist']['enabled']) $list['enabled'] = true;
+			if ($current['Warninglist']['enabled']) $list['enabled'] = 1;
 			$this->deleteAll(array('Warninglist.id' => $current['Warninglist']['id']));
 		}
 		$fieldsToSave = array('name', 'version', 'description', 'type', 'enabled');
@@ -77,18 +80,26 @@ class Warninglist extends AppModel{
 		}
 		$this->create();
 		if ($this->save($warninglist)) {
-			$data = array();
+			$db = $this->getDataSource();
+			$values = array();
 			foreach ($list['list'] as $value) {
-				$data[] = array('value' => $value, 'warninglist_id' => $this->id);
-			}
-			$this->WarninglistEntry->saveMany($data);
-
-			if (!empty($list['matching_attributes'])) {
-				$data = array();
-				foreach ($list['matching_attributes'] as $type) {
-					$data[] = array('type' => $type, 'warninglist_id' => $this->id);
+				if (!empty($value)) {
+					$values[] = array($value, $this->id);
 				}
-				$this->WarninglistType->saveMany($data);
+			}
+			unset($list['list']);
+			$result = $db->insertMulti('warninglist_entries', array('value', 'warninglist_id'), $values);
+			if ($result) {
+				$this->saveField('warninglist_entry_count', count($values));
+			} else {
+				return 'Could not insert values.';
+			}
+			if (!empty($list['matching_attributes'])) {
+				$values = array();
+				foreach ($list['matching_attributes'] as $type) {
+					$values[] = array('type' => $type, 'warninglist_id' => $this->id);
+				}
+				$this->WarninglistType->saveMany($values);
 			} else {
 				$this->WarninglistType->create();
 				$this->WarninglistType->save(array('WarninglistType' => array('type' => 'ALL', 'warninglist_id' => $this->id)));
@@ -100,7 +111,7 @@ class Warninglist extends AppModel{
 	}
 
 	public function fetchForEventView() {
-		$warninglists = $this->find('all', array('contain' => array('WarninglistType'), 'conditions' => array('enabled' => true)));
+		$warninglists = $this->find('all', array('contain' => array('WarninglistType'), 'conditions' => array('enabled' => 1)));
 		if (empty($warninglists)) return array();
 		foreach ($warninglists as $k => &$t) {
 			$t['values'] = $this->WarninglistEntry->find('list', array(

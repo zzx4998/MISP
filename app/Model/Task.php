@@ -1,18 +1,15 @@
 <?php
 App::uses('AppModel', 'Model');
-/**
- * Task Model
- *
- * @property Task $Task
-*/
+
 class Task extends AppModel {
+
 	public $tasks = array(
 			'cache_exports' => array(
 					'type' => 'cache_exports',
 					'timer' => 0,
 					'scheduled_time' => '12:00',
 					'process_id' => '',
-					'description' => 'Generates export caches for every export type and for every organisation. This process is heavy, schedule so it might be a good idea to schedule this outside of working hours and before your daily automatic imports on connected services are scheduled.',
+					'description' => 'Generates export caches for every export type and for every organisation. This process is heavy and it is highly advised to leave export cache generation as an on-demand function for users. STIX export not included.',
 					'next_execution_time' => 1391601600,
 					'message' => 'Not scheduled yet.'
 

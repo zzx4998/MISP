@@ -45,8 +45,8 @@ class AppController extends Controller {
 
 	public $helpers = array('Utility');
 
-	private $__jsVersion = '2.4.49';
-	public $phpmin = '5.5.9';	
+	private $__jsVersion = '2.4.51';
+	public $phpmin = '5.5.9';
 	public $phprec = '5.6.0';
 
 	// Used for _isAutomation(), a check that returns true if the controller & action combo matches an action that is a non-xml and non-json automation method
@@ -83,11 +83,11 @@ class AppController extends Controller {
 		$this->loadModel('User');
 		$auth_user_fields = $this->User->describeAuthFields();
 
-        //if fresh installation (salt empty) generate a new salt
-        if (!Configure::read('Security.salt')) {
-            $this->loadModel('Server');
-            $this->Server->serverSettingsSaveValue('Security.salt', $this->User->generateRandomPassword(32));
-        }
+		//if fresh installation (salt empty) generate a new salt
+		if (!Configure::read('Security.salt')) {
+			$this->loadModel('Server');
+			$this->Server->serverSettingsSaveValue('Security.salt', $this->User->generateRandomPassword(32));
+		}
 		// check if Apache provides kerberos authentication data
 		$envvar = Configure::read('ApacheSecureAuth.apacheEnv');
 		if (isset($_SERVER[$envvar])) {
@@ -322,9 +322,20 @@ class AppController extends Controller {
 		} else {
 			$this->set('me', false);
 		}
-		if (Configure::read('site_admin_debug') && $this->_isSiteAdmin() && (Configure::read('debug') < 2)) {
+		if ($this->_isSiteAdmin()) {
+			if (Configure::read('Session.defaults') == 'database') {
+				$db = ConnectionManager::getDataSource('default');
+				$sqlResult = $db->query('SELECT COUNT(id) AS session_count FROM cake_sessions WHERE expires < ' . time() . ';');
+				if (isset($sqlResult[0][0]['session_count']) && $sqlResult[0][0]['session_count'] > 1000) {
+					$this->loadModel('Server');
+					$this->Server->updateDatabase('cleanSessionTable');
+				}
+			}
+			if (Configure::read('site_admin_debug') && (Configure::read('debug') < 2)) {
 				Configure::write('debug', 1);
+			}
 		}
+
 		$this->debugMode = 'debugOff';
 		if (Configure::read('debug') > 1) $this->debugMode = 'debugOn';
 		$this->set('loggedInUserName', $this->__convertEmailToName($this->Auth->user('email')));
@@ -386,9 +397,7 @@ class AppController extends Controller {
 		return $newArray;
 	}
 
-/**
- * checks if the currently logged user is an administrator (an admin that can manage the users and events of his own organisation)
- */
+	// checks if the currently logged user is an administrator (an admin that can manage the users and events of his own organisation)
 	protected function _isAdmin() {
 		if ($this->userRole['perm_site_admin'] || $this->userRole['perm_admin']) {
 			return true;
@@ -396,9 +405,7 @@ class AppController extends Controller {
 		return false;
 	}
 
-/**
- * checks if the currently logged user is a site administrator (an admin that can manage any user or event on the instance and create / edit the roles).
- */
+	// checks if the currently logged user is a site administrator (an admin that can manage any user or event on the instance and create / edit the roles).
 	protected function _isSiteAdmin() {
 		return $this->userRole['perm_site_admin'];
 	}
@@ -406,12 +413,6 @@ class AppController extends Controller {
 	protected function _checkOrg() {
 		return $this->Auth->user('org_id');
 	}
-
-/**
- *
- * @param $action
- * @return boolean
- */
 
 	// pass an action to this method for it to check the active user's access to the action
 	public function checkAction($action = 'perm_sync') {
@@ -430,15 +431,11 @@ class AppController extends Controller {
 		return $role['Role'];
 	}
 
-/**
- *
- * @param string $authkey
- * @return boolean or user array
- */
 	public function checkAuthUser($authkey) {
 		$this->loadModel('User');
 		$user = $this->User->getAuthUserByUuid($authkey);
 		if (empty($user)) return false;
+		if (!$user['Role']['perm_auth']) return false;
 		if ($user['Role']['perm_site_admin']) $user['siteadmin'] = true;
 		return $user;
 	}
@@ -566,7 +563,8 @@ class AppController extends Controller {
 			$process_id = CakeResque::enqueue(
 					'default',
 					'AdminShell',
-					array('jobUpgrade24', $jobId, $this->Auth->user('id'))
+					array('jobUpgrade24', $jobId, $this->Auth->user('id')),
+					true
 			);
 			$job->saveField('process_id', $process_id);
 			$this->Session->setFlash(__('Job queued. You can view the progress if you navigate to the active jobs view (administration -> jobs).'));
@@ -653,5 +651,9 @@ class AppController extends Controller {
 		$this->Server->cleanCacheFiles();
 		$this->Session->setFlash('Caches cleared.');
 		$this->redirect(array('controller' => 'servers', 'action' => 'serverSettings', 'diagnostics'));
+	}
+
+	public function checkFilename($filename) {
+		return preg_match('@^([a-z0-9_.]+[a-z0-9_.\- ]*[a-z0-9_.\-]|[a-z0-9_.])+$@i', $filename);
 	}
 }

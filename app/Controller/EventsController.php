@@ -1,18 +1,9 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('Xml', 'Utility');
-/**
- * Events Controller
- *
- * @property Event $Event
-*/
+
 class EventsController extends AppController {
 
-	/**
-	 * Components
-	 *
-	 * @var array
-	 */
 	public $components = array(
 			'Security',
 			'Email',
@@ -194,7 +185,7 @@ class EventsController extends AppController {
 		);
 		$attributeHits = $this->Event->Attribute->fetchAttributes($this->Auth->user(), array(
 				'conditions' => $conditions,
-				'fields' => array('event_id', 'comment', 'distribution', 'value1', 'value2') 
+				'fields' => array('event_id', 'comment', 'distribution', 'value1', 'value2')
 		));
 		// rearrange the data into an array where the keys are the event IDs
 		$eventsWithAttributeHits = array();
@@ -262,11 +253,6 @@ class EventsController extends AppController {
 		return $result;
 	}
 
-	/**
-	 * index method
-	 *
-	 * @return void
-	 */
 	public function index() {
 		// list the events
 		$passedArgsArray = array();
@@ -552,6 +538,9 @@ class EventsController extends AppController {
 			if (isset($passedArgs['limit'])) {
 				$rules['limit'] = intval($passedArgs['limit']);
 			}
+			if (isset($passedArgs['page'])) {
+				$rules['page'] = intval($passedArgs['page']);
+			}
 			$rules['contain'] = $this->paginate['contain'];
 			if (Configure::read('MISP.tagging')) {
 				$rules['contain']['EventTag'] = array('Tag' => array('fields' => array('id', 'name', 'colour', 'exportable'), 'conditions' => array('Tag.exportable' => true)));
@@ -567,6 +556,9 @@ class EventsController extends AppController {
 			$this->set('events', $events);
 		} else {
 			$events = $this->paginate();
+			if (count($events) == 1 && isset($this->passedArgs['searchall'])) {
+				$this->redirect(array('controller' => 'events', 'action' => 'view', $events[0]['Event']['id']));
+			}
 			if (Configure::read('MISP.showCorrelationsOnIndex')) $this->Event->attachCorrelationCountToEvents($this->Auth->user(), $events);
 			$this->set('events', $events);
 		}
@@ -843,14 +835,6 @@ class EventsController extends AppController {
 		$this->set('typeGroups', array_keys($this->Event->Attribute->typeGroupings));
 	}
 
-	/**
-	 * view method
-	 *
-	 * @param int $id
-	 * @return void
-	 * @throws NotFoundException
-	 */
-
 	public function view($id = null, $continue=false, $fromEvent=null) {
 		// find the id of the event, change $id to it and proceed to read the event as if the ID was entered.
 		if (Validation::uuid($id)) {
@@ -988,9 +972,6 @@ class EventsController extends AppController {
 		return !$pivot['deletable'];
 	}
 
-	/**
-	 * add method
-	 */
 	public function add() {
 		if (!$this->userRole['perm_add']) {
 			throw new MethodNotAllowedException('You don\'t have permissions to create events');
@@ -1156,13 +1137,14 @@ class EventsController extends AppController {
 			if (!empty($this->data)) {
 				$ext = '';
 				if (isset($this->data['Event']['submittedfile'])) {
-					App::uses('File', 'Utility');
-					$file = new File($this->data['Event']['submittedfile']['name']);
-					$ext = $file->ext();
+					$ext = pathinfo($this->data['Event']['submittedfile']['name'], PATHINFO_EXTENSION);
 				}
-				if (isset($this->data['Event']['submittedfile']) && ($ext != 'xml' && $ext != 'json') && $this->data['Event']['submittedfile']['size'] > 0 &&
-				is_uploaded_file($this->data['Event']['submittedxml']['tmp_name'])) {
+				if (isset($this->data['Event']['submittedfile']) && (strtolower($ext) != 'xml' && strtolower($ext) != 'json') && $this->data['Event']['submittedfile']['size'] > 0 &&
+				is_uploaded_file($this->data['Event']['submittedfile']['tmp_name'])) {
+					$log = ClassRegistry::init('Log');
+					$log->createLogEntry($this->Auth->user(), 'file_upload', 'Event', 0, 'MISP export file upload failed', 'File details: ' . json_encode($this->data['Event']['submittedfile']));
 					$this->Session->setFlash(__('You may only upload MISP XML or MISP JSON files.'));
+					throw new MethodNotAllowedException('File upload failed or file does not have the expected extension (.xml / .json).');
 				}
 				if (isset($this->data['Event']['submittedfile'])) {
 					if (Configure::read('MISP.take_ownership_xml_import')
@@ -1178,12 +1160,6 @@ class EventsController extends AppController {
 		}
 	}
 
-	/**
-	 * edit method
-	 *
-	 * @param int $id
-	 * @throws NotFoundException
-	 */
 	public function edit($id = null) {
 		$this->Event->id = $id;
 		if (!$this->Event->exists()) {
@@ -1296,14 +1272,6 @@ class EventsController extends AppController {
 		$this->set('event', $this->Event->data);
 	}
 
-	/**
-	 * delete method
-	 *
-	 * @param int $id
-	 * @return void
-	 * @throws MethodNotAllowedException
-	 * @throws NotFoundException
-	 */
 	public function delete($id = null) {
 		if (!$this->request->is('post') && !$this->_isRest()) {
 			throw new MethodNotAllowedException();
@@ -1349,11 +1317,7 @@ class EventsController extends AppController {
 		}
 	}
 
-	/**
-	 * Publishes the event without sending an alert email
-	 *
-	 * @throws NotFoundException
-	 */
+	// Publishes the event without sending an alert email
 	public function publish($id = null) {
 		$this->Event->id = $id;
 		if (!$this->Event->exists()) {
@@ -1413,12 +1377,8 @@ class EventsController extends AppController {
 		}
 	}
 
-	/**
-	 * Send out an alert email to all the users that wanted to be notified.
-	 * Users with a GPG key will get the mail encrypted, other users will get the mail unencrypted
-	 *
-	 * @throws NotFoundException
-	 */
+	// Send out an alert email to all the users that wanted to be notified.
+	// Users with a GPG key will get the mail encrypted, other users will get the mail unencrypted
 	public function alert($id = null) {
 		$this->Event->id = $id;
 		$this->Event->recursive = 0;
@@ -1493,12 +1453,8 @@ class EventsController extends AppController {
 		}
 	}
 
-	/**
-	 * Send out an contact email to the person who posted the event.
-	 * Users with a GPG key will get the mail encrypted, other users will get the mail unencrypted
-	 *
-	 * @throws NotFoundException
-	 */
+	// Send out an contact email to the person who posted the event.
+	// Users with a GPG key will get the mail encrypted, other users will get the mail unencrypted
 	public function contact($id = null) {
 		$this->Event->id = $id;
 		if (!$this->Event->exists()) {
@@ -1547,7 +1503,7 @@ class EventsController extends AppController {
 			$data = $this->Event->exportPage($this->Auth->user());
 			$this->set('useOrg', $data['useOrg']);
 			$this->set('export_types', $data['export_types']);
-			
+
 		} else {
 			$this->render('/Events/export_alternate');
 		}
@@ -1834,15 +1790,16 @@ class EventsController extends AppController {
 	public function _addGfiZip($id) {
 		if (!empty($this->data) && $this->data['Event']['submittedgfi']['size'] > 0 &&
 				is_uploaded_file($this->data['Event']['submittedgfi']['tmp_name'])) {
-			App::uses('FileAccess', 'Tools');
-			$zipData = FileAccess::readFromFile($this->data['Event']['submittedgfi']['tmp_name'], $this->data['Event']['submittedgfi']['size']);
+			App::uses('FileAccessTool', 'Tools');
+			$fileAccessTool = new FileAccessTool();
+			$zipData = $fileAccessTool->readFromFile($this->data['Event']['submittedgfi']['tmp_name'], $this->data['Event']['submittedgfi']['size']);
 
 			// write
 			$rootDir = APP . "files" . DS . $id . DS;
 			App::uses('Folder', 'Utility');
 			$dir = new Folder($rootDir, true);
-			if (!preg_match('@^[\w-,\s,\.]+\.[A-Za-z0-9_]{2,4}$@', $this->data['Event']['submittedgfi']['name'])) {
-				throw new Exception ('Filename not allowed');
+			if (!$this->checkFilename($this->data['Event']['submittedgfi']['name'])) {
+				throw new Exception ('Filename not allowed.');
 			}
 			$zipFile = new File($rootDir . $this->data['Event']['submittedgfi']['name']);
 			$result = $zipFile->write($zipData);
@@ -1859,7 +1816,7 @@ class EventsController extends AppController {
 			// open the xml
 			$xmlFileName = 'analysis.xml';
 			$xmlFilePath = $rootDir . DS . 'Analysis' . DS . $xmlFileName;
-			$xmlFileData = FileAccess::readFromFile($xmlFilePath);
+			$xmlFileData = $fileAccessTool->readFromFile($xmlFilePath);
 
 			// read XML
 			$this->_readGfiXML($xmlFileData, $id);
@@ -1869,17 +1826,19 @@ class EventsController extends AppController {
 	public function _addIOCFile($id) {
 		if (!empty($this->data) && $this->data['Event']['submittedioc']['size'] > 0 &&
 				is_uploaded_file($this->data['Event']['submittedioc']['tmp_name'])) {
-			App::uses('FileAccess', 'Tools');
-			$iocData = FileAccess::readFromFile($this->data['Event']['submittedioc']['tmp_name'], $this->data['Event']['submittedioc']['size']);
+			if (!$this->checkFilename($this->data['Event']['submittedioc']['name'])) {
+				throw new Exception ('Filename not allowed.');
+			}
+
+			App::uses('FileAccessTool', 'Tools');
+			$fileAccessTool = new FileAccessTool();
+			$iocData = $fileAccessTool->readFromFile($this->data['Event']['submittedioc']['tmp_name'], $this->data['Event']['submittedioc']['size']);
 
 			// write
 			$rootDir = APP . "files" . DS . $id . DS;
 			App::uses('Folder', 'Utility');
 			$dir = new Folder($rootDir . 'ioc', true);
 			$destPath = $rootDir . 'ioc';
-			if (!preg_match('@^[\w-,\s,\.]+\.[A-Za-z0-9_]{2,4}$@', $this->data['Event']['submittedioc']['name'])) {
-				throw new Exception ('Filename not allowed');
-			}
 			App::uses('File', 'Utility');
 			$iocFile = new File($destPath . DS . $this->data['Event']['submittedioc']['name']);
 			$result = $iocFile->write($iocData);
@@ -1887,7 +1846,7 @@ class EventsController extends AppController {
 
 			// open the xml
 			$xmlFilePath = $destPath . DS . $this->data['Event']['submittedioc']['name'];
-			$xmlFileData = FileAccess::readFromFile($xmlFilePath, $this->data['Event']['submittedioc']['size']);
+			$xmlFileData = $fileAccessTool->readFromFile($xmlFilePath, $this->data['Event']['submittedioc']['size']);
 
 			// Load event and populate the event data
 			$this->Event->id = $id;
@@ -1953,8 +1912,8 @@ class EventsController extends AppController {
 	}
 
 	public function _addMISPExportFile($ext, $take_ownership = false) {
-		App::uses('FileAccess', 'Tools');
-		$data = FileAccess::readFromFile($this->data['Event']['submittedfile']['tmp_name'], $this->data['Event']['submittedfile']['size']);
+		App::uses('FileAccessTool', 'Tools');
+		$data = (new FileAccessTool())->readFromFile($this->data['Event']['submittedfile']['tmp_name'], $this->data['Event']['submittedfile']['size']);
 
 		if ($ext == 'xml') {
 			App::uses('Xml', 'Utility');
@@ -2278,7 +2237,7 @@ class EventsController extends AppController {
 						if ($v == '') continue;
 						if (substr($v, 0, 1) == '!') {
 							// check for an IPv4 address and subnet in CIDR notation (e.g. 127.0.0.1/8)
-							if ($parameters[$k] === 'value' && preg_match('@^((\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\/(\d|[12]\d|3[012]))$@', substr($v, 1))) {
+							if ($parameters[$k] === 'value' && $this->Cidr->checkCIDR(substr($v, 1), 4)) {
 								$cidrresults = $this->Cidr->CIDR(substr($v, 1));
 								foreach ($cidrresults as $result) {
 									$subcondition['AND'][] = array('Attribute.value NOT LIKE' => $result);
@@ -2300,7 +2259,7 @@ class EventsController extends AppController {
 							}
 						} else {
 							// check for an IPv4 address and subnet in CIDR notation (e.g. 127.0.0.1/8)
-							if ($parameters[$k] === 'value' && preg_match('@^((\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\/(\d|[12]\d|3[012]))$@', substr($v, 1))) {
+							if ($parameters[$k] === 'value' && $this->Cidr->checkCIDR($v, 4)) {
 								$cidrresults = $this->Cidr->CIDR($v);
 								foreach ($cidrresults as $result) {
 									if (!empty($result)) $subcondition['OR'][] = array('Attribute.value LIKE' => $result);
@@ -2630,6 +2589,11 @@ class EventsController extends AppController {
 		if (!$this->Event->EventTag->Tag->exists()) {
 			return new CakeResponse(array('body'=> json_encode(array('saved' => false, 'errors' => 'Invalid Tag.')), 'status'=>200));
 		}
+		$tag = $this->Event->EventTag->Tag->find('first', array(
+			'conditions' => array('Tag.id' => $tag_id),
+			'recursive' => -1,
+			'fields' => array('Tag.name')
+		));
 		$found = $this->Event->EventTag->find('first', array(
 			'conditions' => array(
 				'event_id' => $id,
@@ -2642,7 +2606,7 @@ class EventsController extends AppController {
 		$this->Event->EventTag->create();
 		if ($this->Event->EventTag->save(array('event_id' => $id, 'tag_id' => $tag_id))) {
 			$log = ClassRegistry::init('Log');
-			$log->createLogEntry($this->Auth->user(), 'tag', 'Event', $id, 'Attached tag (' . $tag_id . ') to event (' . $id . ')', 'Event (' . $id . ') tagged as Tag (' . $tag_id . ')');
+			$log->createLogEntry($this->Auth->user(), 'tag', 'Event', $id, 'Attached tag (' . $tag_id . ') "' . $tag['Tag']['name'] . '" to event (' . $id . ')', 'Event (' . $id . ') tagged as Tag (' . $tag_id . ')');
 			return new CakeResponse(array('body'=> json_encode(array('saved' => true, 'success' => 'Tag added.')), 'status'=>200));
 		} else {
 			return new CakeResponse(array('body'=> json_encode(array('saved' => false, 'errors' => 'Tag could not be added.')),'status'=>200));
@@ -2686,7 +2650,14 @@ class EventsController extends AppController {
 		));
 		$this->autoRender = false;
 		if (empty($eventTag)) return new CakeResponse(array('body'=> json_encode(array('saved' => false, 'errors' => 'Invalid event - tag combination.')),'status'=>200));
+		$tag = $this->Event->EventTag->Tag->find('first', array(
+			'conditions' => array('Tag.id' => $tag_id),
+			'recursive' => -1,
+			'fields' => array('Tag.name')
+		));
 		if ($this->Event->EventTag->delete($eventTag['EventTag']['id'])) {
+			$log = ClassRegistry::init('Log');
+			$log->createLogEntry($this->Auth->user(), 'tag', 'Event', $id, 'Removed tag (' . $tag_id . ') "' . $tag['Tag']['name'] . '" from event (' . $id . ')', 'Event (' . $id . ') untagged of Tag (' . $tag_id . ')');
 			return new CakeResponse(array('body'=> json_encode(array('saved' => true, 'success' => 'Tag removed.')), 'status'=>200));
 		} else {
 			return new CakeResponse(array('body'=> json_encode(array('saved' => false, 'errors' => 'Tag could not be removed.')),'status'=>200));
@@ -2775,10 +2746,22 @@ class EventsController extends AppController {
 					if ($attribute['type'] == 'ip-src/ip-dst') {
 						$types = array('ip-src', 'ip-dst');
 					} else if ($attribute['type'] == 'malware-sample') {
+						App::uses('FileAccessTool', 'Tools');
+						$tmpdir = Configure::read('MISP.tmpdir') ? Configure::read('MISP.tmpdir') : '/tmp';
+						$tempFile = explode('|', $attribute['data']);
+						if (!$this->checkFilename($tempFile[0])) {
+							throw new Exception('Invalid filename.');
+						}
+						$attribute['data'] = (new FileAccessTool())->readFromFile($tmpdir . '/' . $tempFile[0], $tempFile[1]);
+						unlink($tmpdir . '/' . $tempFile[0]);
 						$result = $this->Event->Attribute->handleMaliciousBase64($id, $attribute['value'], $attribute['data'], array('md5', 'sha1', 'sha256'), $objectType == 'ShadowAttribute' ? true : false);
+						if (!$result['success']) {
+							$failed++;
+							continue;
+						}
+						$attribute['data'] = $result['data'];
 						$shortValue = $attribute['value'];
 						$attribute['value'] = $shortValue . '|' . $result['md5'];
-						$attribute['data'] = $result['data'];
 						$additionalHashes = array('sha1', 'sha256');
 						foreach ($additionalHashes as $hash) {
 							$temp = $attribute;
@@ -2889,11 +2872,11 @@ class EventsController extends AppController {
 		if ($result['success'] == 1) {
 			// read the output file and pass it to the view
 			if (!$numeric) {
-				$this->header('Content-Disposition: download; filename="misp.stix.event.collection.' . $returnType . '"');
+				$name = 'misp.stix.event.collection.' . $returnType;
 			} else {
-				$this->header('Content-Disposition: download; filename="misp.stix.event' . $id . '.' . $returnType . '"');
+				$name = 'misp.stix.event' . $id . '.' . $returnType;
 			}
-			$this->set('data', $result['data']);
+			$this->response->file($result['data'], array('download' => true, 'name' => $name));
 		} else {
 			throw new Exception(h($result['message']));
 		}
@@ -3438,7 +3421,7 @@ class EventsController extends AppController {
 			if (!empty($options)) $data['config'] = $options;
 			$data = json_encode($data);
 			$result = $this->Module->queryModuleServer('/query', $data);
-			if (!$result) return 'Enrichment service not reachable.';
+			if (!$result) throw new MethodNotAllowedException('Enrichment service not reachable.');
 			if (isset($result['error'])) $this->Session->setFlash($result['error']);
 			if (!is_array($result)) throw new Exception($result);
 			$resultArray = $this->Event->handleModuleResult($result, $attribute[0]['Attribute']['event_id']);
@@ -3461,6 +3444,14 @@ class EventsController extends AppController {
 						'order' => false
 				);
 				$result['related'] = $this->Event->Attribute->fetchAttributes($this->Auth->user(), $options);
+				if (isset($result['data'])) {
+					App::uses('FileAccessTool', 'Tools');
+					$fileAccessTool = new FileAccessTool();
+					$tmpdir = Configure::read('MISP.tmpdir') ? Configure::read('MISP.tmpdir') : '/tmp';
+					$tempFile = $fileAccessTool->createTempFile($tmpdir, $prefix = 'MISP');
+					$fileAccessTool->writeToFile($tempFile, $result['data']);
+					$result['data'] = basename($tempFile) . '|' . filesize($tempFile);
+				}
 			}
 
 			$this->set('event', array('Event' => $attribute[0]['Event']));
@@ -3484,7 +3475,7 @@ class EventsController extends AppController {
 		$this->set('id', $id);
 		$this->render('ajax/exportChoice');
 	}
-	
+
 	public function importChoice($id) {
 		if (!is_numeric($id)) throw new MethodNotAllowedException('Invalid ID');
 		$event = $this->Event->fetchEvent($this->Auth->user(), array('eventid' => $id));
@@ -3495,7 +3486,7 @@ class EventsController extends AppController {
 		$this->set('id', $id);
 		$this->render('ajax/importChoice');
 	}
-	
+
 	public function importModule($module, $eventId) {
 		$this->loadModel('Module');
 		$module = $this->Module->getEnabledModule($module, 'Import');
@@ -3536,8 +3527,8 @@ class EventsController extends AppController {
 						$tmpfile = new File($fileupload['tmp_name']);
 						if ((isset($fileupload['error']) && $fileupload['error'] == 0) || (!empty($fileupload['tmp_name']) && $fileupload['tmp_name'] != 'none') && is_uploaded_file($tmpfile->path)) {
 							$filename = basename($fileupload['name']);
-							App::uses('FileAccess', 'Tools');
-							$modulePayload['data'] = FileAccess::readFromFile($fileupload['tmp_name'], $fileupload['size']);
+							App::uses('FileAccessTool', 'Tools');
+							$modulePayload['data'] = (new FileAccessTool())->readFromFile($fileupload['tmp_name'], $fileupload['size']);
 						} else {
 							$fail = 'Invalid file upload.';
 						}
@@ -3589,7 +3580,7 @@ class EventsController extends AppController {
 		$this->set('module', $module);
 		$this->set('eventId', $eventId);
 	}
-	
+
 	public function exportModule($module, $id) {
 		$this->loadModel('Module');
 		$result = $this->Module->export($this->Auth->user(), $module, array('eventid' => $id));
@@ -3598,7 +3589,7 @@ class EventsController extends AppController {
 		$this->response->download('misp.event.' . $id . '.' . $module . '.export.' . $result['extension']);
 		return $this->response;
 	}
-	
+
 	public function export($module = false, $id = false) {
 		if ($id) {
 			if (!is_numeric($id)) throw new MethodNotAllowedException('Invalid ID');
@@ -3609,7 +3600,7 @@ class EventsController extends AppController {
 			$event = false;
 		}
 		if ($this->request->is('post')) {
-			
+
 		} else {
 			if ($this->request->is('ajax')) {
 				$exports = $this->Event->getAllExports($event);

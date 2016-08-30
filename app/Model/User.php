@@ -2,29 +2,12 @@
 App::uses('AppModel', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
 
-/**
- * User Model
- *
- * @property Role $Role
- * @property Event $Event
- */
 class User extends AppModel {
 
-/**
- * Display field
- *
- * @var string
- */
 	public $displayField = 'email';
 
 	public $orgField = array('Organisation', 'name');	// TODO Audit, LogableBehaviour + org
 
-
-/**
- * Validation rules
- *
- * @var array
- */
 	public $validate = array(
 		'role_id' => array(
 			'numeric' => array(
@@ -180,12 +163,6 @@ class User extends AppModel {
 	);
 
 	// The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * belongsTo associations
- *
- * @var array
- */
 	public $belongsTo = array(
 		'Role' => array(
 			'className' => 'Role',
@@ -210,11 +187,6 @@ class User extends AppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
 	public $hasMany = array(
 		'Event' => array(
 			'className' => 'Event',
@@ -281,10 +253,7 @@ class User extends AppModel {
 		return true;
 	}
 
-/**
- * Checks if the GPG key is a valid key
- * But also import it in the keychain.
- */
+	// Checks if the GPG key is a valid key, but also import it in the keychain.
 	// TODO: this will NOT fail on keys that can only be used for signing but not encryption!
 	// the method in verifyUsers will fail in that case.
 	public function validateGpgkey($check) {
@@ -316,10 +285,7 @@ class User extends AppModel {
 		}
 	}
 
-	/**
-	 * Checks if the certificate is a valid x509 certificate
-	 * But also import it in the keychain.
-	 */
+	// Checks if the certificate is a valid x509 certificate, but also import it in the keychain.
 	// TODO: this will NOT fail on keys that can only be used for signing but not encryption!
 	// the method in verifyUsers will fail in that case.
 	public function validateCertificate($check) {
@@ -336,14 +302,15 @@ class User extends AppModel {
 		if (openssl_x509_read($check['certif_public'])) {
 			try {
 				App::uses('Folder', 'Utility');
-				App::uses('FileAccess', 'Tools');
+				App::uses('FileAccessTool', 'Tools');
+				$fileAccessTool = new FileAccessTool();
 				$dir = APP . 'tmp' . DS . 'SMIME';
 				if (!file_exists($dir)) {
 					if (!mkdir($dir, 0750, true)) throw new MethodNotAllowedException('The SMIME temp directory is not writeable (app/tmp/SMIME).');
 				}
-				$tempFile = FileAccess::createTempFile($dir, 'SMIME');
-				$msg_test = FileAccess::writeToFile($tempFile, 'test');
-				$msg_test_encrypted = FileAccess::createTempFile($dir, 'SMIME');
+				$tempFile = $fileAccessTool->createTempFile($dir, 'SMIME');
+				$msg_test = $fileAccessTool->writeToFile($tempFile, 'test');
+				$msg_test_encrypted = $fileAccessTool->createTempFile($dir, 'SMIME');
 				// encrypt it
 				if (openssl_pkcs7_encrypt($msg_test, $msg_test_encrypted, $check['certif_public'], null, 0, OPENSSL_CIPHER_AES_256_CBC)) {
 					unlink($msg_test);
@@ -387,16 +354,16 @@ class User extends AppModel {
 		return true;
 	}
 
+	/*
+	 default password:
+	 6 characters minimum
+	 1 or more upper-case letters
+	 1 or more lower-case letters
+	 1 or more digits or special characters
+	 example: "EasyPeasy34"
+	 If Security.password_policy_complexity is set and valid, use the regex provided.
+	 */
 	public function complexPassword($check) {
-		/*
-		default password:
-		6 characters minimum
-		1 or more upper-case letters
-		1 or more lower-case letters
-		1 or more digits or special characters
-		example: "EasyPeasy34"
-		If Security.password_policy_complexity is set and valid, use the regex provided.
-		*/
 		$regex = Configure::read('Security.password_policy_complexity');
 		if (empty($regex) || @preg_match($regex, 'test') === false) $regex = '/((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$/';
 		$value = array_values($check);
@@ -417,9 +384,6 @@ class User extends AppModel {
 		return true;
 	}
 
-/**
- * Generates an authentication key for each user
- */
 	public function generateAuthKey() {
 		$length = 40;
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -527,14 +491,15 @@ class User extends AppModel {
 			$certif_public = $user['User']['certif_public'];
 			try {
 				App::uses('Folder', 'Utility');
-				App::uses('FileAccess', 'Tools');
+				App::uses('FileAccessTool', 'Tools');
+				$fileAccessTool = new FileAccessTool();
 				$dir = APP . 'tmp' . DS . 'SMIME';
 				if (!file_exists($dir)) {
 					if (!mkdir($dir, 0750, true)) throw new MethodNotAllowedException('The SMIME temp directory is not writeable (app/tmp/SMIME).');
 				}
-				$tempFile = FileAccess::createTempFile($dir, 'SMIME');
-				$msg_test = FileAccess::writeToFile($tempFile, 'test');
-				$msg_test_encrypted = FileAccess::createTempFile($dir, 'SMIME');
+				$tempFile = $fileAccessTool->createTempFile($dir, 'SMIME');
+				$msg_test = $fileAccessTool->writeToFile($tempFile, 'test');
+				$msg_test_encrypted = $fileAccessTool->createTempFile($dir, 'SMIME');
 				// encrypt it
 				if (openssl_pkcs7_encrypt($msg_test, $msg_test_encrypted, $certif_public, null, 0, OPENSSL_CIPHER_AES_256_CBC)) {
 					$parse = openssl_x509_parse($certif_public);
@@ -756,22 +721,23 @@ class User extends AppModel {
 			try {
 				$prependedBody = 'Content-Transfer-Encoding: 7bit' . PHP_EOL . 'Content-Type: text/plain;' . PHP_EOL . '    charset=us-ascii' . PHP_EOL . PHP_EOL . $body;
 				App::uses('Folder', 'Utility');
-				App::uses('FileAccess', 'Tools');
+				App::uses('FileAccessTool', 'Tools');
+				$fileAccessTool = new FileAccessTool();
 				$dir = APP . 'tmp' . DS . 'SMIME';
 				if (!file_exists($dir)) {
 					if (!mkdir($dir, 0750, true)) throw new MethodNotAllowedException('The SMIME temp directory is not writeable (app/tmp/SMIME).');
 				}
 				// save message to file
-				$tempFile = FileAccess::createTempFile($dir, 'SMIME');
-				$msg = FileAccess::writeToFile($tempFile, $prependedBody);
+				$tempFile = $fileAccessTool->createTempFile($dir, 'SMIME');
+				$msg = $fileAccessTool->writeToFile($tempFile, $prependedBody);
 				$headers_smime = array("To" => $user['User']['email'], "From" => Configure::read('MISP.email'), "Subject" => $subject);
 				$canSign = true;
 				if (empty(Configure::read('SMIME.cert_public_sign')) || !is_readable(Configure::read('SMIME.cert_public_sign'))) $canSign = false;
 				if (empty(Configure::read('SMIME.key_sign')) || !is_readable(Configure::read('SMIME.key_sign'))) $canSign = false;
 				if ($canSign) {
-					$signed = FileAccess::createTempFile($dir, 'SMIME');
+					$signed = $fileAccessTool->createTempFile($dir, 'SMIME');
 					if (openssl_pkcs7_sign($msg, $signed, 'file://'.Configure::read('SMIME.cert_public_sign'), array('file://'.Configure::read('SMIME.key_sign'), Configure::read('SMIME.password')), array(), PKCS7_TEXT)) {
-						$bodySigned = FileAccess::readFromFile($signed);
+						$bodySigned = $fileAccessTool->readFromFile($signed);
 						unlink($msg);
 						unlink($signed);
 					} else {
@@ -780,15 +746,15 @@ class User extends AppModel {
 						throw new Exception('Failed while attempting to sign the SMIME message.');
 					}
 					// save message to file
-					$tempFile = FileAccess::createTempFile($dir, 'SMIME');
-					$msg_signed = FileAccess::writeToFile($tempFile, $bodySigned);
+					$tempFile = $fileAccessTool->createTempFile($dir, 'SMIME');
+					$msg_signed = $fileAccessTool->writeToFile($tempFile, $bodySigned);
 				} else {
 					$msg_signed = $msg;
 				}
-				$msg_signed_encrypted = FileAccess::createTempFile($dir, 'SMIME');
+				$msg_signed_encrypted = $fileAccessTool->createTempFile($dir, 'SMIME');
 				// encrypt it
 				if (openssl_pkcs7_encrypt($msg_signed, $msg_signed_encrypted, $user['User']['certif_public'], $headers_smime, 0, OPENSSL_CIPHER_AES_256_CBC)) {
-					$bodyEncSig = FileAccess::readFromFile($msg_signed_encrypted);
+					$bodyEncSig = $fileAccessTool->readFromFile($msg_signed_encrypted);
 					unlink($msg_signed);
 					unlink($msg_signed_encrypted);
 					$parts = explode("\n\n", $bodyEncSig);
@@ -914,5 +880,22 @@ class User extends AppModel {
 			$fields[] = $relatedModel . '.*';
 		}
 		return $fields;
+	}
+
+	public function getMembersCount() {
+		// for Organizations List
+		$fields = array('org_id', 'COUNT(User.id) AS num_members');
+		$params = array(
+				'fields' => $fields,
+				'recursive' => -1,
+				'group' => array('org_id'),
+				'order' => array('org_id'),
+		);
+		$orgs = $this->find('all', $params);
+		$usersPerOrg = [];
+		foreach ($orgs as $key => $value) {
+			$usersPerOrg[$value['User']['org_id']] = $value[0]['num_members'];
+		}
+		return $usersPerOrg;
 	}
 }

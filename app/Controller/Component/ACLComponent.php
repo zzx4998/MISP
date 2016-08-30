@@ -116,6 +116,9 @@ class ACLComponent extends Component {
 					'viewEventAttributes' => array('*'),
 					'viewGraph' => array('*'),
 					'xml' => array('*'),
+					'importChoice' => array('*'),
+					'importModule' => array('*'),
+					'exportModule' => array('*')
 			),
 			'favouriteTags' => array(
 				'index' => array('*'),
@@ -140,6 +143,7 @@ class ACLComponent extends Component {
 					'getGenerateCorrelationProgress' => array('*'),
 					'getProgress' => array('*'),
 					'index' => array(),
+					'getError' => array()
 			),
 			'logs' => array(
 					'admin_index' => array('perm_audit'),
@@ -223,6 +227,7 @@ class ACLComponent extends Component {
 					'stopZeroMQServer' => array(),
 					'testConnection' => array('perm_sync'),
 					'uploadFile' => array(),
+					'clearWorkerQueue' => array()
 			),
 			'shadowAttributes' => array(
 					'accept' => array('perm_add'),
@@ -326,7 +331,7 @@ class ACLComponent extends Component {
 					'initiatePasswordReset' => array('perm_admin'),
 					'login' => array('*'),
 					'logout' => array('*'),
-					'memberslist' => array('*'),
+					'attributehistogram' => array('*'),
 					'resetauthkey' => array('*'),
 					'routeafterlogin' => array('*'),
 					'statistics' => array('*'),

@@ -2,12 +2,6 @@
 
 App::uses('AppController', 'Controller');
 
-/**
- * Tags Controller
- *
- * @property Tag $Tag
- */
-
 class TagsController extends AppController {
 	public $components = array('Security' ,'RequestHandler');
 
@@ -342,7 +336,7 @@ class TagsController extends AppController {
 					'conditions' => array(
 							'NOT' => array(
 									'Tag.org_id' => array(
-											0, 
+											0,
 											$this->Auth->user('org_id')
 									)
 							)

@@ -138,7 +138,6 @@
 					<?php endif; ?>
 					<li id='liview'><a href="<?php echo $baseurl;?>/users/view/me">My Profile</a></li>
 					<li id='lidashboard'><a href="<?php echo $baseurl;?>/users/dashboard">Dashboard</a></li>
-					<li id='limembers'><a href="<?php echo $baseurl;?>/users/memberslist">Members List</a></li>
 					<li id='liindexOrg'><a href="<?php echo $baseurl;?>/organisations/index">List Organisations</a></li>
 					<?php if ($menuItem === 'viewOrg'): ?>
 						<li class="active"><a href="<?php echo $baseurl;?>/organisations/view/<?php echo h($id);?>">View Organisation</a></li>
@@ -155,6 +154,7 @@
 					<li id='liuserGuide'><a href="<?php echo $baseurl;?>/pages/display/doc/general">User Guide</a></li>
 					<li id='literms'><a href="<?php echo $baseurl;?>/users/terms">Terms &amp; Conditions</a></li>
 					<li id='listatistics'><a href="<?php echo $baseurl;?>/users/statistics">Statistics</a></li>
+					<li id='limembers'><a href="<?php echo $baseurl;?>/users/attributehistogram">Attribute Histogram</a></li>
 					<?php
 				break;
 
@@ -216,7 +216,6 @@
 					<li id='liindexRole'><?php echo $this->Html->link('List Roles', array('controller' => 'roles', 'action' => 'index', 'admin' => true)); ?> </li>
 					<?php if ($isSiteAdmin): ?>
 						<li class="divider"></li>
-						<li id='liadminTools'><a href="<?php echo $baseurl;?>/pages/display/administration">Administrative Tools</a></li>
 						<li id='liserverSettings'><a href="<?php echo $baseurl;?>/servers/serverSettings">Server Settings</a></li>
 						<li class="divider"></li>
 						<?php if (Configure::read('MISP.background_jobs')): ?>

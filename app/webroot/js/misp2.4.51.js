@@ -187,7 +187,7 @@ function submitGenericForm(url, form, target) {
 		},
 		type:"post",
 		cache: false,
-		url:url,		
+		url:url,
 	});
 }
 
@@ -2436,37 +2436,6 @@ function toggleSettingSubGroup(group) {
 	$('.subGroup_' + group).toggle();
 }
 
-function hoverModuleExpand(type, id) {
-	$('.popover').remove();
-	if (type + "_" + id in ajaxResults) {
-		$('#' + type + '_' + id + '_container').popover({
-			title: 'Lookup results:',
-			content: ajaxResults[type + "_" + id],
-			placement: 'left',
-			html: true,
-			trigger: 'hover',
-			container: 'body'
-		}).popover('show');
-	} else {
-		$.ajax({
-			success:function (html) {
-				ajaxResults[type + "_" + id] = html;
-				$('.popover').remove();
-				$('#' + type + '_' + id + '_container').popover({
-					title: 'Lookup results:',
-					content: html,
-					placement: 'left',
-					html: true,
-					trigger: 'hover',
-					container: 'body'
-				}).popover('show');
-			},
-			cache: false,
-			url:"/" + type + "s/hoverEnrichment/" + id,
-		});
-	}
-}
-
 function runHoverLookup(type, id) {
 	$.ajax({
 		success:function (html) {
@@ -2482,7 +2451,7 @@ function runHoverLookup(type, id) {
 			}).popover('show');
 		},
 		cache: false,
-		url:"/" + type + "s/hoverEnrichment/" + id,
+		url:"/attributes/hoverEnrichment/" + id,
 	});
 }
 
@@ -2508,4 +2477,43 @@ $(".eventViewAttributeHover").mouseenter(function() {
 	}
 }).mouseleave(function() {
 	clearTimeout(timer);
+});
+
+$(".queryPopover").click(function() {
+	url = $(this).data('url');
+	id = $(this).data('id');
+	$.get(url + '/' + id, function(data) {
+		$('#popover_form').html(data);
+		$('#popover_form').fadeIn();
+		$("#gray_out").fadeIn();
+	});
+});
+
+function serverOwnerOrganisationChange(host_org_id) {
+	if ($('#ServerOrganisationType').val() == "0" && $('#ServerLocal').val() == host_org_id) {
+		$('#InternalDiv').show();
+	} else {
+		$('#ServerInternal').prop("checked", false);
+		$('#InternalDiv').hide();
+	}
+}
+
+$('.servers_default_role_checkbox').click(function() {
+	var id = $(this).data("id");
+	var state = $(this).is(":checked");
+	$(".servers_default_role_checkbox").not(this).attr('checked', false);
+	$.ajax({
+		beforeSend: function (XMLHttpRequest) {
+			$(".loading").show();
+		},
+		success:function (data, textStatus) {
+			handleGenericAjaxResponse(data);
+		},
+		complete:function() {
+			$(".loading").hide();
+		},
+		type:"get",
+		cache: false,
+		url: '/admin/roles/set_default/' + (state ? id : ""),
+	});
 });

@@ -2,11 +2,6 @@
 
 App::uses('AppController', 'Controller');
 
-/**
- * Tasks Controller
- *
- * @property Task $Task
-*/
 class TasksController extends AppController {
 	public $components = array('Security' ,'RequestHandler', 'Session');
 
@@ -40,6 +35,12 @@ class TasksController extends AppController {
 			if (!in_array($taskName, $existingTasks)) {
 				$this->Task->create();
 				$this->Task->save($taskData);
+			} else {
+				$existingTask = $this->Task->find('first', array('recursive' => -1, 'conditions' => array('Task.type' => $taskName)));
+				if ($taskData['description'] != $existingTask['Task']['description']) {
+					$existingTask['Task']['description'] = $taskData['description'];
+					$this->Task->save($existingTask);
+				}
 			}
 		}
 	}

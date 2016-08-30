@@ -2,9 +2,6 @@
 App::uses('AppController', 'Controller');
 App::uses('Xml', 'Utility');
 
-/**
- * Feedss Controller
- */
 class FeedsController extends AppController {
 
 	public $components = array('Security' ,'RequestHandler');	// XXX ACL component
@@ -27,11 +24,6 @@ class FeedsController extends AppController {
 		if (!$this->_isSiteAdmin()) throw new MethodNotAllowedException('You don\'t have the required privileges to do that.');
 	}
 
-/**
- * index method
- *
- * @return void
- */
 	public function index() {
 		$this->set('feeds', $this->paginate());
 		$this->loadModel('Event');
@@ -132,7 +124,8 @@ class FeedsController extends AppController {
 			$process_id = CakeResque::enqueue(
 					'default',
 					'ServerShell',
-					array('fetchFeed', $this->Auth->user('id'), $feedId, $jobId)
+					array('fetchFeed', $this->Auth->user('id'), $feedId, $jobId),
+					true
 			);
 			$this->Job->saveField('process_id', $process_id);
 			$message = 'Pull queued for background execution.';
