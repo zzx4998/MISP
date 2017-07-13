@@ -554,9 +554,11 @@ class Attribute extends AppModel {
 			$this->__afterSaveCorrelation($this->data['Attribute']);
 		}
 		if (Configure::read('Plugin.ZeroMQ_enable') && Configure::read('Plugin.ZeroMQ_attribute_notifications_enable')) {
-			App::uses('PubSubTool', 'Tools');
-			$pubSubTool = new PubSubTool();
+			$pubSubTool = $this->getPubSubTool();
 			$pubSubTool->attribute_save($this->data);
+		}
+		if (Configure::read('MISP.enable_advanced_correlations') && in_array($this->data['Attribute']['type'], array('ip-src', 'ip-dst', 'domain-ip')) && strpos($this->data['Attribute']['value'], '/')) {
+			$this->setCIDRList();
 		}
 		$result = true;
 		// if the 'data' field is set on the $this->data then save the data to the correct file
@@ -571,7 +573,12 @@ class Attribute extends AppModel {
 		$this->read(); // first read the attribute from the db
 		if ($this->typeIsAttachment($this->data['Attribute']['type'])) {
 			// only delete the file if it exists
-			$filepath = APP . "files" . DS . $this->data['Attribute']['event_id'] . DS . $this->data['Attribute']['id'];
+			$attachments_dir = Configure::read('MISP.attachments_dir');
+			if (empty($attachments_dir)) {
+				$my_server = ClassRegistry::init('Server');
+				$attachments_dir = $my_server->getDefaultAttachments_dir();
+			}
+			$filepath = $attachments_dir . DS . $this->data['Attribute']['event_id'] . DS . $this->data['Attribute']['id'];
 			$file = new File($filepath);
 			if ($file->exists()) {
 				if (!$file->delete()) {
@@ -581,6 +588,12 @@ class Attribute extends AppModel {
 		}
 		// update correlation..
 		$this->__beforeDeleteCorrelation($this->data['Attribute']['id']);
+	}
+
+	public function afterDelete() {
+		if (Configure::read('MISP.enable_advanced_correlations') && in_array($this->data['Attribute']['type'], array('ip-src', 'ip-dst', 'domain-ip')) && strpos($this->data['Attribute']['value'], '/')) {
+			$this->setCIDRList();
+		}
 	}
 
 	public function beforeValidate($options = array()) {
@@ -637,25 +650,39 @@ class Attribute extends AppModel {
 		public function valueIsUnique ($fields) {
 		if (isset($this->data['Attribute']['deleted']) && $this->data['Attribute']['deleted']) return true;
 		$value = $fields['value'];
+		if (strpos($value, '|')) {
+			$value = explode('|', $value);
+			$value = array(
+				'Attribute.value1' => $value[0],
+				'Attribute.value2' => $value[1]
+			);
+		} else {
+			$value = array(
+				'Attribute.value1' => $value,
+			);
+		}
 		$eventId = $this->data['Attribute']['event_id'];
 		$type = $this->data['Attribute']['type'];
 		$category = $this->data['Attribute']['category'];
 
 		// check if the attribute already exists in the same event
-		$conditions = array('Attribute.event_id' => $eventId,
-				'Attribute.type' => $type,
-				'Attribute.category' => $category,
-				'Attribute.value' => $value,
-				'Attribute.deleted' => 0
+		$conditions = array(
+			'Attribute.event_id' => $eventId,
+			'Attribute.type' => $type,
+			'Attribute.category' => $category,
+			'Attribute.deleted' => 0
 		);
+		$conditions = array_merge ($conditions, $value);
 		if (isset($this->data['Attribute']['id'])) {
 			$conditions['Attribute.id !='] = $this->data['Attribute']['id'];
 		}
 
-		$params = array('recursive' => -1,
-				'conditions' => $conditions,
+		$params = array(
+			'recursive' => -1,
+			'fields' => array('id'),
+			'conditions' => $conditions,
 		);
-		if (0 != $this->find('count', $params)) {
+		if (!empty($this->find('first', $params))) {
 			// value isn't unique
 			return false;
 		}
@@ -1226,7 +1253,12 @@ class Attribute extends AppModel {
 	}
 
 	public function base64EncodeAttachment($attribute) {
-		$filepath = APP . "files" . DS . $attribute['event_id'] . DS . $attribute['id'];
+		$attachments_dir = Configure::read('MISP.attachments_dir');
+		if (empty($attachments_dir)) {
+			$my_server = ClassRegistry::init('Server');
+			$attachments_dir = $my_server->getDefaultAttachments_dir();
+		}
+		$filepath = $attachments_dir . DS . $attribute['event_id'] . DS . $attribute['id'];
 		$file = new File($filepath);
 		if (!$file->readable()) {
 			return '';
@@ -1236,7 +1268,12 @@ class Attribute extends AppModel {
 	}
 
 	public function saveBase64EncodedAttachment($attribute) {
-		$rootDir = APP . DS . "files" . DS . $attribute['event_id'];
+		$attachments_dir = Configure::read('MISP.attachments_dir');
+		if (empty($attachments_dir)) {
+			$my_server = ClassRegistry::init('Server');
+			$attachments_dir = $my_server->getDefaultAttachments_dir();
+		}
+		$rootDir = $attachments_dir . DS . $attribute['event_id'];
 		$dir = new Folder($rootDir, true);						// create directory structure
 		$destpath = $rootDir . DS . $attribute['id'];
 		$file = new File($destpath, true);						// create the file
@@ -1281,7 +1318,12 @@ class Attribute extends AppModel {
 		// no errors in file upload, entry already in db, now move the file where needed and zip it if required.
 		// no sanitization is required on the filename, path or type as we save
 		// create directory structure
-		$rootDir = APP . "files" . DS . $eventId;
+		$attachments_dir = Configure::read('MISP.attachments_dir');
+		if (empty($attachments_dir)) {
+			$my_server = ClassRegistry::init('Server');
+			$attachments_dir = $my_server->getDefaultAttachments_dir();
+		}
+		$rootDir = $attachments_dir . DS . $eventId;
 		$dir = new Folder($rootDir, true);
 		// move the file to the correct location
 		$destpath = $rootDir . DS . $this->getID(); // id of the new attribute in the database
@@ -1396,14 +1438,7 @@ class Attribute extends AppModel {
 		} else {
 			$ip = $a['value1'];
 			$ip_version = filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? 4 : 6;
-			$cidrList = $this->find('list', array(
-				'conditions' => array(
-					'type' => array('ip-src', 'ip-dst'),
-					'value1 LIKE' => '%/%'
-				),
-				'fields' => array('value1'),
-				'order' => false
-			));
+			$cidrList = $this->getSetCIDRList();
 			foreach ($cidrList as $cidr) {
 				$cidr_ip = explode('/', $cidr)[0];
 				if (filter_var($cidr_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
@@ -1453,27 +1488,24 @@ class Attribute extends AppModel {
 			if (!empty($a['value2']) && !isset($this->primaryOnlyCorrelatingTypes[$a['type']])) $correlatingValues[] = $a['value2'];
 			foreach ($correlatingValues as $k => $cV) {
 				$conditions = array(
-					'AND' => array(
-						'OR' => array(
-								'Attribute.value1' => $cV,
-								'AND' => array(
-										'Attribute.value2' => $cV,
-										'NOT' => array('Attribute.type' => $this->primaryOnlyCorrelatingTypes)
-								)
-						),
-						'Attribute.type !=' => $this->nonCorrelatingTypes,
-						'Attribute.disable_correlation' => 0,
-						'Event.disable_correlation' => 0
+					'OR' => array(
+							'Attribute.value1' => $cV,
+							'AND' => array(
+									'Attribute.value2' => $cV,
+									'NOT' => array('Attribute.type' => $this->primaryOnlyCorrelatingTypes)
+							)
 					),
+					'Attribute.disable_correlation' => 0,
+					'Event.disable_correlation' => 0,
 					'Attribute.deleted' => 0
 				);
 				if (!empty($extraConditions)) {
-					$conditions['AND']['OR'][] = $extraConditions;
+					$conditions['OR'][] = $extraConditions;
 				}
 				$correlatingAttributes[$k] = $this->find('all', array(
 						'conditions' => $conditions,
 						'recursive => -1',
-						'fields' => array('Attribute.event_id', 'Attribute.id', 'Attribute.distribution', 'Attribute.sharing_group_id', 'Attribute.deleted'),
+						'fields' => array('Attribute.event_id', 'Attribute.id', 'Attribute.distribution', 'Attribute.sharing_group_id', 'Attribute.deleted', 'Attribute.type'),
 						'contain' => array('Event' => array('fields' => array('Event.id', 'Event.date', 'Event.info', 'Event.org_id', 'Event.distribution', 'Event.sharing_group_id'))),
 						'order' => array(),
 				));
@@ -1481,6 +1513,7 @@ class Attribute extends AppModel {
 					if ($correlatingAttribute['Attribute']['id'] == $a['id']) unset($correlatingAttributes[$k][$key]);
 					else if ($correlatingAttribute['Attribute']['event_id'] == $a['event_id']) unset($correlatingAttributes[$k][$key]);
 					else if ($full && $correlatingAttribute['Attribute']['id'] <= $a['id']) unset($correlatingAttributes[$k][$key]);
+					else if (in_array($correlatingAttribute['Attribute']['type'], $this->nonCorrelatingTypes)) unset($correlatingAttributes[$k][$key]);
 					else if (isset($this->primaryOnlyCorrelatingTypes[$a['type']]) && $correlatingAttribute['value1'] !== $a['value1']) unset($correlatingAttribute[$k][$key]);
 				}
 			}
@@ -2234,7 +2267,6 @@ class Attribute extends AppModel {
 				'recursive' => -1,
 				'contain' => array('Event'),
 				'fields' => array('Attribute.event_id'),
-				'group' => array('Attribute.event_id'),
 				'sort' => false
 			));
 			return $results;
@@ -2274,10 +2306,15 @@ class Attribute extends AppModel {
 	// The contents of the archive will be the actual sample, named <md5> and the original filename in a text file named <md5>.filename.txt
 	public function handleMaliciousBase64($event_id, $original_filename, $base64, $hash_types, $proposal = false) {
 		if (!is_numeric($event_id)) throw new Exception('Something went wrong. Received a non-numeric event ID while trying to create a zip archive of an uploaded malware sample.');
+		$attachments_dir = Configure::read('MISP.attachments_dir');
+		if (empty($attachments_dir)) {
+			$my_server = ClassRegistry::init('Server');
+			$attachments_dir = $my_server->getDefaultAttachments_dir();
+		}
 		if ($proposal) {
-			$dir = new Folder(APP . "files" . DS . $event_id . DS . 'shadow', true);
+			$dir = new Folder($attachments_dir . DS . $event_id . DS . 'shadow', true);
 		} else {
-			$dir = new Folder(APP . "files" . DS . $event_id, true);
+			$dir = new Folder($attachments_dir . DS . $event_id, true);
 		}
 		$tmpFile = new File($dir->path . DS . $this->generateRandomFileName(), true, 0600);
 		$tmpFile->write(base64_decode($base64));
@@ -2506,5 +2543,46 @@ class Attribute extends AppModel {
 		}
 		array_push ($conditions['AND'], $subcondition);
 		return $conditions;
+	}
+
+	private function __getCIDRList() {
+		return $this->find('list', array(
+			'conditions' => array(
+				'type' => array('ip-src', 'ip-dst'),
+				'value1 LIKE' => '%/%'
+			),
+			'fields' => array('value1'),
+			'order' => false
+		));
+	}
+
+	public function setCIDRList() {
+		$redis = $this->setupRedis();
+		$cidrList = array();
+		if ($redis) {
+			$redis->del('misp:cidr_cache_list');
+			$cidrList = $this->__getCIDRList();
+			$pipeline = $redis->multi(Redis::PIPELINE);
+			foreach ($cidrList as $cidr) {
+				$pipeline->sadd('misp:cidr_cache_list', $cidr);
+			}
+			$pipeline->exec();
+			$redis->smembers('misp:cidr_cache_list');
+		}
+		return $cidrList;
+	}
+
+	public function getSetCIDRList() {
+		$redis = $this->setupRedis();
+		if ($redis) {
+			if (!$redis->exists('misp:cidr_cache_list') || $redis->sCard('misp:cidr_cache_list') == 0) {
+				$cidrList = $this->setCIDRList($redis);
+			} else {
+				$cidrList = $redis->smembers('misp:cidr_cache_list');
+			}
+		} else {
+			$cidrList = $this->__getCIDRList();
+		}
+		return $cidrList;
 	}
 }

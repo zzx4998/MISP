@@ -760,6 +760,8 @@ class ServersController extends AppController {
 			}
 			// Only run this check on the diagnostics tab
 			if ($tab == 'diagnostics' || $tab == 'download') {
+				$php_ini = php_ini_loaded_file();
+				$this->set('php_ini', $php_ini);
 				// check if the current version of MISP is outdated or not
 				$version = $this->__checkVersion();
 				$this->set('version', $version);
@@ -864,6 +866,11 @@ class ServersController extends AppController {
 						'finalSettings' => $dumpResults,
 						'extensions' => $extensions
 				);
+				foreach ($dump['finalSettings'] as $k => $v) {
+					if (!empty($v['redacted'])) {
+						$dump['finalSettings'][$k]['value'] = '*****';
+					}
+				}
 				$this->response->body(json_encode($dump, JSON_PRETTY_PRINT));
 				$this->response->type('json');
 				$this->response->download('MISP.report.json');
@@ -970,6 +977,9 @@ class ServersController extends AppController {
 			$this->render('ajax/server_settings_edit');
 		}
 		if ($this->request->is('post')) {
+			if (trim($this->request->data['Server']['value']) === '*****') {
+				return new CakeResponse(array('body'=> json_encode(array('saved' => false, 'errors' => 'No change.')),'status'=>200));
+			}
 			$this->autoRender = false;
 			$this->loadModel('Log');
 			if (!is_writeable(APP . 'Config/config.php')) {
@@ -1011,7 +1021,11 @@ class ServersController extends AppController {
 			if ($found['type'] == 'numeric') {
 				$this->request->data['Server']['value'] = intval($this->request->data['Server']['value']);
 			}
-			$testResult = $this->Server->{$found['test']}($this->request->data['Server']['value']);
+			if  (!empty($leafValue['test'])) {
+				$testResult = $this->Server->{$found['test']}($this->request->data['Server']['value']);
+			} else  {
+				$testResult = true;  # No test defined for this setting: cannot fail
+			}
 			if (!$forceSave && $testResult !== true) {
 				if ($testResult === false) $errorMessage = $found['errorMessage'];
 				else $errorMessage = $testResult;
@@ -1225,8 +1239,7 @@ class ServersController extends AppController {
 
 	public function startZeroMQServer() {
 		if (!$this->_isSiteAdmin()) throw new MethodNotAllowedException();
-		App::uses('PubSubTool', 'Tools');
-		$pubSubTool = new PubSubTool();
+		$pubSubTool = $this->Server->getPubSubTool();
 		$result = $pubSubTool->restartServer();
 		if ($result === true) return new CakeResponse(array('body'=> json_encode(array('saved' => true, 'success' => 'ZeroMQ server successfully started.')),'status'=>200));
 		else return new CakeResponse(array('body'=> json_encode(array('saved' => false, 'errors' => $result)),'status'=>200));
@@ -1234,8 +1247,7 @@ class ServersController extends AppController {
 
 	public function stopZeroMQServer() {
 		if (!$this->_isSiteAdmin()) throw new MethodNotAllowedException();
-		App::uses('PubSubTool', 'Tools');
-		$pubSubTool = new PubSubTool();
+		$pubSubTool = $this->Server->getPubSubTool();
 		$result = $pubSubTool->killService();
 		if ($result === true) return new CakeResponse(array('body'=> json_encode(array('saved' => true, 'success' => 'ZeroMQ server successfully killed.')),'status'=>200));
 		else return new CakeResponse(array('body'=> json_encode(array('saved' => false, 'errors' => 'Could not kill the previous instance of the ZeroMQ script.')),'status'=>200));
@@ -1243,8 +1255,7 @@ class ServersController extends AppController {
 
 	public function statusZeroMQServer() {
 		if (!$this->_isSiteAdmin()) throw new MethodNotAllowedException();
-		App::uses('PubSubTool', 'Tools');
-		$pubSubTool = new PubSubTool();
+		$pubSubTool = $this->Server->getPubSubTool();
 		$result = $pubSubTool->statusCheck();
 		if (!empty($result)) {
 			$this->set('events', $result['publishCount']);

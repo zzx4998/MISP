@@ -46,8 +46,8 @@ class AppController extends Controller {
 
 	public $helpers = array('Utility');
 
-	private $__queryVersion = '12';
-	public $pyMispVersion = '2.4.71';
+	private $__queryVersion = '14';
+	public $pyMispVersion = '2.4.77';
 	public $phpmin = '5.6.5';
 	public $phprec = '7.0.16';
 
@@ -73,11 +73,26 @@ class AppController extends Controller {
 				'authError' => 'Unauthorised access.',
 				'loginRedirect' => array('controller' => 'users', 'action' => 'routeafterlogin'),
 				'logoutRedirect' => array('controller' => 'users', 'action' => 'login', 'admin' => false),
+				'authenticate' => array(
+					'Form' => array(
+						'passwordHasher' => 'Blowfish',
+						'fields' => array(
+							'username' => 'email'
+						)
+					)
+				)
 			),
 			'Security',
 			'ACL',
 			'RestResponse'
 	);
+
+	private function __isApiFunction($controller, $action) {
+		if (isset($this->automationArray[$controller]) && in_array($action, $this->automationArray[$controller])) {
+			return true;
+		}
+		return false;
+	}
 
 	public function beforeFilter() {
 		// check for a supported datasource configuration
@@ -118,12 +133,7 @@ class AppController extends Controller {
 				)
 			);
 		} else {
-			$this->Auth->authenticate = array(
-				'Form' => array(
-					'fields' => array('username' => 'email'),
-					'userFields' => $auth_user_fields
-				)
-			);
+			$this->Auth->authenticate['Form']['userFields'] = $auth_user_fields;
 		}
 		$versionArray = $this->{$this->modelClass}->checkMISPVersion();
 		$this->mispVersion = implode('.', array_values($versionArray));
@@ -144,7 +154,6 @@ class AppController extends Controller {
 		if (isset($_SERVER['HTTP_USER_AGENT'])) {
 			if (preg_match('/(?i)msie [2-8]/',$_SERVER['HTTP_USER_AGENT']) && !strpos($_SERVER['HTTP_USER_AGENT'], 'Opera')) throw new MethodNotAllowedException('You are using an unsecure and outdated version of IE, please download Google Chrome, Mozilla Firefox or update to a newer version of IE. If you are running IE9 or newer and still receive this error message, please make sure that you are not running your browser in compatibility mode. If you still have issues accessing the site, get in touch with your administration team at ' . Configure::read('MISP.contact'));
 		}
-
 		$userLoggedIn = false;
 		if (Configure::read('Plugin.CustomAuth_enable')) $userLoggedIn = $this->__customAuthentication($_SERVER);
 		if (!$userLoggedIn) {
@@ -162,7 +171,9 @@ class AppController extends Controller {
 						if (preg_match('/^[a-zA-Z0-9]{40}$/', trim($auth_key))) {
 							$found_misp_auth_key = true;
 							$temp = $this->checkAuthUser(trim($auth_key));
-							if ($temp) $user['User'] = $this->checkAuthUser(trim($auth_key));
+							if ($temp) {
+								$user['User'] = $this->checkAuthUser(trim($auth_key));
+							}
 						}
 					}
 					if ($found_misp_auth_key) {
@@ -394,7 +405,8 @@ class AppController extends Controller {
 	}
 
 	protected function _isRest() {
-		return (isset($this->RequestHandler) && ($this->RequestHandler->isXml() || $this->_isJson()));
+		$api = $this->__isApiFunction($this->request->params['controller'], $this->request->params['action']);
+		return (isset($this->RequestHandler) && ($api || $this->RequestHandler->isXml() || $this->_isJson()));
 	}
 
 	protected function _isAutomation() {

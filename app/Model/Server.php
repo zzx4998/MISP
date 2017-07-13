@@ -348,6 +348,15 @@ class Server extends AppModel {
 							'test' => 'testBool',
 							'type' => 'boolean',
 					),
+					'attachments_dir' => array(
+							'level' => 2,
+							'description' => 'Directory where attachments are stored. MISP will NOT migrate the existing data if you change this setting. The only safe way to change this setting is in config.php, when MISP is not running, and after having moved/copied the existing data to the new location. This directory must already exist and be writable and readable by the MISP application.',
+							'value' =>  'app/files', # GUI display purpose only. Default value defined in func getDefaultAttachments_dir()
+							'errorMessage' => '',
+							'null' => false,
+							'test' => 'testForWritableDir',
+							'type' => 'string',
+					),
 					'cached_attachments' => array(
 							'level' => 1,
 							'description' => 'Allow the XML caches to include the encoded attachments.',
@@ -765,6 +774,15 @@ class Server extends AppModel {
 						'errorMessage' => '',
 						'test' => 'testForNumeric',
 						'type' => 'numeric'
+					),
+					'redis_password' => array(
+						'level' => 0,
+						'description' => 'The password on the redis server (if any) to be used for generic MISP tasks.',
+						'value' => '',
+						'errorMessage' => '',
+						'test' => null,
+						'type' => 'string',
+						'redacted' => true
 					)
 			),
 			'GnuPG' => array(
@@ -808,6 +826,7 @@ class Server extends AppModel {
 							'errorMessage' => '',
 							'test' => 'testForEmpty',
 							'type' => 'string',
+							'redacted' => true
 					),
 					'homedir' => array(
 							'level' => 0,
@@ -859,6 +878,7 @@ class Server extends AppModel {
 							'errorMessage' => '',
 							'test' => 'testForEmpty',
 							'type' => 'string',
+							'redacted' => true
 					),
 			),
 			'Proxy' => array(
@@ -1673,19 +1693,6 @@ class Server extends AppModel {
 						}
 					}
 				}
-			} else {
-				$this->Log = ClassRegistry::init('Log');
-				$this->Log->create();
-				$this->Log->save(array(
-					'org' => $user['Organisation']['name'],
-					'model' => 'Server',
-					'model_id' => $id,
-					'email' => $user['email'],
-					'action' => 'error',
-					'user_id' => $user['id'],
-					'title' => 'Pulling of proposals has failed.',
-					'change' => ''
-				));
 			}
 		}
 		if ($jobId) {
@@ -2147,10 +2154,12 @@ class Server extends AppModel {
 
 	private function __evaluateLeaf($leafValue, $leafKey, $setting) {
 		if (isset($setting)) {
-			$result = $this->{$leafValue['test']}($setting);
-			if ($result !== true) {
-				$leafValue['error'] = 1;
-				if ($result !== false) $leafValue['errorMessage'] = $result;
+			if (!empty($leafValue['test'])) {
+				$result = $this->{$leafValue['test']}($setting);
+				if ($result !== true) {
+					$leafValue['error'] = 1;
+					if ($result !== false) $leafValue['errorMessage'] = $result;
+				}
 			}
 			if ($setting !== '') $leafValue['value'] = $setting;
 		} else {
@@ -2204,6 +2213,12 @@ class Server extends AppModel {
 		if ($value === '') return true;
 		if (preg_match('@^\/?(([a-z0-9_.]+[a-z0-9_.\-.\:]*[a-z0-9_.\-.\:]|[a-z0-9_.])+\/?)+$@i', $value)) return true;
 		return 'Invalid characters in the path.';
+	}
+
+	public function testForWritableDir($value) {
+		if (!is_dir($value)) return 'Not a valid directory.';
+		if (!is_writeable($value)) return 'Not a writable directory.';
+		return true;
 	}
 
 	public function testDebug($value) {
@@ -2393,8 +2408,7 @@ class Server extends AppModel {
 	}
 
 	public function zmqAfterHook($setting, $value) {
-		App::uses('PubSubTool', 'Tools');
-		$pubSubTool = new PubSubTool();
+		$pubSubTool = $this->getPubSubTool();
 		// If we are trying to change the enable setting to false, we don't need to test anything, just kill the server and return true.
 		if ($setting == 'Plugin.ZeroMQ_enable') {
 			if ($value == false || $value == 0) {
@@ -2977,8 +2991,7 @@ class Server extends AppModel {
 
 	public function zmqDiagnostics(&$diagnostic_errors) {
 		if (!Configure::read('Plugin.ZeroMQ_enable')) return 1;
-		App::uses('PubSubTool', 'Tools');
-		$pubSubTool = new PubSubTool();
+		$pubSubTool = $this->getPubSubTool();
 		if (!$pubSubTool->checkIfPythonLibInstalled()) {
 			$diagnostic_errors++;
 			return 2;
@@ -3045,7 +3058,18 @@ class Server extends AppModel {
 	}
 
 	public function workerDiagnostics(&$workerIssueCount) {
-		$this->ResqueStatus = new ResqueStatus\ResqueStatus(Resque::redis());
+		try {
+			$this->ResqueStatus = new ResqueStatus\ResqueStatus(Resque::redis());
+		} catch (Exception $e) {
+			// redis connection failed
+			return array(
+					'cache' => array('ok' => false),
+					'default' => array('ok' => false),
+					'email' => array('ok' => false),
+					'prio' => array('ok' => false),
+					'scheduler' => array('ok' => false)
+			);
+		}
 		$workers = $this->ResqueStatus->getWorkers();
 		if (function_exists('posix_getpwuid')) {
 			$currentUser = posix_getpwuid(posix_geteuid());
@@ -3516,5 +3540,9 @@ class Server extends AppModel {
 		exec($command2, $output);
 		$final .= implode("\n", $output);
 		return $final;
+	}
+
+	public function getDefaultAttachments_dir() {
+		return APP . 'files';
 	}
 }

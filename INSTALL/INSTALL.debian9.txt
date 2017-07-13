@@ -1,10 +1,10 @@
 INSTALLATION INSTRUCTIONS
-------------------------- for Ubuntu 16.04-server
+------------------------- for Debian 9 "stretch" server
 
-1/ Minimal Ubuntu install
+1/ Minimal Debian install
 -------------------------
 
-# Install a minimal Ubuntu 16.04-server system with the software:
+# Install a minimal Debian 9 "stretch" server system with the software:
 - OpenSSH server
 
 # Make sure your system is up2date:
@@ -37,16 +37,18 @@ sudo apt-get install apache2 apache2-doc apache2-utils
 
 # Enable modules, settings, and default of SSL in Apache
 sudo a2dismod status
-sudo a2enmod ssl
-sudo a2enmod rewrite
+sudo a2enmod ssl rewrite
 sudo a2dissite 000-default
 sudo a2ensite default-ssl
 
 # Install PHP and dependencies
-sudo apt-get install libapache2-mod-php php php-cli php-crypt-gpg php-dev php-json php-mysql php-opcache php-readline php-redis php-xml
+sudo apt-get install -y libapache2-mod-php7.0 php7.0 php7.0-cli php7.0-dev php7.0-json php7.0-xml php7.0-mysql php7.0-readline php7.0-redis php7.0-mbstring
+sudo pear install Crypt_GPG
+sudo a2enmod php7.0
 
 # Apply all changes
 sudo systemctl restart apache2
+
 
 3/ MISP code
 ------------
@@ -78,9 +80,9 @@ sudo python setup.py install
 
 # install mixbox to accomodate the new STIX dependencies:
 cd /var/www/MISP/app/files/scripts/
-sudo -u www-data git clone https://github.com/CybOXProject/mixbox.git
+git clone https://github.com/CybOXProject/mixbox.git
 cd /var/www/MISP/app/files/scripts/mixbox
-sudo -u www-data git checkout v1.0.2
+git checkout v1.0.2
 python setup.py install
 
 4/ CakePHP
@@ -296,7 +298,34 @@ Recommended actions
 
 Optional features
 -------------------
-# MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following command
-sudo pip install pyzmq
+# MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands
+
 # ZeroMQ depends on the Python client for Redis
 sudo pip install redis
+
+# Debian has an ancient version of ZeroMQ, so manually install a current version
+
+## Install ZeroMQ and prerequisites
+sudo apt-get install pkg-config
+cd /usr/local/src/
+sudo git clone git://github.com/jedisct1/libsodium.git
+cd libsodium
+sudo ./autogen.sh
+sudo ./configure
+sudo make check
+sudo make
+sudo make install
+sudo ldconfig
+cd /usr/local/src/
+sudo wget https://archive.org/download/zeromq_4.1.5/zeromq-4.1.5.tar.gz
+sudo tar -xvf zeromq-4.1.5.tar.gz
+cd zeromq-4.1.5/
+sudo ./autogen.sh
+sudo ./configure
+sudo make check
+sudo make
+sudo make install
+sudo ldconfig
+
+## install pyzmq
+sudo pip install pyzmq
