@@ -141,7 +141,7 @@ class OrganisationsController extends AppController {
 					$this->request->data = $this->request->data['request'];
 				}
 				if (!isset($this->request->data['Organisation'])) {
-					$this->request->data['Organisation'] = $this->request->data;
+					$this->request->data = array('Organisation' => $this->request->data);
 				}
 				$existingOrg = $this->Organisation->find('first', array('conditions' => array('Organisation.id' => $id)));
 				$changeFields = array('name', 'type', 'nationality', 'sector', 'contacts', 'description', 'local', 'uuid');
@@ -152,8 +152,8 @@ class OrganisationsController extends AppController {
 					} else {
 						$temp['Organisation'][$field] = $existingOrg['Organisation'][$field];
 					}
-					$this->request->data = $temp;
 				}
+				$this->request->data = $temp;
 			}
 			$this->request->data['Organisation']['id'] = $id;
 			if ($this->Organisation->save($this->request->data)) {
