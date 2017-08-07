@@ -81,58 +81,102 @@ class Tag extends AppModel {
 	public function fetchEventTagIds($accept=array(), $reject=array(), $controller='events') {
 		$acceptIds = array();
 		$rejectIds = array();
+		$rejectedAttributeIds = array();
 		if (!empty($accept)) {
 			if ($controller === 'attributes') {
-				$acceptIds = $this->findAttributeIdsByAttributeTagNames($accept);
-				if (empty($acceptIds)) $acceptIds[] = -1;
-			}else{
+				$acceptIds = $this->findAttributeRulesByTagNames($accept);
+				if (empty($acceptIds)) {
+					$acceptIds['Event'] = -1;
+				}
+			} else {
 				$acceptIds = $this->findEventIdsByTagNames($accept);
 				if (empty($acceptIds)) $acceptIds[] = -1;
 			}
 		}
 		if (!empty($reject)) {
 			if ($controller === 'attributes') {
-				$rejectIds = $this->findAttributeIdsByAttributeTagNames($reject);
-			}else{
-				$rejectIds = $this->findEventIdsByTagNames($reject);
+				$rejectIds = $this->findAttributeRulesByTagNames($reject);
+			} else {
+				$rejectIds = $this->findEventIdsByTagNames($reject, array('EventTag'));
+				$rejectedAttributeIds = $this->findAttributeIdsByAttributeTagNames($reject);
 			}
 		}
-		return array($acceptIds, $rejectIds);
+		return array($acceptIds, $rejectIds, $rejectedAttributeIds);
 	}
 
-	public function findEventIdsByTagNames($array) {
+	public function findEventIdsByTagNames($array, $objects = array('AttributeTag', 'EventTag')) {
 		$ids = array();
 		foreach ($array as $a) {
-			$conditions['OR'][] = array('LOWER(name) like' => strtolower($a));
+			$conditions['OR'][] = array('LOWER(Tag.name) like' => strtolower($a));
 		}
 		$params = array(
 				'recursive' => 1,
-				'contain' => 'EventTag',
-				'conditions' => $conditions
+				//'contain' => array('EventTag', 'AttributeTag'),
+				'conditions' => $conditions,
+				'fields' => array('id')
 		);
-		$result = $this->find('all', $params);
-		foreach ($result as $tag) {
-			foreach ($tag['EventTag'] as $eventTag) {
-				$ids[] = $eventTag['event_id'];
-			}
+		$result = $this->find('list', $params);
+		$ids = array(0 => array(), 1 => array());
+		foreach ($objects as $k => $object) {
+			$ids[$k] = $this->$object->find('list', array(
+				'conditions' => array($object . '.tag_id' => $result),
+				'recursive' => -1,
+				'fields' => array($object . '.event_id'),
+				'group' => array($object . '.event_id', $object . '.id')
+			));
 		}
+		$ids = array_merge($ids[0], $ids[1]);
 		return $ids;
 	}
 
 	public function findAttributeIdsByAttributeTagNames($array) {
 		$ids = array();
 		foreach ($array as $a) {
+			$conditions['OR'][] = array('LOWER(Tag.name) like' => strtolower($a));
+		}
+		$params = array(
+				'recursive' => 1,
+				'conditions' => $conditions,
+				'fields' => array('id')
+		);
+		$result = $this->find('list', $params);
+		$ids = $this->AttributeTag->find('list', array(
+			'conditions' => array('AttributeTag.tag_id' => $result),
+			'recursive' => -1,
+			'fields' => array('AttributeTag.attribute_id'),
+			'group' => array('AttributeTag.attribute_id', 'AttributeTag.id')
+		));
+		return $ids;
+	}
+
+	public function findAttributeRulesByTagNames($array) {
+		$ids = array();
+		foreach ($array as $a) {
 			$conditions['OR'][] = array('LOWER(name) LIKE' => strtolower($a));
 		}
 		$params = array(
 				'recursive' => 1,
-				'contain' => 'AttributeTag',
+				'contain' => array('AttributeTag', 'EventTag'),
 				'conditions' => $conditions
 		);
 		$result = $this->find('all', $params);
+		$searchParams = array(
+			'Attribute' => array(
+				'model' => 'AttributeTag',
+				'key' => 'attribute_id'
+			),
+			'Event' => array(
+				'model' => 'EventTag',
+				'key' => 'event_id'
+			)
+		);
 		foreach ($result as $tag) {
-			foreach ($tag['AttributeTag'] as $attributeTag) {
-				$ids[] = $attributeTag['attribute_id'];
+			foreach ($searchParams as $searchKey => $searchData) {
+				if (!empty($tag[$searchData['model']])) {
+					foreach ($tag[$searchData['model']] as $tagObject) {
+						$ids[$searchKey][] = $tagObject[$searchData['key']];
+					}
+				}
 			}
 		}
 		return $ids;

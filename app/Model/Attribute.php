@@ -2434,24 +2434,40 @@ class Attribute extends AppModel {
 		return $this->IOCExport->buildAll($this->Auth->user(), $event);
 	}
 
-	public function setTagConditions($tags, $conditions, $controller='Events') {
+	/*
+	 * Get a list of tags in the allow/negate format, parse it, build find conditions out of them
+	 * - $conditions contains the previously constructed conditions which will be appended
+	 * - controller can be on an event or attribute level
+	 * - attribute_exclusions is used on Event level searches to build an exclusion list based on
+	 *   rejected attribute tags
+	 */
+	public function setTagConditions($tags, $conditions, $controller='Events', &$attribute_exlusions) {
 		$args = $this->dissectArgs($tags);
 		$tagArray = $this->AttributeTag->Tag->fetchEventTagIds($args[0], $args[1], $controller);
 		$temp = array();
-		foreach ($tagArray[0] as $accepted) {
-			if ($controller === 'attributes') {
-				$temp['OR'][] = array('Attribute.id' => $accepted);
-			}else{
-				$temp['OR'][] = array('Event.id' => $accepted);
+		if ($controller === 'attributes') {
+			foreach ($tagArray[0] as $object => $ids) {
+				if (!isset($temp['OR'][$object . '.id'])) $temp['OR'][$object . '.id'] = array();
+				$temp['OR'][$object . '.id'] = array_merge($temp['OR'][$object . '.id'], $ids);
+			}
+		} else {
+			foreach ($tagArray[0] as $ids) {
+				$temp['OR'][] = array('Event.id' => $ids);
 			}
 		}
 		$conditions['AND'][] = $temp;
 		$temp = array();
-		foreach ($tagArray[1] as $rejected) {
-			if ($controller === 'attributes') {
-				$temp['AND'][] = array('Attribute.id !=' => $rejected);
-			}else{
-				$temp['AND'][] = array('Event.id !=' => $rejected);
+		if ($controller === 'attributes') {
+			foreach ($tagArray[1] as $object => $ids) {
+				if (!isset($temp['AND'][$object . '.id !='])) $temp['AND'][$object . '.id !='] = array();
+				$temp['AND'][$object . '.id !='] = array_merge($temp['AND'][$object . '.id !='], $ids);
+			}
+		} else {
+			foreach ($tagArray[1] as $ids) {
+				$temp['AND'][] = array('Event.id !=' => $ids);
+			}
+			if (!empty($tagArray[2])) {
+				$attribute_exlusions = array_values($tagArray[2]);
 			}
 		}
 		$conditions['AND'][] = $temp;

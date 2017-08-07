@@ -2638,7 +2638,10 @@ class EventsController extends AppController {
 				}
 			}
 			// If we sent any tags along, load the associated tag names for each attribute
-			if ($tags) $conditions = $this->Event->Attribute->setTagConditions($tags, $conditions);
+			if ($tags) {
+				$attribute_exclusions = array();
+				$conditions = $this->Event->Attribute->setTagConditions($tags, $conditions, 'event', $attribute_exclusions);
+			}
 			if ($from) $conditions['AND'][] = array('Event.date >=' => $from);
 			if ($to) $conditions['AND'][] = array('Event.date <=' => $to);
 			if ($publish_timestamp) $conditions = $this->Event->Attribute->setPublishTimestampConditions($publish_timestamp, $conditions);
@@ -2687,7 +2690,8 @@ class EventsController extends AppController {
 				'includeAttachments' => $withAttachments,
 				'metadata' => $metadata,
 				'enforceWarninglist' => $enforceWarninglist,
-				'sgReferenceOnly' => $sgReferenceOnly
+				'sgReferenceOnly' => $sgReferenceOnly,
+				'attribute_exclusions' => $attribute_exclusions
 			));
 			if (!empty($result)) {
 				$result = $this->Whitelist->removeWhitelistedFromArray($result, false);
