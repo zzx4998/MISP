@@ -1379,4 +1379,27 @@ class ServersController extends AppController {
 	public function getInstanceUUID() {
 		return $this->RestResponse->viewData(array('uuid' => Configure::read('MISP.uuid')), $this->response->type());
 	}
+
+	public function taxii() {
+		App::uses('TAXIITool', 'Tools');
+		$taxii = new TAXIITool();
+		$options = array('username' => 'guest', 'password' => 'guest');
+		$services = $taxii->discover('http://hailataxii.com/taxii-discovery-service', $options);
+		$poll_service = false;
+		foreach($services as $service) {
+			if ($service['@service_type'] == 'POLL') $collections_service = $service['taxii_11:Address'];
+		}
+		if (!empty($collections_service)) {
+			debug($collections_service);
+			$collections = $taxii->getCollectionInfo($collections_service, $options);
+		}
+		foreach ($collections as $collection) {
+			debug($collection);
+			$data = $taxii->poll($collection['taxii_11:Polling_Service']['taxii_11:Address'], $collection['@collection_name']);
+			debug($data);
+			throw new Exception();
+		}
+		debug($collections);
+		//$data = $taxii->poll($service['address']);
+	}
 }
