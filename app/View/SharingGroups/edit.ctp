@@ -9,16 +9,16 @@
 		</div>
 		<div id="page1_content" class="multi-page-form-div tabContent" style="width:544px;">
 			<label for="SharingGroupName"><?php echo __('Name');?></label>
-			<input type="text" class="input-xxlarge" placeholder="<?php echo __('Example: Multinational sharing group');?>" id="SharingGroupName" value="<?php echo h($sharingGroup['SharingGroup']['name']); ?>"></input>
+			<input class="form-control" type="text" class="input-xxlarge" placeholder="<?php echo __('Example: Multinational sharing group');?>" id="SharingGroupName" value="<?php echo h($sharingGroup['SharingGroup']['name']); ?>"></input>
 			<label for="SharingGroupReleasability"><?php echo __('Releasable to');?></label>
-			<input type="text" class="input-xxlarge" placeholder="<?php echo __('Example: Community1, Organisation1, Organisation2');?>" id="SharingGroupReleasability" value="<?php echo h($sharingGroup['SharingGroup']['releasability']); ?>"></input>
+			<input class="form-control" type="text" class="input-xxlarge" placeholder="<?php echo __('Example: Community1, Organisation1, Organisation2');?>" id="SharingGroupReleasability" value="<?php echo h($sharingGroup['SharingGroup']['releasability']); ?>"></input>
 			<label for="SharingGroupDescription"><?php echo __('Description');?></label>
 			<textarea class="input-xxlarge" placeholder="<?php echo __('A description of the sharing group.');?>" cols="30" rows="6" id="SharingGroupDescription"><?php echo h($sharingGroup['SharingGroup']['description']); ?></textarea>
 			<div style="display:block;">
-				<input type="checkbox" style="float:left;" title="<?php echo __('Active sharing groups can be selected by users of the local instance when creating events. Generally, sharing groups received through synchronisation will have this disabled until manually enabled.');?>" <?php if ($sharingGroup['SharingGroup']['active']) echo "checked"; ?> id="SharingGroupActive"></input>
+				<input class="form-check-input" type="checkbox" style="float:left;" title="<?php echo __('Active sharing groups can be selected by users of the local instance when creating events. Generally, sharing groups received through synchronisation will have this disabled until manually enabled.');?>" <?php if ($sharingGroup['SharingGroup']['active']) echo "checked"; ?> id="SharingGroupActive"></input>
 				<label for="SharingGroupActive" style="padding-left:20px;"><?php echo __('Make the sharing group selectable (active)');?></label>
 			</div>
-			<span role="button" tabindex="0" aria-label="<?php echo __('Next page');?>" title="<?php echo __('Next page');?>" class="btn btn-inverse" onClick="simpleTabPage(2);"><?php echo __('Next page');?></span>
+			<span role="button" tabindex="0" aria-label="<?php echo __('Next page');?>" title="<?php echo __('Next page');?>" class="btn btn-dark" onClick="simpleTabPage(2);"><?php echo __('Next page');?></span>
 		</div>
 		<div id="page2_content" class="multi-page-form-div tabContent" style="display:none;width:544px;">
 			<div class="tabMenuFixedContainer">
@@ -34,8 +34,8 @@
 					<th><?php echo __('Actions');?></th>
 				</tr>
 			</table>
-			<span role="button" tabindex="0" aria-label="<?php echo __('Previous page');?>" title="<?php echo __('Previous page');?>" class="btn btn-inverse" onClick="simpleTabPage(1);"><?php echo __('Previous page');?></span>
-			<span role="button" tabindex="0" aria-label="<?php echo __('Next page');?>" title="<?php echo __('Next page');?>" class="btn btn-inverse" onClick="simpleTabPage(3);"><?php echo __('Next page');?></span>
+			<span role="button" tabindex="0" aria-label="<?php echo __('Previous page');?>" title="<?php echo __('Previous page');?>" class="btn btn-dark" onClick="simpleTabPage(1);"><?php echo __('Previous page');?></span>
+			<span role="button" tabindex="0" aria-label="<?php echo __('Next page');?>" title="<?php echo __('Next page');?>" class="btn btn-dark" onClick="simpleTabPage(3);"><?php echo __('Next page');?></span>
 		</div>
 		<div id="page3_content" class="multi-page-form-div tabContent" style="display:none;width:544px;">
 		<?php
@@ -47,7 +47,7 @@
 			}
 		?>
 			<div style="display:block;">
-				<input type="checkbox" style="float:left;" title="<?php echo __('Enable roaming mode for this sharing group. Roaming mode will allow the sharing group to be passed to any instance where the remote recipient is contained in the organisation list. It is preferred to list the recipient instances instead.');?>" <?php echo $checked; ?> id="SharingGroupRoaming"></input>
+				<input class="form-check-input" type="checkbox" style="float:left;" title="<?php echo __('Enable roaming mode for this sharing group. Roaming mode will allow the sharing group to be passed to any instance where the remote recipient is contained in the organisation list. It is preferred to list the recipient instances instead.');?>" <?php echo $checked; ?> id="SharingGroupRoaming"></input>
 				<label for="SharingGroupRoaming" style="padding-left:20px;"><?php echo __('<b>Enable roaming mode</b> for this sharing group (pass the event to any connected instance where the sync connection is tied to an organisation contained in the SG organisation list).');?></label>
 			</div>
 			<div id="serverList" <?php echo $serverDivVisibility; ?>>
@@ -63,8 +63,8 @@
 					</tr>
 				</table>
 			</div>
-			<span role="button" tabindex="0" aria-label="<?php echo __('Previous page');?>" title="<?php echo __('Previous page');?>" class="btn btn-inverse" onClick="simpleTabPage(2);"><?php echo __('Previous page');?></span>
-			<span role="button" tabindex="0" aria-label="<?php echo __('Next page');?>" title="<?php echo __('Next page');?>" class="btn btn-inverse" onClick="simpleTabPage(4);"><?php echo __('Next page');?></span>
+			<span role="button" tabindex="0" aria-label="<?php echo __('Previous page');?>" title="<?php echo __('Previous page');?>" class="btn btn-dark" onClick="simpleTabPage(2);"><?php echo __('Previous page');?></span>
+			<span role="button" tabindex="0" aria-label="<?php echo __('Next page');?>" title="<?php echo __('Next page');?>" class="btn btn-dark" onClick="simpleTabPage(4);"><?php echo __('Next page');?></span>
 	</div>
 	</fieldset>
 	<div id="page4_content" class="multi-page-form-div tabContent" style="display:none;width:544px;">
@@ -79,7 +79,7 @@
 			//echo $this->Form->button(__('Submit'), array('class' => 'btn btn-primary'));
 			echo $this->Form->end();
 		?>
-		<span role="button" tabindex="0" aria-label="<?php echo __('Previous page');?>" title="<?php echo __('Previous page');?>" class="btn btn-inverse" onClick="simpleTabPage(3);"><?php echo __('Previous page');?></span>
+		<span role="button" tabindex="0" aria-label="<?php echo __('Previous page');?>" title="<?php echo __('Previous page');?>" class="btn btn-dark" onClick="simpleTabPage(3);"><?php echo __('Previous page');?></span>
 		<span role="button" tabindex="0" aria-label="<?php echo __('Submit and create sharing group');?>" title="<?php echo __('Submit and create sharing group');?>" class="btn btn-primary" onClick="sgSubmitForm('Edit');">Submit</span>
 	</div>
 </div>

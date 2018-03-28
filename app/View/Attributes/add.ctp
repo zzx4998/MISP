@@ -13,10 +13,12 @@
 			echo $this->Form->input('category', array(
 				'empty' => __('(choose one)'),
 				'label' => __('Category ') . $this->element('formInfo', array('type' => 'category')),
+				'class' => 'form-control'
 			));
 			echo $this->Form->input('type', array(
 				'empty' => __('(first choose category)'),
 				'label' => __('Type ') . $this->element('formInfo', array('type' => 'type')),
+				'class' => 'form-control'
 			));
 
 			$initialDistribution = 5;
@@ -36,6 +38,7 @@
 				'options' => array($distributionLevels),
 				'label' => __('Distribution ') . $this->element('formInfo', array('type' => 'distribution')),
 				'selected' => $initialDistribution,
+				'class' => 'form-control'
 			));
 			?>
 				<div id="SGContainer" style="display:none;">
@@ -44,6 +47,7 @@
 					echo $this->Form->input('sharing_group_id', array(
 							'options' => array($sharingGroups),
 							'label' => __('Sharing Group'),
+							'class' => 'form-control'
 					));
 				}
 			?>
@@ -53,7 +57,7 @@
 					'type' => 'textarea',
 					'error' => array('escape' => false),
 					'div' => 'input clear',
-					'class' => 'input-xxlarge'
+					'class' => 'form-control input-xxlarge'
 			));
 			?>
 				<div class="input clear"></div>
@@ -63,7 +67,7 @@
 					'label' => __('Contextual Comment'),
 					'error' => array('escape' => false),
 					'div' => 'input clear',
-					'class' => 'input-xxlarge'
+					'class' => 'form-control input-xxlarge'
 			));
 			?>
 			<div class="input clear"></div>
@@ -71,9 +75,11 @@
 			echo $this->Form->input('to_ids', array(
 						'checked' => false,
 						'label' => __('for Intrusion Detection System'),
+						'class' => 'form-control'
 			));
 			echo $this->Form->input('batch_import', array(
-					'type' => 'checkbox'
+					'type' => 'checkbox',
+					'class' => 'check-control'
 			));
 		?>
 		</div>
@@ -89,7 +95,7 @@
 					<p style="color:red;font-weight:bold;display:none;text-align:center;margin-bottom:0px;" id="warning-message"><?php echo __('Warning: You are about to share data that is of a classified nature. Make sure that you are authorised to share this.'); ?></p>
 				</td>
 				<td style="vertical-align:bottom;">
-					<span class="btn btn-inverse" title="<?php echo __('Cancel'); ?>" role="button" tabindex="0" aria-label="<?php echo __('Cancel'); ?>" id="cancel_attribute_add"><?php echo __('Cancel'); ?></span>
+					<span class="btn btn-dark" title="<?php echo __('Cancel'); ?>" role="button" tabindex="0" aria-label="<?php echo __('Cancel'); ?>" id="cancel_attribute_add"><?php echo __('Cancel'); ?></span>
 				</td>
 				</tr>
 			</table>

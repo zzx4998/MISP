@@ -1,19 +1,19 @@
-<div class="pagination">
-	<ul>
-	<?php
-		$this->Paginator->options(array(
-				'update' => '#clusters_div',
-				'evalScripts' => true,
-				'before' => '$(".progress").show()',
-				'complete' => '$(".progress").hide()',
-		));
+<div>
+		<ul class="pagination">
+			<?php
+				$this->Paginator->options(array(
+						'update' => '.span12',
+						'evalScripts' => true,
+						'before' => '$(".progress").show()',
+						'complete' => '$(".progress").hide()',
+				));
 
-		echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'prev disabled', 'escape' => false, 'disabledTag' => 'span'));
-		echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'span'));
-		echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'next disabled', 'escape' => false, 'disabledTag' => 'span'));
-	?>
-	</ul>
-</div>
+				echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'prev disabled', 'escape' => false, 'disabledTag' => 'span'));
+				echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'span'));
+				echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'next disabled', 'escape' => false, 'disabledTag' => 'span'));
+			?>
+		</ul>
+	</div>
 <?php
 	$tab = "Center";
 	$filtered = false;
@@ -37,7 +37,7 @@
 			</span>
 		<?php endforeach; ?>
 		<span class="tabMenuFixed tabMenuFixedRight tabMenuSides">
-			<?php echo $this->Html->link('', array('controller' => 'galaxies', 'action' => 'view/'. $galaxy_id), array('class' => 'icon-remove', 'title' => 'Remove filters'));?>
+			<?php echo $this->Html->link('', array('controller' => 'galaxies', 'action' => 'view/'. $galaxy_id), array('class' => 'fa fa-remove', 'title' => 'Remove filters'));?>
 		</span>
 	<?php endif;?>
 	<span style="border-right:0px !important;">
@@ -83,7 +83,7 @@
 			<td><?php echo h($item['GalaxyCluster']['description']); ?>&nbsp;</td>
 			<td class="short action-links">
 				<?php echo $this->Html->link('', array('controller' => 'galaxies', 'action' => 'viewGraph', $item['GalaxyCluster']['id']), array('class' => 'fa fa-share-alt', 'title' => 'View graph'));?>
-				<?php echo $this->Html->link('', array('action' => 'view', $item['GalaxyCluster']['id']), array('class' => 'icon-list-alt', 'title' => 'View'));?>
+				<?php echo $this->Html->link('', array('action' => 'view', $item['GalaxyCluster']['id']), array('class' => 'fa fa-list', 'title' => 'View'));?>
 			</td>
 		</tr>
 	<?php
@@ -95,15 +95,16 @@
 	echo $this->Paginator->counter(array('format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')));
 ?>
 </p>
-<div class="pagination">
-	<ul>
-	<?php
-		echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'prev disabled', 'escape' => false, 'disabledTag' => 'span'));
-		echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'span'));
-		echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'next disabled', 'escape' => false, 'disabledTag' => 'span'));
-	?>
-	</ul>
-</div>
+<div>
+		<ul class="pagination">
+			<?php
+
+				echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'prev disabled', 'escape' => false, 'disabledTag' => 'span'));
+				echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'span'));
+				echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'next disabled', 'escape' => false, 'disabledTag' => 'span'));
+			?>
+		</ul>
+	</div>
 
 <script type="text/javascript">
 	$(document).ready(function(){

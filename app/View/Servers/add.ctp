@@ -5,9 +5,11 @@
 	<?php
 		echo $this->Form->input('url', array(
 			'label' => __('Base URL'),
+			'class' => 'form-control'
 		));
 		echo $this->Form->input('name', array(
 				'label' => __('Instance name'),
+				'class' => 'form-control'
 		));
 		if (!empty($host_org_id)):
 	?>
@@ -18,6 +20,7 @@
 				echo $this->Form->input('internal', array(
 						'label' => __('Internal instance'),
 						'type' => 'checkbox',
+						'class' => 'form-check-input'
 				));
 	?>
 			</div>
@@ -34,32 +37,34 @@
 		echo $this->Form->input('organisation_type', array(
 				'label' => __('Remote Sync Organisation Type'),
 				'options' => $organisationOptions,
+				'class' => 'form-control'
 		));
 	?>
 		<div id="ServerExternalContainer" class="input select hiddenField" style="display:none;">
 			<label for="ServerExternal"><?php echo __('External Organisation');?></label>
-			<select id="ServerExternal">
+			<select class="form-control" id="ServerExternal">
 				<?php foreach ($externalOrganisations as $k => $v) echo '<option value="' . $k . '">' . h($v) . '</option>'; ?>
 			</select>
 		</div>
 		<div id="ServerLocalContainer" class="input select hiddenField" style="display:none;">
 			<label for="ServerLocal"><?php echo __('Local Organisation');?></label>
-			<select id="ServerLocal">
+			<select class="form-control" id="ServerLocal">
 				<?php foreach ($localOrganisations as $k => $v) echo '<option value="' . $k . '">' . h($v) . '</option>'; ?>
 			</select>
 		</div>
 		<div id="ServerExternalNameContainer" class="input select hiddenField" style="display:none;">
 			<label for="ServerExternalName"><?php echo __('Remote Organisation\'s Name');?></label>
-			<input type="text" id="ServerExternalName" <?php if (isset($this->request->data['Server']['external_name'])) echo 'value="' . $this->request->data['Server']['external_name'] . '"';?>>
+			<input class="form-control" type="text" id="ServerExternalName" <?php if (isset($this->request->data['Server']['external_name'])) echo 'value="' . $this->request->data['Server']['external_name'] . '"';?>>
 		</div>
 		<div id="ServerExternalUuidContainer" class="input select hiddenField" style="display:none;">
 			<label for="ServerExternalUuid"><?php echo __('Remote Organisation\'s Uuid');?></label>
-			<input type="text" id="ServerExternalUuid" <?php if (isset($this->request->data['Server']['external_uuid'])) echo 'value="' . $this->request->data['Server']['external_uuid'] . '"';?>>
+			<input class="form-control" type="text" id="ServerExternalUuid" <?php if (isset($this->request->data['Server']['external_uuid'])) echo 'value="' . $this->request->data['Server']['external_uuid'] . '"';?>>
 		</div>
 		<div class = "input clear"></div>
 	<?php
 		endif;
 		echo $this->Form->input('authkey', array(
+			'class' => 'form-control'
 		));
 	?>
 		<div class = "input clear" style="width:100%;"><hr /></div>
@@ -75,18 +80,23 @@
 	<?php
 		echo $this->Form->input('unpublish_event', array(
 			'type' => 'checkbox',
+			'class' => 'form-check-input'
+      
 		));
 	?>
 		<div class = "input clear"></div>
 	<?php
 		echo $this->Form->input('publish_without_email', array(
-			'type' => 'checkbox',
+			'type' => 'checkbox',  
+			'class' => 'form-check-input'
 		));
 	?>
 		<div class = "input clear"></div>
 	<?php
 		echo $this->Form->input('self_signed', array(
 			'type' => 'checkbox',
+			'class' => 'form-check-input'
+      
 		));
 
 		echo $this->Form->input('Server.submitted_cert', array(
@@ -106,13 +116,13 @@
 		<span id="push_tags_NOT" style="display:none;"><?php echo __('Events with the following tags blocked: ');?><span id="push_tags_NOT_text" style="color:red;"></span><br /></span>
 		<span id="push_orgs_OR" style="display:none;"><?php echo __('Events with the following organisations allowed: ');?><span id="push_orgs_OR_text" style="color:green;"></span><br /></span>
 		<span id="push_orgs_NOT" style="display:none;"><?php echo __('Events with the following organisations blocked: ');?><span id="push_orgs_NOT_text" style="color:red;"></span><br /></span>
-		<span id="push_modify" class="btn btn-inverse" style="line-height:10px; padding: 4px 4px;"><?php echo __('Modify');?></span><br /><br />
+		<span id="push_modify" class="btn btn-dark" style="line-height:10px; padding: 4px 4px;"><?php echo __('Modify');?></span><br /><br />
 		<b><?php echo __('Pull rules:');?></b><br />
 		<span id="pull_tags_OR" style="display:none;"><?php echo __('Events with the following tags allowed: ');?><span id="pull_tags_OR_text" style="color:green;"></span><br /></span>
 		<span id="pull_tags_NOT" style="display:none;"><?php echo __('Events with the following tags blocked: ');?><span id="pull_tags_NOT_text" style="color:red;"></span><br /></span>
 		<span id="pull_orgs_OR" style="display:none;"><?php echo __('Events with the following organisations allowed: ');?><span id="pull_orgs_OR_text" style="color:green;"></span><br /></span>
 		<span id="pull_orgs_NOT" style="display:none;"><?php echo __('Events with the following organisations blocked: ');?><span id="pull_orgs_NOT_text" style="color:red;"></span><br /></span>
-		<span id="pull_modify"  class="btn btn-inverse" style="line-height:10px; padding: 4px 4px;">Modify</span><br /><br />
+		<span id="pull_modify"  class="btn btn-dark" style="line-height:10px; padding: 4px 4px;">Modify</span><br /><br />
 	<?php
 		echo $this->Form->input('push_rules', array('style' => 'display:none;', 'label' => false, 'div' => false));
 		echo $this->Form->input('pull_rules', array('style' => 'display:none;', 'label' => false, 'div' => false));

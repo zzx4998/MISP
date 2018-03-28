@@ -3,8 +3,12 @@
 	<fieldset>
 		<legend><?php echo __('Add Import Regexp');?></legend>
 	<?php
-		echo $this->Form->input('regexp');
-		echo $this->Form->input('replacement');
+		echo $this->Form->input('regexp', array(
+			'class' => 'form-control'			
+		));
+		echo $this->Form->input('replacement', array(
+			'class' => 'form-control'			
+		));
 	?>
 	<div class = "clear">
 			<?php echo __('Types to be affected by the filter (Setting \'all\' will override the other settings)');?>
@@ -15,6 +19,7 @@
 		echo $this->Form->input('all', array(
 			'checked' => false,
 			'label' => 'All',
+			'class' => 'form-check-input-input'
 		));
 	?>
 	</div>
@@ -24,6 +29,7 @@
 			echo $this->Form->input($key, array(
 				'checked' => false,
 				'label' => $type,
+				'class' => 'form-check-input-input'
 			));
 		}
 	?>

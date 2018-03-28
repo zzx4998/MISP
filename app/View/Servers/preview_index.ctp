@@ -1,21 +1,20 @@
 <div class="events <?php if (!$ajax) echo 'index'; ?>">
 	<?php $serverName = $server['Server']['name'] ? '"' . $server['Server']['name'] . '" (' . $server['Server']['url'] . ')' : '"' . $server['Server']['url'] . '"'; ?>
 	<h4 class="visibleDL notPublished" ><?php echo __('You are currently viewing the event index of the remote instance %s', h($serverName));?></h4>
-	<div class="pagination">
-		<ul>
-		<?php
-			$eventViewURL = '/servers/previewEvent/' . h($id) . '/';
+	<div>
+		<ul class="pagination">
+			<?php
 			$this->Paginator->options(array(
-				'url' => $id,
 				'update' => '.span12',
 				'evalScripts' => true,
 				'before' => '$(".progress").show()',
 				'complete' => '$(".progress").hide()',
 			));
-			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'prev disabled', 'escape' => false, 'disabledTag' => 'span'));
-			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'currentClass' => 'red', 'currentTag' => 'span'));
-			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'next disabled', 'escape' => false, 'disabledTag' => 'span'));
-		?>
+
+			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span'));
+			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'class' => 'page-link', 'currentClass' => 'page-link', 'currentTag' => 'span', 'currentClass' => 'p-active'));
+			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span', 'disabledClass' => 'page-link'));
+			?>
 		</ul>
 	</div>
 	<?php
@@ -30,7 +29,7 @@
 
 	<div class="tabMenuFixedContainer" style="display:inline-block;">
 		<span class="tabMenuFixed tabMenuFixed<?php echo $tab; ?> tabMenuSides">
-			<span id="create-button" title="<?php echo __('Modify filters');?>" role="button" tabindex="0" aria-label="<?php echo __('Modify filters');?>" class="icon-search useCursorPointer" onClick="getPopup('<?php echo h($urlparams);?>', 'servers', 'filterEventIndex/<?php echo h($id);?>');"></span>
+			<span id="create-button" title="<?php echo __('Modify filters');?>" role="button" tabindex="0" aria-label="<?php echo __('Modify filters');?>" class="fa fa-search icon-search useCursorPointer" onClick="getPopup('<?php echo h($urlparams);?>', 'servers', 'filterEventIndex/<?php echo h($id);?>');"></span>
 		</span>
 		<?php if ($filtered):
 			foreach ($passedArgsArray as $k => $v):?>
@@ -39,7 +38,7 @@
 				</span>
 			<?php endforeach; ?>
 		<span class="tabMenuFixed tabMenuFixedRight tabMenuSides">
-			<?php echo $this->Html->link('', '/servers/previewIndex/' . h($id), array('class' => 'icon-remove', 'title' => __('Remove filters')));?>
+			<?php echo $this->Html->link('', '/servers/previewIndex/' . h($id), array('class' => 'fa fa-remove', 'title' => __('Remove filters')));?>
 		</span>
 		<?php endif;?>
 		<span id="quickFilterButton" role="button" tabindex="0" aria-label="<?php echo __('Filter');?>" title="<?php echo __('Filter');?>" class="tabMenuFilterFieldButton useCursorPointer" onClick='quickFilterRemoteEvents(<?php echo h($passedArgs);?>, <?php echo h($id); ?>);'><?php echo __('Filter');?></span>
@@ -144,8 +143,8 @@
 				?>
 			</td>
 			<td class="short action-links">
-				<?php if ($event['Event']['published']) echo $this->Form->postLink('', '/servers/pull/' . $server['Server']['id'] . '/' . $event['Event']['id'], array('class' => 'icon-download', 'title' => __('Fetch the event')), __('Are you sure you want to fetch and save this event on your instance?', $this->Form->value('Server.id'))); ?>
-				<a href='<?php echo $eventViewURL . h($event['Event']['id']);?>' class = "icon-list-alt" title = "<?php echo __('View');?>"></a>
+				<?php if ($event['Event']['published']) echo $this->Form->postLink('', '/servers/pull/' . $server['Server']['id'] . '/' . $event['Event']['id'], array('class' => 'fa fa-download', 'title' => __('Fetch the event')), __('Are you sure you want to fetch and save this event on your instance?', $this->Form->value('Server.id'))); ?>
+				<a href='<?php echo $eventViewURL . h($event['Event']['id']);?>' class = "fa fa-list" title = "<?php echo __('View');?>"></a>
 			</td>
 		</tr>
 		<?php endforeach; ?>
@@ -158,13 +157,15 @@
 	));
 	?>
 	</p>
-	<div class="pagination">
-		<ul>
-		<?php
-			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'prev disabled', 'escape' => false, 'disabledTag' => 'span'));
-			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'currentClass' => 'red', 'currentTag' => 'span'));
-			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'next disabled', 'escape' => false, 'disabledTag' => 'span'));
-		?>
+	<div>
+		<ul class="pagination">
+			<?php
+
+
+			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span'));
+			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'class' => 'page-link', 'currentClass' => 'page-link', 'currentTag' => 'span', 'currentClass' => 'p-active'));
+			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span', 'disabledClass' => 'page-link'));
+			?>
 		</ul>
 	</div>
 </div>

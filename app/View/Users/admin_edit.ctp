@@ -13,7 +13,7 @@
 				$password = false;
 			else:
 				$userType = Configure::read('Plugin.CustomAuth_name') ? Configure::read('Plugin.CustomAuth_name') : 'External authentication';
-				echo $this->Form->input('external_auth_required', array('type' => 'checkbox', 'label' => $userType . ' user'));
+				echo $this->Form->input('external_auth_required', array('type' => 'checkbox', 'class' => 'form-check-input','label' => $userType . ' user'));
 			endif;
 
 	?>
@@ -29,7 +29,7 @@
 	<div class="clear"></div>
 	<div id="passwordDivDiv">
 		<?php
-			echo $this->Form->input('enable_password', array('type' => 'checkbox', 'label' => __('Set password')));
+			echo $this->Form->input('enable_password', array('type' => 'checkbox','class' => 'form-check-input', 'label' => __('Set password')));
 		?>
 		<div id="PasswordDiv">
 			<div class="clear"></div>
@@ -37,9 +37,10 @@
 				$passwordPopover = '<span class=\"blue bold\">Length</span>: ' . h($length) . '<br />';
 				$passwordPopover .= '<span class=\"blue bold\">Complexity</span>: ' . h($complexity);
 				echo $this->Form->input('password', array(
+					'class' => 'form-control',
 					'label' => __('Password') . ' <span id = "PasswordPopover" class="icon-info-sign" ></span>'
 				));
-				echo $this->Form->input('confirm_password', array('type' => 'password', 'div' => array('class' => 'input password required')));
+				echo $this->Form->input('confirm_password', array('class' => 'form-control', 'type' => 'password', 'div' => array('class' => 'input password required')));
 			?>
 		</div>
 	</div>
@@ -63,13 +64,13 @@
 	<?php
 		echo $this->Form->input('gpgkey', array('label' => __('GnuPG key'), 'div' => 'clear', 'class' => 'input-xxlarge', 'placeholder' => __('Paste the user\'s GnuPG key here or try to retrieve it from the MIT key server by clicking on "Fetch GnuPG key" below.')));
 	?>
-		<div class="clear"><span role="button" tabindex="0" aria-label="<?php echo __('Fetch the user\'s GnuPG key');?>" onClick="lookupPGPKey('UserEmail');" class="btn btn-inverse" style="margin-bottom:10px;"><?php echo __('Fetch GnuPG key');?></span></div>
+		<div class="clear"><span role="button" tabindex="0" aria-label="<?php echo __('Fetch the user\'s GnuPG key');?>" onClick="lookupPGPKey('UserEmail');" class="btn btn-dark" style="margin-bottom:10px;"><?php echo __('Fetch GnuPG key');?></span></div>
 	<?php
 		if (Configure::read('SMIME.enabled')) echo $this->Form->input('certif_public', array('label' => __('SMIME key'), 'div' => 'clear', 'class' => 'input-xxlarge', 'placeholder' => __('Paste the user\'s SMIME public key in PEM format here.')));
 		echo $this->Form->input('termsaccepted', array('label' => __('Terms accepted')));
-		echo $this->Form->input('change_pw', array('type' => 'checkbox', 'label' => __('Change Password')));
-		echo $this->Form->input('autoalert', array('label' => __('Receive alerts when events are published'), 'type' => 'checkbox'));
-		echo $this->Form->input('contactalert', array('label' => __('Receive alerts from "contact reporter" requests'), 'type' => 'checkbox'));
+		echo $this->Form->input('change_pw', array('type' => 'checkbox', 'class' => 'form-check-input', 'label' => __('Change Password')));
+		echo $this->Form->input('autoalert', array('label' => __('Receive alerts when events are published'), 'class' => 'form-check-input', 'type' => 'checkbox'));
+		echo $this->Form->input('contactalert', array('label' => __('Receive alerts from "contact reporter" requests'), 'class' => 'form-check-input', 'type' => 'checkbox'));
 
 		echo $this->Html->link(__('Reset Auth Key'), array('controller' => 'users', 'action' => 'resetauthkey', $currentId));
 	?>

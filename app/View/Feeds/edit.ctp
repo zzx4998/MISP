@@ -37,16 +37,16 @@
 				));
 		?>
 			<div>
-				<span id="basicAuthFormEnable" class="btn btn-inverse quick-popover" style="line-height:10px; padding: 4px 4px;"><?php echo __('Add Basic Auth');?></span>
+				<span id="basicAuthFormEnable" class="btn btn-dark quick-popover" style="line-height:10px; padding: 4px 4px;"><?php echo __('Add Basic Auth');?></span>
 				<div id="basicAuthForm" class="quick-form" style="display:none;">
 						<fieldset>
 							<div class="input">
 								<label for="BasicAuthUsername"><?php echo __('Username');?></label>
-								<input class="form-control" type="text" id="BasicAuthUsername"></input><br />
+								<input class="form-control" class="form-control" type="text" id="BasicAuthUsername"></input><br />
 							</div>
 							<div class="input">
 								<label for ="BasicAuthPassword"><?php echo __('Password');?></label>
-								<input class="form-control" type="text" id="BasicAuthPassword"></input><br />
+								<input class="form-control" class="form-control" type="text" id="BasicAuthPassword"></input><br />
 							</div>
 						</fieldset>
 						<span class="btn-inverse btn" onClick="add_basic_auth();" style="line-height:10px; padding: 4px 4px;"><?php echo __('Add basic auth header'); ?></span>
@@ -133,7 +133,7 @@
 			echo $this->Form->input('publish', array(
 					'label' => __('Auto Publish'),
 					'type' => 'checkbox',
-					'class' => 'form-control'
+					'class' => 'form-check-input'
 			));
 		?>
 		</div>
@@ -143,7 +143,7 @@
 					'label' => __('Override IDS Flag'),
 					'title' => __('If checked, the IDS flags will always be set to off when pulling from this feed'),
 					'type' => 'checkbox',
-					'class' => 'form-control'
+					'class' => 'form-check-input'
 			));
 		?>
 		</div>
@@ -153,7 +153,7 @@
 					'label' => __('Delta Merge'),
 					'title' => __('Merge attributes (only add new attributes, remove revoked attributes)'),
 					'type' => 'checkbox',
-					'class' => 'form-control'
+					'class' => 'form-check-input'
 			));
 		?>
 		</div>
@@ -188,7 +188,7 @@
 	<span id="pull_tags_NOT" style="display:none;"><?php echo __('Events with the following tags blocked');?>: <span id="pull_tags_NOT_text" style="color:red;"></span><br /></span>
 	<span id="pull_orgs_OR" style="display:none;"><?php echo __('Events with the following organisations allowed');?>: <span id="pull_orgs_OR_text" style="color:green;"></span><br /></span>
 	<span id="pull_orgs_NOT" style="display:none;"><?php echo __('Events with the following organisations blocked');?>: <span id="pull_orgs_NOT_text" style="color:red;"></span><br /></span>
-	<span id="pull_modify"  class="btn btn-inverse" style="line-height:10px; padding: 4px 4px;"><?php echo __('Modify');?></span><br /><br />
+	<span id="pull_modify"  class="btn btn-dark" style="line-height:10px; padding: 4px 4px;"><?php echo __('Modify');?></span><br /><br />
 	<?php
 	echo $this->Form->button(__('Edit'), array('class' => 'btn btn-primary'));
 	echo $this->Form->end();

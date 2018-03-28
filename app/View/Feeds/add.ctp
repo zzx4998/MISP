@@ -53,25 +53,25 @@
 			echo $this->Form->input('headers', array(
 				'label' => __('Any headers to be passed with requests (for example: Authorization)'),
 				'div' => 'clear',
-				'class' => 'input-xxlarge',
+				'class' => 'form-control input-xxlarge',
 				'type' => 'textarea',
 				'placeholder' => __('Line break separated list of headers in the "headername: value" format')
 			));
 	?>
 			<div>
-				<span id="basicAuthFormEnable" class="btn btn-inverse quick-popover" style="line-height:10px; padding: 4px 4px;"><?php echo __('Add Basic Auth');?></span>
+				<span id="basicAuthFormEnable" class="btn btn-dark quick-popover"><?php echo __('Add Basic Auth');?></span>
 				<div id="basicAuthForm" class="quick-form" style="display:none;">
 						<fieldset>
 							<div class="input">
 								<label for="BasicAuthUsername"><?php echo __('Username');?></label>
-								<input class="form-control" type="text" id="BasicAuthUsername"></input><br />
+								<input class="form-control" class="form-control" type="text" id="BasicAuthUsername"></input><br />
 							</div>
 							<div class="input">
 								<label for ="BasicAuthPassword"><?php echo __('Password');?></label>
-								<input class="form-control" type="text" id="BasicAuthPassword"></input><br />
+								<input class="form-control" class="form-control" type="text" id="BasicAuthPassword"></input><br />
 							</div>
 						</fieldset>
-						<span class="btn-inverse btn" onClick="add_basic_auth();" style="line-height:10px; padding: 4px 4px;"><?php echo __('Add basic auth header'); ?></span>
+						<span class="btn-inverse btn" onClick="add_basic_auth();"><?php echo __('Add basic auth header'); ?></span>
 				</div>
 			</div><br />
 		</div>
@@ -100,7 +100,7 @@
 				echo $this->Form->input('Feed.settings.csv.value', array(
 						'label' => __('Value field(s) in the CSV'),
 						'title' => __('Select one or several fields that should be parsed by the CSV parser and converted into MISP attributes'),
-						'div' => 'input clear',
+						'div' => 'form-control input clear',
 						'placeholder' => __('2,3,4 (column position separated by commas)'),
 						'class' => 'form-control span6'
 				));
@@ -135,7 +135,7 @@
 					'label' => __('Auto Publish'),
 					'title' => __('Publish events directly after pulling the feed - if you would like to review the event before publishing uncheck this'),
 					'type' => 'checkbox',
-					'class' => 'form-control'
+					'class' => 'form-check-input'
 			));
 		?>
 		</div>
@@ -145,7 +145,7 @@
 					'label' => __('Override IDS Flag'),
 					'title' => __('If checked, the IDS flags will always be set to off when pulling from this feed'),
 					'type' => 'checkbox',
-					'class' => 'form-control'
+					'class' => 'form-check-input'
 			));
 		?>
 		</div>
@@ -155,7 +155,7 @@
 					'label' => __('Delta Merge'),
 					'title' => __('Merge attributes (only add new attributes, remove revoked attributes)'),
 					'type' => 'checkbox',
-					'class' => 'form-control'
+					'class' => 'form-check-input'
 			));
 		?>
 		</div>
@@ -165,6 +165,7 @@
 				'div' => 'input clear',
 				'label' => __('Distribution'),
 				'selected' => 3,
+				'class' => 'form-control'
 		));
 	?>
 		<div id="SGContainer" style="display:none;">
@@ -173,6 +174,7 @@
 			echo $this->Form->input('sharing_group_id', array(
 					'options' => array($sharingGroups),
 					'label' => __('Sharing Group'),
+					'class' => 'form-control'
 			));
 		}
 	?>
@@ -183,6 +185,7 @@
 				'options' => $tags,
 				'label' => __('Default Tag'),
 				'selected' => 0,
+				'class' => 'form-control'
 		));
 		echo $this->Form->input('pull_rules', array('style' => 'display:none;', 'label' => false, 'div' => false));
 	?>
@@ -192,7 +195,7 @@
 	<span id="pull_tags_NOT" style="display:none;"><?php echo __('Events with the following tags blocked');?>: <span id="pull_tags_NOT_text" style="color:red;"></span><br /></span>
 	<span id="pull_orgs_OR" style="display:none;"><?php echo __('Events with the following organisations allowed');?>: <span id="pull_orgs_OR_text" style="color:green;"></span><br /></span>
 	<span id="pull_orgs_NOT" style="display:none;"><?php echo __('Events with the following organisations blocked');?>: <span id="pull_orgs_NOT_text" style="color:red;"></span><br /></span>
-	<span id="pull_modify"  class="btn btn-inverse" style="line-height:10px; padding: 4px 4px;"><?php echo __('Modify');?></span><br /><br />
+	<span id="pull_modify"  class="btn btn-dark"><?php echo __('Modify');?></span><br /><br />
 	<?php
 	echo $this->Form->button(__('Add'), array('class' => 'btn btn-primary'));
 	echo $this->Form->end();

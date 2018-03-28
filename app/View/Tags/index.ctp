@@ -8,20 +8,20 @@
 ?>
 <div class="tags index">
 	<h2><?php echo $favouritesOnly ? __('Your Favourite Tags') : __('Tags');?></h2>
-	<div class="pagination">
-		<ul>
-		<?php
-		$this->Paginator->options(array(
-			'update' => '.span12',
-			'evalScripts' => true,
-			'before' => '$(".progress").show()',
-			'complete' => '$(".progress").hide()',
-		));
+	<div>
+		<ul class="pagination">
+			<?php
+			$this->Paginator->options(array(
+				'update' => '.span12',
+				'evalScripts' => true,
+				'before' => '$(".progress").show()',
+				'complete' => '$(".progress").hide()',
+			));
 
-			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'prev disabled', 'escape' => false, 'disabledTag' => 'span'));
-			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'span'));
-			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'next disabled', 'escape' => false, 'disabledTag' => 'span'));
-		?>
+			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span'));
+			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'class' => 'page-link', 'currentClass' => 'page-link', 'currentTag' => 'span', 'currentClass' => 'p-active'));
+			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span', 'disabledClass' => 'page-link'));
+			?>
 		</ul>
 	</div>
 	<div id="hiddenFormDiv">
@@ -49,7 +49,7 @@
 				</span>
 			<?php endforeach; ?>
 			<span class="tabMenuFixed tabMenuFixedRight tabMenuSides">
-				<?php echo $this->Html->link('', array('controller' => 'tags', 'action' => 'index'), array('class' => 'icon-remove', 'title' => __('Remove filters')));?>
+				<?php echo $this->Html->link('', array('controller' => 'tags', 'action' => 'index'), array('class' => 'fa fa-remove', 'title' => __('Remove filters')));?>
 			</span>
 		<?php endif;?>
 		<span style="border-right:0px !important;">
@@ -79,7 +79,7 @@
 foreach ($list as $k => $item): ?>
 	<tr>
 		<td class="short"><?php echo h($item['Tag']['id']); ?>&nbsp;</td>
-		<td class="short"><span class="<?php echo ($item['Tag']['exportable'] ? 'icon-ok' : 'icon-remove'); ?>"></span></td>
+		<td class="short"><span class="<?php echo ($item['Tag']['exportable'] ? 'fa fa-check' : 'fa fa-remove'); ?>"></span></td>
 		<td class="short"><span class="icon-<?php echo $item['Tag']['hide_tag'] ? 'ok' : 'remove'; ?>"></span></td>
 		<td><a href="<?php echo $baseurl . "/events/index/searchtag:" . $item['Tag']['id']; ?>" class="tag" style="background-color: <?php echo h($item['Tag']['colour']); ?>;color:<?php echo $this->TextColour->getTextColour($item['Tag']['colour']); ?>" title="<?php echo isset($item['Tag']['Taxonomy']['expanded']) ? h($item['Tag']['Taxonomy']['expanded']) : h($item['Tag']['name']); ?>"><?php echo h($item['Tag']['name']); ?></a></td>
 		<td class="short">
@@ -116,13 +116,13 @@ foreach ($list as $k => $item): ?>
 			<?php echo $this->element('sparkline', array('id' => $item['Tag']['id'], 'csv' => isset($csv[$k]) ? $csv[$k] : $emptyDate)); ?>
 		</td>
 		<td class="short" id ="checkbox_row_<?php echo h($item['Tag']['id']);?>">
-			<input id="checkBox_<?php echo h($item['Tag']['id']); ?>" type="checkbox" onClick="toggleSetting(event, 'favourite_tag', '<?php echo h($item['Tag']['id']); ?>')" <?php echo $item['Tag']['favourite'] ? 'checked' : ''; ?>/>
+			<input class="form-check-input" id="checkBox_<?php echo h($item['Tag']['id']); ?>" type="checkbox" onClick="toggleSetting(event, 'favourite_tag', '<?php echo h($item['Tag']['id']); ?>')" <?php echo $item['Tag']['favourite'] ? 'checked' : ''; ?>/>
 		</td>
 		<?php if ($isSiteAdmin): ?>
 		<td class="short action-links">
 			<?php echo $this->Html->link('', array('controller' => 'tags', 'action' => 'viewGraph', $item['Tag']['id']), array('class' => 'fa fa-share-alt', 'title' => 'View graph'));?>
-			<?php echo $this->Html->link('', array('action' => 'edit', $item['Tag']['id']), array('class' => 'icon-edit', 'title' => 'Edit'));?>
-			<?php echo $this->Form->postLink('', array('action' => 'delete', $item['Tag']['id']), array('class' => 'icon-trash', 'title' => __('Delete')), __('Are you sure you want to delete "%s"?', $item['Tag']['name']));?>
+			<?php echo $this->Html->link('', array('action' => 'edit', $item['Tag']['id']), array('class' => 'fa fa-edit', 'title' => 'Edit'));?>
+			<?php echo $this->Form->postLink('', array('action' => 'delete', $item['Tag']['id']), array('class' => 'fa fa-trash', 'title' => __('Delete')), __('Are you sure you want to delete "%s"?', $item['Tag']['name']));?>
 		</td>
 		<?php endif; ?>
 	</tr><?php
@@ -135,13 +135,14 @@ endforeach; ?>
 		));
 	?>
 	</p>
-	<div class="pagination">
-		<ul>
-		<?php
-			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'prev disabled', 'escape' => false, 'disabledTag' => 'span'));
-			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'span'));
-			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'next disabled', 'escape' => false, 'disabledTag' => 'span'));
-		?>
+	<div>
+		<ul class="pagination">
+			<?php
+
+			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span'));
+			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'class' => 'page-link', 'currentClass' => 'page-link', 'currentTag' => 'span', 'currentClass' => 'p-active'));
+			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span', 'disabledClass' => 'page-link'));
+			?>
 		</ul>
 	</div>
 

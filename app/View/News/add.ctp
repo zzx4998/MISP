@@ -9,7 +9,7 @@
 					'type' => 'text',
 					'error' => array('escape' => false),
 					'div' => 'input clear',
-					'class' => 'input-xxlarge'
+					'class' => 'form-control input-xxlarge'
 			));
 			?>
 				<div class="input clear"></div>
@@ -18,7 +18,7 @@
 					'type' => 'textarea',
 					'error' => array('escape' => false),
 					'div' => 'input clear',
-					'class' => 'input-xxlarge'
+					'class' => 'form-control input-xxlarge'
 			));
 			?>
 			<div class="input clear"></div>
@@ -26,6 +26,7 @@
 			echo $this->Form->input('anonymise', array(
 						'checked' => false,
 						'label' => __('Create anonymously'),
+						'class' => 'check-control'
 			));
 		?>
 	</fieldset>

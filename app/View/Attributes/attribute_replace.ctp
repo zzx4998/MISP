@@ -17,6 +17,7 @@ echo $this->Form->create('Attribute', array('id', 'url' => '/attributes/attribut
 			echo $this->Form->input('to_ids', array(
 					'type' => 'checkbox',
 					'label' => __('Mark all new attributes as to IDS'),
+					'class' => 'check-control'
 			));
 			echo $this->Form->input('value', array(
 					'type' => 'textarea',
@@ -41,7 +42,7 @@ echo $this->Form->create('Attribute', array('id', 'url' => '/attributes/attribut
 					<p style="color:red;font-weight:bold;display:none;text-align:center" id="warning-message"><?php echo __('Warning: You are about to share data that is of a classified nature (Attribution / targeting data). Make sure that you are authorised to share this.'); ?></p>
 				</td>
 				<td style="vertical-align:top;">
-					<span class="btn btn-inverse" id="cancel_attribute_add" title="<?php echo __('Cancel'); ?>" role="button" tabindex="0" aria-label="<?php echo __('Cancel'); ?>"><?php echo __('Cancel'); ?></span>
+					<span class="btn btn-dark" id="cancel_attribute_add" title="<?php echo __('Cancel'); ?>" role="button" tabindex="0" aria-label="<?php echo __('Cancel'); ?>"><?php echo __('Cancel'); ?></span>
 				</td>
 				</tr>
 			</table>

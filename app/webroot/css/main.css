@@ -1,6 +1,7 @@
 /* bootstrap changes */
 body {
 	font-size: 12px;
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
 #topBar {
@@ -28,6 +29,7 @@ button .full-width {
 h2{
 	font-size: 25px;
 	clear:both;
+	font-weight: bold;
 }
 h3{
 	font-size: 18px;
@@ -210,9 +212,9 @@ div.message{
 	padding: 5px;
 	float: top;
 	color: #FFFFFF;
-	background-color: #C11B17;
-	border-radius: 10px;
-	box-shadow: 5px 5px 8px #B2B2B2;
+	background-color: #d14d4b;
+	border-radius: 2px;
+	border: 1px solid #881b19;
 }
 
 .clear{
@@ -552,7 +554,6 @@ dd {
 }
 
 .footerCenterText {
-	padding-top:12px;
 	position: absolute;
 	width:100%;
 	text-align:center;
@@ -726,10 +727,9 @@ a.proposal_link_red:hover {
 	font-size: 12px;
 	font-weight: bold;
 	line-height: 14px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	box-shadow: 3px 3px 3px #888888;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 }
 
 .tagFirstHalf {
@@ -832,8 +832,6 @@ a.proposal_link_red:hover {
 	left:calc(50% - 350px);
 	position: fixed;
 	background-color:#f4f4f4;
-	border-radius: 11px 11px 10px 10px;
-	box-shadow: 4px 4px 4px #333;
 	z-index:5;
 }
 
@@ -848,12 +846,11 @@ a.proposal_link_red:hover {
 }
 
 .ajax_popover_form legend, .ajax_popover_form .legend {
-	border-radius: 10px 10px 0px 0px;
 	padding-left:10px;
+	border-radius: 2px 2px 0 0;
 	margin-bottom:0px;
-	width:690px;
-	background-color:black;
-	color:white;
+	width:100%;
+	background-color:#f4f4f4;
 	font-size: 21px;
 	line-height: 40px;
 }
@@ -1063,7 +1060,6 @@ a.proposal_link_red:hover {
 }
 
 .tabMenuFilterFieldHeader {
-	border-radius: 10px 0px 0 0 !important;
 	height:14px !important;
 	width:30px;
 	margin:0px !important;
@@ -1079,7 +1075,6 @@ a.proposal_link_red:hover {
 }
 
 .tabMenuFilterField {
-	border-radius: 10px 0 0 0 !important;
 	height:20px !important;
 	margin:0px !important;
 	margin-bottom:1px !important;
@@ -1093,7 +1088,6 @@ a.proposal_link_red:hover {
 }
 
 .tabMenuFilterFieldButton {
-	border-radius: 0px 10px 0 0 !important;
 	background-color:#f9f9f9;
 	height:20px !important;
 	width:34px;
@@ -1230,9 +1224,6 @@ a.proposal_link_red:hover {
 	display:inline-block;
 	width:10px;
 	height:10px;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
 	box-shadow: 1px 1px 1px #888888;
 }
 
@@ -1268,15 +1259,11 @@ a.proposal_link_red:hover {
 .templateTableRow {
 	width:100%;
 	display:inline-block;
-	box-shadow: 4px 2px 4px 2px #aaa;
 	margin: 0 0 15px 0;
-	background-color: #FFFFFF;
+	background-color: #fff;
 	padding:0px !important;
 	padding-right:0px !important;
-	border: 1px solid black !important;
-	-webkit-radius: 8px;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
+	border: 1px solid #eee !important;
 }
 
 .templateTableRow80 {
@@ -1357,9 +1344,6 @@ a.proposal_link_red:hover {
 	color:white;
 	font-weight:bold;
 	height:25px;
-	-moz-border-radius: 0px;
-	-webkit-border-radius: 7px 7px 0px 0px;
-	border-radius: 7px 7px 0px 0px;
 }
 
 .templateElementHeaderText {
@@ -1373,15 +1357,7 @@ a.proposal_link_red:hover {
 	height: 100%;
 	position: absolute;
 	padding: 0;
-	-webkit-border-radius: 7px 7px 0px 0px;
-	-moz-border-radius: 7px 7px 0px 0px;
-	border-radius: 7px 7px 0px 0px;
 	background: rgba(0,0,0,0.1.25);
-	box-shadow: 0 2px 6px rgba(0,0,0,0.5),
-		inset 0 1px rgba(255,255,255,0.3),
-		inset 0 10px rgba(255,255,255,0.1),
-		inset 0 10px 20px rgba(255,255,255,0.3),
-		inset 0 -15px 30px rgba(0,0,0,0.3);
 
 }
 
@@ -1410,6 +1386,7 @@ a.proposal_link_red:hover {
 .popover_choice legend {
 	margin-bottom:0px !important;
 	border-bottom:0px !important;
+	border-bottom: 1px solid red;
 }
 
 .popover_choice form {
@@ -1423,10 +1400,10 @@ a.proposal_link_red:hover {
 }
 
 .templateChoiceButton {
-	text-align:center;
+	cursor: pointer;
+	padding-left: 10px;
 	width:100%;
 	line-height:30px;
-	border-top:1px solid black;
 }
 
 .templateChoiceButton:hover {
@@ -1440,9 +1417,8 @@ a.proposal_link_red:hover {
 }
 
 .templateChoiceButtonLast {
-	border-radius:0 0 10px 10px;
 	color:white;
-	background-color:black;
+	background-color:#0077bb;
 }
 
 .templateTypeBox {
@@ -1575,7 +1551,7 @@ a.proposal_link_red:hover {
 }
 
 .background-red {
-	background: red !important;
+	background: rgb(201, 72, 72) !important;
 	color: white !important;
 }
 
@@ -1643,8 +1619,7 @@ a.discrete {
 
 .dashboard_element{
 	border: 1px solid #0088cc;
-	border-radius: 5px;
-	box-shadow: 0px 0px 6px #B2B2B2;
+	margin-left: 10px;
 	padding-left:10px;
 	padding-right:10px;
 	width: 100%;
@@ -1668,8 +1643,6 @@ a.discrete {
 
 .info_container {
 	border: 1px solid #0088cc;
-	border-radius: 7px;
-	box-shadow: 0px 0px 6px #B2B2B2;
 	padding-left:10px;
 	padding-right:10px;
 	padding-bottom:10px;
@@ -1758,11 +1731,10 @@ table.table.table-striped tr.deleted_row td {
 }
 
 .popover-back {
-	border-top:1px solid black;
 	line-height: 30px;
 	padding-top: 1px;
 	padding-bottom: 1px;
-	text-align:center;
+	padding-left: 5px;
 	width:100%;
 }
 
@@ -2044,4 +2016,44 @@ table tr:hover .down-expand-button {
 	to {
 		transform: rotate(359deg);
 	}
+}
+
+/* BOOTSTRAP 4 */
+
+a {
+	font-size: 12px;
+}
+
+hr {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	width: 80%;
+	border: 0;
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+.p-active {
+	background: #eee;
+}
+
+.small-search-box {
+	width: 250px !important;
+	float: left;
+	margin: 5px;
+}
+
+.navbar-right {
+	padding-left: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.form-check-input-input {
+	margin-left: 0px;
+}
+
+.form-check-input-input + label {
+	margin-left: 30px;
+
 }

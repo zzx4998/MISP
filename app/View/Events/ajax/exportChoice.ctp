@@ -4,7 +4,7 @@
 		<table style="width:100%;">
 		<?php foreach ($exports as $k => $export): ?>
 			<tr
-				style="border-bottom:1px solid black;"
+				
 				class="templateChoiceButton"
 				data-export-url="<?php echo h($export['url']); ?>"
 				data-export-key="<?php echo h($k); ?>"
@@ -32,7 +32,7 @@
 					<?php if ($export['checkbox']):
 						echo h($export['checkbox_text']);
 					?>
-						<input
+						<input class="form-check-input"
 							title="<?php h($export['checkbox_text']); ?>"
 							id="<?php echo h($k) . '_toggle';?>"
 							type="checkbox"

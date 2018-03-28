@@ -1,19 +1,19 @@
 <div class="servers index">
 	<h2><?php echo __('Servers');?></h2>
-	<div class="pagination">
-		<ul>
-		<?php
-		$this->Paginator->options(array(
-			'update' => '.span12',
-			'evalScripts' => true,
-			'before' => '$(".progress").show()',
-			'complete' => '$(".progress").hide()',
-		));
+	<div>
+		<ul class="pagination">
+			<?php
+			$this->Paginator->options(array(
+				'update' => '.span12',
+				'evalScripts' => true,
+				'before' => '$(".progress").show()',
+				'complete' => '$(".progress").hide()',
+			));
 
-			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'prev disabled', 'escape' => false, 'disabledTag' => 'span'));
-			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'span'));
-			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'next disabled', 'escape' => false, 'disabledTag' => 'span'));
-		?>
+			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span'));
+			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'class' => 'page-link', 'currentClass' => 'page-link', 'currentTag' => 'span', 'currentClass' => 'p-active'));
+			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span', 'disabledClass' => 'page-link'));
+			?>
 		</ul>
 	</div>
 	<table class="table table-striped table-hover table-condensed">
@@ -68,23 +68,23 @@ foreach ($servers as $server):
 			?>
 		</td>
 		<td id="connection_test_<?php echo $server['Server']['id'];?>"><span role="button" tabindex="0" aria-label="<?php echo __('Test the connection to the remote instance');?>" title="<?php echo __('Test the connection to the remote instance');?>" class="btn btn-primary" style="line-height:10px; padding: 4px 4px;" onClick="testConnection('<?php echo $server['Server']['id'];?>');"><?php echo __('Run');?></span></td>
-		<td><span class="<?php echo ($server['Server']['internal']? 'icon-ok' : 'icon-remove'); ?>" title="<?php echo ($server['Server']['internal']? __('Internal instance that ignores distribution level degradation *WARNING: Only use this setting if you have several internal instances and the sync link is to an internal extension of the current MISP community*') : __('Normal sync link to an external MISP instance. Distribution degradation will follow the normal rules.')); ?>"></span></td>
-		<td><span class="<?php echo ($server['Server']['push']? 'icon-ok' : 'icon-remove'); ?>"></span><span class="short <?php if (!$server['Server']['push'] || empty($ruleDescription['push'])) echo "hidden"; ?>" data-toggle="popover" title="Distribution List" data-content="<?php echo $ruleDescription['push']; ?>"> (<?php echo __('Rules');?>)</span></td>
-		<td><span class="<?php echo ($server['Server']['pull']? 'icon-ok' : 'icon-remove'); ?>"></span><span class="short <?php if (!$server['Server']['pull'] || empty($ruleDescription['pull'])) echo "hidden"; ?>" data-toggle="popover" title="Distribution List" data-content="<?php echo $ruleDescription['pull']; ?>"> (<?php echo __('Rules');?>)</span>
-		<td class="short"><span class="<?php echo ($server['Server']['unpublish_event'] ? 'icon-ok' : 'icon-remove'); ?>"></span></td>
-		<td class="short"><span class="<?php echo ($server['Server']['publish_without_email'] ? 'icon-ok' : 'icon-remove'); ?>"></span></td>
+		<td><span class="<?php echo ($server['Server']['internal']? 'fa fa-check' : 'fa fa-remove'); ?>" title="<?php echo ($server['Server']['internal']? __('Internal instance that ignores distribution level degradation *WARNING: Only use this setting if you have several internal instances and the sync link is to an internal extension of the current MISP community*') : __('Normal sync link to an external MISP instance. Distribution degradation will follow the normal rules.')); ?>"></span></td>
+		<td><span class="<?php echo ($server['Server']['push']? 'fa fa-check' : 'fa fa-remove'); ?>"></span><span class="short <?php if (!$server['Server']['push'] || empty($ruleDescription['push'])) echo "hidden"; ?>" data-toggle="popover" title="Distribution List" data-content="<?php echo $ruleDescription['push']; ?>"> (<?php echo __('Rules');?>)</span></td>
+		<td><span class="<?php echo ($server['Server']['pull']? 'fa fa-check' : 'fa fa-remove'); ?>"></span><span class="short <?php if (!$server['Server']['pull'] || empty($ruleDescription['pull'])) echo "hidden"; ?>" data-toggle="popover" title="Distribution List" data-content="<?php echo $ruleDescription['pull']; ?>"> (<?php echo __('Rules');?>)</span>
+		<td class="short"><span class="<?php echo ($server['Server']['unpublish_event'] ? 'fa fa-check' : 'fa fa-remove'); ?>"></span></td>
+		<td class="short"><span class="<?php echo ($server['Server']['publish_without_email'] ? 'fa fa-check' : 'fa fa-remove'); ?>"></span></td>
 		<td><?php echo h($server['Server']['url']); ?>&nbsp;</td>
 		<td><a href="/organisations/view/<?php echo h($server['RemoteOrg']['id']); ?>"><?php echo h($server['RemoteOrg']['name']); ?></a></td>
 		<td class="short"><?php echo h($server['Server']['cert_file']); ?>&nbsp;</td>
 		<td class="short"><?php echo h($server['Server']['client_cert_file']); ?>&nbsp;</td>
-		<td class="short"><span class="<?php echo ($server['Server']['self_signed'] ? 'icon-ok' : 'icon-remove'); ?>"></span></td>
+		<td class="short"><span class="<?php echo ($server['Server']['self_signed'] ? 'fa fa-check' : 'fa fa-remove'); ?>"></span></td>
 		<td class="short"><a href="/organisations/view/<?php echo h($server['Organisation']['id']); ?>"><?php echo h($server['Organisation']['name']); ?></a></td>
 		<td class="short action-links">
 			<?php
-			echo $this->Html->link('', array('action' => 'previewIndex', $server['Server']['id']), array('class' => 'icon-search', 'title' => __('Explore')));
+			echo $this->Html->link('', array('action' => 'previewIndex', $server['Server']['id']), array('class' => 'fa fa-search icon-search', 'title' => __('Explore')));
 			if ($server['Server']['pull']) {
 				echo $this->Html->link('', array('action' => 'pull', $server['Server']['id'], 'update'), array('class' => 'icon-refresh', 'title' => __('Pull updates to events that already exist locally')));
-				echo $this->Html->link('', array('action' => 'pull', $server['Server']['id'], 'full'), array('class' => 'icon-download', 'title' => __('Pull all')));
+				echo $this->Html->link('', array('action' => 'pull', $server['Server']['id'], 'full'), array('class' => 'fa fa-download', 'title' => __('Pull all')));
 			}
 			if ($server['Server']['push']) {
 				echo $this->Html->link('', array('action' => 'push', $server['Server']['id'], 'full'), array('class' => 'icon-upload', 'title' => __('Push all')));
@@ -93,8 +93,8 @@ foreach ($servers as $server):
 			&nbsp;
 			<?php
 			$mayModify = ($isSiteAdmin);
-			if ($mayModify) echo $this->Html->link('', array('action' => 'edit', $server['Server']['id']), array('class' => 'icon-edit', 'title' => __('Edit')));
-			if ($mayModify) echo $this->Form->postLink('', array('action' => 'delete', $server['Server']['id']), array('class' => 'icon-trash', 'title' => __('Delete')), __('Are you sure you want to delete # %s?', $server['Server']['id']));
+			if ($mayModify) echo $this->Html->link('', array('action' => 'edit', $server['Server']['id']), array('class' => 'fa fa-edit', 'title' => __('Edit')));
+			if ($mayModify) echo $this->Form->postLink('', array('action' => 'delete', $server['Server']['id']), array('class' => 'fa fa-trash', 'title' => __('Delete')), __('Are you sure you want to delete # %s?', $server['Server']['id']));
 			?>
 
 		</td>
@@ -109,13 +109,14 @@ endforeach; ?>
 	));
 	?>
 	</p>
-	<div class="pagination">
-		<ul>
-		<?php
-			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'prev disabled', 'escape' => false, 'disabledTag' => 'span'));
-			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'span'));
-			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'next disabled', 'escape' => false, 'disabledTag' => 'span'));
-		?>
+	<div>
+		<ul class="pagination">
+			<?php
+
+			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span'));
+			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'class' => 'page-link', 'currentClass' => 'page-link', 'currentTag' => 'span', 'currentClass' => 'p-active'));
+			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span', 'disabledClass' => 'page-link'));
+			?>
 		</ul>
 	</div>
 

@@ -290,8 +290,8 @@
 										if ($relatedFeed ['source_format'] == 'misp'):
 									?>
 											<form action="<?php echo $baseurl; ?>/feeds/previewIndex/<?php echo h($relatedFeed['id']); ?>" method="post" style="margin:0px;">
-												<input type="hidden" name="data[Feed][eventid]" value="<?php echo h(json_encode($relatedFeed['event_uuids'], true)); ?>">
-												<input type="submit" class="linkButton useCursorPointer" value="<?php echo h($relatedFeed['name']) . ' (' . $relatedFeed['id'] . ')'; ?>" data-toggle="popover" data-content="<?php echo h($popover); ?>" data-trigger="hover" />
+												<input class="form-control" type="hidden" name="data[Feed][eventid]" value="<?php echo h(json_encode($relatedFeed['event_uuids'], true)); ?>">
+												<input class="form-control" type="submit" class="linkButton useCursorPointer" value="<?php echo h($relatedFeed['name']) . ' (' . $relatedFeed['id'] . ')'; ?>" data-toggle="popover" data-content="<?php echo h($popover); ?>" data-trigger="hover" />
 											</form>
 									<?php
 										else:
@@ -330,19 +330,19 @@
 	</div>
 	<br />
 	<div class="toggleButtons">
-		<button class="btn btn-inverse toggle-left btn.active qet galaxy-toggle-button" id="pivots_toggle" data-toggle-type="pivots">
+		<button class="btn btn-dark toggle-left btn.active qet galaxy-toggle-button" id="pivots_toggle" data-toggle-type="pivots">
 			<span class="icon-minus icon-white" title="<?php echo __('Toggle pivot graph');?>" role="button" tabindex="0" aria-label="<?php echo __('Toggle pivot graph');?>" style="vertical-align:top;"></span><?php echo __('Pivots');?>
 		</button>
-		<button class="btn btn-inverse toggle qet galaxy-toggle-button" id="galaxies_toggle" data-toggle-type="galaxies">
+		<button class="btn btn-dark toggle qet galaxy-toggle-button" id="galaxies_toggle" data-toggle-type="galaxies">
 			<span class="icon-minus icon-white" title="<?php echo __('Toggle galaxies');?>" role="button" tabindex="0" aria-label="<?php echo __('Toggle galaxies');?>" style="vertical-align:top;"></span><?php echo __('Galaxy');?>
 		</button>
-		<button class="btn btn-inverse toggle qet galaxy-toggle-button" id="eventgraph_toggle" data-toggle-type="eventgraph" onclick="enable_interactive_graph();">
-			<span class="icon-plus icon-white" title="<?php echo __('Toggle Event graph');?>" role="button" tabindex="0" aria-label="<?php echo __('Toggle Event graph');?>" style="vertical-align:top;"></span><?php echo __('Event graph');?>
+		<button class="btn btn-dark toggle qet galaxy-toggle-button" id="eventgraph_toggle" data-toggle-type="eventgraph" onclick="enable_interactive_graph();">
+			<span class="fa fa-plus icon-white" title="<?php echo __('Toggle Event graph');?>" role="button" tabindex="0" aria-label="<?php echo __('Toggle Event graph');?>" style="vertical-align:top;"></span><?php echo __('Event graph');?>
 		</button>
-		<button class="btn btn-inverse toggle qet galaxy-toggle-button" id="attributes_toggle" data-toggle-type="attributes">
+		<button class="btn btn-dark toggle qet galaxy-toggle-button" id="attributes_toggle" data-toggle-type="attributes">
 			<span class="icon-minus icon-white" title="<?php echo __('Toggle attributes');?>" role="button" tabindex="0" aria-label="<?php echo __('Toggle attributes');?>" style="vertical-align:top;"></span><?php echo __('Attributes');?>
 		</button>
-		<button class="btn btn-inverse toggle-right qet galaxy-toggle-button" id="discussions_toggle" data-toggle-type="discussions">
+		<button class="btn btn-dark toggle-right qet galaxy-toggle-button" id="discussions_toggle" data-toggle-type="discussions">
 			<span class="icon-minus icon-white" title="<?php echo __('Toggle discussions');?>" role="button" tabindex="0" aria-label="<?php echo __('Toggle discussions');?>" style="vertical-align:top;"></span><?php echo __('Discussion');?>
 		</button>
 	</div>
@@ -358,7 +358,7 @@
 	<div id="eventgraph_div" class="info_container_eventgraph_network" style="display: none;" data-fullscreen="false">
 		<span class="shortcut-help btn btn-xs btn-info">?</span>
 		<span class="fullscreen-btn btn btn-xs btn-primary" data-toggle="tooltip" data-placement="top" data-title="<?php echo __('Toggle fullscreen');?>"><span class="fa fa-desktop"></span></span>
-		<input type="text" id="network-typeahead" class="network-typeahead" data-provide="typeahead" size="20" placeholder="Search for an item">
+		<input class="form-control" type="text" id="network-typeahead" class="network-typeahead" data-provide="typeahead" size="20" placeholder="Search for an item">
 
 		<div id="eventgraph_network" class="eventgraph_network" data-event-id="<?php echo h($event['Event']['id']); ?>" data-user-manipulation="<?php echo $mayModify || $isSiteAdmin ? 'true' : 'false'; ?>"></div>
 		<div class="loading-network-div" id="refecences_network_loading_div" style="display: none;">
@@ -390,7 +390,7 @@ $(document).ready(function () {
 	});
 });
 </script>
-<input type="hidden" value="/shortcuts/event_view.json" class="keyboardShortcutsConfig" />
+<input class="form-control" type="hidden" value="/shortcuts/event_view.json" class="keyboardShortcutsConfig" />
 <?php echo $this->Html->script('vis'); ?>
 <?php echo $this->Html->css('vis'); ?>
 <?php echo $this->Html->script('bootstrap-typeahead'); ?>

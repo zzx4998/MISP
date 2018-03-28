@@ -45,7 +45,7 @@
 								));
 							?>
 							<br />
-							<select id="targetSelect" size="10" style="width:100%;height:200px;">
+							<select class="form-control" id="targetSelect" size="10" style="width:100%;height:200px;">
 								<?php
 									if (!empty($event['Object'])):
 										foreach ($event['Object'] as $object):
@@ -79,7 +79,7 @@
 								</td>
 								<td style="width:100%;">&nbsp;</td>
 								<td>
-									<span class="btn btn-inverse" title="<?php echo __('Cancel');?>" role="button" tabindex="0" aria-label="<?php echo __('Cancel');?>" onClick="cancelPopoverForm();"><?php echo __('Cancel');?></span>
+									<span class="btn btn-dark" title="<?php echo __('Cancel');?>" role="button" tabindex="0" aria-label="<?php echo __('Cancel');?>" onClick="cancelPopoverForm();"><?php echo __('Cancel');?></span>
 								</td>
 							</tr>
 						</table>

@@ -18,6 +18,7 @@
 				echo $this->Form->input('internal', array(
 						'label' => __('Internal instance'),
 						'type' => 'checkbox',
+						'class' => 'form-check-input'
 				));
 	?>
 			</div>
@@ -35,7 +36,7 @@
 	?>
 		<div id="ServerExternalContainer" class="input select hiddenField" style="display:none;">
 			<label for="ServerExternal"><?php echo __('External Organisation');?></label>
-			<select id="ServerExternal">
+			<select class="form-control" id="ServerExternal">
 				<?php
 					foreach ($externalOrganisations as $k => $v) {
 						if ($k == $oldRemoteOrg) echo '<option value="' . $k . '" selected="selected">' . h($v) . '</option>';
@@ -46,7 +47,7 @@
 		</div>
 		<div id="ServerLocalContainer" class="input select hiddenField" style="display:none;">
 			<label for="ServerLocal"><?php echo __('Local Organisation');?></label>
-			<select id="ServerLocal">
+			<select class="form-control" id="ServerLocal">
 				<?php
 					foreach ($localOrganisations as $k => $v) {
 						if ($k == $oldRemoteOrg) echo '<option value="' . $k . '" selected="selected">' . h($v) . '</option>';
@@ -57,11 +58,11 @@
 		</div>
 		<div id="ServerExternalNameContainer" class="input select hiddenField" style="display:none;">
 			<label for="ServerExternalName"><?php echo __('Remote Organisation\'s Name');?></label>
-			<input type="text" id="ServerExternalName" <?php if (isset($this->request->data['Server']['external_name'])) echo 'value="' . $this->request->data['Server']['external_name'] . '"';?>>
+			<input class="form-control" type="text" id="ServerExternalName" <?php if (isset($this->request->data['Server']['external_name'])) echo 'value="' . $this->request->data['Server']['external_name'] . '"';?>>
 		</div>
 		<div id="ServerExternalUuidContainer" class="input select hiddenField" style="display:none;">
 			<label for="ServerExternalUuid"><?php echo __('Remote Organisation\'s Uuid');?></label>
-			<input type="text" id="ServerExternalUuid" <?php if (isset($this->request->data['Server']['external_uuid'])) echo 'value="' . $this->request->data['Server']['external_uuid'] . '"';?>>
+			<input class="form-control" type="text" id="ServerExternalUuid" <?php if (isset($this->request->data['Server']['external_uuid'])) echo 'value="' . $this->request->data['Server']['external_uuid'] . '"';?>>
 		</div>
 		<div class = "input clear"></div>
 	<?php
@@ -81,18 +82,21 @@
 	<?php
 		echo $this->Form->input('unpublish_event', array(
 			'type' => 'checkbox',
+			'class' => 'form-check-input'
 		));
 	?>
 		<div class = "input clear"></div>
 	<?php
 		echo $this->Form->input('publish_without_email', array(
 			'type' => 'checkbox',
+			'class' => 'form-check-input'
 		));
 	?>
 		<div class = "input clear"></div>
 	<?php
 		echo $this->Form->input('self_signed', array(
 			'type' => 'checkbox',
+			'class' => 'form-check-input'
 		));
 	?>
 	<div class="clear">
@@ -105,8 +109,8 @@
 				?>
 			</span>
 			<br />
-			<span id="add_cert_file" class="btn btn-inverse" style="line-height:10px; padding: 4px 4px;"><?php echo __('Add certificate file');?></span>
-			<span id="remove_cert_file" class="btn btn-inverse" style="line-height:10px; padding: 4px 4px;"><?php echo __('Remove certificate file');?></span>
+			<span id="add_cert_file" class="btn btn-dark" style="line-height:10px; padding: 4px 4px;"><?php echo __('Add certificate file');?></span>
+			<span id="remove_cert_file" class="btn btn-dark" style="line-height:10px; padding: 4px 4px;"><?php echo __('Remove certificate file');?></span>
 		</p>
 		<div style="width: 0px;height: 0px;overflow: hidden;">
 		<?php
@@ -127,8 +131,8 @@
 				?>
 			</span>
 			<br />
-			<span id="add_client_cert_file" class="btn btn-inverse" style="line-height:10px; padding: 4px 4px;"><?php echo __('Add certificate file');?></span>
-			<span id="remove_client_cert_file" class="btn btn-inverse" style="line-height:10px; padding: 4px 4px;"><?php echo __('Remove certificate file');?></span>
+			<span id="add_client_cert_file" class="btn btn-dark" style="line-height:10px; padding: 4px 4px;"><?php echo __('Add certificate file');?></span>
+			<span id="remove_client_cert_file" class="btn btn-dark" style="line-height:10px; padding: 4px 4px;"><?php echo __('Remove certificate file');?></span>
 		</p>
 		<div style="width: 0px;height: 0px;overflow: hidden;">
 		<?php
@@ -145,19 +149,19 @@
 		<span id="push_tags_NOT" style="display:none;"><?php echo __('Events with the following tags blocked: ');?><span id="push_tags_NOT_text" style="color:red;"></span><br /></span>
 		<span id="push_orgs_OR" style="display:none;"><?php echo __('Events with the following organisations allowed: ');?><span id="push_orgs_OR_text" style="color:green;"></span><br /></span>
 		<span id="push_orgs_NOT" style="display:none;"><?php echo __('Events with the following organisations blocked: ');?><span id="push_orgs_NOT_text" style="color:red;"></span><br /></span>
-		<span id="push_modify" class="btn btn-inverse" style="line-height:10px; padding: 4px 4px;"><?php echo __('Modify');?></span><br /><br />
+		<span id="push_modify" class="btn btn-dark" style="line-height:10px; padding: 4px 4px;"><?php echo __('Modify');?></span><br /><br />
 		<b><?php echo __('Pull rules:');?></b><br />
 		<span id="pull_tags_OR" style="display:none;"><?php echo __('Events with the following tags allowed: ');?><span id="pull_tags_OR_text" style="color:green;"></span><br /></span>
 		<span id="pull_tags_NOT" style="display:none;"><?php echo __('Events with the following tags blocked: ');?><span id="pull_tags_NOT_text" style="color:red;"></span><br /></span>
 		<span id="pull_orgs_OR" style="display:none;"><?php echo __('Events with the following organisations allowed: ');?><span id="pull_orgs_OR_text" style="color:green;"></span><br /></span>
 		<span id="pull_orgs_NOT" style="display:none;"><?php echo __('Events with the following organisations blocked: ');?><span id="pull_orgs_NOT_text" style="color:red;"></span><br /></span>
-		<span id="pull_modify" class="btn btn-inverse" style="line-height:10px; padding: 4px 4px;"><?php echo __('Modify');?></span><br /><br />
+		<span id="pull_modify" class="btn btn-dark" style="line-height:10px; padding: 4px 4px;"><?php echo __('Modify');?></span><br /><br />
 	<?php
 		echo $this->Form->input('push_rules', array('style' => 'display:none;', 'label' => false, 'div' => false));
 		echo $this->Form->input('pull_rules', array('style' => 'display:none;', 'label' => false, 'div' => false));
 		echo $this->Form->input('json', array('style' => 'display:none;', 'label' => false, 'div' => false));
-		echo $this->Form->checkbox('delete_cert', array('style' => 'display:none;', 'label' => false, 'div' => false));
-		echo $this->Form->checkbox('delete_client_cert', array('style' => 'display:none;', 'label' => false, 'div' => false));
+		echo $this->Form->checkbox('delete_cert', array('class' => 'form-check-input', 'style' => 'display:none;', 'label' => false, 'div' => false));
+		echo $this->Form->checkbox('delete_client_cert', array('class' => 'form-check-input', 'style' => 'display:none;', 'label' => false, 'div' => false));
 	?>
 	</fieldset>
 	<span role="button" tabindex="0" aria-label="<?php echo __('Submit');?>" title="<?php echo __('Submit');?>" class="btn btn-primary" onClick="serverSubmitForm('Edit');"><?php echo __('Submit');?></span>

@@ -1281,8 +1281,8 @@ function choicePopup(legend, list) {
 			popupHtml += '<table style="width:100%;" id="MainTable">';
 				popupHtml += '<tbody>';
 					for (var item of list) {
-						popupHtml += '<tr style="border-bottom:1px solid black;" class="templateChoiceButton">';
-							popupHtml += '<td role="button" tabindex="0" aria-label="All meta-categories" title="'+item.text+'" style="padding-left:10px;padding-right:10px; text-align:center;width:100%;" onClick="'+item.onclick+';">'+item.text+'</td>';
+						popupHtml += '<tr  class="templateChoiceButton">';
+							popupHtml += '<td role="button" tabindex="0" aria-label="All meta-categories" title="'+item.text+'" style="padding-left:10px;padding-right:10px;width:100%;" onClick="'+item.onclick+';">'+item.text+'</td>';
 						popupHtml += '</tr>';
 					}
 				popupHtml += '</tbody>';
@@ -2129,15 +2129,15 @@ function sharingGroupPopulateOrganisations() {
 		html += '<td>' + org.uuid + '&nbsp;</td>';
 		html += '<td class="short" style="text-align:center;">';
 		if (org.removable == 1) {
-			html += '<input id="orgExtend' + id + '" type="checkbox" onClick="sharingGroupExtendOrg(' + id + ')" ';
+			html += '<input class="form-control" id="orgExtend' + id + '" type="checkbox" onClick="sharingGroupExtendOrg(' + id + ')" ';
 			if (org.extend) html+= 'checked';
 			html += '></input>';
 		} else {
-			html += '<span class="icon-ok"></span>'
+			html += '<span class="fa fa-check"></span>'
 		}
 		html +='</td>';
 		html += '<td class="actions short">';
-		if (org.removable == 1) html += '<span class="icon-trash" onClick="sharingGroupRemoveOrganisation(' + id + ')"></span>';
+		if (org.removable == 1) html += '<span class="fa fa-trash" onClick="sharingGroupRemoveOrganisation(' + id + ')"></span>';
 		html += '&nbsp;</td></tr>';
 		$('#organisations_table tr:last').after(html);
 		id++;
@@ -2154,12 +2154,12 @@ function sharingGroupPopulateServers() {
 		html += '<td>' + server.name + '&nbsp;</td>';
 		html += '<td>' + server.url + '&nbsp;</td>';
 		html += '<td>';
-		html += '<input id="serverAddOrgs' + id + '" type="checkbox" onClick="sharingGroupServerAddOrgs(' + id + ')" ';
+		html += '<input class="form-control" id="serverAddOrgs' + id + '" type="checkbox" onClick="sharingGroupServerAddOrgs(' + id + ')" ';
 		if (server.all_orgs) html += 'checked';
 		html += '></input>';
 		html +='</td>';
 		html += '<td class="actions short">';
-		if (server.removable == 1) html += '<span class="icon-trash" onClick="sharingGroupRemoveServer(' + id + ')"></span>';
+		if (server.removable == 1) html += '<span class="fa fa-trash" onClick="sharingGroupRemoveServer(' + id + ')"></span>';
 		html += '&nbsp;</td></tr>';
 		$('#servers_table tr:last').after(html);
 		id++;
@@ -3039,11 +3039,11 @@ function selectAllInbetween(last, current) {
 $('.galaxy-toggle-button').click(function() {
 	var element = $(this).data('toggle-type');
 	if ($(this).children('span').hasClass('icon-minus')) {
-		$(this).children('span').addClass('icon-plus');
+		$(this).children('span').addClass('fa fa-plus');
 		$(this).children('span').removeClass('icon-minus');
 		$('#' + element + '_div').hide();
 	} else {
-		$(this).children('span').removeClass('icon-plus');
+		$(this).children('span').removeClass('fa fa-plus');
 		$(this).children('span').addClass('icon-minus');
 		$('#' + element + '_div').show();
 	}

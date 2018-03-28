@@ -38,7 +38,7 @@
 				<th><?php echo __('Similar Attributes');?></th>
 				<th><?php echo __('Category');?></th>
 				<th><?php echo __('Type');?></th>
-				<th><?php echo __('IDS');?><input type="checkbox" id="checkAll" style="margin:0px;margin-left:3px;"/></th>
+				<th><?php echo __('IDS');?><input class="form-check-input" type="checkbox" id="checkAll" style="margin:0px;margin-left:3px;"/></th>
 				<th><?php echo __('Distribution');?></th>
 				<th><?php echo __('Comment');?></th>
 				<th><?php echo __('Tags');?></th>
@@ -75,7 +75,7 @@
 							'div' => false
 					));
 				?>
-				<input type="hidden" id="<?php echo 'Attribute' . $k . 'Save'; ?>" value=1 >
+				<input class="form-control" type="hidden" id="<?php echo 'Attribute' . $k . 'Save'; ?>" value=1 >
 			</td>
 			<td class="shortish">
 				<?php
@@ -114,7 +114,7 @@
 
 					}
 				?>
-				<select id="<?php echo 'Attribute' . $k . 'Category'; ?>" style='padding:0px;height:20px;margin-bottom:0px;' class="categoryToggle">
+				<select id="<?php echo 'Attribute' . $k . 'Category'; ?>" style='padding:0px;height:20px;margin-bottom:0px;' class="form-control categoryToggle">
 					<?php
 						foreach ($typeCategoryMapping[$item['default_type']] as $category) {
 							if (isset($item['categories']) && !in_array($category, $item['categories'])) {
@@ -139,7 +139,7 @@
 					}
 				?>
 				<div id = "<?php echo 'Attribute' . $k . 'TypeStatic'; ?>" <?php echo $divVisibility; ?> ><?php echo h($item['default_type']); ?></div>
-				<select id = "<?php echo 'Attribute' . $k . 'Type'; ?>" class='typeToggle' style='padding:0px;height:20px;margin-bottom:0px;<?php echo $selectVisibility; ?>'>
+				<select id = "<?php echo 'Attribute' . $k . 'Type'; ?>" class=' form-control typeToggle' style='padding:0px;height:20px;margin-bottom:0px;<?php echo $selectVisibility; ?>'>
 					<?php
 						if (!empty($item['types'])) {
 							foreach ($item['types'] as $type) {
@@ -151,10 +151,10 @@
 				</select>
 			</td>
 			<td class="short" style="width:40px;text-align:center;">
-				<input type="checkbox" id="<?php echo 'Attribute' . $k . 'To_ids'; ?>" <?php if ($item['to_ids']) echo 'checked'; ?> class="idsCheckbox" />
+				<input type="checkbox" id="<?php echo 'Attribute' . $k . 'To_ids'; ?>" <?php if ($item['to_ids']) echo 'checked'; ?> class="form-check-input idsCheckbox" />
 			</td>
 			<td class="short" style="width:40px;text-align:center;">
-				<select id = "<?php echo 'Attribute' . $k . 'Distribution'; ?>" class='distributionToggle' style='padding:0px;height:20px;margin-bottom:0px;'>
+				<select id = "<?php echo 'Attribute' . $k . 'Distribution'; ?>" class='form-control distributionToggle' style='padding:0px;height:20px;margin-bottom:0px;'>
 					<?php
 						foreach ($distributions as $distKey => $distValue) {
 							$default = isset($item['distribution']) ? $item['distribution'] : $instanceDefault;
@@ -164,7 +164,7 @@
 					?>
 				</select>
 				<div style="display:none;">
-					<select id = "<?php echo 'Attribute' . $k . 'SharingGroupId'; ?>" class='sgToggle' style='padding:0px;height:20px;margin-top:3px;margin-bottom:0px;'>
+					<select id = "<?php echo 'Attribute' . $k . 'SharingGroupId'; ?>" class='form-control sgToggle' style='padding:0px;height:20px;margin-top:3px;margin-bottom:0px;'>
 						<?php
 							foreach ($sgs as $sgKey => $sgValue) {
 								echo '<option value="' . h($sgKey) . '">' . h($sgValue) . '</option>';
@@ -174,13 +174,13 @@
 				</div>
 			</td>
 			<td class="short">
-				<input type="text" class="freetextCommentField" id="<?php echo 'Attribute' . $k . 'Comment'; ?>" style="padding:0px;height:20px;margin-bottom:0px;" placeholder="<?php echo h($importComment); ?>" <?php if (isset($item['comment']) && $item['comment'] !== false) echo 'value="' . h($item['comment']) . '"'?>/>
+				<input class="form-check-input" type="text" class="freetextCommentField" id="<?php echo 'Attribute' . $k . 'Comment'; ?>" style="padding:0px;height:20px;margin-bottom:0px;" placeholder="<?php echo h($importComment); ?>" <?php if (isset($item['comment']) && $item['comment'] !== false) echo 'value="' . h($item['comment']) . '"'?>/>
 			</td>
 			<td class="short">
-				<input type="text" class="freetextTagField" id="<?php echo 'Attribute' . $k . 'Tags'; ?>" style="padding:0px;height:20px;margin-bottom:0px;"<?php if (isset($item['tags']) && $item['tags'] !== false) echo 'value="' . h(implode(",",$item['tags'])) . '"'?>/>
+				<input class="form-check-input" type="text" class="freetextTagField" id="<?php echo 'Attribute' . $k . 'Tags'; ?>" style="padding:0px;height:20px;margin-bottom:0px;"<?php if (isset($item['tags']) && $item['tags'] !== false) echo 'value="' . h(implode(",",$item['tags'])) . '"'?>/>
 			</td>
 			<td class="action short">
-				<span class="icon-remove pointer" title="<?php echo __('Remove resolved attribute');?>" role="button" tabindex="0" aria-label="<?php echo __('Remove resolved attribute');?>" onClick="freetextRemoveRow('<?php echo $k; ?>', '<?php echo $event['Event']['id']; ?>');"></span>
+				<span class="fa fa-remove pointer" title="<?php echo __('Remove resolved attribute');?>" role="button" tabindex="0" aria-label="<?php echo __('Remove resolved attribute');?>" onClick="freetextRemoveRow('<?php echo $k; ?>', '<?php echo $event['Event']['id']; ?>');"></span>
 			</td>
 		</tr>
 	<?php
@@ -202,7 +202,7 @@
 			<?php
 				if (!empty($optionsRearranged)):
 			?>
-				<select id="changeFrom" style="margin-left:50px;margin-top:10px;">
+				<select class="form-control" id="changeFrom" style="margin-left:50px;margin-top:10px;">
 					<?php
 						foreach (array_keys($optionsRearranged) as $fromElement):
 					?>
@@ -212,7 +212,7 @@
 					?>
 				</select>
 				<span class="icon-arrow-right"></span>
-				<select id="changeTo" style="margin-top:10px;">
+				<select class="form-control" id="changeTo" style="margin-top:10px;">
 					<?php
 						$keys = array_keys($optionsRearranged);
 						foreach ($optionsRearranged[$keys[0]] as $toElement):
@@ -222,10 +222,10 @@
 						endforeach;
 					?>
 				</select>
-				<span role="button" tabindex="0" aria-label="<?php echo __('Apply changes to all applicable resolved attributes');?>" title="<?php echo __('Apply changes to all applicable resolved attributes');?>" class="btn btn-inverse" onClick="changeFreetextImportExecute();"><?php echo __('Change all');?></span><br />
+				<span role="button" tabindex="0" aria-label="<?php echo __('Apply changes to all applicable resolved attributes');?>" title="<?php echo __('Apply changes to all applicable resolved attributes');?>" class="btn btn-dark" onClick="changeFreetextImportExecute();"><?php echo __('Change all');?></span><br />
 			<?php endif; ?>
-			<input type="text" id="changeComments" style="margin-left:50px;margin-top:10px;width:446px;" placeholder="<?php echo __('Update all comment fields');?>">
-			<span role="button" tabindex="0" aria-label="<?php echo __('Change all');?>" title="<?php echo __('Change all');?>" class="btn btn-inverse" onClick="changeFreetextImportCommentExecute();"><?php echo __('Change all');?></span>
+			<input class="form-control" type="text" id="changeComments" style="margin-left:50px;margin-top:10px;width:446px;" placeholder="<?php echo __('Update all comment fields');?>">
+			<span role="button" tabindex="0" aria-label="<?php echo __('Change all');?>" title="<?php echo __('Change all');?>" class="btn btn-dark" onClick="changeFreetextImportCommentExecute();"><?php echo __('Change all');?></span>
 		</span>
 	</span>
 </div>

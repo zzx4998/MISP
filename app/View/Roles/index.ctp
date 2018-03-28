@@ -1,19 +1,19 @@
 <div class="roles index">
 	<h2><?php echo __('Roles');?></h2>
-	<div class="pagination">
-		<ul>
-		<?php
-		$this->Paginator->options(array(
-			'update' => '.span12',
-			'evalScripts' => true,
-			'before' => '$(".progress").show()',
-			'complete' => '$(".progress").hide()',
-		));
+	<div>
+		<ul class="pagination">
+			<?php
+			$this->Paginator->options(array(
+				'update' => '.span12',
+				'evalScripts' => true,
+				'before' => '$(".progress").show()',
+				'complete' => '$(".progress").hide()',
+			));
 
-			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'prev disabled', 'escape' => false, 'disabledTag' => 'span'));
-			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'span'));
-			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'next disabled', 'escape' => false, 'disabledTag' => 'span'));
-		?>
+			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span'));
+			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'class' => 'page-link', 'currentClass' => 'page-link', 'currentTag' => 'span', 'currentClass' => 'p-active'));
+			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span', 'disabledClass' => 'page-link'));
+			?>
 		</ul>
 	</div>
 	<table class="table table-striped table-hover table-condensed">
@@ -37,7 +37,7 @@ foreach ($list as $item): ?>
 		<td><?php echo h($item['Role']['name']); ?>&nbsp;</td>
 		<td class="short"><?php echo h($options[$item['Role']['permission']]); ?>&nbsp;</td>
 		<?php foreach ($permFlags as $k => $flags): ?>
-			<td class="short"><span class="<?php if ($item['Role'][$k]) echo 'icon-ok'; ?>"></span>&nbsp;</td>
+			<td class="short"><span class="<?php if ($item['Role'][$k]) echo 'fa fa-check'; ?>"></span>&nbsp;</td>
 		<?php endforeach; ?>
 	</tr><?php
 endforeach; ?>
@@ -49,13 +49,13 @@ endforeach; ?>
 	));
 	?>
 	</p>
-	<div class="pagination">
-		<ul>
-		<?php
-			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'prev disabled', 'escape' => false, 'disabledTag' => 'span'));
-			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'span'));
-			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false), null, array('tag' => 'li', 'class' => 'next disabled', 'escape' => false, 'disabledTag' => 'span'));
-		?>
+	<div>
+		<ul class="pagination">
+			<?php
+			echo $this->Paginator->prev('&laquo; ' . __('previous'), array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span'));
+			echo $this->Paginator->numbers(array('modulus' => 20, 'separator' => '', 'tag' => 'li', 'class' => 'page-link', 'currentClass' => 'page-link', 'currentTag' => 'span', 'currentClass' => 'p-active'));
+			echo $this->Paginator->next(__('next') . ' &raquo;', array('tag' => 'li', 'escape' => false, 'class' => 'page-link'), null, array('tag' => 'li', 'class' => 'page-link', 'escape' => false, 'disabledTag' => 'span', 'disabledClass' => 'page-link'));
+			?>
 		</ul>
 	</div>
 </div>
