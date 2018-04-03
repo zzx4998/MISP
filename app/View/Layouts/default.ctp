@@ -84,7 +84,8 @@
 	<?php
 	echo $this->element('footer');
 	echo $this->element('sql_dump');
-	echo $this->Html->script('popper.js');
+	echo $this->Html->script('tooltip.js');
+    echo $this->Html->script('popper.js');
     echo $this->Html->script('bootstrap');
 	echo $this->Html->script('bootstrap-timepicker');
 	echo $this->Html->script('bootstrap-datepicker');
