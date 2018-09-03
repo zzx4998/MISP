@@ -32,11 +32,16 @@ class PubSubTool
         if (!$this->__redis) {
             $settings = $this->__setupPubServer();
             $redis = new Redis();
-            $redis->connect($settings['redis_host'], $settings['redis_port']);
+            $result = $redis->connect($settings['redis_host'], $settings['redis_port']);
             $redis_pwd = $settings['redis_password'];
             if (!empty($redis_pwd)) {
                 $redis->auth($redis_pwd);
             }
+            $debug_string = 'Host: ' . $settings['redis_host'] . "\n" .
+                'Port: ' . $settings['redis_port'] . "\n" . 
+                'Password: ' . $redis_pwd . "\n" . 
+                'Connection established? ' . ($result === true ? 'Yes' : 'No');
+            file_put_contents(APP . '/tmp/redis_test_output', $debug_string);
             $redis->select($settings['redis_database']);
             $this->__redis = $redis;
             $this->__settings = $settings;
