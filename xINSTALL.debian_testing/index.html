@@ -1,0 +1,2012 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="MISP Project - Install Guides">
+      
+      
+        <link rel="canonical" href="https://www.misp-project.org/xINSTALL.debian_testing/">
+      
+      
+        <meta name="author" content="MISP Project">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
+    
+    
+      
+        <title>Debian testing - MISP Install Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="../#installation-instructions" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://www.misp-project.org/" title="MISP Install Documentation" class="md-header-nav__button md-logo">
+          
+            <img src="../img/misp.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                MISP Install Documentation
+              </span>
+              <span class="md-header-nav__topic">
+                Debian testing
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/MISP/MISP" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      MISP/MISP
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://www.misp-project.org/" title="MISP Install Documentation" class="md-nav__button md-logo">
+      
+        <img src="../img/misp.png" width="48" height="48">
+      
+    </a>
+    MISP Install Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/MISP/MISP" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      MISP/MISP
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Install Guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Install Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.ubuntu1804/" title="Ubuntu 18.04" class="md-nav__link">
+      Ubuntu 18.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
+      Ubuntu 18.04 \w webmin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
+      Debian stable
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
+      Kali Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.rhel7/" title="Redhat Enterprise Linux 7" class="md-nav__link">
+      Redhat Enterprise Linux 7
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      xInstall Guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        xInstall Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL/" title="Warning" class="md-nav__link">
+      Warning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
+      Centos 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.centos7/" title="Centos 7" class="md-nav__link">
+      Centos 7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Debian testing
+      </label>
+    
+    <a href="./" title="Debian testing" class="md-nav__link md-nav__link--active">
+      Debian testing
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#for-debian-testing-buster-server" title="for Debian testing "buster" server" class="md-nav__link">
+    for Debian testing "buster" server
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0-misp-testing-dev-install-status" title="0/ MISP testing dev install - Status" class="md-nav__link">
+    0/ MISP testing dev install - Status
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#misp-configuration-variables" title="MISP configuration variables" class="md-nav__link">
+    MISP configuration variables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-minimal-debian-install" title="1/ Minimal Debian install" class="md-nav__link">
+    1/ Minimal Debian install
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-a-minimal-debian-testing-buster-server-system-with-the-software" title="Install a minimal Debian testing "buster" server system with the software:" class="md-nav__link">
+    Install a minimal Debian testing "buster" server system with the software:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-sure-you-can-sudo" title="Make sure you can sudo" class="md-nav__link">
+    Make sure you can sudo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-etckeeper-optional" title="install etckeeper (optional)" class="md-nav__link">
+    install etckeeper (optional)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-sure-your-system-is-up2date" title="Make sure your system is up2date:" class="md-nav__link">
+    Make sure your system is up2date:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-interface-name-salvage-optional" title="Network Interface Name salvage (optional)" class="md-nav__link">
+    Network Interface Name salvage (optional)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-postfix-there-will-be-some-questions-optional" title="install postfix, there will be some questions. (optional)" class="md-nav__link">
+    install postfix, there will be some questions. (optional)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-install-lamp-dependencies" title="2/ Install LAMP &amp; dependencies" class="md-nav__link">
+    2/ Install LAMP &amp; dependencies
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-all-the-dependencies-some-might-already-be-installed" title="Install all the dependencies: (some might already be installed)" class="md-nav__link">
+    Install all the dependencies: (some might already be installed)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apply-all-changes" title="Apply all changes" class="md-nav__link">
+    Apply all changes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-misp-code" title="3/ MISP code" class="md-nav__link">
+    3/ MISP code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-cakephp" title="4/ CakePHP" class="md-nav__link">
+    4/ CakePHP
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cakephp-is-included-as-a-submodule-of-misp" title="CakePHP is included as a submodule of MISP." class="md-nav__link">
+    CakePHP is included as a submodule of MISP.
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-set-the-permissions" title="5/ Set the permissions" class="md-nav__link">
+    5/ Set the permissions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-create-a-database-and-user" title="6/ Create a database and user" class="md-nav__link">
+    6/ Create a database and user
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enter-the-mysql-shell" title="Enter the mysql shell" class="md-nav__link">
+    Enter the mysql shell
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copypaste" title="copy/paste:" class="md-nav__link">
+    copy/paste:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import-the-empty-misp-database-from-mysqlsql" title="Import the empty MISP database from MYSQL.sql" class="md-nav__link">
+    Import the empty MISP database from MYSQL.sql
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-apache-configuration" title="7/ Apache configuration" class="md-nav__link">
+    7/ Apache configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-log-rotation" title="8/ Log rotation" class="md-nav__link">
+    8/ Log rotation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-misp-configuration" title="9/ MISP configuration" class="md-nav__link">
+    9/ MISP configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-actions" title="Recommended actions" class="md-nav__link">
+    Recommended actions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-features" title="Optional features" class="md-nav__link">
+    Optional features
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-commands" title="MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands" class="md-nav__link">
+    MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#misp-dashboard" title="MISP Dashboard" class="md-nav__link">
+    MISP Dashboard
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-viper-framework" title="Install viper framework" class="md-nav__link">
+    Install viper framework
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-mail-to-misp" title="Install mail to misp" class="md-nav__link">
+    Install mail to misp
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-nav__link">
+      Debian 9 \w postgresql
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.4" class="md-nav__link">
+      OpenBSD 6.4
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Config Guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Config Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CONFIG.elasticsearch-logging/" title="Elastic Search Logging" class="md-nav__link">
+      Elastic Search Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CONFIG.s3-attachments/" title="Amazon S3 attachments" class="md-nav__link">
+      Amazon S3 attachments
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CONFIG.SMIME/" title="S/MIME" class="md-nav__link">
+      S/MIME
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../UPDATE/" title="Update MISP" class="md-nav__link">
+      Update MISP
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../UPGRADE/" title="Upgrading MISP" class="md-nav__link">
+      Upgrading MISP
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Old guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Old guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
+      2.3 to 2.4 upgrade
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      About
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        About
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Changelog/" title="MISP Release Notes" class="md-nav__link">
+      MISP Release Notes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#for-debian-testing-buster-server" title="for Debian testing "buster" server" class="md-nav__link">
+    for Debian testing "buster" server
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0-misp-testing-dev-install-status" title="0/ MISP testing dev install - Status" class="md-nav__link">
+    0/ MISP testing dev install - Status
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#misp-configuration-variables" title="MISP configuration variables" class="md-nav__link">
+    MISP configuration variables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-minimal-debian-install" title="1/ Minimal Debian install" class="md-nav__link">
+    1/ Minimal Debian install
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-a-minimal-debian-testing-buster-server-system-with-the-software" title="Install a minimal Debian testing "buster" server system with the software:" class="md-nav__link">
+    Install a minimal Debian testing "buster" server system with the software:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-sure-you-can-sudo" title="Make sure you can sudo" class="md-nav__link">
+    Make sure you can sudo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-etckeeper-optional" title="install etckeeper (optional)" class="md-nav__link">
+    install etckeeper (optional)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-sure-your-system-is-up2date" title="Make sure your system is up2date:" class="md-nav__link">
+    Make sure your system is up2date:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-interface-name-salvage-optional" title="Network Interface Name salvage (optional)" class="md-nav__link">
+    Network Interface Name salvage (optional)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-postfix-there-will-be-some-questions-optional" title="install postfix, there will be some questions. (optional)" class="md-nav__link">
+    install postfix, there will be some questions. (optional)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-install-lamp-dependencies" title="2/ Install LAMP &amp; dependencies" class="md-nav__link">
+    2/ Install LAMP &amp; dependencies
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-all-the-dependencies-some-might-already-be-installed" title="Install all the dependencies: (some might already be installed)" class="md-nav__link">
+    Install all the dependencies: (some might already be installed)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apply-all-changes" title="Apply all changes" class="md-nav__link">
+    Apply all changes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-misp-code" title="3/ MISP code" class="md-nav__link">
+    3/ MISP code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-cakephp" title="4/ CakePHP" class="md-nav__link">
+    4/ CakePHP
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cakephp-is-included-as-a-submodule-of-misp" title="CakePHP is included as a submodule of MISP." class="md-nav__link">
+    CakePHP is included as a submodule of MISP.
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-set-the-permissions" title="5/ Set the permissions" class="md-nav__link">
+    5/ Set the permissions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-create-a-database-and-user" title="6/ Create a database and user" class="md-nav__link">
+    6/ Create a database and user
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enter-the-mysql-shell" title="Enter the mysql shell" class="md-nav__link">
+    Enter the mysql shell
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copypaste" title="copy/paste:" class="md-nav__link">
+    copy/paste:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import-the-empty-misp-database-from-mysqlsql" title="Import the empty MISP database from MYSQL.sql" class="md-nav__link">
+    Import the empty MISP database from MYSQL.sql
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-apache-configuration" title="7/ Apache configuration" class="md-nav__link">
+    7/ Apache configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-log-rotation" title="8/ Log rotation" class="md-nav__link">
+    8/ Log rotation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-misp-configuration" title="9/ MISP configuration" class="md-nav__link">
+    9/ MISP configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-actions" title="Recommended actions" class="md-nav__link">
+    Recommended actions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-features" title="Optional features" class="md-nav__link">
+    Optional features
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-commands" title="MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands" class="md-nav__link">
+    MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#misp-dashboard" title="MISP Dashboard" class="md-nav__link">
+    MISP Dashboard
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-viper-framework" title="Install viper framework" class="md-nav__link">
+    Install viper framework
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-mail-to-misp" title="Install mail to misp" class="md-nav__link">
+    Install mail to misp
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h1>
+<h2 id="for-debian-testing-buster-server">for Debian testing "buster" server<a class="headerlink" href="#for-debian-testing-buster-server" title="Permanent link">&para;</a></h2>
+<h3 id="0-misp-testing-dev-install-status">0/ MISP testing dev install - Status<a class="headerlink" href="#0-misp-testing-dev-install-status" title="Permanent link">&para;</a></h3>
+<hr />
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>This is mostly the install <a href="https://twitter.com/SteveClement">@SteveClement</a>
+uses for testing, qc and random development.
+Maintained and tested by @SteveClement on 20180705</p>
+</div>
+<h4 id="misp-configuration-variables">MISP configuration variables<a class="headerlink" href="#misp-configuration-variables" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="c1"># MISP configuration variables</span>
+<span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s1">&#39;/var/www/MISP&#39;</span>
+<span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
+<span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+<span class="nv">MISP_LIVE</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+
+<span class="c1"># Database configuration</span>
+<span class="nv">DBHOST</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span>
+<span class="nv">DBNAME</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+<span class="nv">DBUSER_ADMIN</span><span class="o">=</span><span class="s1">&#39;root&#39;</span>
+<span class="nv">DBPASSWORD_ADMIN</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="nv">DBUSER_MISP</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+<span class="nv">DBPASSWORD_MISP</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
+
+<span class="c1"># Webserver configuration</span>
+<span class="nv">FQDN</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span>
+
+<span class="c1"># OpenSSL configuration</span>
+<span class="nv">OPENSSL_CN</span><span class="o">=</span><span class="s1">&#39;Common Name&#39;</span>
+<span class="nv">OPENSSL_C</span><span class="o">=</span><span class="s1">&#39;LU&#39;</span>
+<span class="nv">OPENSSL_ST</span><span class="o">=</span><span class="s1">&#39;State&#39;</span>
+<span class="nv">OPENSSL_L</span><span class="o">=</span><span class="s1">&#39;Location&#39;</span>
+<span class="nv">OPENSSL_O</span><span class="o">=</span><span class="s1">&#39;Organization&#39;</span>
+<span class="nv">OPENSSL_OU</span><span class="o">=</span><span class="s1">&#39;Organizational Unit&#39;</span>
+<span class="nv">OPENSSL_EMAILADDRESS</span><span class="o">=</span><span class="s1">&#39;info@localhost&#39;</span>
+
+<span class="c1"># GPG configuration</span>
+<span class="nv">GPG_REAL_NAME</span><span class="o">=</span><span class="s1">&#39;Autogenerated Key&#39;</span>
+<span class="nv">GPG_COMMENT</span><span class="o">=</span><span class="s1">&#39;WARNING: MISP AutoGenerated Key consider this Key VOID!&#39;</span>
+<span class="nv">GPG_EMAIL_ADDRESS</span><span class="o">=</span><span class="s1">&#39;admin@admin.test&#39;</span>
+<span class="nv">GPG_KEY_LENGTH</span><span class="o">=</span><span class="s1">&#39;2048&#39;</span>
+<span class="nv">GPG_PASSPHRASE</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
+
+<span class="c1"># php.ini configuration</span>
+<span class="nv">upload_max_filesize</span><span class="o">=</span>50M
+<span class="nv">post_max_size</span><span class="o">=</span>50M
+<span class="nv">max_execution_time</span><span class="o">=</span><span class="m">300</span>
+<span class="nv">memory_limit</span><span class="o">=</span>512M
+<span class="nv">PHP_INI</span><span class="o">=</span>/etc/php/7.2/apache2/php.ini
+
+<span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>
+</pre></div>
+
+<h3 id="1-minimal-debian-install">1/ Minimal Debian install<a class="headerlink" href="#1-minimal-debian-install" title="Permanent link">&para;</a></h3>
+<hr />
+<h4 id="install-a-minimal-debian-testing-buster-server-system-with-the-software">Install a minimal Debian testing "buster" server system with the software:<a class="headerlink" href="#install-a-minimal-debian-testing-buster-server-system-with-the-software" title="Permanent link">&para;</a></h4>
+<ul>
+<li>OpenSSH server</li>
+<li>Web server, apache FTW!</li>
+<li>This guide assumes a user name of 'misp'</li>
+</ul>
+<h4 id="make-sure-you-can-sudo">Make sure you can sudo<a class="headerlink" href="#make-sure-you-can-sudo" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>misp@debian:~$ sudo ls
+<span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for</span> misp:
+misp is not in the sudoers file.  This incident will be reported.
+</pre></div>
+
+<div class="codehilite"><pre><span></span>su -
+adduser misp sudo
+</pre></div>
+
+<h4 id="install-etckeeper-optional">install etckeeper (optional)<a class="headerlink" href="#install-etckeeper-optional" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo apt install -y etckeeper
+</pre></div>
+
+<h4 id="make-sure-your-system-is-up2date">Make sure your system is up2date:<a class="headerlink" href="#make-sure-your-system-is-up2date" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo apt update
+sudo apt -y dist-upgrade
+</pre></div>
+
+<h4 id="network-interface-name-salvage-optional">Network Interface Name salvage (optional)<a class="headerlink" href="#network-interface-name-salvage-optional" title="Permanent link">&para;</a></h4>
+<p>This will bring back 'ethX' e.g: eth0</p>
+<div class="codehilite"><pre><span></span><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&quot;net.ifnames=0 biosdevname=0&quot;</span>
+<span class="nv">DEFAULT_GRUB</span><span class="o">=</span>/etc/default/grub
+<span class="k">for</span> key in GRUB_CMDLINE_LINUX
+<span class="k">do</span>
+    sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\)=.*/\1=\&quot;</span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">\&quot;/&quot;</span> <span class="nv">$DEFAULT_GRUB</span>
+<span class="k">done</span>
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+</pre></div>
+
+<h4 id="install-postfix-there-will-be-some-questions-optional">install postfix, there will be some questions. (optional)<a class="headerlink" href="#install-postfix-there-will-be-some-questions-optional" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="c1"># Postfix Configuration: Satellite system</span>
+sudo apt install -y postfix
+</pre></div>
+
+<div class="codehilite"><pre><span></span># change the relay server later with:
+sudo postconf -e &#39;relayhost = example.com&#39;
+sudo postfix reload
+</pre></div>
+
+<h3 id="2-install-lamp-dependencies">2/ Install LAMP &amp; dependencies<a class="headerlink" href="#2-install-lamp-dependencies" title="Permanent link">&para;</a></h3>
+<hr />
+<h4 id="install-all-the-dependencies-some-might-already-be-installed">Install all the dependencies: (some might already be installed)<a class="headerlink" href="#install-all-the-dependencies-some-might-already-be-installed" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo apt install -y <span class="se">\</span>
+curl gcc git gnupg-agent make openssl redis-server neovim zip libyara-dev python3-yara python3-redis python3-zmq <span class="se">\</span>
+mariadb-client <span class="se">\</span>
+mariadb-server <span class="se">\</span>
+apache2 apache2-doc apache2-utils <span class="se">\</span>
+libapache2-mod-php7.2 php7.2 php7.2-cli  php7.2-mbstring php-pear php7.2-dev php7.2-json php7.2-xml php7.2-mysql php7.2-opcache php7.2-readline <span class="se">\</span>
+python3-dev python3-pip libpq5 libjpeg-dev libfuzzy-dev ruby asciidoctor <span class="se">\</span>
+libxml2-dev libxslt1-dev zlib1g-dev python3-setuptools
+
+<span class="c1"># Start rng-tools to get more entropy (optional)</span>
+<span class="c1"># If you get TPM errors, enable &quot;Security chip&quot; in BIOS (keep secure boot disabled)</span>
+sudo apt install rng-tools
+sudo service rng-tools start
+
+<span class="c1"># Secure the MariaDB installation (especially by setting a strong root password)</span>
+sudo mysql_secure_installation
+
+<span class="c1"># Enable modules, settings, and default of SSL in Apache</span>
+sudo a2dismod status
+sudo a2enmod ssl rewrite
+sudo a2dissite <span class="m">000</span>-default
+sudo a2ensite default-ssl
+
+<span class="c1"># Install PHP external dependencies</span>
+sudo pear channel-update pear.php.net
+sudo pear install Crypt_GPG
+sudo pecl channel-update pecl.php.net
+sudo pecl install redis
+<span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> <span class="p">|</span> sudo tee /etc/php/7.2/mods-available/redis.ini
+
+<span class="c1"># Switch to python3 by default (optional)</span>
+
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 <span class="m">1</span>
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 <span class="m">2</span>
+</pre></div>
+
+<p>To flip between the 2 pythons use update-alternatives
+<div class="codehilite"><pre><span></span>sudo update-alternatives --config python
+</pre></div></p>
+<h4 id="apply-all-changes">Apply all changes<a class="headerlink" href="#apply-all-changes" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo systemctl restart apache2
+</pre></div>
+
+<h3 id="3-misp-code">3/ MISP code<a class="headerlink" href="#3-misp-code" title="Permanent link">&para;</a></h3>
+<hr />
+<div class="codehilite"><pre><span></span># Download MISP using git in the /var/www/ directory.
+sudo mkdir $PATH_TO_MISP
+sudo chown www-data:www-data $PATH_TO_MISP
+cd $PATH_TO_MISP
+sudo -u www-data git clone https://github.com/MISP/MISP.git $PATH_TO_MISP
+
+# Make git ignore filesystem permission differences
+sudo -u www-data git config core.filemode false
+
+cd $PATH_TO_MISP/app/files/scripts
+sudo -u www-data git clone https://github.com/CybOXProject/python-cybox.git
+sudo -u www-data git clone https://github.com/STIXProject/python-stix.git
+cd $PATH_TO_MISP/app/files/scripts/python-cybox
+sudo pip3 install .
+cd $PATH_TO_MISP/app/files/scripts/python-stix
+sudo pip3 install .
+
+# install mixbox to accomodate the new STIX dependencies:
+cd $PATH_TO_MISP/app/files/scripts/
+sudo -u www-data git clone https://github.com/CybOXProject/mixbox.git
+cd $PATH_TO_MISP/app/files/scripts/mixbox
+sudo pip3 install .
+
+cd $PATH_TO_MISP
+sudo -u www-data git submodule update --init --recursive
+# Make git ignore filesystem permission differences for submodules
+sudo -u www-data git submodule foreach --recursive git config core.filemode false
+
+# install PyMISP
+cd $PATH_TO_MISP/PyMISP
+sudo pip3 install .
+</pre></div>
+
+<h3 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h3>
+<hr />
+<h4 id="cakephp-is-included-as-a-submodule-of-misp">CakePHP is included as a submodule of MISP.<a class="headerlink" href="#cakephp-is-included-as-a-submodule-of-misp" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="c1"># Install CakeResque along with its dependencies if you intend to use the built in background jobs:</span>
+<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
+<span class="c1"># Make composer cache happy</span>
+sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown www-data:www-data /var/www/.composer
+sudo -u www-data php composer.phar require kamisama/cake-resque:4.1.2
+sudo -u www-data php composer.phar config vendor-dir Vendor
+sudo -u www-data php composer.phar install
+
+<span class="c1"># Enable CakeResque with php-redis</span>
+sudo phpenmod redis
+
+<span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
+sudo -u www-data cp -fa <span class="nv">$PATH_TO_MISP</span>/INSTALL/setup/config.php <span class="nv">$PATH_TO_MISP</span>/app/Plugin/CakeResque/Config/config.php
+</pre></div>
+
+<h3 id="5-set-the-permissions">5/ Set the permissions<a class="headerlink" href="#5-set-the-permissions" title="Permanent link">&para;</a></h3>
+<hr />
+<div class="codehilite"><pre><span></span><span class="c1"># Check if the permissions are set correctly using the following commands:</span>
+sudo chown -R www-data:www-data <span class="nv">$PATH_TO_MISP</span>
+sudo chmod -R <span class="m">750</span> <span class="nv">$PATH_TO_MISP</span>
+sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/tmp
+sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/files
+sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/tmp
+</pre></div>
+
+<h3 id="6-create-a-database-and-user">6/ Create a database and user<a class="headerlink" href="#6-create-a-database-and-user" title="Permanent link">&para;</a></h3>
+<hr />
+<h4 id="enter-the-mysql-shell">Enter the mysql shell<a class="headerlink" href="#enter-the-mysql-shell" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo mysql -u root -p
+</pre></div>
+
+<div class="codehilite"><pre><span></span>MariaDB [(none)]&gt; create database misp;
+MariaDB [(none)]&gt; grant usage on *.* to misp@localhost identified by &#39;XXXXdbpasswordhereXXXXX&#39;;
+MariaDB [(none)]&gt; grant all privileges on misp.* to misp@localhost;
+MariaDB [(none)]&gt; flush privileges;
+MariaDB [(none)]&gt; exit
+</pre></div>
+
+<h4 id="copypaste">copy/paste:<a class="headerlink" href="#copypaste" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;create database </span><span class="nv">$DBNAME</span><span class="s2">;&quot;</span>
+sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant usage on *.* to </span><span class="nv">$DBNAME</span><span class="s2">@localhost identified by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
+sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant all privileges on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
+sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;flush privileges;&quot;</span>
+</pre></div>
+
+<h4 id="import-the-empty-misp-database-from-mysqlsql">Import the empty MISP database from MYSQL.sql<a class="headerlink" href="#import-the-empty-misp-database-from-mysqlsql" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo -u www-data cat <span class="nv">$PATH_TO_MISP</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
+</pre></div>
+
+<h3 id="7-apache-configuration">7/ Apache configuration<a class="headerlink" href="#7-apache-configuration" title="Permanent link">&para;</a></h3>
+<hr />
+<div class="codehilite"><pre><span></span><span class="c1"># Now configure your Apache webserver with the DocumentRoot $PATH_TO_MISP/app/webroot/</span>
+
+<span class="c1"># If the apache version is 2.4:</span>
+sudo cp <span class="nv">$PATH_TO_MISP</span>/INSTALL/apache.24.misp.ssl /etc/apache2/sites-available/misp-ssl.conf
+
+<span class="c1"># Be aware that the configuration files for apache 2.4 and up have changed.</span>
+<span class="c1"># The configuration file has to have the .conf extension in the sites-available directory</span>
+<span class="c1"># For more information, visit http://httpd.apache.org/docs/2.4/upgrading.html</span>
+
+<span class="c1"># If a valid SSL certificate is not already created for the server, create a self-signed certificate:</span>
+sudo openssl req -newkey rsa:4096 -days <span class="m">365</span> -nodes -x509 <span class="se">\</span>
+-subj <span class="s2">&quot;/C=</span><span class="si">${</span><span class="nv">OPENSSL_C</span><span class="si">}</span><span class="s2">/ST=</span><span class="si">${</span><span class="nv">OPENSSL_ST</span><span class="si">}</span><span class="s2">/L=</span><span class="si">${</span><span class="nv">OPENSSL_L</span><span class="si">}</span><span class="s2">/O=</span><span class="si">${</span><span class="nv">OPENSSL_O</span><span class="si">}</span><span class="s2">/OU=</span><span class="si">${</span><span class="nv">OPENSSL_OU</span><span class="si">}</span><span class="s2">/CN=</span><span class="si">${</span><span class="nv">OPENSSL_CN</span><span class="si">}</span><span class="s2">/emailAddress=</span><span class="si">${</span><span class="nv">OPENSSL_EMAILADDRESS</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+-keyout /etc/ssl/private/misp.local.key -out /etc/ssl/private/misp.local.crt
+
+<span class="c1"># Otherwise, copy the SSLCertificateFile, SSLCertificateKeyFile, and SSLCertificateChainFile to /etc/ssl/private/. (Modify path and config to fit your environment)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>============================================= Begin sample working SSL config for MISP
+&lt;VirtualHost _default_:80&gt;
+        ServerAdmin admin@&lt;your.FQDN.here&gt;
+        ServerName &lt;your.FQDN.here&gt;
+
+        Redirect permanent / https://&lt;your.FQDN.here&gt;
+
+        LogLevel warn
+        ErrorLog /var/log/apache2/misp.local_error.log
+        CustomLog /var/log/apache2/misp.local_access.log combined
+        ServerSignature Off
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost _default_:443&gt;
+        ServerAdmin admin@&lt;your.FQDN.here&gt;
+        ServerName &lt;your.FQDN.here&gt;
+        DocumentRoot $PATH_TO_MISP/app/webroot
+        &lt;Directory $PATH_TO_MISP/app/webroot&gt;
+                Options -Indexes
+                AllowOverride all
+                Require all granted
+                Order allow,deny
+                allow from all
+        &lt;/Directory&gt;
+
+        SSLEngine On
+        SSLCertificateFile /etc/ssl/private/misp.local.crt
+        SSLCertificateKeyFile /etc/ssl/private/misp.local.key
+#        SSLCertificateChainFile /etc/ssl/private/misp-chain.crt
+
+        LogLevel warn
+        ErrorLog /var/log/apache2/misp.local_error.log
+        CustomLog /var/log/apache2/misp.local_access.log combined
+        ServerSignature Off
+&lt;/VirtualHost&gt;
+============================================= End sample working SSL config for MISP
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="c1"># activate new vhost</span>
+sudo a2dissite default-ssl
+sudo a2ensite misp-ssl
+
+<span class="c1"># Recommended: Change some PHP settings in /etc/php/7.2/apache2/php.ini</span>
+<span class="c1"># max_execution_time = 300</span>
+<span class="c1"># memory_limit = 512M</span>
+<span class="c1"># upload_max_filesize = 50M</span>
+<span class="c1"># post_max_size = 50M</span>
+<span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
+<span class="k">do</span>
+    sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
+<span class="k">done</span>
+
+<span class="c1"># Restart apache</span>
+sudo systemctl restart apache2
+</pre></div>
+
+<h3 id="8-log-rotation">8/ Log rotation<a class="headerlink" href="#8-log-rotation" title="Permanent link">&para;</a></h3>
+<hr />
+<div class="codehilite"><pre><span></span><span class="c1"># MISP saves the stdout and stderr of its workers in $PATH_TO_MISP/app/tmp/logs</span>
+<span class="c1"># To rotate these logs install the supplied logrotate script:</span>
+
+sudo cp <span class="nv">$PATH_TO_MISP</span>/INSTALL/misp.logrotate /etc/logrotate.d/misp
+chmod <span class="m">0640</span> /etc/logrotate.d/misp
+</pre></div>
+
+<h3 id="9-misp-configuration">9/ MISP configuration<a class="headerlink" href="#9-misp-configuration" title="Permanent link">&para;</a></h3>
+<hr />
+<div class="codehilite"><pre><span></span><span class="c1"># There are 4 sample configuration files in $PATH_TO_MISP/app/Config that need to be copied</span>
+sudo -u www-data cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/bootstrap.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/bootstrap.php
+sudo -u www-data cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/database.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
+sudo -u www-data cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/core.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/core.php
+sudo -u www-data cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/config.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/config.php
+
+
+<span class="nb">echo</span> <span class="s2">&quot;&lt;?php</span>
+<span class="s2">class DATABASE_CONFIG {</span>
+<span class="s2">        public \$default = array(</span>
+<span class="s2">                &#39;datasource&#39; =&gt; &#39;Database/Mysql&#39;,</span>
+<span class="s2">                //&#39;datasource&#39; =&gt; &#39;Database/Postgres&#39;,</span>
+<span class="s2">                &#39;persistent&#39; =&gt; false,</span>
+<span class="s2">                &#39;host&#39; =&gt; &#39;</span><span class="nv">$DBHOST</span><span class="s2">&#39;,</span>
+<span class="s2">                &#39;login&#39; =&gt; &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;,</span>
+<span class="s2">                &#39;port&#39; =&gt; 3306, // MySQL &amp; MariaDB</span>
+<span class="s2">                //&#39;port&#39; =&gt; 5432, // PostgreSQL</span>
+<span class="s2">                &#39;password&#39; =&gt; &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;,</span>
+<span class="s2">                &#39;database&#39; =&gt; &#39;</span><span class="nv">$DBNAME</span><span class="s2">&#39;,</span>
+<span class="s2">                &#39;prefix&#39; =&gt; &#39;&#39;,</span>
+<span class="s2">                &#39;encoding&#39; =&gt; &#39;utf8&#39;,</span>
+<span class="s2">        );</span>
+<span class="s2">}&quot;</span> <span class="p">|</span> sudo -u www-data tee <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
+
+<span class="c1"># and make sure the file permissions are still OK</span>
+sudo chown -R www-data:www-data <span class="nv">$PATH_TO_MISP</span>/app/Config
+sudo chmod -R <span class="m">750</span> <span class="nv">$PATH_TO_MISP</span>/app/Config
+<span class="c1"># Set some MISP directives with the command line tool</span>
+sudo <span class="nv">$CAKE</span> Live <span class="nv">$MISP_LIVE</span>
+
+<span class="c1"># Change base url</span>
+sudo <span class="nv">$CAKE</span> Baseurl <span class="nv">$MISP_BASEURL</span>
+
+<span class="c1"># example: &#39;baseurl&#39; =&gt; &#39;https://&lt;your.FQDN.here&gt;&#39;,</span>
+<span class="c1"># alternatively, you can leave this field empty if you would like to use relative pathing in MISP</span>
+<span class="c1"># &#39;baseurl&#39; =&gt; &#39;&#39;,</span>
+
+<span class="c1"># and make sure the file permissions are still OK</span>
+sudo chown -R www-data:www-data <span class="nv">$PATH_TO_MISP</span>/app/Config
+sudo chmod -R <span class="m">750</span> <span class="nv">$PATH_TO_MISP</span>/app/Config
+
+<span class="c1"># Generate a GPG encryption key.</span>
+
+cat &gt;/tmp/gen-key-script <span class="s">&lt;&lt;EOF</span>
+<span class="s">    %echo Generating a default key</span>
+<span class="s">    Key-Type: default</span>
+<span class="s">    Key-Length: $GPG_KEY_LENGTH</span>
+<span class="s">    Subkey-Type: default</span>
+<span class="s">    Name-Real: $GPG_REAL_NAME</span>
+<span class="s">    Name-Comment: $GPG_COMMENT</span>
+<span class="s">    Name-Email: $GPG_EMAIL_ADDRESS</span>
+<span class="s">    Expire-Date: 0</span>
+<span class="s">    Passphrase: $GPG_PASSPHRASE</span>
+<span class="s">    # Do a commit here, so that we can later print &quot;done&quot;</span>
+<span class="s">    %commit</span>
+<span class="s">    %echo done</span>
+<span class="s">EOF</span>
+
+sudo -u www-data gpg --homedir <span class="nv">$PATH_TO_MISP</span>/.gnupg --batch --gen-key /tmp/gen-key-script
+<span class="c1"># The email address should match the one set in the config.php / set in the configuration menu in the administration menu configuration file</span>
+
+<span class="c1"># And export the public key to the webroot</span>
+sudo -u www-data sh -c <span class="s2">&quot;gpg --homedir </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.gnupg --export --armor </span><span class="nv">$GPG_EMAIL_ADDRESS</span><span class="s2">&quot;</span> <span class="p">|</span> sudo -u www-data tee <span class="nv">$PATH_TO_MISP</span>/app/webroot/gpg.asc
+
+<span class="c1"># To make the background workers start on boot</span>
+sudo chmod +x <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
+<span class="k">if</span> <span class="o">[</span> ! -e /etc/rc.local <span class="o">]</span>
+<span class="k">then</span>
+    <span class="nb">echo</span> <span class="s1">&#39;#!/bin/sh -e&#39;</span> <span class="p">|</span> sudo tee -a /etc/rc.local
+    <span class="nb">echo</span> <span class="s1">&#39;exit 0&#39;</span> <span class="p">|</span> sudo tee -a /etc/rc.local
+    sudo chmod u+x /etc/rc.local
+<span class="k">fi</span>
+
+<span class="c1"># Initialize user and fetch Auth Key</span>
+sudo -E <span class="nv">$CAKE</span> userInit -q
+<span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1<span class="k">)</span>
+
+<span class="c1"># Setup some more MISP default via cake CLI</span>
+
+<span class="c1"># Tune global time outs</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.autoRegenerate&quot;</span> <span class="m">0</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.timeout&quot;</span> <span class="m">600</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.cookie_timeout&quot;</span> <span class="m">3600</span>
+
+<span class="c1"># Enable GnuPG</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.email&quot;</span> <span class="s2">&quot;admin@admin.test&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.homedir&quot;</span> <span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.gnupg&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.password&quot;</span> <span class="s2">&quot;Password1234&quot;</span>
+
+<span class="c1"># Enable Enrichment set better timeouts</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_enable&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_enable&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_timeout&quot;</span> <span class="m">300</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_timeout&quot;</span> <span class="m">150</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_cve_enabled&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_dns_enabled&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_port&quot;</span> <span class="m">6666</span>
+
+<span class="c1"># Enable Import modules set better timout</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_enable&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_port&quot;</span> <span class="m">6666</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_timeout&quot;</span> <span class="m">300</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_ocr_enabled&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_csvimport_enabled&quot;</span> <span class="nb">true</span>
+
+<span class="c1"># Enable Export modules set better timout</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_enable&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_port&quot;</span> <span class="m">6666</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_timeout&quot;</span> <span class="m">300</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_pdfexport_enabled&quot;</span> <span class="nb">true</span>
+
+<span class="c1"># Enable installer org and tune some configurables</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.host_org_id&quot;</span> <span class="m">1</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.email&quot;</span> <span class="s2">&quot;info@admin.test&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.disable_emailing&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.contact&quot;</span> <span class="s2">&quot;info@admin.test&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.disablerestalert&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.showCorrelationsOnIndex&quot;</span> <span class="nb">true</span>
+
+<span class="c1"># Provisional Cortex tunes</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_enable&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_port&quot;</span> <span class="m">9000</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_timeout&quot;</span> <span class="m">120</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_port&quot;</span> <span class="m">9000</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_timeout&quot;</span> <span class="m">120</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_authkey&quot;</span> <span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_verify_peer&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_verify_host&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_allow_self_signed&quot;</span> <span class="nb">true</span>
+
+<span class="c1"># Various plugin sightings settings</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_policy&quot;</span> <span class="m">0</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_anonymise&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_range&quot;</span> <span class="m">365</span>
+
+<span class="c1"># Plugin CustomAuth tuneable</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.CustomAuth_disable_logout&quot;</span> <span class="nb">false</span>
+
+<span class="c1"># RPZ Plugin settings</span>
+
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_policy&quot;</span> <span class="s2">&quot;DROP&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_walled_garden&quot;</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_serial&quot;</span> <span class="s2">&quot;\$date00&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_refresh&quot;</span> <span class="s2">&quot;2h&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_retry&quot;</span> <span class="s2">&quot;30m&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_expiry&quot;</span> <span class="s2">&quot;30d&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_minimum_ttl&quot;</span> <span class="s2">&quot;1h&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_ttl&quot;</span> <span class="s2">&quot;1w&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_ns&quot;</span> <span class="s2">&quot;localhost.&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_ns_alt&quot;</span> <span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_email&quot;</span> <span class="s2">&quot;root.localhost&quot;</span>
+
+<span class="c1"># Force defaults to make MISP Server Settings less RED</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.language&quot;</span> <span class="s2">&quot;eng&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.proposals_block_attributes&quot;</span> <span class="nb">false</span>
+
+<span class="c1">## Redis block</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.redis_host&quot;</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.redis_port&quot;</span> <span class="m">6379</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.redis_database&quot;</span> <span class="m">13</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.redis_password&quot;</span> <span class="s2">&quot;&quot;</span>
+
+<span class="c1"># Force defaults to make MISP Server Settings less YELLOW</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.ssdeep_correlation_threshold&quot;</span> <span class="m">40</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.extended_alert_subject&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.default_event_threat_level&quot;</span> <span class="m">4</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.newUserText&quot;</span> <span class="s2">&quot;Dear new MISP user,\\n\\nWe would hereby like to welcome you to the \$org MISP community.\\n\\n Use the credentials below to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nPassword: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.passwordResetText&quot;</span> <span class="s2">&quot;Dear MISP user,\\n\\nA password reset has been triggered for your account. Use the below provided temporary password to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nYour temporary password: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.enableEventBlacklisting&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.enableOrgBlacklisting&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.log_client_ip&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.log_auth&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.disableUserSelfManagement&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_event_alert&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_event_alert_tag&quot;</span> <span class="s2">&quot;no-alerts=\&quot;true\&quot;&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert_age&quot;</span> <span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.incoming_tags_disabled_by_default&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.footermidleft&quot;</span> <span class="s2">&quot;This is an initial install&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.footermidright&quot;</span> <span class="s2">&quot;Please configure and harden accordingly&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.welcome_text_top&quot;</span> <span class="s2">&quot;Initial Install, please configure&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.welcome_text_bottom&quot;</span> <span class="s2">&quot;Welcome to MISP, change this message in MISP Settings&quot;</span>
+
+<span class="c1"># Force defaults to make MISP Server Settings less GREEN</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.password_policy_length&quot;</span> <span class="m">12</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.password_policy_complexity&quot;</span> <span class="s1">&#39;/^((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$|.{16,}/&#39;</span>
+<span class="c1"># Tune global time outs</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.autoRegenerate&quot;</span> <span class="m">0</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.timeout&quot;</span> <span class="m">600</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.cookie_timeout&quot;</span> <span class="m">3600</span>
+
+<span class="c1"># Now log in using the webinterface:</span>
+<span class="c1"># The default user/pass = admin@admin.test/admin</span>
+
+<span class="c1"># Using the server settings tool in the admin interface (Administration -&gt; Server Settings), set MISP up to your preference</span>
+<span class="c1"># It is especially vital that no critical issues remain!</span>
+<span class="c1"># start the workers by navigating to the workers tab and clicking restart all workers</span>
+
+<span class="c1"># Don&#39;t forget to change the email, password and authentication key after installation.</span>
+
+<span class="c1"># Set MISP Live</span>
+sudo <span class="nv">$CAKE</span> Live <span class="nv">$MISP_LIVE</span>
+
+<span class="c1"># Update the galaxies…</span>
+sudo <span class="nv">$CAKE</span> Admin updateGalaxies
+
+<span class="c1"># Updating the taxonomies…</span>
+sudo <span class="nv">$CAKE</span> Admin updateTaxonomies
+
+<span class="c1"># Updating the warning lists…</span>
+sudo <span class="nv">$CAKE</span> Admin updateWarningLists
+
+<span class="c1"># Updating the notice lists…</span>
+<span class="c1">## sudo $CAKE Admin updateNoticeLists</span>
+curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/noticelists/update
+
+<span class="c1"># Updating the object templates…</span>
+<span class="c1">##sudo $CAKE Admin updateObjectTemplates</span>
+curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/objectTemplates/update
+
+<span class="c1"># Add the following lines before the last line (exit 0). Make sure that you replace www-data with your apache user:</span>
+sudo sed -i -e <span class="s1">&#39;$i \echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled\n&#39;</span> /etc/rc.local
+sudo sed -i -e <span class="s1">&#39;$i \echo 1024 &gt; /proc/sys/net/core/somaxconn\n&#39;</span> /etc/rc.local
+sudo sed -i -e <span class="s1">&#39;$i \sysctl vm.overcommit_memory=1\n&#39;</span> /etc/rc.local
+sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data bash /var/www/MISP/app/Console/worker/start.sh\n&#39;</span> /etc/rc.local
+sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data misp-modules -l 0.0.0.0 -s &amp;\n&#39;</span> /etc/rc.local
+
+<span class="c1"># Start the workers</span>
+sudo -u www-data bash <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
+
+<span class="nb">cd</span> /usr/local/src/
+sudo git clone https://github.com/MISP/misp-modules.git
+<span class="nb">cd</span> misp-modules
+<span class="c1"># pip3 install</span>
+sudo pip3 install -I -r REQUIREMENTS
+sudo pip3 install -I .
+sudo pip3 install maec lief python-magic wand
+sudo pip3 install git+https://github.com/kbandla/pydeep.git
+<span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
+sudo pip3 install stix2
+sudo gem install pygments.rb
+sudo gem install asciidoctor-pdf --pre
+
+<span class="c1"># Once done, have a look at the diagnostics</span>
+
+<span class="c1"># If any of the directories that MISP uses to store files is not writeable to the apache user, change the permissions</span>
+<span class="c1"># you can do this by running the following commands:</span>
+
+sudo chmod -R <span class="m">750</span> <span class="nv">$PATH_TO_MISP</span>/&lt;directory path with an indicated issue&gt;
+sudo chown -R www-data:www-data <span class="nv">$PATH_TO_MISP</span>/&lt;directory path with an indicated issue&gt;
+
+<span class="c1"># Make sure that the STIX libraries and GnuPG work as intended, if not, refer to INSTALL.txt&#39;s paragraphs dealing with these two items</span>
+
+<span class="c1"># If anything goes wrong, make sure that you check MISP&#39;s logs for errors:</span>
+<span class="c1"># $PATH_TO_MISP/app/tmp/logs/error.log</span>
+<span class="c1"># $PATH_TO_MISP/app/tmp/logs/resque-worker-error.log</span>
+<span class="c1"># $PATH_TO_MISP/app/tmp/logs/resque-scheduler-error.log</span>
+<span class="c1"># $PATH_TO_MISP/app/tmp/logs/resque-2015-01-01.log // where the actual date is the current date</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>
+</pre></div>
+
+<h3 id="recommended-actions">Recommended actions<a class="headerlink" href="#recommended-actions" title="Permanent link">&para;</a></h3>
+<hr />
+<ul>
+<li>
+<p>By default CakePHP exposes its name and version in email headers. Apply a patch to remove this behavior.</p>
+</li>
+<li>
+<p>You should really harden your OS</p>
+</li>
+<li>You should really harden the configuration of Apache</li>
+<li>You should really harden the configuration of MySQL/MariaDB</li>
+<li>Keep your software up2date (OS, MISP, CakePHP and everything else)</li>
+<li>Log and audit</li>
+</ul>
+<h3 id="optional-features">Optional features<a class="headerlink" href="#optional-features" title="Permanent link">&para;</a></h3>
+<hr />
+<div class="codehilite"><pre><span></span><span class="c1"># set PATH so it includes viper if it exists</span>
+<span class="k">if</span> <span class="o">[</span> -d <span class="s2">&quot;/usr/local/src/viper&quot;</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then</span>
+    <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:/usr/local/src/viper&quot;</span>
+<span class="k">fi</span>
+
+<span class="c1"># set PATH so it includes viper if it exists</span>
+<span class="k">if</span> <span class="o">[</span> -d <span class="s2">&quot;/var/www/MISP/app/Console&quot;</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then</span>
+    <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:/var/www/MISP/app/Console&quot;</span>
+<span class="k">fi</span>
+</pre></div>
+
+<h4 id="misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-commands">MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="c1"># ZeroMQ depends on the Python client for Redis</span>
+sudo apt install python3-redis -y
+
+<span class="c1">## install pyzmq</span>
+sudo apt install python3-zmq -y
+</pre></div>
+
+<h4 id="misp-dashboard">MISP Dashboard<a class="headerlink" href="#misp-dashboard" title="Permanent link">&para;</a></h4>
+<hr />
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www
+sudo mkdir misp-dashboard
+sudo chown www-data:www-data misp-dashboard
+sudo -u www-data git clone https://github.com/MISP/misp-dashboard.git
+<span class="nb">cd</span> misp-dashboard
+sudo /var/www/misp-dashboard/install_dependencies.sh
+sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
+sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data bash /var/www/misp-dashboard/start_all.sh\n&#39;</span> /etc/rc.local
+sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 0.0.0.0:8001&#39;</span> /etc/apache2/ports.conf
+sudo apt install libapache2-mod-wsgi-py3
+
+<span class="nb">echo</span> <span class="s2">&quot;&lt;VirtualHost *:8001&gt;</span>
+<span class="s2">    ServerAdmin admin@misp.local</span>
+<span class="s2">    ServerName misp.local</span>
+<span class="s2">    DocumentRoot /var/www/misp-dashboard</span>
+
+<span class="s2">    WSGIDaemonProcess misp-dashboard \</span>
+<span class="s2">       user=misp group=misp \</span>
+<span class="s2">       python-home=/var/www/misp-dashboard/DASHENV \</span>
+<span class="s2">       processes=1 \</span>
+<span class="s2">       threads=15 \</span>
+<span class="s2">       maximum-requests=5000 \</span>
+<span class="s2">       listen-backlog=100 \</span>
+<span class="s2">       queue-timeout=45 \</span>
+<span class="s2">       socket-timeout=60 \</span>
+<span class="s2">       connect-timeout=15 \</span>
+<span class="s2">       request-timeout=60 \</span>
+<span class="s2">       inactivity-timeout=0 \</span>
+<span class="s2">       deadlock-timeout=60 \</span>
+<span class="s2">       graceful-timeout=15 \</span>
+<span class="s2">       eviction-timeout=0 \</span>
+<span class="s2">       shutdown-timeout=5 \</span>
+<span class="s2">       send-buffer-size=0 \</span>
+<span class="s2">       receive-buffer-size=0 \</span>
+<span class="s2">       header-buffer-size=0 \</span>
+<span class="s2">       response-buffer-size=0 \</span>
+<span class="s2">       server-metrics=Off</span>
+<span class="s2">    WSGIScriptAlias / /var/www/misp-dashboard/misp-dashboard.wsgi</span>
+<span class="s2">    &lt;Directory /var/www/misp-dashboard&gt;</span>
+<span class="s2">        WSGIProcessGroup misp-dashboard</span>
+<span class="s2">        WSGIApplicationGroup %{GLOBAL}</span>
+<span class="s2">        Require all granted</span>
+<span class="s2">    &lt;/Directory&gt;</span>
+<span class="s2">    LogLevel info</span>
+<span class="s2">    ErrorLog /var/log/apache2/misp-dashboard.local_error.log</span>
+<span class="s2">    CustomLog /var/log/apache2/misp-dashboard.local_access.log combined</span>
+<span class="s2">    ServerSignature Off</span>
+<span class="s2">&lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> sudo tee /etc/apache2/sites-available/misp-dashboard.conf
+
+sudo a2ensite misp-dashboard
+sudo systemctl reload apache2
+
+<span class="c1"># Enable ZeroMQ for misp-dashboard</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_enable&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_event_notifications_enable&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_notifications_enable&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_reference_notifications_enable&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_attribute_notifications_enable&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_sighting_notifications_enable&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_user_notifications_enable&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_organisation_notifications_enable&quot;</span> <span class="nb">true</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_port&quot;</span> <span class="m">50000</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_host&quot;</span> <span class="s2">&quot;localhost&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_port&quot;</span> <span class="m">6379</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_database&quot;</span> <span class="m">1</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_namespace&quot;</span> <span class="s2">&quot;mispq&quot;</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_include_attachments&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_tag_notifications_enable&quot;</span> <span class="nb">false</span>
+sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_audit_notifications_enable&quot;</span> <span class="nb">false</span>
+</pre></div>
+
+<h2 id="install-viper-framework">Install viper framework<a class="headerlink" href="#install-viper-framework" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span>cd /usr/local/src/
+sudo apt-get install -y libssl-dev swig python3-ssdeep p7zip-full unrar-free sqlite python3-pyclamd exiftool radare2
+sudo pip3 install SQLAlchemy PrettyTable python-magic
+sudo git clone https://github.com/viper-framework/viper.git
+cd viper
+sudo git git submodule update --init --recursive
+sudo pip3 install -r requirements.txt
+sudo pip3 uninstall yara -y
+/usr/local/src/viper/viper-cli -h
+/usr/local/src/viper/viper-web -p 8888 -H 0.0.0.0 &amp;
+echo &#39;PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper&quot;&#39; |sudo tee /etc/environment
+sed -i &quot;s/^misp_url\ =/misp_url\ =\ http:\/\/localhost/g&quot; ~/.viper/viper.conf
+sed -i &quot;s/^misp_key\ =/misp_key\ =\ $AUTH_KEY/g&quot; ~/.viper/viper.conf
+sqlite3 ~/.viper/admin.db &#39;UPDATE auth_user SET password=&quot;pbkdf2_sha256$100000$iXgEJh8hz7Cf$vfdDAwLX8tko1t0M1TLTtGlxERkNnltUnMhbv56wK/U=&quot;&#39;
+</pre></div>
+
+<h4 id="install-mail-to-misp">Install mail to misp<a class="headerlink" href="#install-mail-to-misp" title="Permanent link">&para;</a></h4>
+<hr />
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> /usr/local/src/
+sudo apt-get install -y cmake
+sudo git clone https://github.com/MISP/mail_to_misp.git
+sudo git clone git://github.com/stricaud/faup.git
+<span class="nb">cd</span> faup
+sudo mkdir -p build
+<span class="nb">cd</span> build
+sudo cmake .. <span class="o">&amp;&amp;</span> sudo make
+sudo make install
+sudo ldconfig
+<span class="nb">cd</span> ../../
+<span class="nb">cd</span> mail_to_misp
+sudo pip3 install -r requirements.txt
+sudo cp mail_to_misp_config.py-example mail_to_misp_config.py
+
+sudo sed -i <span class="s2">&quot;s/^misp_url\ =\ &#39;YOUR_MISP_URL&#39;/misp_url\ =\ &#39;http:\/\/localhost&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+sudo sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="nv">$AUTH_KEY</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+</pre></div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../xINSTALL.centos7/" title="Centos 7" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Centos 7
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Debian 9 \w postgresql
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 MISP Project
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    
+      <a href="https://www.misp-project.org/" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/MISP" class="md-footer-social__link fa fa-github-alt"></a>
+    
+      <a href="https://twitter.com/MISPProject" class="md-footer-social__link fa fa-twitter"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.583bbe55.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>
