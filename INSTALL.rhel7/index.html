@@ -1128,36 +1128,57 @@ su -s /bin/bash apache -c <span class="s1">&#39;scl enable rh-php71 rh-redis32 r
 <div class="codehilite"><pre><span></span>chmod +x /etc/rc.local
 </pre></div>
 
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Now log in using the webinterface: http://misp/users/login<br />
-The default user/pass = <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#97;&#100;&#109;&#105;&#110;&#46;&#116;&#101;&#115;&#116;">&#97;&#100;&#109;&#105;&#110;&#64;&#97;&#100;&#109;&#105;&#110;&#46;&#116;&#101;&#115;&#116;</a>/admin<br />
-Using the server settings tool in the admin interface (Administration -&gt; Server Settings), set MISP up to your preference<br />
-It is especially vital that no critical issues remain!<br />
-Don't forget to change the email, password and authentication key after installation.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Once done, have a look at the diagnostics<br />
-If any of the directories that MISP uses to store files is not writeable to the apache user, change the permissions<br />
-you can do this by running the following commands:<br />
-<div class="codehilite"><pre><span></span>chmod -R 750 /var/www/MISP/&lt;directory path with an indicated issue&gt;
-chown -R apache:apache /var/www/MISP/&lt;directory path with an indicated issue&gt;
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you have installed the recommended Python 3 virtualenv to the recommended place of <strong>${PATH_TO_MISP}/venv</strong> set the following MISP configurable
+<div class="codehilite"><pre><span></span>sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
 </pre></div></p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Make sure that the STIX libraries and GnuPG work as intended, if not, refer to INSTALL.txt's paragraphs dealing with these two items</p>
+<p>Make sure that the STIX libraries and GnuPG work as intended, if not, refer to the relevant sections in the install guide you are currently reading.</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If anything goes wrong, make sure that you check MISP's logs for errors:
-<div class="codehilite"><pre><span></span># /var/www/MISP/app/tmp/logs/error.log
-# /var/www/MISP/app/tmp/logs/resque-worker-error.log
-# /var/www/MISP/app/tmp/logs/resque-scheduler-error.log
-# /var/www/MISP/app/tmp/logs/resque-2015-01-01.log //where the actual date is the current date
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Now log in using the webinterface: http://misp/users/login<br />
+The default user/pass = <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#97;&#100;&#109;&#105;&#110;&#46;&#116;&#101;&#115;&#116;">&#97;&#100;&#109;&#105;&#110;&#64;&#97;&#100;&#109;&#105;&#110;&#46;&#116;&#101;&#115;&#116;</a>/admin<br />
+Using the server settings tool in the admin interface (Administration -&gt; Server Settings), set MISP up to your preference.<br />
+It is especially vital that no critical issues remain!<br />
+Don't forget to change the email, password and authentication key after installation.<br />
+Once done, have a look at the diagnostics.</p>
+</div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>If any of the directories that MISP uses to store files is not writeable to the apache user, change the permissions<br />
+you can do this by running the following commands:
+<div class="codehilite"><pre><span></span>chmod -R <span class="m">750</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/&lt;directory path with an indicated issue&gt;
+<span class="c1"># /!\ Depending on your OS replace www-data with apache or www or whatever user is the web server user.</span>
+chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/&lt;directory path with an indicated issue&gt;
 </pre></div></p>
 </div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>If anything goes wrong, make sure that you check MISP's logs for errors:
+<div class="codehilite"><pre><span></span># ${PATH_TO_MISP}/app/tmp/logs/error.log
+# ${PATH_TO_MISP}/app/tmp/logs/resque-worker-error.log
+# ${PATH_TO_MISP}/app/tmp/logs/resque-scheduler-error.log
+# ${PATH_TO_MISP}/app/tmp/logs/resque-2018-10-25.log //where the actual date is the current date
+</pre></div></p>
+</div>
+<h3 id="recommended-actions">Recommended actions<a class="headerlink" href="#recommended-actions" title="Permanent link">&para;</a></h3>
+<hr />
+<ul>
+<li>
+<p>By default CakePHP exposes his name and version in email headers. Apply a patch to remove this behavior.</p>
+</li>
+<li>
+<p>You should really harden your OS</p>
+</li>
+<li>You should really harden the configuration of Apache</li>
+<li>You should really harden the configuration of MySQL</li>
+<li>Keep your software up2date (MISP, CakePHP and everything else)</li>
+<li>Log and audit</li>
+</ul>
 <h1 id="10-post-install">10/ Post Install<a class="headerlink" href="#10-post-install" title="Permanent link">&para;</a></h1>
 <h2 id="1001-allow-apache-to-write-to-varwwwmispapptmplogs">10.01/ Allow apache to write to /var/www/MISP/app/tmp/logs<a class="headerlink" href="#1001-allow-apache-to-write-to-varwwwmispapptmplogs" title="Permanent link">&para;</a></h2>
 <p>If the result from the diagnostic page is that the directory is not writable, try the following.
