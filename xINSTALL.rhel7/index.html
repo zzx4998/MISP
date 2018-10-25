@@ -760,8 +760,21 @@
                 <h1 id="installation-instructions-for-rhel-7x">INSTALLATION INSTRUCTIONS for RHEL 7.x<a class="headerlink" href="#installation-instructions-for-rhel-7x" title="Permanent link">&para;</a></h1>
 <hr />
 <h2 id="0-overview-and-assumptions">0/ Overview and Assumptions<a class="headerlink" href="#0-overview-and-assumptions" title="Permanent link">&para;</a></h2>
-<p>This document details the steps to install MISP on Red Hat Enterprise Linux 7.x BETA (RHEL 7.x). At time of this writing it
-was tested on version 7.6 BETA.</p>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Maintained and tested by the community.<br />
+Parts of the installation procedures can also be found in the automatic VM generator script <a href="https://github.com/MISP/misp-packer/blob/18.04/scripts/bootstrap.sh">bootstrap.sh</a> of misp-packer.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The core MISP team cannot verify if this guide is working or not. Please help us in keeping it up to date and accurate.
+Thus we also have difficulties in supporting RHEL issues but will do a best effort on a similar yet slightly different setup.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is a carbon copy of the 7.5 document. Please try to adapt it to the 7.6 BETA release so we can seamlessly switch versions once it is not BETA anymore.</p>
+</div>
+<p>This document details the steps to install MISP on Red Hat Enterprise Linux 7.x BETA (RHEL 7.x). At time of this writing it could be tested on version 7.6 BETA.</p>
 <p>The following assumptions with regard to this installation have been made.</p>
 <h3 id="01-a-valid-support-agreement-allowing-the-system-to-register-to-the-red-hat-customer-portal-and-receive-updates">0.1/ A valid support agreement allowing the system to register to the Red Hat Customer Portal and receive updates<a class="headerlink" href="#01-a-valid-support-agreement-allowing-the-system-to-register-to-the-red-hat-customer-portal-and-receive-updates" title="Permanent link">&para;</a></h3>
 <h3 id="02-the-ability-to-enable-additional-rpm-repositories-specifically-the-epel-and-software-collections-scl-repos">0.2/ The ability to enable additional RPM repositories, specifically the EPEL and Software Collections (SCL) repos<a class="headerlink" href="#02-the-ability-to-enable-additional-rpm-repositories-specifically-the-epel-and-software-collections-scl-repos" title="Permanent link">&para;</a></h3>
@@ -782,56 +795,56 @@ To quickly make sure if NetworkManager handles your network interface on boot, c
 <h1 id="1-os-install-and-additional-repositories">1/ OS Install and additional repositories<a class="headerlink" href="#1-os-install-and-additional-repositories" title="Permanent link">&para;</a></h1>
 <h2 id="11-complete-a-minimal-rhel-installation-configure-ip-address-to-connect-automatically">1.1/ Complete a minimal RHEL installation, configure IP address to connect automatically.<a class="headerlink" href="#11-complete-a-minimal-rhel-installation-configure-ip-address-to-connect-automatically" title="Permanent link">&para;</a></h2>
 <h2 id="12-configure-system-hostname">1.2/ Configure system hostname<a class="headerlink" href="#12-configure-system-hostname" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>hostnamectl set-hostname misp <span class="c1"># You&#39;re choice, in a production environment, it&#39;s best to use a FQDN</span>
+<div class="codehilite"><pre><span></span>sudo hostnamectl set-hostname misp <span class="c1"># Your choice, in a production environment, it&#39;s best to use a FQDN</span>
 </pre></div>
 
 <h2 id="13-register-the-system-for-updates-with-red-hat-subscription-manager">1.3/ Register the system for updates with Red Hat Subscription Manager<a class="headerlink" href="#13-register-the-system-for-updates-with-red-hat-subscription-manager" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>subscription-manager register <span class="c1"># register your system to an account</span>
-subscription-manager attach   <span class="c1"># attach your system to a current subscription</span>
+<div class="codehilite"><pre><span></span>sudo subscription-manager register <span class="c1"># register your system to an account</span>
+sudo subscription-manager attach   <span class="c1"># attach your system to a current subscription</span>
 </pre></div>
 
 <h2 id="14-enable-the-optional-extras-and-software-collections-scl-repos">1.4/ Enable the optional, extras and Software Collections (SCL) repos<a class="headerlink" href="#14-enable-the-optional-extras-and-software-collections-scl-repos" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>subscription-manager repos --enable rhel-7-server-optional-rpms
-subscription-manager repos --enable rhel-7-server-extras-rpms
-subscription-manager repos --enable rhel-server-rhscl-7-rpms
+<div class="codehilite"><pre><span></span>sudo subscription-manager repos --enable rhel-7-server-optional-rpms
+sudo subscription-manager repos --enable rhel-7-server-extras-rpms
+sudo subscription-manager repos --enable rhel-server-rhscl-7-rpms
 </pre></div>
 
 <h3 id="15a-optional-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates">1.5a/ OPTIONAL: Install the deltarpm package to help reduce download size when installing updates<a class="headerlink" href="#15a-optional-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span>yum install deltarpm
+<div class="codehilite"><pre><span></span>sudo yum install deltarpm -y
 </pre></div>
 
 <h2 id="15-update-the-system-and-reboot">1.5/ Update the system and reboot<a class="headerlink" href="#15-update-the-system-and-reboot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum update
+<div class="codehilite"><pre><span></span>sudo yum update -y
 </pre></div>
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>As time of writing performing a yum update results in the rhel-7-server-rt-beta-rpms being forbidden.<br />
+<p>At the time of writing performing a yum update results in the rhel-7-server-rt-beta-rpms being forbidden.<br />
 The repo can be disabled using the following command
-<div class="codehilite"><pre><span></span>subscription-manager repos --disable rhel-7-server-rt-beta-rpms
+<div class="codehilite"><pre><span></span>sudo subscription-manager repos --disable rhel-7-server-rt-beta-rpms
 </pre></div></p>
 </div>
 <h2 id="16-install-the-epel-repo">1.6/ Install the EPEL repo<a class="headerlink" href="#16-install-the-epel-repo" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+<div class="codehilite"><pre><span></span>sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
 </pre></div>
 
 <h2 id="17-install-the-scl-repo">1.7/ Install the SCL repo<a class="headerlink" href="#17-install-the-scl-repo" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install centos-release-scl
+<div class="codehilite"><pre><span></span>sudo yum install centos-release-scl -y
 </pre></div>
 
 <h1 id="2-install-dependencies">2/ Install Dependencies<a class="headerlink" href="#2-install-dependencies" title="Permanent link">&para;</a></h1>
 <p>Once the system is installed and updated, the following steps can be performed as root</p>
 <h2 id="201-install-some-base-system-dependencies">2.01/ Install some base system dependencies<a class="headerlink" href="#201-install-some-base-system-dependencies" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install gcc git httpd zip python-devel libxslt-devel zlib-devel python-pip ssdeep-devel
+<div class="codehilite"><pre><span></span>sudo yum install gcc git httpd zip python-devel libxslt-devel zlib-devel python-pip ssdeep-devel -y
 </pre></div>
 
 <h2 id="202-install-mariadb-102-from-scl">2.02/ Install MariaDB 10.2 from SCL<a class="headerlink" href="#202-install-mariadb-102-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install rh-mariadb102
+<div class="codehilite"><pre><span></span>sudo yum install rh-mariadb102 -y
 </pre></div>
 
 <h2 id="203-start-the-mariadb-service-and-enable-it-to-start-on-boot">2.03/ Start the MariaDB service and enable it to start on boot<a class="headerlink" href="#203-start-the-mariadb-service-and-enable-it-to-start-on-boot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>systemctl start rh-mariadb102-mariadb.service
-systemctl <span class="nb">enable</span> rh-mariadb102-mariadb.service
+<div class="codehilite"><pre><span></span>sudo systemctl start rh-mariadb102-mariadb.service
+sudo systemctl <span class="nb">enable</span> rh-mariadb102-mariadb.service
 </pre></div>
 
 <div class="admonition note">
@@ -844,7 +857,7 @@ This guide installs PHP 7.1 from SCL</p>
 <p><a href="https://secure.php.net/supported-versions.php">PHP 5.6 will be EOL in December 2018</a>. Please update accordingly. In future only PHP7 will be supported.</p>
 </div>
 <h2 id="204-install-php-71-from-scl">2.04/ Install PHP 7.1 from SCL<a class="headerlink" href="#204-install-php-71-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install rh-php71 rh-php71-php-fpm rh-php71-php-devel rh-php71-php-mysqlnd rh-php71-php-mbstring rh-php71-php-xml rh-php71-php-bcmath rh-php71-php-opcache
+<div class="codehilite"><pre><span></span>sudo yum install rh-php71 rh-php71-php-fpm rh-php71-php-devel rh-php71-php-mysqlnd rh-php71-php-mbstring rh-php71-php-xml rh-php71-php-bcmath rh-php71-php-opcache -y
 </pre></div>
 
 <div class="admonition note">
@@ -921,7 +934,7 @@ git config core.filemode <span class="nb">false</span>
 scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 setup.py install&#39;</span>
 </pre></div>
 
-<h2 id="304-install-mixbox-to-accomodate-the-new-stix-dependencies">3.04/ Install mixbox to accomodate the new STIX dependencies<a class="headerlink" href="#304-install-mixbox-to-accomodate-the-new-stix-dependencies" title="Permanent link">&para;</a></h2>
+<h2 id="304-install-mixbox-to-accommodate-the-new-stix-dependencies">3.04/ Install mixbox to accommodate the new STIX dependencies<a class="headerlink" href="#304-install-mixbox-to-accommodate-the-new-stix-dependencies" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www/MISP/app/files/scripts/
 git clone https://github.com/CybOXProject/mixbox.git
 <span class="nb">cd</span> /var/www/MISP/app/files/scripts/mixbox

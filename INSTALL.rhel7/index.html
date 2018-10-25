@@ -760,6 +760,16 @@
                 <h1 id="installation-instructions-for-rhel-7x">INSTALLATION INSTRUCTIONS for RHEL 7.x<a class="headerlink" href="#installation-instructions-for-rhel-7x" title="Permanent link">&para;</a></h1>
 <hr />
 <h2 id="0-overview-and-assumptions">0/ Overview and Assumptions<a class="headerlink" href="#0-overview-and-assumptions" title="Permanent link">&para;</a></h2>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Maintained and tested by the community.<br />
+Parts of the installation procedures can also be found in the automatic VM generator script <a href="https://github.com/MISP/misp-packer/blob/18.04/scripts/bootstrap.sh">bootstrap.sh</a> of misp-packer.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The core MISP team cannot verify if this guide is working or not. Please help us in keeping it up to date and accurate.
+Thus we also have difficulties in supporting RHEL issues but will do a best effort on a similar yet slightly different setup.</p>
+</div>
 <p>This document details the steps to install MISP on Red Hat Enterprise Linux 7.x (RHEL 7.x). At time of this writing it
 was tested on version 7.5.</p>
 <p>The following assumptions with regard to this installation have been made.</p>
@@ -770,26 +780,27 @@ was tested on version 7.5.</p>
 <h1 id="1-os-install-and-additional-repositories">1/ OS Install and additional repositories<a class="headerlink" href="#1-os-install-and-additional-repositories" title="Permanent link">&para;</a></h1>
 <h2 id="11-complete-a-minimal-rhel-installation-configure-ip-address-to-connect-automatically">1.1/ Complete a minimal RHEL installation, configure IP address to connect automatically.<a class="headerlink" href="#11-complete-a-minimal-rhel-installation-configure-ip-address-to-connect-automatically" title="Permanent link">&para;</a></h2>
 <h2 id="12-configure-system-hostname">1.2/ Configure system hostname<a class="headerlink" href="#12-configure-system-hostname" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>hostnamectl set-hostname misp <span class="c1"># You&#39;re choice, in a production environment, it&#39;s best to use a FQDN</span>
+<div class="codehilite"><pre><span></span>sudo hostnamectl set-hostname misp <span class="c1"># You&#39;re choice, in a production environment, it&#39;s best to use a FQDN</span>
 </pre></div>
 
 <h2 id="13-register-the-system-for-updates-with-red-hat-subscription-manager">1.3/ Register the system for updates with Red Hat Subscription Manager<a class="headerlink" href="#13-register-the-system-for-updates-with-red-hat-subscription-manager" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>subscription-manager register <span class="c1"># register your system to an account</span>
-subscription-manager attach   <span class="c1"># attach your system to a current subscription</span>
+<div class="codehilite"><pre><span></span>sudo subscription-manager register --auto-attach <span class="c1"># register your system to an account and attach to a current subscription</span>
 </pre></div>
 
 <h2 id="14-enable-the-optional-extras-and-software-collections-scl-repos">1.4/ Enable the optional, extras and Software Collections (SCL) repos<a class="headerlink" href="#14-enable-the-optional-extras-and-software-collections-scl-repos" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>subscription-manager repos --enable rhel-7-server-optional-rpms
-subscription-manager repos --enable rhel-7-server-extras-rpms
-subscription-manager repos --enable rhel-server-rhscl-7-rpms
+<div class="codehilite"><pre><span></span>sudo subscription-manager refresh 
+sudo subscription-manager repos --enable rhel-7-server-optional-rpms
+sudo subscription-manager repos --enable rhel-7-server-extras-rpms
+<span class="c1"># This fails on a Trial subscription, it seems.</span>
+<span class="c1">##sudo subscription-manager repos --enable rhel-server-rhscl-7-rpms</span>
 </pre></div>
 
 <h3 id="15a-optional-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates">1.5a/ OPTIONAL: Install the deltarpm package to help reduce download size when installing updates<a class="headerlink" href="#15a-optional-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span>yum install deltarpm
+<div class="codehilite"><pre><span></span>sudo yum install deltarpm -y
 </pre></div>
 
 <h2 id="15-update-the-system-and-reboot">1.5/ Update the system and reboot<a class="headerlink" href="#15-update-the-system-and-reboot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum update
+<div class="codehilite"><pre><span></span>yum update -y
 </pre></div>
 
 <div class="admonition note">
@@ -800,7 +811,7 @@ The repo can be disabled using the following command
 </pre></div></p>
 </div>
 <h2 id="16-install-the-epel-repo">1.6/ Install the EPEL repo<a class="headerlink" href="#16-install-the-epel-repo" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+<div class="codehilite"><pre><span></span>yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
 </pre></div>
 
 <h2 id="17-install-the-scl-repo">1.7/ Install the SCL repo<a class="headerlink" href="#17-install-the-scl-repo" title="Permanent link">&para;</a></h2>
@@ -909,7 +920,7 @@ git config core.filemode <span class="nb">false</span>
 scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 setup.py install&#39;</span>
 </pre></div>
 
-<h2 id="304-install-mixbox-to-accomodate-the-new-stix-dependencies">3.04/ Install mixbox to accomodate the new STIX dependencies<a class="headerlink" href="#304-install-mixbox-to-accomodate-the-new-stix-dependencies" title="Permanent link">&para;</a></h2>
+<h2 id="304-install-mixbox-to-accommodate-the-new-stix-dependencies">3.04/ Install mixbox to accommodate the new STIX dependencies<a class="headerlink" href="#304-install-mixbox-to-accommodate-the-new-stix-dependencies" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www/MISP/app/files/scripts/
 git clone https://github.com/CybOXProject/mixbox.git
 <span class="nb">cd</span> /var/www/MISP/app/files/scripts/mixbox
