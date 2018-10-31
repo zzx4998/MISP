@@ -1876,6 +1876,18 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <div class="codehilite"><pre><span></span>sudo -H -u www-data /var/www/MISP/venv/bin/pip install pyzmq
 </pre></div>
 
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>There is an issue with the apache config of misp-dashboard in Ubuntu 16.04
+You need to <strong>remove</strong> the following 3 options from <strong>WSGIDaemonProcess</strong>
+<div class="codehilite"><pre><span></span>#       eviction-timeout=0
+#       response-buffer-size=0
+#       server-metrics=Off
+</pre></div>
+The version of <strong>libapache2-mod-wsgi-py3</strong> is "out-of-date".
+<div class="codehilite"><pre><span></span>ii  libapache2-mod-wsgi-py3             4.3.0-1.1build1                            amd64        Python 3 WSGI adapter module for Apache
+</pre></div></p>
+</div>
 <h4 id="misp-dashboard">MISP Dashboard<a class="headerlink" href="#misp-dashboard" title="Permanent link">&para;</a></h4>
 <hr />
 <div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www
