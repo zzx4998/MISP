@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.6">
     
     
       
@@ -96,7 +96,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../#for-centos-6x" tabindex="1" class="md-skip">
+      <a href="#installation-instructions" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -373,6 +373,8 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
+      
+    
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
         Centos 6
@@ -385,6 +387,8 @@
       
 <nav class="md-nav md-nav--secondary">
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">Table of contents</label>
@@ -469,6 +473,13 @@
           <li class="md-nav__item">
   <a href="#5-set-the-permissions" title="5/ Set the permissions" class="md-nav__link">
     5/ Set the permissions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-create-a-database-and-user" title="6/ Create a database and user" class="md-nav__link">
+    6/ Create a database and user
   </a>
   
     <nav class="md-nav">
@@ -711,8 +722,20 @@
 
 
   <li class="md-nav__item">
-    <a href="../old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
+    <a href="../archive/old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
       2.3 to 2.4 upgrade
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../archive/INSTALL.ubuntu1604/" title="Ubuntu 16.04" class="md-nav__link">
+      Ubuntu 16.04
     </a>
   </li>
 
@@ -783,6 +806,8 @@
                     
 <nav class="md-nav md-nav--secondary">
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">Table of contents</label>
@@ -869,6 +894,13 @@
     5/ Set the permissions
   </a>
   
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-create-a-database-and-user" title="6/ Create a database and user" class="md-nav__link">
+    6/ Create a database and user
+  </a>
+  
     <nav class="md-nav">
       <ul class="md-nav__list">
         
@@ -941,12 +973,15 @@
               
                 
                 
-                  <h1>Centos 6</h1>
-                
-                <p># INSTALLATION INSTRUCTIONS</p>
+                <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h1>
 <h2 id="for-centos-6x">for CentOS 6.x<a class="headerlink" href="#for-centos-6x" title="Permanent link">&para;</a></h2>
 <h3 id="0-misp-centos-6-minimal-netinstall-status">0/ MISP CentOS 6 Minimal NetInstall - Status<a class="headerlink" href="#0-misp-centos-6-minimal-netinstall-status" title="Permanent link">&para;</a></h3>
 <hr />
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Semi-maintained and tested by @SteveClement, CentOS 6.10 on 20181025<br />
+It is still considered experimental as not everything works seemlessly.</p>
+</div>
 <p>CentOS 6.10 <a href="http://mirrors.sonic.net/centos/6.10/os/x86_64/">NetInstallURL</a></p>
 <h4 id="misp-configuration-variables">MISP configuration variables<a class="headerlink" href="#misp-configuration-variables" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><span class="c1"># MISP configuration variables</span>
@@ -993,10 +1028,10 @@
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="c1"># CentOS Specific</span>
-<span class="nv">RUN_PHP</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-php56 &#39;</span>
+<span class="nv">RUN_PHP</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-php70 &#39;</span>
 <span class="nv">RUN_PYTHON</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-python36 &#39;</span>
 
-<span class="nv">PHP_INI</span><span class="o">=</span>/etc/opt/rh/rh-php56/php.ini
+<span class="nv">PHP_INI</span><span class="o">=</span>/etc/opt/rh/rh-php70/php.ini
 </pre></div>
 
 <h3 id="1-minimal-centos-install">1/ Minimal CentOS install<a class="headerlink" href="#1-minimal-centos-install" title="Permanent link">&para;</a></h3>
@@ -1008,7 +1043,7 @@
 <li>Mail server</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="c1"># Make sure you set your hostname CORRECTLY vs. like an brute (manually in /etc/hostname)</span>
-hostnamectl set-hostname misp.local <span class="c1"># or whatever you want it to be</span>
+sudo hostnamectl set-hostname misp.local <span class="c1"># or whatever you want it to be</span>
 
 <span class="c1"># Make sure your system is up2date:</span>
 sudo yum update -y
@@ -1023,34 +1058,36 @@ sudo rpm -Uvh /tmp/epel.rpm
 
 <span class="c1"># Since MISP 2.4 PHP 5.5 is a minimal requirement, so we need a newer version than CentOS base provides</span>
 <span class="c1"># Software Collections is a way do to this, see https://wiki.centos.org/AdditionalResources/Repositories/SCL</span>
-sudo yum install centos-release-scl
+sudo yum install centos-release-scl -y
 
 <span class="c1"># Because vim is just so practical</span>
-sudo yum install vim
+sudo yum install vim -y
 
 <span class="c1"># Install the dependencies:</span>
-sudo yum install gcc git httpd zip redis mysql-server python-devel python-pip libxslt-devel zlib-devel
+sudo yum install gcc git httpd zip redis mysql-server python-devel python-pip libxslt-devel zlib-devel -y
 
-<span class="c1"># Install PHP 5.6 from SCL, see https://www.softwarecollections.org/en/scls/rhscl/rh-php56/</span>
-sudo yum install rh-php56 rh-php56-php-fpm rh-php56-php-devel rh-php56-php-mysqlnd rh-php56-php-mbstring rh-php56-php-xml rh-php56-php-bcmath
+<span class="c1"># Install PHP 7.0 from SCL, see https://www.softwarecollections.org/en/scls/rhscl/rh-php70/</span>
+sudo yum install rh-php70 rh-php70-php-fpm rh-php70-php-devel rh-php70-php-mysqlnd rh-php70-php-mbstring rh-php70-php-xml rh-php70-php-bcmath
 
 <span class="c1"># Install Python 3.6 from SCL, see https://www.softwarecollections.org/en/scls/rhscl/rh-python36/</span>
-sudo yum install rh-python36
+sudo yum install rh-python36 -y
 
-<span class="c1"># rh-php56-php only provided mod_php for httpd24-httpd from SCL</span>
-<span class="c1"># if we want to use httpd from CentOS base we can use rh-php56-php-fpm instead</span>
-sudo chkconfig rh-php56-php-fpm on
-sudo service rh-php56-php-fpm start
+<span class="c1"># rh-php70-php only provided mod_php for httpd24-httpd from SCL</span>
+<span class="c1"># if we want to use httpd from CentOS base we can use rh-php70-php-fpm instead</span>
+sudo chkconfig rh-php70-php-fpm on
+sudo service rh-php70-php-fpm start
 
 <span class="c1"># php-fpm is accessed using the fcgi interface</span>
 sudo yum install mod_fcgid mod_proxy_fcgi
+</pre></div>
 
-<span class="c1"># Start a new shell with rh-php56 enabled</span>
-sudo scl <span class="nb">enable</span> rh-php56 bash
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>$RUN_PHP makes php available for you if using rh-php70. e.g: $RUN_PHP "pear list | grep Crypt_GPG"</p>
+</div>
+<div class="codehilite"><pre><span></span>sudo <span class="nv">$RUN_PHP</span> pear channel-update pear.php.net
 
-sudo pear channel-update pear.php.net
-
-sudo pear install Crypt_GPG    <span class="c1"># we need version &gt;1.3.0</span>
+sudo <span class="nv">$RUN_PHP</span> pear install Crypt_GPG    <span class="c1"># we need version &gt;1.3.0</span>
 
 <span class="c1"># GPG needs lots of entropy, haveged provides entropy</span>
 sudo yum install haveged
@@ -1119,9 +1156,9 @@ sudo <span class="nv">$RUN_PYTHON</span> <span class="s2">&quot;python3 setup.py
 sudo <span class="nv">$RUN_PYTHON</span> <span class="s2">&quot;python3 setup.py install&quot;</span>
 
 <span class="c1"># Enable python3 for php-fpm</span>
-<span class="nb">echo</span> <span class="s1">&#39;source scl_source enable rh-python36&#39;</span> <span class="p">|</span> sudo tee -a /etc/opt/rh/rh-php56/sysconfig/php-fpm
-sudo sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> /etc/opt/rh/rh-php56/php-fpm.d/www.conf
-sudo service rh-php56-php-fpm restart
+<span class="nb">echo</span> <span class="s1">&#39;source scl_source enable rh-python36&#39;</span> <span class="p">|</span> sudo tee -a /etc/opt/rh/rh-php70/sysconfig/php-fpm
+sudo sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> /etc/opt/rh/rh-php70/php-fpm.d/www.conf
+sudo service rh-php70-php-fpm restart
 
 <span class="nb">umask</span> <span class="nv">$UMASK</span>
 </pre></div>
@@ -1140,15 +1177,15 @@ sudo -u apache <span class="nv">$RUN_PHP</span> <span class="s2">&quot;php compo
 
 <span class="c1"># CakeResque normally uses phpredis to connect to redis, but it has a (buggy) fallback connector through Redisent. It is highly advised to install phpredis</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pecl install redis-2.2.8&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> <span class="p">|</span>sudo tee /etc/opt/rh/rh-php56/php-fpm.d/redis.ini
-sudo ln -s ../php-fpm.d/redis.ini /etc/opt/rh/rh-php56/php.d/99-redis.ini
-sudo service rh-php56-php-fpm restart
+<span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> <span class="p">|</span>sudo tee /etc/opt/rh/rh-php70/php-fpm.d/redis.ini
+sudo ln -s ../php-fpm.d/redis.ini /etc/opt/rh/rh-php70/php.d/99-redis.ini
+sudo service rh-php70-php-fpm restart
 
 <span class="c1"># If you have not yet set a timezone in php.ini</span>
-<span class="nb">echo</span> <span class="s1">&#39;date.timezone = &quot;Europe/Luxembourg&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/opt/rh/rh-php56/php-fpm.d/timezone.ini
-sudo ln -s ../php-fpm.d/timezone.ini /etc/opt/rh/rh-php56/php.d/99-timezone.ini
+<span class="nb">echo</span> <span class="s1">&#39;date.timezone = &quot;Europe/Luxembourg&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/opt/rh/rh-php70/php-fpm.d/timezone.ini
+sudo ln -s ../php-fpm.d/timezone.ini /etc/opt/rh/rh-php70/php.d/99-timezone.ini
 
-<span class="c1"># Recommended: Change some PHP settings in /etc/opt/rh/rh-php56/php.ini</span>
+<span class="c1"># Recommended: Change some PHP settings in /etc/opt/rh/rh-php70/php.ini</span>
 <span class="c1"># max_execution_time = 300</span>
 <span class="c1"># memory_limit = 512M</span>
 <span class="c1"># upload_max_filesize = 50M</span>
@@ -1157,7 +1194,7 @@ sudo ln -s ../php-fpm.d/timezone.ini /etc/opt/rh/rh-php56/php.d/99-timezone.ini
 <span class="k">do</span>
     sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
 <span class="k">done</span>
-sudo systemctl restart rh-php56-php-fpm.service
+sudo systemctl restart rh-php70-php-fpm.service
 <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
 sudo cp -fa /var/www/MISP/INSTALL/setup/config.php /var/www/MISP/app/Plugin/CakeResque/Config/config.php
 </pre></div>
@@ -1168,18 +1205,23 @@ sudo cp -fa /var/www/MISP/INSTALL/setup/config.php /var/www/MISP/app/Plugin/Cake
 sudo chown -R root:apache /var/www/MISP
 sudo find /var/www/MISP -type d -exec chmod <span class="nv">g</span><span class="o">=</span>rx <span class="o">{}</span> <span class="se">\;</span>
 sudo chmod -R g+r,o<span class="o">=</span> /var/www/MISP
+sudo chmod -R <span class="m">750</span> /var/www/MISP
+sudo chmod -R g+ws /var/www/MISP/app/tmp
+sudo chmod -R g+ws /var/www/MISP/app/files
+sudo chmod -R g+ws /var/www/MISP/app/files/scripts/tmp
 sudo chown apache:apache /var/www/MISP/app/files
 sudo chown apache:apache /var/www/MISP/app/files/terms
 sudo chown apache:apache /var/www/MISP/app/files/scripts/tmp
 sudo chown apache:apache /var/www/MISP/app/Plugin/CakeResque/tmp
+sudo chown -R apache:apache /var/www/MISP/app/Config
 sudo chown -R apache:apache /var/www/MISP/app/tmp
 sudo chown -R apache:apache /var/www/MISP/app/webroot/img/orgs
 sudo chown -R apache:apache /var/www/MISP/app/webroot/img/custom
+</pre></div>
 
-<span class="c1">### 6/ Create a database and user</span>
------------------------------
-<span class="sb">```</span>bash
-<span class="c1"># Enable, start and secure your mysql database server</span>
+<h3 id="6-create-a-database-and-user">6/ Create a database and user<a class="headerlink" href="#6-create-a-database-and-user" title="Permanent link">&para;</a></h3>
+<hr />
+<div class="codehilite"><pre><span></span><span class="c1"># Enable, start and secure your mysql database server</span>
 chkconfig mysqld on
 service mysqld start
 mysql_secure_installation
@@ -1281,12 +1323,12 @@ sudo -u apache gpg --homedir /var/www/MISP/.gnupg --export --armor YOUR-EMAIL &g
 
 # Start the workers to enable background jobs
 sudo chmod +x /var/www/MISP/app/Console/worker/start.sh
-su -s /bin/bash apache -c &#39;scl enable rh-php56 /var/www/MISP/app/Console/worker/start.sh&#39;
+su -s /bin/bash apache -c &#39;scl enable rh-php70 /var/www/MISP/app/Console/worker/start.sh&#39;
 
 # To make the background workers start on boot
 vi /etc/rc.local
 # Add the following line at the end
-su -s /bin/bash apache -c &#39;scl enable rh-php56 /var/www/MISP/app/Console/worker/start.sh&#39;
+su -s /bin/bash apache -c &#39;scl enable rh-php70 /var/www/MISP/app/Console/worker/start.sh&#39;
 
 #### Initialize MISP configuration and set some defaults
 ```bash
@@ -1428,15 +1470,15 @@ sudo $RUN_PHP &quot;$CAKE Admin updateTaxonomies&quot;
 
 # Updating the warning lists…
 ##sudo $RUN_PHP &quot;$CAKE Admin updateWarningLists&quot;
-curl --header &quot;Authorization: $AUTH_KEY&quot; --header &quot;Accept: application/json&quot; --header &quot;Content-Type: application/json&quot; -k -X POST https://127.0.0.1/warninglists/update
+curl --header &quot;Authorization: $AUTH_KEY&quot; --header &quot;Accept: application/json&quot; --header &quot;Content-Type: application/json&quot; -k -X POST http://127.0.0.1/warninglists/update
 
 # Updating the notice lists…
 ## sudo $RUN_PHP &quot;$CAKE Admin updateNoticeLists&quot;
-curl --header &quot;Authorization: $AUTH_KEY&quot; --header &quot;Accept: application/json&quot; --header &quot;Content-Type: application/json&quot; -k -X POST https://127.0.0.1/noticelists/update
+curl --header &quot;Authorization: $AUTH_KEY&quot; --header &quot;Accept: application/json&quot; --header &quot;Content-Type: application/json&quot; -k -X POST http://127.0.0.1/noticelists/update
 
 # Updating the object templates…
 ##sudo $RUN_PHP &quot;$CAKE Admin updateObjectTemplates&quot;
-curl --header &quot;Authorization: $AUTH_KEY&quot; --header &quot;Accept: application/json&quot; --header &quot;Content-Type: application/json&quot; -k -X POST https://127.0.0.1/objectTemplates/update
+curl --header &quot;Authorization: $AUTH_KEY&quot; --header &quot;Accept: application/json&quot; --header &quot;Content-Type: application/json&quot; -k -X POST http://127.0.0.1/objectTemplates/update
 
 # Set MISP Live
 sudo $RUN_PHP &quot;$CAKE Live $MISP_LIVE&quot;
@@ -1446,6 +1488,9 @@ sudo $RUN_PHP &quot;$CAKE Live $MISP_LIVE&quot;
 <p class="admonition-title">Warning</p>
 <p>If you have installed the recommended Python 3 virtualenv to the recommended place of <strong>${PATH_TO_MISP}/venv</strong> set the following MISP configurable
 <div class="codehilite"><pre><span></span>sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
+</pre></div>
+or on CentOS
+<div class="codehilite"><pre><span></span>sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.python_bin<span class="s2">&quot; &quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/python<span class="s2">&quot;&quot;</span>
 </pre></div></p>
 </div>
 <div class="admonition warning">
@@ -1579,7 +1624,7 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
       
     </div>
     
-      <script src="../assets/javascripts/application.583bbe55.js"></script>
+      <script src="../assets/javascripts/application.5e60981f.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       

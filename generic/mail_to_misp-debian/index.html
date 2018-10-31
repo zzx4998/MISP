@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.6">
     
     
       
@@ -96,7 +96,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../../#install-mail-to-misp" tabindex="1" class="md-skip">
+      <a href="#install-mail-to-misp" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -546,8 +546,20 @@
 
 
   <li class="md-nav__item">
-    <a href="../../old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
+    <a href="../../archive/old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
       2.3 to 2.4 upgrade
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../archive/INSTALL.ubuntu1604/" title="Ubuntu 16.04" class="md-nav__link">
+      Ubuntu 16.04
     </a>
   </li>
 
@@ -661,14 +673,13 @@ sudo mkdir -p build
 cmake .. <span class="o">&amp;&amp;</span> make
 sudo make install
 sudo ldconfig
-<span class="nb">cd</span> ../../
-<span class="nb">cd</span> mail_to_misp
+<span class="nb">cd</span> ../../mail_to_misp
 virtualenv -p python3 venv
 ./venv/bin/pip install -r requirements.txt
 cp mail_to_misp_config.py-example mail_to_misp_config.py
 
 sed -i <span class="s2">&quot;s/^misp_url\ =\ &#39;YOUR_MISP_URL&#39;/misp_url\ =\ &#39;http:\/\/localhost&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
-sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="nv">$AUTH_KEY</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
 </pre></div>
                 
                   
@@ -721,7 +732,7 @@ sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ 
       
     </div>
     
-      <script src="../../assets/javascripts/application.583bbe55.js"></script>
+      <script src="../../assets/javascripts/application.5e60981f.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

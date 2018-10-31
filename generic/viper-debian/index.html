@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.6">
     
     
       
@@ -96,7 +96,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../../#install-viper-framework-with-a-virtualenv" tabindex="1" class="md-skip">
+      <a href="#install-viper-framework-with-a-virtualenv" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -546,8 +546,20 @@
 
 
   <li class="md-nav__item">
-    <a href="../../old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
+    <a href="../../archive/old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
       2.3 to 2.4 upgrade
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../archive/INSTALL.ubuntu1604/" title="Ubuntu 16.04" class="md-nav__link">
+      Ubuntu 16.04
     </a>
   </li>
 
@@ -668,7 +680,7 @@ sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/py
 /usr/local/src/viper/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
 <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/environment
 sed -i <span class="s2">&quot;s/^misp_url\ =/misp_url\ =\ http:\/\/localhost/g&quot;</span> ~/.viper/viper.conf
-sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="nv">$AUTH_KEY</span><span class="s2">/g&quot;</span> ~/.viper/viper.conf
+sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">/g&quot;</span> ~/.viper/viper.conf
 <span class="c1"># Reset admin password to: admin/Password1234</span>
 sqlite3 ~/.viper/admin.db <span class="s1">&#39;UPDATE auth_user SET password=&quot;pbkdf2_sha256$100000$iXgEJh8hz7Cf$vfdDAwLX8tko1t0M1TLTtGlxERkNnltUnMhbv56wK/U=&quot;&#39;</span>
 <span class="c1"># Add viper-web to rc.local to be started on boot</span>
@@ -725,7 +737,7 @@ sudo sed -i -e <span class="s1">&#39;$i \sudo -u misp /usr/local/src/viper/viper
       
     </div>
     
-      <script src="../../assets/javascripts/application.583bbe55.js"></script>
+      <script src="../../assets/javascripts/application.5e60981f.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

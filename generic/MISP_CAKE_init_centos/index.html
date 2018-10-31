@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.6">
     
     
       
@@ -96,7 +96,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../../#initialize-misp-configuration-and-set-some-defaults" tabindex="1" class="md-skip">
+      <a href="#initialize-misp-configuration-and-set-some-defaults" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -546,8 +546,20 @@
 
 
   <li class="md-nav__item">
-    <a href="../../old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
+    <a href="../../archive/old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
       2.3 to 2.4 upgrade
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../archive/INSTALL.ubuntu1604/" title="Ubuntu 16.04" class="md-nav__link">
+      Ubuntu 16.04
     </a>
   </li>
 
@@ -788,15 +800,15 @@ sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class=
 
 <span class="c1"># Updating the warning lists…</span>
 <span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin updateWarningLists&quot;</span>
-curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/warninglists/update
+curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST http://127.0.0.1/warninglists/update
 
 <span class="c1"># Updating the notice lists…</span>
 <span class="c1">## sudo $RUN_PHP &quot;$CAKE Admin updateNoticeLists&quot;</span>
-curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/noticelists/update
+curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST http://127.0.0.1/noticelists/update
 
 <span class="c1"># Updating the object templates…</span>
 <span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin updateObjectTemplates&quot;</span>
-curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/objectTemplates/update
+curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST http://127.0.0.1/objectTemplates/update
 
 <span class="c1"># Set MISP Live</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Live </span><span class="nv">$MISP_LIVE</span><span class="s2">&quot;</span>
@@ -852,7 +864,7 @@ sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class=
       
     </div>
     
-      <script src="../../assets/javascripts/application.583bbe55.js"></script>
+      <script src="../../assets/javascripts/application.5e60981f.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

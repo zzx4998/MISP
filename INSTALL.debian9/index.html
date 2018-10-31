@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.4">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.6">
     
     
       
@@ -96,7 +96,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="../#installation-instructions" tabindex="1" class="md-skip">
+      <a href="#installation-instructions" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -369,6 +369,19 @@
   <a href="#install-etckeeper-and-sudo-optional" title="install etckeeper and sudo (optional)" class="md-nav__link">
     install etckeeper and sudo (optional)
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-the-misp-user-to-staff-and-www-data-mandatory" title="add the misp user to staff and www-data (mandatory)" class="md-nav__link">
+    add the misp user to staff and www-data (mandatory)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -870,8 +883,20 @@
 
 
   <li class="md-nav__item">
-    <a href="../old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
+    <a href="../archive/old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
       2.3 to 2.4 upgrade
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../archive/INSTALL.ubuntu1604/" title="Ubuntu 16.04" class="md-nav__link">
+      Ubuntu 16.04
     </a>
   </li>
 
@@ -996,6 +1021,19 @@
   <a href="#install-etckeeper-and-sudo-optional" title="install etckeeper and sudo (optional)" class="md-nav__link">
     install etckeeper and sudo (optional)
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-the-misp-user-to-staff-and-www-data-mandatory" title="add the misp user to staff and www-data (mandatory)" class="md-nav__link">
+    add the misp user to staff and www-data (mandatory)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1324,8 +1362,13 @@
 apt install -y etckeeper
 apt install -y sudo
 adduser misp sudo
-<span class="c1"># Add the user to the staff group to be able to write to /usr/local/src</span>
-adduser misp staff
+</pre></div>
+
+<h5 id="add-the-misp-user-to-staff-and-www-data-mandatory">add the misp user to staff and www-data (mandatory)<a class="headerlink" href="#add-the-misp-user-to-staff-and-www-data-mandatory" title="Permanent link">&para;</a></h5>
+<div class="codehilite"><pre><span></span><span class="c1"># Add the user to the staff group to be able to write to /usr/local/src</span>
+sudo adduser misp staff
+sudo adduser misp www-data
+<span class="nb">logout</span>
 </pre></div>
 
 <h4 id="network-interface-name-salvage-optional">Network Interface Name salvage (optional)<a class="headerlink" href="#network-interface-name-salvage-optional" title="Permanent link">&para;</a></h4>
@@ -1867,6 +1910,9 @@ sudo -u www-data /var/www/MISP/venv/bin/misp-modules -l <span class="m">0</span>
 <p class="admonition-title">Warning</p>
 <p>If you have installed the recommended Python 3 virtualenv to the recommended place of <strong>${PATH_TO_MISP}/venv</strong> set the following MISP configurable
 <div class="codehilite"><pre><span></span>sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
+</pre></div>
+or on CentOS
+<div class="codehilite"><pre><span></span>sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.python_bin<span class="s2">&quot; &quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/python<span class="s2">&quot;&quot;</span>
 </pre></div></p>
 </div>
 <div class="admonition warning">
@@ -1965,7 +2011,7 @@ sudo mkdir misp-dashboard
 sudo chown www-data:www-data misp-dashboard
 sudo -u www-data git clone https://github.com/MISP/misp-dashboard.git
 <span class="nb">cd</span> misp-dashboard
-sudo /var/www/misp-dashboard/install_dependencies.sh
+sudo -H /var/www/misp-dashboard/install_dependencies.sh
 sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
 sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data bash /var/www/misp-dashboard/start_all.sh\n&#39;</span> /etc/rc.local
 sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 0.0.0.0:8001&#39;</span> /etc/apache2/ports.conf
@@ -2053,7 +2099,7 @@ sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/py
 /usr/local/src/viper/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
 <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/environment
 sed -i <span class="s2">&quot;s/^misp_url\ =/misp_url\ =\ http:\/\/localhost/g&quot;</span> ~/.viper/viper.conf
-sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="nv">$AUTH_KEY</span><span class="s2">/g&quot;</span> ~/.viper/viper.conf
+sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">/g&quot;</span> ~/.viper/viper.conf
 <span class="c1"># Reset admin password to: admin/Password1234</span>
 sqlite3 ~/.viper/admin.db <span class="s1">&#39;UPDATE auth_user SET password=&quot;pbkdf2_sha256$100000$iXgEJh8hz7Cf$vfdDAwLX8tko1t0M1TLTtGlxERkNnltUnMhbv56wK/U=&quot;&#39;</span>
 <span class="c1"># Add viper-web to rc.local to be started on boot</span>
@@ -2074,7 +2120,7 @@ sudo make install
 sudo pecl install ssdeep
 
 # You should add &quot;extension=ssdeep.so&quot; to mods-available - Check /etc/php for your current version
-echo &quot;extension=ssdeep.so&quot; | sudo tee /etc/php/7.2/mods-available/ssdeep.ini
+echo &quot;extension=ssdeep.so&quot; | sudo tee ${PHP_ETC_BASE}/mods-available/ssdeep.ini
 sudo phpenmod ssdeep
 sudo service apache2 restart
 </pre></div>
@@ -2091,14 +2137,13 @@ sudo mkdir -p build
 cmake .. <span class="o">&amp;&amp;</span> make
 sudo make install
 sudo ldconfig
-<span class="nb">cd</span> ../../
-<span class="nb">cd</span> mail_to_misp
+<span class="nb">cd</span> ../../mail_to_misp
 virtualenv -p python3 venv
 ./venv/bin/pip install -r requirements.txt
 cp mail_to_misp_config.py-example mail_to_misp_config.py
 
 sed -i <span class="s2">&quot;s/^misp_url\ =\ &#39;YOUR_MISP_URL&#39;/misp_url\ =\ &#39;http:\/\/localhost&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
-sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="nv">$AUTH_KEY</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
 </pre></div>
                 
                   
@@ -2186,7 +2231,7 @@ sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ 
       
     </div>
     
-      <script src="../assets/javascripts/application.583bbe55.js"></script>
+      <script src="../assets/javascripts/application.5e60981f.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
