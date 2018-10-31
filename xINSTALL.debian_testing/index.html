@@ -974,7 +974,8 @@ Maintained and tested by @SteveClement on 20181023</p>
 <span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nv">PHP_INI</span><span class="o">=</span>/etc/php/7.2/apache2/php.ini
+<div class="codehilite"><pre><span></span><span class="nv">PHP_ETC_BASE</span><span class="o">=</span>/etc/php/7.2
+<span class="nv">PHP_INI</span><span class="o">=</span><span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/apache2/php.ini
 </pre></div>
 
 <h3 id="1-minimal-debian-install">1/ Minimal Debian install<a class="headerlink" href="#1-minimal-debian-install" title="Permanent link">&para;</a></h3>
@@ -1109,7 +1110,9 @@ sudo -u www-data git clone https://github.com/MISP/MISP.git <span class="nv">$PA
 sudo -u www-data git config core.filemode <span class="nb">false</span>
 
 <span class="c1"># Create a python3 virtualenv</span>
-sudo -u www-data virtualenv -p python3 /var/www/MISP/venv
+sudo -u www-data virtualenv -p python3 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
+
+<span class="c1"># make pip happy</span>
 sudo mkdir /var/www/.cache/
 sudo chown www-data:www-data /var/www/.cache
 
@@ -1266,8 +1269,8 @@ yes no <span class="p">|</span>sudo pecl install redis
 sudo apt-get install libgpgme11-dev -y
 sudo pecl install gnupg
 
-<span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> <span class="p">|</span> sudo tee /etc/php/7.2/mods-available/redis.ini
-<span class="nb">echo</span> <span class="s2">&quot;extension=gnupg.so&quot;</span> <span class="p">|</span> sudo tee /etc/php/7.2/mods-available/gnupg.ini
+<span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> <span class="p">|</span> sudo tee <span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/mods-available/redis.ini
+<span class="nb">echo</span> <span class="s2">&quot;extension=gnupg.so&quot;</span> <span class="p">|</span> sudo tee <span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/mods-available/gnupg.ini
 
 sudo phpenmod redis
 sudo phpenmod gnupg
@@ -1631,7 +1634,7 @@ sudo make install
 sudo pecl install ssdeep
 
 # You should add &quot;extension=ssdeep.so&quot; to mods-available - Check /etc/php for your current version
-echo &quot;extension=ssdeep.so&quot; | sudo tee /etc/php/7.2/mods-available/ssdeep.ini
+echo &quot;extension=ssdeep.so&quot; | sudo tee ${PHP_ETC_BASE}/mods-available/ssdeep.ini
 sudo phpenmod ssdeep
 sudo service apache2 restart
 </pre></div>
