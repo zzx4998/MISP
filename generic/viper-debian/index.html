@@ -414,6 +414,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../INSTALL.tsurugi.md" title="Tsurugi Linux" class="md-nav__link">
+      Tsurugi Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.4" class="md-nav__link">
       OpenBSD 6.4
     </a>
@@ -663,6 +675,13 @@
                 
                 <h4 id="install-viper-framework-with-a-virtualenv">Install viper framework (with a virtualenv)<a class="headerlink" href="#install-viper-framework-with-a-virtualenv" title="Permanent link">&para;</a></h4>
 <hr />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Viper has <strong>lief</strong> as a dependency, lief only has an .egg for Python3.6 NOT Python3.7<br />
+If you have python3.7 installed make sure <strong>virtualenv</strong> uses <strong>python3.6</strong><br />
+<div class="codehilite"><pre><span></span>virtualenv -p python3.6 venv
+</pre></div></p>
+</div>
 <div class="codehilite"><pre><span></span><span class="nb">cd</span> /usr/local/src/
 sudo apt-get install -y libssl-dev swig python3-ssdeep p7zip-full unrar-free sqlite python3-pyclamd exiftool radare2 python3-magic python3-sqlalchemy python3-prettytable
 git clone https://github.com/viper-framework/viper.git
@@ -673,9 +692,6 @@ git submodule update --init --recursive
 ./venv/bin/pip install -r requirements.txt
 sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-cli
 sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-web
-<span class="c1">## /!\ Check wtf is going on with yara.</span>
-<span class="c1">###sudo pip3 uninstall yara -y</span>
-<span class="c1">###./venv/bin/pip uninstall yara -y</span>
 /usr/local/src/viper/viper-cli -h
 /usr/local/src/viper/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
 <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/environment

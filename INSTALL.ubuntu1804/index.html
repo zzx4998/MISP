@@ -698,6 +698,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../INSTALL.tsurugi.md" title="Tsurugi Linux" class="md-nav__link">
+      Tsurugi Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.4" class="md-nav__link">
       OpenBSD 6.4
     </a>
@@ -1375,7 +1387,7 @@ sudo -u www-data git submodule foreach --recursive git config core.filemode <spa
 sudo -u www-data git config core.filemode <span class="nb">false</span>
 
 <span class="c1"># Create a python3 virtualenv</span>
-sudo -u www-data virtualenv -p python3 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/MISP/venv
+sudo -u www-data virtualenv -p python3 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
 
 <span class="c1"># make pip happy</span>
 sudo mkdir /var/www/.cache/
@@ -1625,7 +1637,9 @@ sudo chmod +x <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
 </pre></div>
 
 <h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><span class="c1"># Initialize user and fetch Auth Key</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Default Cake path</span>
+<span class="nb">export</span> <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
+<span class="c1"># Initialize user and fetch Auth Key</span>
 sudo -E <span class="nv">$CAKE</span> userInit -q
 <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1<span class="k">)</span>
 
@@ -1808,7 +1822,6 @@ sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</spa
 sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
 
 <span class="c1"># Start misp-modules</span>
-<span class="c1">## /!\ Check wtf is going on with yara.</span>
 sudo -u www-data misp-modules -l <span class="m">127</span>.0.0.1 -s <span class="p">&amp;</span>
 
 <span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span>
@@ -1953,6 +1966,13 @@ sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugi
 
 <h4 id="install-viper-framework-with-a-virtualenv">Install viper framework (with a virtualenv)<a class="headerlink" href="#install-viper-framework-with-a-virtualenv" title="Permanent link">&para;</a></h4>
 <hr />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Viper has <strong>lief</strong> as a dependency, lief only has an .egg for Python3.6 NOT Python3.7<br />
+If you have python3.7 installed make sure <strong>virtualenv</strong> uses <strong>python3.6</strong><br />
+<div class="codehilite"><pre><span></span>virtualenv -p python3.6 venv
+</pre></div></p>
+</div>
 <div class="codehilite"><pre><span></span><span class="nb">cd</span> /usr/local/src/
 sudo apt-get install -y libssl-dev swig python3-ssdeep p7zip-full unrar-free sqlite python3-pyclamd exiftool radare2 python3-magic python3-sqlalchemy python3-prettytable
 git clone https://github.com/viper-framework/viper.git
@@ -1963,9 +1983,6 @@ git submodule update --init --recursive
 ./venv/bin/pip install -r requirements.txt
 sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-cli
 sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-web
-<span class="c1">## /!\ Check wtf is going on with yara.</span>
-<span class="c1">###sudo pip3 uninstall yara -y</span>
-<span class="c1">###./venv/bin/pip uninstall yara -y</span>
 /usr/local/src/viper/viper-cli -h
 /usr/local/src/viper/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
 <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/environment
@@ -1998,6 +2015,13 @@ sudo service apache2 restart
 
 <h4 id="install-mail-to-misp">Install mail to misp<a class="headerlink" href="#install-mail-to-misp" title="Permanent link">&para;</a></h4>
 <hr />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>mail_to_misp has <strong>lief</strong> as a dependency, lief only has an .egg for Python3.6 NOT Python3.7<br />
+If you have python3.7 installed make sure <strong>virtualenv</strong> uses <strong>python3.6</strong><br />
+<div class="codehilite"><pre><span></span>virtualenv -p python3.6 venv
+</pre></div></p>
+</div>
 <div class="codehilite"><pre><span></span><span class="nb">cd</span> /usr/local/src/
 sudo apt-get install -y cmake
 git clone https://github.com/MISP/mail_to_misp.git

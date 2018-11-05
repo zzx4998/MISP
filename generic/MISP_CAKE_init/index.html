@@ -414,6 +414,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../INSTALL.tsurugi.md" title="Tsurugi Linux" class="md-nav__link">
+      Tsurugi Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.4" class="md-nav__link">
       OpenBSD 6.4
     </a>
@@ -662,7 +674,9 @@
                   <h1>MISP CAKE init</h1>
                 
                 <h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><span class="c1"># Initialize user and fetch Auth Key</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Default Cake path</span>
+<span class="nb">export</span> <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
+<span class="c1"># Initialize user and fetch Auth Key</span>
 sudo -E <span class="nv">$CAKE</span> userInit -q
 <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1<span class="k">)</span>
 
