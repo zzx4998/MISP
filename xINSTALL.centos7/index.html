@@ -765,6 +765,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../archive/xINSTALL.FreeBSD/" title="FreeBSD" class="md-nav__link">
+      FreeBSD
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1017,7 +1029,7 @@
 <hr />
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>Semi-maintained and tested by @SteveClement, CentOS 7.5-1804 on 20180906<br />
+<p>Semi-maintained and tested by @SteveClement, CentOS 7.5-1804 on 20181113<br />
 It is still considered experimental as not everything works seemlessly.</p>
 </div>
 <p>CentOS 7.5-1804 <a href="http://mirror.centos.org/centos/7.5.1804/os/x86_64/">NetInstallURL</a></p>
@@ -1101,7 +1113,7 @@ sudo yum install centos-release-scl -y
 sudo yum install vim -y
 
 <span class="c1"># Install the dependencies:</span>
-sudo yum install gcc git httpd zip redis mariadb mariadb-server python-devel python-pip python-zmq libxslt-devel zlib-devel -y
+sudo yum install gcc git httpd zip redis mariadb mariadb-server python-devel python-pip python-zmq libxslt-devel zlib-devel ssdeep-devel -y
 
 <span class="c1"># Install PHP 7.1 from SCL, see https://www.softwarecollections.org/en/scls/rhscl/rh-php71/</span>
 sudo yum install rh-php71 rh-php71-php-fpm rh-php71-php-devel rh-php71-php-mysqlnd rh-php71-php-mbstring rh-php71-php-xml rh-php71-php-bcmath rh-php71-php-opcache -y
@@ -1155,8 +1167,8 @@ sudo -u apache git submodule foreach --recursive git config core.filemode <span 
 
 <span class="c1"># Create a python3 virtualenv</span>
 sudo -u apache <span class="nv">$RUN_PYTHON</span> <span class="s2">&quot;virtualenv -p python3 </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/venv&quot;</span>
-sudo mkdir /var/www/.cache/
-sudo chown apache:apache /var/www/.cache
+sudo mkdir /usr/share/httpd/.cache
+sudo chown apache:apache /usr/share/httpd/.cache
 sudo -u apache <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U pip
 
 <span class="c1"># install Mitre&#39;s STIX and its dependencies by running the following commands:</span>
@@ -1180,6 +1192,9 @@ sudo -u apache <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U zmq
 <span class="c1"># install redis</span>
 sudo -u apache <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U redis
 
+<span class="c1"># install magic, lief, pydeep</span>
+sudo -u apache <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U python-magic lief git+https://github.com/kbandla/pydeep.git
+
 <span class="c1"># install mixbox to accommodate the new STIX dependencies:</span>
 <span class="nb">cd</span> /var/www/MISP/app/files/scripts/
 sudo -u apache git clone https://github.com/CybOXProject/mixbox.git
@@ -1188,6 +1203,7 @@ sudo -u apache <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
 
 <span class="c1"># install PyMISP</span>
 <span class="nb">cd</span> /var/www/MISP/PyMISP
+sudo -u apache <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install enum34
 sudo -u apache <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
 
 <span class="c1"># Enable python3 for php-fpm</span>
@@ -1322,6 +1338,18 @@ sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWO
 
 <h3 id="7-apache-configuration">7/ Apache configuration<a class="headerlink" href="#7-apache-configuration" title="Permanent link">&para;</a></h3>
 <hr />
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>SELinux note, to check if it is running:
+<div class="codehilite"><pre><span></span>$ sestatus
+SELinux status:                 disabled
+</pre></div>
+If it is disabled, you can ignore the <strong>chcon/setsebool/semanage/checkmodule/semodule*</strong> commands.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This guide only copies a stock <strong>NON-SSL</strong> configuration file.</p>
+</div>
 <div class="codehilite"><pre><span></span><span class="c1"># Now configure your apache server with the DocumentRoot /var/www/MISP/app/webroot/</span>
 <span class="c1"># A sample vhost can be found in /var/www/MISP/INSTALL/apache.misp.centos7</span>
 
@@ -1367,7 +1395,9 @@ sudo firewall-cmd --reload
 <p class="admonition-title">Warning</p>
 <p>To be fixed - Place holder</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="c1"># If a valid SSL certificate is not already created for the server, create a self-signed certificate:</span>
+<div class="codehilite"><pre><span></span>sudo mkdir /etc/ssl/private
+sudo chmod <span class="m">700</span> /etc/ssl/private
+<span class="c1"># If a valid SSL certificate is not already created for the server, create a self-signed certificate:</span>
 sudo openssl req -newkey rsa:4096 -days <span class="m">365</span> -nodes -x509 <span class="se">\</span>
 -subj <span class="s2">&quot;/C=</span><span class="si">${</span><span class="nv">OPENSSL_C</span><span class="si">}</span><span class="s2">/ST=</span><span class="si">${</span><span class="nv">OPENSSL_ST</span><span class="si">}</span><span class="s2">/L=</span><span class="si">${</span><span class="nv">OPENSSL_L</span><span class="si">}</span><span class="s2">/O=</span><span class="si">${</span><span class="nv">OPENSSL_O</span><span class="si">}</span><span class="s2">/OU=</span><span class="si">${</span><span class="nv">OPENSSL_OU</span><span class="si">}</span><span class="s2">/CN=</span><span class="si">${</span><span class="nv">OPENSSL_CN</span><span class="si">}</span><span class="s2">/emailAddress=</span><span class="si">${</span><span class="nv">OPENSSL_EMAILADDRESS</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
 -keyout /etc/ssl/private/misp.local.key -out /etc/ssl/private/misp.local.crt
@@ -1394,90 +1424,126 @@ sudo semodule -i /tmp/misplogrotate.pp
 
 <h3 id="9-misp-configuration">9/ MISP configuration<a class="headerlink" href="#9-misp-configuration" title="Permanent link">&para;</a></h3>
 <hr />
-<div class="codehilite"><pre><span></span># There are 4 sample configuration files in $PATH_TO_MISP/app/Config that need to be copied
-sudo -u apache cp -a $PATH_TO_MISP/app/Config/bootstrap.default.php $PATH_TO_MISP/app/Config/bootstrap.php
-sudo -u apache cp -a $PATH_TO_MISP/app/Config/database.default.php $PATH_TO_MISP/app/Config/database.php
-sudo -u apache cp -a $PATH_TO_MISP/app/Config/core.default.php $PATH_TO_MISP/app/Config/core.php
-sudo -u apache cp -a $PATH_TO_MISP/app/Config/config.default.php $PATH_TO_MISP/app/Config/config.php
+<div class="codehilite"><pre><span></span><span class="c1"># There are 4 sample configuration files in $PATH_TO_MISP/app/Config that need to be copied</span>
+sudo -u apache cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/bootstrap.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/bootstrap.php
+sudo -u apache cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/database.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
+sudo -u apache cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/core.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/core.php
+sudo -u apache cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/config.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/config.php
 
-echo &quot;&lt;?php
-class DATABASE_CONFIG {
-        public \$default = array(
-                &#39;datasource&#39; =&gt; &#39;Database/Mysql&#39;,
-                //&#39;datasource&#39; =&gt; &#39;Database/Postgres&#39;,
-                &#39;persistent&#39; =&gt; false,
-                &#39;host&#39; =&gt; &#39;$DBHOST&#39;,
-                &#39;login&#39; =&gt; &#39;$DBUSER_MISP&#39;,
-                &#39;port&#39; =&gt; 3306, // MySQL &amp; MariaDB
-                //&#39;port&#39; =&gt; 5432, // PostgreSQL
-                &#39;password&#39; =&gt; &#39;$DBPASSWORD_MISP&#39;,
-                &#39;database&#39; =&gt; &#39;$DBNAME&#39;,
-                &#39;prefix&#39; =&gt; &#39;&#39;,
-                &#39;encoding&#39; =&gt; &#39;utf8&#39;,
-        );
-}&quot; | sudo -u apache tee $PATH_TO_MISP/app/Config/database.php
+<span class="nb">echo</span> <span class="s2">&quot;&lt;?php</span>
+<span class="s2">class DATABASE_CONFIG {</span>
+<span class="s2">        public \$default = array(</span>
+<span class="s2">                &#39;datasource&#39; =&gt; &#39;Database/Mysql&#39;,</span>
+<span class="s2">                //&#39;datasource&#39; =&gt; &#39;Database/Postgres&#39;,</span>
+<span class="s2">                &#39;persistent&#39; =&gt; false,</span>
+<span class="s2">                &#39;host&#39; =&gt; &#39;</span><span class="nv">$DBHOST</span><span class="s2">&#39;,</span>
+<span class="s2">                &#39;login&#39; =&gt; &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;,</span>
+<span class="s2">                &#39;port&#39; =&gt; 3306, // MySQL &amp; MariaDB</span>
+<span class="s2">                //&#39;port&#39; =&gt; 5432, // PostgreSQL</span>
+<span class="s2">                &#39;password&#39; =&gt; &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;,</span>
+<span class="s2">                &#39;database&#39; =&gt; &#39;</span><span class="nv">$DBNAME</span><span class="s2">&#39;,</span>
+<span class="s2">                &#39;prefix&#39; =&gt; &#39;&#39;,</span>
+<span class="s2">                &#39;encoding&#39; =&gt; &#39;utf8&#39;,</span>
+<span class="s2">        );</span>
+<span class="s2">}&quot;</span> <span class="p">|</span> sudo -u apache tee <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
 
-# Configure the fields in the newly created files:
-# config.php   : baseurl (example: &#39;baseurl&#39; =&gt; &#39;http://misp&#39;,) - don&#39;t use &quot;localhost&quot; it causes issues when browsing externally
-# core.php   : Uncomment and set the timezone: `// date_default_timezone_set(&#39;UTC&#39;);`
-# database.php : login, port, password, database
-# DATABASE_CONFIG has to be filled
-# With the default values provided in section 6, this would look like:
-# class DATABASE_CONFIG {
-#   public $default = array(
-#       &#39;datasource&#39; =&gt; &#39;Database/Mysql&#39;,
-#       &#39;persistent&#39; =&gt; false,
-#       &#39;host&#39; =&gt; &#39;localhost&#39;,
-#       &#39;login&#39; =&gt; &#39;misp&#39;, // grant usage on *.* to misp@localhost
-#       &#39;port&#39; =&gt; 3306,
-#       &#39;password&#39; =&gt; &#39;XXXXdbpasswordhereXXXXX&#39;, // identified by &#39;XXXXdbpasswordhereXXXXX&#39;;
-#       &#39;database&#39; =&gt; &#39;misp&#39;, // create database misp;
-#       &#39;prefix&#39; =&gt; &#39;&#39;,
-#       &#39;encoding&#39; =&gt; &#39;utf8&#39;,
-#   );
-#}
+<span class="c1"># Configure the fields in the newly created files:</span>
+<span class="c1"># config.php   : baseurl (example: &#39;baseurl&#39; =&gt; &#39;http://misp&#39;,) - don&#39;t use &quot;localhost&quot; it causes issues when browsing externally</span>
+<span class="c1"># core.php   : Uncomment and set the timezone: `// date_default_timezone_set(&#39;UTC&#39;);`</span>
+<span class="c1"># database.php : login, port, password, database</span>
+<span class="c1"># DATABASE_CONFIG has to be filled</span>
+<span class="c1"># With the default values provided in section 6, this would look like:</span>
+<span class="c1"># class DATABASE_CONFIG {</span>
+<span class="c1">#   public $default = array(</span>
+<span class="c1">#       &#39;datasource&#39; =&gt; &#39;Database/Mysql&#39;,</span>
+<span class="c1">#       &#39;persistent&#39; =&gt; false,</span>
+<span class="c1">#       &#39;host&#39; =&gt; &#39;localhost&#39;,</span>
+<span class="c1">#       &#39;login&#39; =&gt; &#39;misp&#39;, // grant usage on *.* to misp@localhost</span>
+<span class="c1">#       &#39;port&#39; =&gt; 3306,</span>
+<span class="c1">#       &#39;password&#39; =&gt; &#39;XXXXdbpasswordhereXXXXX&#39;, // identified by &#39;XXXXdbpasswordhereXXXXX&#39;;</span>
+<span class="c1">#       &#39;database&#39; =&gt; &#39;misp&#39;, // create database misp;</span>
+<span class="c1">#       &#39;prefix&#39; =&gt; &#39;&#39;,</span>
+<span class="c1">#       &#39;encoding&#39; =&gt; &#39;utf8&#39;,</span>
+<span class="c1">#   );</span>
+<span class="c1">#}</span>
 
-# Important! Change the salt key in /var/www/MISP/app/Config/config.php
-# The admin user account will be generated on the first login, make sure that the salt is changed before you create that user
-# If you forget to do this step, and you are still dealing with a fresh installation, just alter the salt,
-# delete the user from mysql and log in again using the default admin credentials (admin@admin.test / admin)
+<span class="c1"># Important! Change the salt key in /var/www/MISP/app/Config/config.php</span>
+<span class="c1"># The admin user account will be generated on the first login, make sure that the salt is changed before you create that user</span>
+<span class="c1"># If you forget to do this step, and you are still dealing with a fresh installation, just alter the salt,</span>
+<span class="c1"># delete the user from mysql and log in again using the default admin credentials (admin@admin.test / admin)</span>
 
-# If you want to be able to change configuration parameters from the webinterface:
+<span class="c1"># If you want to be able to change configuration parameters from the webinterface:</span>
 sudo chown apache:apache /var/www/MISP/app/Config/config.php
 sudo chcon -t httpd_sys_rw_content_t /var/www/MISP/app/Config/config.php
 
-# Generate a GPG encryption key.
-cat &gt;/tmp/gen-key-script &lt;&lt;EOF
-    %echo Generating a default key
-    Key-Type: default
-    Key-Length: $GPG_KEY_LENGTH
-    Subkey-Type: default
-    Name-Real: $GPG_REAL_NAME
-    Name-Comment: $GPG_COMMENT
-    Name-Email: $GPG_EMAIL_ADDRESS
-    Expire-Date: 0
-    Passphrase: $GPG_PASSPHRASE
-    # Do a commit here, so that we can later print &quot;done&quot;
-    %commit
-    %echo done
-EOF
+<span class="c1"># Generate a GPG encryption key.</span>
+cat &gt;/tmp/gen-key-script <span class="s">&lt;&lt;EOF</span>
+<span class="s">    %echo Generating a default key</span>
+<span class="s">    Key-Type: default</span>
+<span class="s">    Key-Length: $GPG_KEY_LENGTH</span>
+<span class="s">    Subkey-Type: default</span>
+<span class="s">    Name-Real: $GPG_REAL_NAME</span>
+<span class="s">    Name-Comment: $GPG_COMMENT</span>
+<span class="s">    Name-Email: $GPG_EMAIL_ADDRESS</span>
+<span class="s">    Expire-Date: 0</span>
+<span class="s">    Passphrase: $GPG_PASSPHRASE</span>
+<span class="s">    # Do a commit here, so that we can later print &quot;done&quot;</span>
+<span class="s">    %commit</span>
+<span class="s">    %echo done</span>
+<span class="s">EOF</span>
 
 sudo gpg --homedir /var/www/MISP/.gnupg --batch --gen-key /tmp/gen-key-script
 sudo rm -f /tmp/gen-key-script
 sudo chown -R apache:apache /var/www/MISP/.gnupg
 
-# And export the public key to the webroot
-sudo gpg --homedir /var/www/MISP/.gnupg --export --armor $GPG_EMAIL_ADDRESS |sudo tee /var/www/MISP/app/webroot/gpg.asc
+<span class="c1"># And export the public key to the webroot</span>
+sudo gpg --homedir /var/www/MISP/.gnupg --export --armor <span class="nv">$GPG_EMAIL_ADDRESS</span> <span class="p">|</span>sudo tee /var/www/MISP/app/webroot/gpg.asc
 sudo chown apache:apache /var/www/MISP/app/webroot/gpg.asc
 
-# Start the workers to enable background jobs
-chmod +x /var/www/MISP/app/Console/worker/start.sh
-sudo -u apache $RUN_PHP /var/www/MISP/app/Console/worker/start.sh
+<span class="c1"># Start the workers to enable background jobs</span>
+sudo chmod +x /var/www/MISP/app/Console/worker/start.sh
+sudo -u apache <span class="nv">$RUN_PHP</span> /var/www/MISP/app/Console/worker/start.sh
 
-# Add the following line at the end
-su -s /bin/bash apache -c &#39;scl enable rh-php71 /var/www/MISP/app/Console/worker/start.sh&#39;
-# and make sure it will execute
+<span class="k">if</span> <span class="o">[</span> ! -e /etc/rc.local <span class="o">]</span>
+<span class="k">then</span>
+    <span class="nb">echo</span> <span class="s1">&#39;#!/bin/sh -e&#39;</span> <span class="p">|</span> sudo tee -a /etc/rc.local
+    <span class="nb">echo</span> <span class="s1">&#39;exit 0&#39;</span> <span class="p">|</span> sudo tee -a /etc/rc.local
+    sudo chmod u+x /etc/rc.local
+<span class="k">fi</span>
+
+sudo sed -i -e <span class="s1">&#39;$i \su -s /bin/bash apache -c &quot;scl enable rh-php71 /var/www/MISP/app/Console/worker/start.sh&quot; &gt; /tmp/worker_start_rc.local.log\n&#39;</span> /etc/rc.local
+<span class="c1"># Make sure it will execute</span>
 sudo chmod +x /etc/rc.local
+
+<span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span># some misp-modules dependencies
+sudo yum install -y openjpeg-devel
+
+sudo chmod 2777 /usr/local/src
+sudo chown root:users /usr/local/src
+cd /usr/local/src/
+git clone https://github.com/MISP/misp-modules.git
+cd misp-modules
+# pip install
+sudo $PATH_TO_MISP/venv/bin/pip install -I -r REQUIREMENTS
+sudo -u apache $PATH_TO_MISP/venv/bin/pip install .
+sudo yum install rubygem-rouge -y
+##sudo gem install asciidoctor-pdf --pre
+
+# install STIX2.0 library to support STIX 2.0 export:
+sudo -u apache $PATH_TO_MISP/venv/bin/pip install stix2
+
+# install additional dependencies for extended object generation and extraction
+sudo -u apache ${PATH_TO_MISP}/venv/bin/pip install maec lief python-magic pathlib
+sudo -u apache ${PATH_TO_MISP}/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
+
+# Start misp-modules
+sudo -u apache ${PATH_TO_MISP}/venv/bin/misp-modules -l 0.0.0.0 -s &amp;
+
+sudo sed -i -e &#39;$i \sudo -u apache /var/www/MISP/venv/bin/misp-modules -l 127.0.0.1 -s &amp;\n&#39; /etc/rc.local
 </pre></div>
 
 <h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
@@ -1677,7 +1743,7 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <hr />
 <ul>
 <li>
-<p>By default CakePHP exposes his name and version in email headers. Apply a patch to remove this behavior.</p>
+<p>By default CakePHP exposes its name and version in email headers. Apply a patch to remove this behavior.</p>
 </li>
 <li>
 <p>You should really harden your OS</p>

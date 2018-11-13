@@ -576,6 +576,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../archive/xINSTALL.FreeBSD/" title="FreeBSD" class="md-nav__link">
+      FreeBSD
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -7353,6 +7365,31 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>
+<p>[stix2 import] Starting importing external pattern. [chrisr3d]</p>
+</li>
+<li>
+<p>Starting with File objects</p>
+</li>
+<li>Also modified functions to make them reusable</li>
+<li>[enrichment] separate caches for hover and persistent hover results.
+  [iglocska]</li>
+<li>
+<p>[enrichment] clickable popup changes. [iglocska]</p>
+</li>
+<li>
+<p>new persistent flag passed to misp modules to differentiate it from hovering</p>
+</li>
+<li>various UI changes</li>
+<li>
+<p>[feeds] Changed default feed target to fixed event. [iglocska]</p>
+</li>
+<li>
+<p>major cause of death by overcorrelating</p>
+</li>
+<li>[search] Rework of the UI attribute search complete. [iglocska]</li>
+<li>[attribute search] Rework of the UI version of the search to unify the
+  functionalities with the event view. [iglocska]</li>
 <li>[doc] Added symlink to generic folder and added note what generic
   means/is. [Steve Clement]</li>
 <li>[doc] Added Tsurugi Linux install script. [Steve Clement]</li>
@@ -7371,6 +7408,34 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[doc] Centos 7 update to make misp-modules work. Some notes on
+  SELinux. [Steve Clement]</li>
+<li>[doc] FreeBSD base MISP now works well enough. [Steve Clement]</li>
+<li>[doc] Some more FreeBSD updates. [Steve Clement]</li>
+<li>[doc] Due to some mimimi, FreeBSD is now "back" in the Archives.
+  (Works on FreeBSD 12.0BETA4) [Steve Clement]</li>
+<li>[documentation] Link to the rest client from the automation page.
+  [iglocska]</li>
+<li>[taxonomies] added the exercise taxonomy from CSIRT network
+  discussions. [Alexandre Dulaunoy]</li>
+<li>[taxonomies] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>
+<p>[stix2 import] Parsing relationships &amp; importing galaxies in the
+  appropriate level. [chrisr3d]</p>
+</li>
+<li>
+<p>Importing Galaxies in attribute level when
+    expected by relationships, and possible</p>
+</li>
+<li>Importing Galaxies as before in event level
+    otherwise</li>
+<li>[misp-taxonomies] updated with the new and latest changes. [Alexandre
+  Dulaunoy]</li>
+<li>[enrichment] Linebreak handling for enrichment hovers. [iglocska]</li>
+<li>Bump PyMISP. [Raphaël Vinot]</li>
+<li>[seach] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />, more work on the attribute search's JS components.
+  [iglocska]</li>
+<li>[search] Further progress on the attribute search UI. [iglocska]</li>
 <li>[doc] Fixed folder typo. [Steve Clement]</li>
 <li>[doc] Added Tsurugi Linux to Index and changed some minor issue.
   [Steve Clement]</li>
@@ -7417,6 +7482,86 @@
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[stix export] Fixed dictionary update which requires lists and not
+  tuples. [chrisr3d]</li>
+<li>
+<p>[CLI] Fixed the CLI feed fetcher. [iglocska]</p>
+</li>
+<li>
+<p>use "all" to fetch all feeds</p>
+</li>
+<li>
+<p>[sharing groups] Fixed several sharing group issues preventing proper
+  editing of events with SGs. [iglocska]</p>
+</li>
+<li>
+<p>include the uuid and modified time in the sharing group</p>
+</li>
+<li>fix the incorrectly embedded organisation object</li>
+<li>[API] better handling of trying to edit an attribute without
+  permissions to do so. [iglocska]</li>
+<li>[stix2 import] Fixed relationship target uuid. [chrisr3d]</li>
+<li>[cleanup] Updated function names to differentiate observable parsing
+  from the next updates on pattern parsing. [chrisr3d]</li>
+<li>[API] throw a proper error when trying to edit an event without access
+  to doing so. [iglocska]</li>
+<li>[enrichment] linebreak woes. [iglocska]</li>
+<li>[enrichment] Adding proper linebreaks, cut 2. [iglocska]</li>
+<li>[cleanup] removed junk. [iglocska]</li>
+<li>[cleanup] Cleaned up STIX 1&amp;2 export scripts. [chrisr3d]</li>
+<li>
+<p>[stix2 import] Taking Relationship objects target_ref as uuid.
+  [chrisr3d]</p>
+</li>
+<li>
+<p>Better than using the Relationship id that is not
+    going to be  represented in MISP</p>
+</li>
+<li>We directly have the uuid of the object that will
+    receive an Object Reference</li>
+<li>Fixes attribute popup UI issues with expansion. [Christophe Vandeplas]</li>
+<li>
+<p>[stix2 import] Excluding patterns with any of some linking words.
+  [chrisr3d]</p>
+</li>
+<li>
+<p>Since those patterns contain linking words we do
+    not know how to map, we do not even try to parse
+    them and only stix2-patterns will be created
+    from them</p>
+</li>
+<li>
+<p>[stix 1&amp;2 export] Making initiation lists immutable. [chrisr3d]</p>
+</li>
+<li>
+<p>Lists only used for mapping should be immutable
+    since they are not modified. Thus declaring as
+    tuples is more appropriate</p>
+</li>
+<li>
+<p>[stix2 import] Better selection of objects to parse in object_refs.
+  [chrisr3d]</p>
+</li>
+<li>
+<p>It is not nececssary to call parsing functions on
+    reports in object_refs because they are already
+    parsed through the loop iterating through reports</p>
+</li>
+<li>
+<p>[stix2 import] Using Report attributes instead of dictionary keys.
+  [chrisr3d]</p>
+</li>
+<li>
+<p>Also improved the loop iterating through reports</p>
+</li>
+<li>[stix2 import] Try-catching Report objects creator reference.
+  [chrisr3d]</li>
+<li>[attribute search] Fixed invalid JS calls introduced as part of the
+  rework (<img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />) [iglocska]</li>
+<li>[api] Invalid handling of empty parameters in the built in parameter
+  builder. [iglocska]</li>
+<li>[tags] showAttributeTag function now correctly culls galaxy tags.
+  [iglocska]</li>
 <li>[doc] Typo in index for Tsurugi Linux. [Steve Clement]</li>
 <li>[stix export] Fixed function header missing self attribute. [chrisr3d]</li>
 <li>#3774 [restResponse] added missing <code>includeEventTags</code> entry.
@@ -7452,8 +7597,51 @@
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Steve Clement]</li>
-<li>Merge pull request #3844 from SteveClement/guides. [Steve Clement]</li>
+<li>Merge pull request #3868 from SteveClement/guides. [Steve Clement]</li>
 </ul>
+<p>chg: [doc] Updated FreeBSD and CentOS 7 install guides
+- Merge branch 'rest_link' into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
+- Merge pull request #3856 from moshekaplan/patch-1. [Andras Iklody]</p>
+<p>Fix minor typo in recommended.actions.md
+- Update recommended.actions.md. [Moshe Kaplan]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Add: [stix2 import] Parsing external process patterns. [chrisr3d]</p>
+<ul>
+<li>Also small update on process mapping since a
+    recent update on Process MISP Object includes
+    more attribute fields</li>
+<li>
+<p>Add: [stix2 import] Parsing external network-traffic patterns.
+  [chrisr3d]</p>
+</li>
+<li>
+<p>Code duplication is also avoided in attributes
+    creation, since the only change is the mapping
+    dictionary we can use the same function with
+    only that parameter changing instead of having
+    the same function multiple times</p>
+</li>
+<li>Add: [stix2 import] Parsing external regkey patterns. [chrisr3d]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Merge pull request #3852 from RichieB2B/ncsc-nl/fix-stix-cidr.
+  [Christian Studer]</li>
+</ul>
+<p>Keep CIDR subnet size in STIX export
+- Keep CIDR subnet size in stix export. [Richard van den Berg]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Raphaël Vinot]
+- Merge pull request #3849 from axpatito/small_compare_fix. [Andras
+  Iklody]</p>
+<p>[BUGFIX] Small compare fix
+- Fixed double check if clause. [Axpatito]
+- Fix compare issue. [Axpatito]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Steve Clement]
+- Merge pull request #3844 from SteveClement/guides. [Steve Clement]</p>
 <p>fix: [doc] Typo in index for Tsurugi Linux.
 - Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Steve Clement]
 - Merge pull request #3843 from SteveClement/guides. [Steve Clement]</p>
@@ -41577,7 +41765,7 @@ renamed:    app/Config/database.php -&amp;gt; app/Config/database.default.php
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../archive/INSTALL.ubuntu1604/" title="Ubuntu 16.04" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../archive/xINSTALL.FreeBSD/" title="FreeBSD" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -41586,7 +41774,7 @@ renamed:    app/Config/database.php -&amp;gt; app/Config/database.default.php
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Ubuntu 16.04
+                FreeBSD
               </span>
             </div>
           </a>
