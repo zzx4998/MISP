@@ -1,0 +1,1695 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="MISP Project - Install Guides">
+      
+      
+        <link rel="canonical" href="https://www.misp-project.org/xINSTALL.ubuntu1804.with.webmin/">
+      
+      
+        <meta name="author" content="MISP Project">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.6">
+    
+    
+      
+        <title>Ubuntu 18.04 \w webmin - MISP Install Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#installation-instructions" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://www.misp-project.org/" title="MISP Install Documentation" class="md-header-nav__button md-logo">
+          
+            <img src="../img/misp.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                MISP Install Documentation
+              </span>
+              <span class="md-header-nav__topic">
+                Ubuntu 18.04 \w webmin
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/MISP/MISP" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      MISP/MISP
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://www.misp-project.org/" title="MISP Install Documentation" class="md-nav__button md-logo">
+      
+        <img src="../img/misp.png" width="48" height="48">
+      
+    </a>
+    MISP Install Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/MISP/MISP" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      MISP/MISP
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Install Guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Install Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.ubuntu1804/" title="Ubuntu 18.04" class="md-nav__link">
+      Ubuntu 18.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
+      Debian stable
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
+      Kali Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.rhel7/" title="Redhat Enterprise Linux 7" class="md-nav__link">
+      Redhat Enterprise Linux 7
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      xInstall Guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        xInstall Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL/" title="Warning" class="md-nav__link">
+      Warning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
+      Centos 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.centos7/" title="Centos 7" class="md-nav__link">
+      Centos 7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.debian_testing/" title="Debian testing" class="md-nav__link">
+      Debian testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-nav__link">
+      Debian 9 \w postgresql
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Ubuntu 18.04 \w webmin
+      </label>
+    
+    <a href="./" title="Ubuntu 18.04 \w webmin" class="md-nav__link md-nav__link--active">
+      Ubuntu 18.04 \w webmin
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#for-ubuntu-18041-server-with-webmin" title="for Ubuntu 18.04.1-server with Webmin" class="md-nav__link">
+    for Ubuntu 18.04.1-server with Webmin
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#misp-configuration-variables" title="MISP configuration variables" class="md-nav__link">
+    MISP configuration variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-webminvirtualmin" title="Why Webmin/Virtualmin?" class="md-nav__link">
+    Why Webmin/Virtualmin?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assumptions" title="Assumptions" class="md-nav__link">
+    Assumptions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-minimal-ubuntu-install" title="1/ Minimal Ubuntu install" class="md-nav__link">
+    1/ Minimal Ubuntu install
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-a-minimal-ubuntu-1804-server-system-with-the-software" title="Install a minimal Ubuntu 18.04-server system with the software:" class="md-nav__link">
+    Install a minimal Ubuntu 18.04-server system with the software:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-etckeeper-and-sudo-optional" title="install etckeeper and sudo (optional)" class="md-nav__link">
+    install etckeeper and sudo (optional)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-the-misp-user-to-staff-and-www-data-mandatory" title="add the misp user to staff and www-data (mandatory)" class="md-nav__link">
+    add the misp user to staff and www-data (mandatory)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-interface-name-salvage-optional" title="Network Interface Name salvage (optional)" class="md-nav__link">
+    Network Interface Name salvage (optional)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-sure-your-system-is-up2date" title="Make sure your system is up2date" class="md-nav__link">
+    Make sure your system is up2date
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-virtualmin" title="Get Virtualmin" class="md-nav__link">
+    Get Virtualmin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-it" title="Install it" class="md-nav__link">
+    Install it
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configure-basic-virtualmin-environment" title="2/ Configure basic Virtualmin environment" class="md-nav__link">
+    2/ Configure basic Virtualmin environment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-the-dependencies-some-might-already-be-installed" title="Install the dependencies: (some might already be installed)" class="md-nav__link">
+    Install the dependencies: (some might already be installed)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stop-mysql-and-install-mariadb-a-mysql-forkalternative" title="Stop MySQL and install MariaDB (a MySQL fork/alternative)" class="md-nav__link">
+    Stop MySQL and install MariaDB (a MySQL fork/alternative)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove-and-cleanup-packages" title="Remove and cleanup packages" class="md-nav__link">
+    Remove and cleanup packages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-repositories-for-mariadb-103-and-install-it" title="Add repositories for Mariadb 10.3 and install it" class="md-nav__link">
+    Add repositories for Mariadb 10.3 and install it
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-php-and-dependencies" title="Install PHP and dependencies" class="md-nav__link">
+    Install PHP and dependencies
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.tsurugi/" title="Tsurugi Linux" class="md-nav__link">
+      Tsurugi Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.4" class="md-nav__link">
+      OpenBSD 6.4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.rhel7/" title="Redhat Enterprise Linux 7.6 (BETA)" class="md-nav__link">
+      Redhat Enterprise Linux 7.6 (BETA)
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Config Guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Config Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CONFIG.elasticsearch-logging/" title="Elastic Search Logging" class="md-nav__link">
+      Elastic Search Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CONFIG.s3-attachments/" title="Amazon S3 attachments" class="md-nav__link">
+      Amazon S3 attachments
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CONFIG.SMIME/" title="S/MIME" class="md-nav__link">
+      S/MIME
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../UPDATE/" title="Update MISP" class="md-nav__link">
+      Update MISP
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../UPGRADE/" title="Upgrading MISP" class="md-nav__link">
+      Upgrading MISP
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Old guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Old guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../archive/old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
+      2.3 to 2.4 upgrade
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../archive/INSTALL.ubuntu1604/" title="Ubuntu 16.04" class="md-nav__link">
+      Ubuntu 16.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../archive/xINSTALL.FreeBSD/" title="FreeBSD" class="md-nav__link">
+      FreeBSD
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      About
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        About
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Changelog/" title="MISP Release Notes" class="md-nav__link">
+      MISP Release Notes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#for-ubuntu-18041-server-with-webmin" title="for Ubuntu 18.04.1-server with Webmin" class="md-nav__link">
+    for Ubuntu 18.04.1-server with Webmin
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#misp-configuration-variables" title="MISP configuration variables" class="md-nav__link">
+    MISP configuration variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-webminvirtualmin" title="Why Webmin/Virtualmin?" class="md-nav__link">
+    Why Webmin/Virtualmin?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assumptions" title="Assumptions" class="md-nav__link">
+    Assumptions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-minimal-ubuntu-install" title="1/ Minimal Ubuntu install" class="md-nav__link">
+    1/ Minimal Ubuntu install
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-a-minimal-ubuntu-1804-server-system-with-the-software" title="Install a minimal Ubuntu 18.04-server system with the software:" class="md-nav__link">
+    Install a minimal Ubuntu 18.04-server system with the software:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-etckeeper-and-sudo-optional" title="install etckeeper and sudo (optional)" class="md-nav__link">
+    install etckeeper and sudo (optional)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-the-misp-user-to-staff-and-www-data-mandatory" title="add the misp user to staff and www-data (mandatory)" class="md-nav__link">
+    add the misp user to staff and www-data (mandatory)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-interface-name-salvage-optional" title="Network Interface Name salvage (optional)" class="md-nav__link">
+    Network Interface Name salvage (optional)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-sure-your-system-is-up2date" title="Make sure your system is up2date" class="md-nav__link">
+    Make sure your system is up2date
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-virtualmin" title="Get Virtualmin" class="md-nav__link">
+    Get Virtualmin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-it" title="Install it" class="md-nav__link">
+    Install it
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configure-basic-virtualmin-environment" title="2/ Configure basic Virtualmin environment" class="md-nav__link">
+    2/ Configure basic Virtualmin environment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-the-dependencies-some-might-already-be-installed" title="Install the dependencies: (some might already be installed)" class="md-nav__link">
+    Install the dependencies: (some might already be installed)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stop-mysql-and-install-mariadb-a-mysql-forkalternative" title="Stop MySQL and install MariaDB (a MySQL fork/alternative)" class="md-nav__link">
+    Stop MySQL and install MariaDB (a MySQL fork/alternative)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove-and-cleanup-packages" title="Remove and cleanup packages" class="md-nav__link">
+    Remove and cleanup packages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-repositories-for-mariadb-103-and-install-it" title="Add repositories for Mariadb 10.3 and install it" class="md-nav__link">
+    Add repositories for Mariadb 10.3 and install it
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-php-and-dependencies" title="Install PHP and dependencies" class="md-nav__link">
+    Install PHP and dependencies
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h1>
+<h2 id="for-ubuntu-18041-server-with-webmin">for Ubuntu 18.04.1-server with Webmin<a class="headerlink" href="#for-ubuntu-18041-server-with-webmin" title="Permanent link">&para;</a></h2>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Tested semi-working by @SteveClement on 20181120.</p>
+</div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Maintained and tested by the community.<br />
+Parts of the installation procedures can also be found in the automatic VM generator script <a href="https://github.com/MISP/misp-packer/blob/18.04/scripts/bootstrap.sh">bootstrap.sh</a> of misp-packer.</p>
+</div>
+<h4 id="misp-configuration-variables">MISP configuration variables<a class="headerlink" href="#misp-configuration-variables" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="c1"># MISP configuration variables</span>
+<span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s1">&#39;/var/www/MISP&#39;</span>
+<span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
+<span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;&quot;&quot;&#39;</span>
+<span class="nv">MISP_LIVE</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+
+<span class="c1"># Database configuration</span>
+<span class="nv">DBHOST</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span>
+<span class="nv">DBNAME</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+<span class="nv">DBUSER_ADMIN</span><span class="o">=</span><span class="s1">&#39;root&#39;</span>
+<span class="nv">DBPASSWORD_ADMIN</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="nv">DBUSER_MISP</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+<span class="nv">DBPASSWORD_MISP</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
+
+<span class="c1"># Webserver configuration</span>
+<span class="nv">FQDN</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span>
+
+<span class="c1"># OpenSSL configuration</span>
+<span class="nv">OPENSSL_CN</span><span class="o">=</span><span class="s1">&#39;Common Name&#39;</span>
+<span class="nv">OPENSSL_C</span><span class="o">=</span><span class="s1">&#39;LU&#39;</span>
+<span class="nv">OPENSSL_ST</span><span class="o">=</span><span class="s1">&#39;State&#39;</span>
+<span class="nv">OPENSSL_L</span><span class="o">=</span><span class="s1">&#39;Location&#39;</span>
+<span class="nv">OPENSSL_O</span><span class="o">=</span><span class="s1">&#39;Organization&#39;</span>
+<span class="nv">OPENSSL_OU</span><span class="o">=</span><span class="s1">&#39;Organizational Unit&#39;</span>
+<span class="nv">OPENSSL_EMAILADDRESS</span><span class="o">=</span><span class="s1">&#39;info@localhost&#39;</span>
+
+<span class="c1"># GPG configuration</span>
+<span class="nv">GPG_REAL_NAME</span><span class="o">=</span><span class="s1">&#39;Autogenerated Key&#39;</span>
+<span class="nv">GPG_COMMENT</span><span class="o">=</span><span class="s1">&#39;WARNING: MISP AutoGenerated Key consider this Key VOID!&#39;</span>
+<span class="nv">GPG_EMAIL_ADDRESS</span><span class="o">=</span><span class="s1">&#39;admin@admin.test&#39;</span>
+<span class="nv">GPG_KEY_LENGTH</span><span class="o">=</span><span class="s1">&#39;2048&#39;</span>
+<span class="nv">GPG_PASSPHRASE</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
+
+<span class="c1"># php.ini configuration</span>
+<span class="nv">upload_max_filesize</span><span class="o">=</span>50M
+<span class="nv">post_max_size</span><span class="o">=</span>50M
+<span class="nv">max_execution_time</span><span class="o">=</span><span class="m">300</span>
+<span class="nv">memory_limit</span><span class="o">=</span>512M
+
+<span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nv">PHP_ETC_BASE</span><span class="o">=</span>/etc/php/7.2
+<span class="nv">PHP_INI</span><span class="o">=</span><span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/apache2/php.ini
+<span class="nv">VIRT_USER</span><span class="o">=</span>misp.misp-vm.local
+<span class="nv">PATH_TO_MISP</span><span class="o">=</span>/home/<span class="si">${</span><span class="nv">VIRT_USER</span><span class="si">}</span>/public_html/MISP
+</pre></div>
+
+<h4 id="why-webminvirtualmin">Why Webmin/Virtualmin?<a class="headerlink" href="#why-webminvirtualmin" title="Permanent link">&para;</a></h4>
+<p>Some may not be full time sysadmin and prefer a platform that once it has been setup works and is decently easy to manage.</p>
+<h4 id="assumptions">Assumptions<a class="headerlink" href="#assumptions" title="Permanent link">&para;</a></h4>
+<p>Assuming you created the subdomanin misp.yourserver.tld to where MISP will be installed and that the user "misp" is in the sudoers group and that you have already configured SSL with Lets Encrypt on the subdomain.</p>
+<h3 id="1-minimal-ubuntu-install">1/ Minimal Ubuntu install<a class="headerlink" href="#1-minimal-ubuntu-install" title="Permanent link">&para;</a></h3>
+<hr />
+<h4 id="install-a-minimal-ubuntu-1804-server-system-with-the-software">Install a minimal Ubuntu 18.04-server system with the software:<a class="headerlink" href="#install-a-minimal-ubuntu-1804-server-system-with-the-software" title="Permanent link">&para;</a></h4>
+<ul>
+<li>OpenSSH server</li>
+<li>This guide assumes a user name of 'misp' with sudo working</li>
+</ul>
+<h4 id="install-etckeeper-and-sudo-optional">install etckeeper and sudo (optional)<a class="headerlink" href="#install-etckeeper-and-sudo-optional" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>su -
+apt install -y etckeeper
+apt install -y sudo
+adduser misp sudo
+</pre></div>
+
+<h5 id="add-the-misp-user-to-staff-and-www-data-mandatory">add the misp user to staff and www-data (mandatory)<a class="headerlink" href="#add-the-misp-user-to-staff-and-www-data-mandatory" title="Permanent link">&para;</a></h5>
+<div class="codehilite"><pre><span></span><span class="c1"># Add the user to the staff group to be able to write to /usr/local/src</span>
+sudo adduser misp staff
+sudo adduser misp www-data
+<span class="nb">logout</span>
+</pre></div>
+
+<h4 id="network-interface-name-salvage-optional">Network Interface Name salvage (optional)<a class="headerlink" href="#network-interface-name-salvage-optional" title="Permanent link">&para;</a></h4>
+<p>This will bring back 'ethX' e.g: eth0</p>
+<div class="codehilite"><pre><span></span><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&quot;net.ifnames=0 biosdevname=0&quot;</span>
+<span class="nv">DEFAULT_GRUB</span><span class="o">=</span>/etc/default/grub
+<span class="k">for</span> key in GRUB_CMDLINE_LINUX
+<span class="k">do</span>
+    sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\)=.*/\1=\&quot;</span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">\&quot;/&quot;</span> <span class="nv">$DEFAULT_GRUB</span>
+<span class="k">done</span>
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+</pre></div>
+
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>On recent Ubuntu install Netplan is default and you need to change the Network name.
+<div class="codehilite"><pre><span></span>sudo sed -i &quot;s/enp0s3/eth0/&quot; /etc/netplan/50-cloud-init.yaml
+</pre></div>
+OR on Ubuntu 19.04 (yay for changing this every 5 commits... #n00bs)
+<div class="codehilite"><pre><span></span>sudo sed -i &quot;s/enp0s3/eth0/&quot; /etc/netplan/01-netcfg.yaml
+</pre></div></p>
+</div>
+<h4 id="make-sure-your-system-is-up2date">Make sure your system is up2date<a class="headerlink" href="#make-sure-your-system-is-up2date" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo apt-get update
+sudo apt-get upgrade
+</pre></div>
+
+<h4 id="get-virtualmin">Get Virtualmin<a class="headerlink" href="#get-virtualmin" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>wget -O /tmp/install.sh http://software.virtualmin.com/gpl/scripts/install.sh
+</pre></div>
+
+<h4 id="install-it">Install it<a class="headerlink" href="#install-it" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>chmod +x /tmp/install.sh
+sudo /tmp/install.sh
+</pre></div>
+
+<h3 id="2-configure-basic-virtualmin-environment">2/ Configure basic Virtualmin environment<a class="headerlink" href="#2-configure-basic-virtualmin-environment" title="Permanent link">&para;</a></h3>
+<hr />
+<p>Once the system is installed you can perform the following steps:</p>
+<h4 id="install-the-dependencies-some-might-already-be-installed">Install the dependencies: (some might already be installed)<a class="headerlink" href="#install-the-dependencies-some-might-already-be-installed" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo apt-get install curl gcc git gnupg-agent make python openssl redis-server sudo vim zip virtualenv -y
+</pre></div>
+
+<h4 id="stop-mysql-and-install-mariadb-a-mysql-forkalternative">Stop MySQL and install MariaDB (a MySQL fork/alternative)<a class="headerlink" href="#stop-mysql-and-install-mariadb-a-mysql-forkalternative" title="Permanent link">&para;</a></h4>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Databases and data will be lost! It is assumed you are installing on a new server with no existing DBs</p>
+</div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>At present, a simple...
+<div class="codehilite"><pre><span></span>sudo service mysql stop <span class="o">&amp;&amp;</span> sudo apt-get install mariadb-client mariadb-server<span class="err">&#39;</span>
+</pre></div>
+... doesn't work well with 18.04.1 so you should do the following:
+<div class="codehilite"><pre><span></span>sudo apt purge mysql-client-5.7 mysql-client-core-5.7 mysql-common mysql-server-5.7 mysql-server-core-5.7 mysql-server
+</pre></div>
+---&gt; NOT VERIFIED, NEED TO CLARIFY &lt;---</p>
+</div>
+<p>Issues may arise if you leave the MySQL configuration in place, remove config files in /etc/mysql if needed.</p>
+<h4 id="remove-and-cleanup-packages">Remove and cleanup packages<a class="headerlink" href="#remove-and-cleanup-packages" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo apt autoremove <span class="o">&amp;&amp;</span> sudo apt -f install
+</pre></div>
+
+<h4 id="add-repositories-for-mariadb-103-and-install-it">Add repositories for Mariadb 10.3 and install it<a class="headerlink" href="#add-repositories-for-mariadb-103-and-install-it" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo apt-get install software-properties-common
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+sudo add-apt-repository <span class="s1">&#39;deb [arch=amd64,arm64,ppc64el] http://mariadb.mirrors.ovh.net/MariaDB/repo/10.3/ubuntu bionic main&#39;</span>
+sudo apt update
+<span class="c1"># Install MariaDB (a MySQL fork/alternative)</span>
+sudo apt-get install mariadb-client mariadb-server -y
+
+<span class="c1"># Make sure auth_socket.so is loaded</span>
+grep auth_socket /etc/mysql/mariadb.conf.d/50-server.cnf
+<span class="c1">## If not add this in the [mysqld] section</span>
+<span class="c1">### [mysqld]</span>
+<span class="c1">### plugin-load-add = auth_socket.so</span>
+sudo systemctl restart mariadb.service
+
+sudo apt install expect -y
+
+<span class="c1"># Add your credentials if needed, if sudo has NOPASS, comment out the relevant lines</span>
+<span class="nv">pw</span><span class="o">=</span><span class="s2">&quot;Password1234&quot;</span>
+
+expect -f - <span class="s">&lt;&lt;-EOF</span>
+<span class="s">  set timeout 10</span>
+
+<span class="s">  spawn sudo mysql_secure_installation</span>
+<span class="s">  expect &quot;*?assword*&quot;</span>
+<span class="s">  send -- &quot;$pw\r&quot;</span>
+<span class="s">  expect &quot;Enter current password for root (enter for none):&quot;</span>
+<span class="s">  send -- &quot;\r&quot;</span>
+<span class="s">  expect &quot;Set root password?&quot;</span>
+<span class="s">  send -- &quot;y\r&quot;</span>
+<span class="s">  expect &quot;New password:&quot;</span>
+<span class="s">  send -- &quot;${DBPASSWORD_ADMIN}\r&quot;</span>
+<span class="s">  expect &quot;Re-enter new password:&quot;</span>
+<span class="s">  send -- &quot;${DBPASSWORD_ADMIN}\r&quot;</span>
+<span class="s">  expect &quot;Remove anonymous users?&quot;</span>
+<span class="s">  send -- &quot;y\r&quot;</span>
+<span class="s">  expect &quot;Disallow root login remotely?&quot;</span>
+<span class="s">  send -- &quot;y\r&quot;</span>
+<span class="s">  expect &quot;Remove test database and access to it?&quot;</span>
+<span class="s">  send -- &quot;y\r&quot;</span>
+<span class="s">  expect &quot;Reload privilege tables now?&quot;</span>
+<span class="s">  send -- &quot;y\r&quot;</span>
+<span class="s">  expect eof</span>
+<span class="s">EOF</span>
+sudo apt-get purge -y expect <span class="p">;</span> sudo apt autoremove -y
+</pre></div>
+
+<p>Go through the Webmin post-installation Wizard and configure your misp.yourdomain.tld virtual server</p>
+<p>That should create the 'misp' user and related directories
+Add the 'misp' user to the sudo group</p>
+<p>Also make sure the variable ${VIRT_USER} is set to the user you created when you created the virtual server. This might NOT be 'misp' but something completely different, like: 'misp.misp-vm.local' or 'misp.example.com' or 'misp-virtual'.</p>
+<h4 id="install-php-and-dependencies">Install PHP and dependencies<a class="headerlink" href="#install-php-and-dependencies" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo apt-get install libapache2-mod-php php php-cli php-gnupg php-dev php-json php-mysql php-opcache php-readline php-redis php-xml php-mbstring -y
+</pre></div>
+
+<h1 id="apply-all-changes">Apply all changes<a class="headerlink" href="#apply-all-changes" title="Permanent link">&para;</a></h1>
+<p>sudo systemctl restart apache2</p>
+<h3 id="3-misp-code">3/ MISP code<a class="headerlink" href="#3-misp-code" title="Permanent link">&para;</a></h3>
+<hr />
+<p>Assuming you created the subdomain virtual server misp.yourserver.tld
+Download MISP using git in the /home/${VIRT_USER}/public_html/ as ${VIRT_USER}</p>
+<div class="codehilite"><pre><span></span>sudo su - ${VIRT_USER}
+# or log out root and log back in as your virtual server user
+
+git clone https://github.com/MISP/MISP.git ${PATH_TO_MISP}
+cd ${PATH_TO_MISP}
+git checkout tags/$(git describe --tags `git rev-list --tags --max-count=1`)
+# if the last shortcut doesn&#39;t work, specify the latest version manually
+# example: git checkout tags/v2.4.XY
+# the message regarding a &quot;detached HEAD state&quot; is expected behaviour
+# (you only have to create a new branch, if you want to change stuff and do a pull request for example)
+
+git submodule update --init --recursive
+
+# Make git ignore filesystem permission differences
+git submodule foreach --recursive git config core.filemode false
+
+# Create a python3 virtualenv
+virtualenv -p python3 ${PATH_TO_MISP}/venv
+
+cd $PATH_TO_MISP/app/files/scripts
+git clone https://github.com/CybOXProject/python-cybox.git
+git clone https://github.com/STIXProject/python-stix.git
+git clone https://github.com/MAECProject/python-maec.git
+cd $PATH_TO_MISP/app/files/scripts/python-cybox
+${PATH_TO_MISP}/venv/bin/pip install .
+cd $PATH_TO_MISP/app/files/scripts/python-stix
+${PATH_TO_MISP}/venv/bin/pip install .
+cd $PATH_TO_MISP/app/files/scripts/python-maec
+${PATH_TO_MISP}/venv/bin/pip install .
+
+# install mixbox to accommodate the new STIX dependencies:
+cd $PATH_TO_MISP/app/files/scripts/
+git clone https://github.com/CybOXProject/mixbox.git
+cd $PATH_TO_MISP/app/files/scripts/mixbox
+${PATH_TO_MISP}/venv/bin/pip install .
+
+# install PyMISP
+cd $PATH_TO_MISP/PyMISP
+${PATH_TO_MISP}/venv/bin/pip install .
+</pre></div>
+
+<h3 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h3>
+<hr />
+<div class="codehilite"><pre><span></span><span class="c1"># CakePHP is included as a submodule of MISP</span>
+
+<span class="c1"># Install CakeResque along with its dependencies if you intend to use the built in background jobs:</span>
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app
+php composer.phar require kamisama/cake-resque:4.1.2
+php composer.phar config vendor-dir Vendor
+php composer.phar install
+
+<span class="c1"># Enable CakeResque with php-redis</span>
+sudo phpenmod redis
+sudo phpenmod gnupg
+
+<span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
+cp -fa <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/setup/config.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Plugin/CakeResque/Config/config.php
+
+<span class="c1"># If you have multiple MISP instances on the same system, don&#39;t forget to have a different Redis per MISP instance for the CakeResque workers</span>
+<span class="c1"># The default Redis port can be updated in Plugin/CakeResque/Config/config.php</span>
+</pre></div>
+
+<h3 id="5-set-the-permissions">5/ Set the permissions<a class="headerlink" href="#5-set-the-permissions" title="Permanent link">&para;</a></h3>
+<hr />
+<div class="codehilite"><pre><span></span><span class="c1"># Check if the permissions are set correctly using the following commands:</span>
+sudo chown -R <span class="si">${</span><span class="nv">VIRT_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">VIRT_USER</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
+sudo chmod -R <span class="m">750</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
+sudo chmod -R g+ws <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/tmp
+sudo chmod -R g+ws <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files
+sudo chmod -R g+ws <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts/tmp
+</pre></div>
+
+<h3 id="6-create-a-database-and-user">6/ Create a database and user<a class="headerlink" href="#6-create-a-database-and-user" title="Permanent link">&para;</a></h3>
+<hr />
+<div class="codehilite"><pre><span></span><span class="c1"># Enter the mysql shell</span>
+sudo mysql -u root -p
+
+<span class="c1"># If all went well when you created the misp user in Virtualmin you should already have a misp database</span>
+<span class="c1"># otherwise create it with:</span>
+create database misp<span class="p">;</span>
+<span class="c1"># Make sure password and all privileges are set</span>
+grant usage on *.* to misp@localhost identified by <span class="s1">&#39;XXXXdbpasswordhereXXXXX&#39;</span><span class="p">;</span>
+grant all privileges on misp.* to misp@localhost<span class="p">;</span>
+flush privileges<span class="p">;</span>
+<span class="nb">exit</span>
+
+<span class="c1"># Import the empty MISP database from MYSQL.sql</span>
+sudo -u <span class="si">${</span><span class="nv">VIRT_USER</span><span class="si">}</span> cat <span class="nv">$PATH_TO_MISP</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
+</pre></div>
+
+<h3 id="7-apache-configuration">7/ Apache configuration<a class="headerlink" href="#7-apache-configuration" title="Permanent link">&para;</a></h3>
+<hr />
+<p>Most of it should have been done when you created the subdomain but add these changes as well</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Under &lt;VirtualHost &lt;IP, FQDN, or *&gt;:80&gt;</span>
+<span class="c1">#        ServerName &lt;your.FQDN.here&gt;</span>
+<span class="c1"># add</span>
+
+        Redirect permanent / https://&lt;your.FQDN.here&gt;
+        ServerSignature Off
+
+<span class="c1"># Closing tag &lt;/VirtualHost&gt;</span>
+
+
+<span class="c1"># Under &lt;VirtualHost &lt;IP, FQDN, or *&gt;:443&gt;</span>
+<span class="c1">#        ServerAdmin admin@&lt;your.FQDN.here&gt;</span>
+<span class="c1">#        ServerName &lt;your.FQDN.here&gt;</span>
+<span class="c1"># etc...</span>
+<span class="c1"># find the document root and change it as follows</span>
+
+        DocumentRoot /home/misp/public_html/MISP/app/webroot
+
+<span class="c1"># The Directory tag should be changed to:</span>
+
+        &lt;Directory /home/misp/public_html/MISP/app/webroot&gt;
+
+<span class="c1"># The rest should&#39;t require modifications. Restart Apache</span>
+
+sudo service apache2 restart
+</pre></div>
+
+<h3 id="9-misp-configuration">9/ MISP configuration<a class="headerlink" href="#9-misp-configuration" title="Permanent link">&para;</a></h3>
+<hr />
+<div class="codehilite"><pre><span></span><span class="c1"># There are 4 sample configuration files in ${PATH_TO_MISP}/app/Config that need to be copied</span>
+cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/bootstrap.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/bootstrap.php
+cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/database.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/database.php
+cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/core.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/core.php
+cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/config.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/config.php
+
+<span class="c1"># Configure the fields in the newly created files:</span>
+vi <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/database.php
+<span class="c1"># DATABASE_CONFIG has to be filled</span>
+<span class="c1"># With the default values provided in section 6, this would look like:</span>
+<span class="c1"># class DATABASE_CONFIG {</span>
+<span class="c1">#   public $default = array(</span>
+<span class="c1">#       &#39;datasource&#39; =&gt; &#39;Database/Mysql&#39;,</span>
+<span class="c1">#       &#39;persistent&#39; =&gt; false,</span>
+<span class="c1">#       &#39;host&#39; =&gt; &#39;localhost&#39;,</span>
+<span class="c1">#       &#39;login&#39; =&gt; &#39;misp&#39;, // grant usage on *.* to misp@localhost</span>
+<span class="c1">#       &#39;port&#39; =&gt; 3306,</span>
+<span class="c1">#       &#39;password&#39; =&gt; &#39;XXXXdbpasswordhereXXXXX&#39;, // identified by &#39;XXXXdbpasswordhereXXXXX&#39;;</span>
+<span class="c1">#       &#39;database&#39; =&gt; &#39;misp&#39;, // create database misp;</span>
+<span class="c1">#       &#39;prefix&#39; =&gt; &#39;&#39;,</span>
+<span class="c1">#       &#39;encoding&#39; =&gt; &#39;utf8&#39;,</span>
+<span class="c1">#   );</span>
+<span class="c1">#}</span>
+
+<span class="c1"># Important! Change the salt key in ${PATH_TO_MISP}/app/Config/config.php</span>
+<span class="c1"># see line 7 (may change)</span>
+<span class="c1"># &#39;salt&#39; =&gt; &#39;yoursaltkeyhere&#39; </span>
+<span class="c1"># The salt key must be a string at least 32 bytes long.</span>
+<span class="c1"># The admin user account will be generated on the first login, make sure that the salt is changed before you create that user</span>
+<span class="c1"># If you forget to do this step, and you are still dealing with a fresh installation, just alter the salt,</span>
+<span class="c1"># delete the user from mysql and log in again using the default admin credentials (admin@admin.test / admin)</span>
+
+<span class="c1"># Change base url in config.php</span>
+vi <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/config.php
+<span class="c1"># example: &#39;baseurl&#39; =&gt; &#39;https://&lt;your.FQDN.here&gt;&#39;,</span>
+<span class="c1"># alternatively, you can leave this field empty if you would like to use relative pathing in MISP</span>
+<span class="c1"># &#39;baseurl&#39; =&gt; &#39;&#39;,</span>
+<span class="c1"># &#39;email&#39; =&gt; &#39;anemail@yourdomain.tld, set an email address that will be used for gpg</span>
+
+<span class="c1"># and make sure the file permissions are still OK</span>
+chmod -R <span class="m">750</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config
+
+<span class="c1"># Generate a GPG encryption key.</span>
+
+mkdir <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/.gnupg
+chmod <span class="m">700</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/.gnupg
+
+cat &gt;/tmp/gen-key-script <span class="s">&lt;&lt;EOF</span>
+<span class="s">    %echo Generating a default key</span>
+<span class="s">    Key-Type: default</span>
+<span class="s">    Key-Length: $GPG_KEY_LENGTH</span>
+<span class="s">    Subkey-Type: default</span>
+<span class="s">    Name-Real: $GPG_REAL_NAME</span>
+<span class="s">    Name-Comment: $GPG_COMMENT</span>
+<span class="s">    Name-Email: $GPG_EMAIL_ADDRESS</span>
+<span class="s">    Expire-Date: 0</span>
+<span class="s">    Passphrase: $GPG_PASSPHRASE</span>
+<span class="s">    # Do a commit here, so that we can later print &quot;done&quot;</span>
+<span class="s">    %commit</span>
+<span class="s">    %echo done</span>
+<span class="s">EOF</span>
+
+gpg --homedir <span class="nv">$PATH_TO_MISP</span>/.gnupg --batch --gen-key /tmp/gen-key-script
+<span class="c1"># The email address should match the one set in the config.php / set in the configuration menu in the administration menu configuration file</span>
+
+<span class="c1"># And export the public key to the webroot</span>
+sh -c <span class="s2">&quot;gpg --homedir </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.gnupg --export --armor </span><span class="nv">$GPG_EMAIL_ADDRESS</span><span class="s2">&quot;</span> <span class="p">|</span> tee <span class="nv">$PATH_TO_MISP</span>/app/webroot/gpg.asc
+
+<span class="c1"># If you get no satisfaction with your entropy install this:</span>
+sudo apt-get install haveged pv
+
+<span class="c1">#Generate entropy for the next step, open a new shell and run the following command:</span>
+haveged -n <span class="m">0</span> <span class="p">|</span> pv &gt; /dev/null
+
+<span class="c1"># It should start saying something like &quot;Writing unlimited bytes to stdout&quot;</span>
+<span class="c1"># let it run and go back to the previous shell</span>
+
+<span class="c1"># You can now Ctrl+C the running haveged in the other shell</span>
+<span class="c1"># and return to the &quot;install&quot; shell</span>
+
+<span class="c1"># To make the background workers start on boot</span>
+chmod +x <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Console/worker/start.sh
+
+<span class="c1"># Activate rc.local in systemd</span>
+<span class="c1"># Systemd developers, in their wisdom, decided to complicate things a bit so you&#39;ll have to</span>
+<span class="c1"># create the rc-local.service</span>
+sudo vi /etc/systemd/system/rc-local.service
+<span class="c1"># and paste the following in it</span>
+<span class="o">[</span>Unit<span class="o">]</span>
+ <span class="nv">Description</span><span class="o">=</span>/etc/rc.local Compatibility
+ <span class="nv">ConditionPathExists</span><span class="o">=</span>/etc/rc.local
+
+<span class="o">[</span>Service<span class="o">]</span>
+ <span class="nv">Type</span><span class="o">=</span>forking
+ <span class="nv">ExecStart</span><span class="o">=</span>/etc/rc.local start
+ <span class="nv">TimeoutSec</span><span class="o">=</span><span class="m">0</span>
+ <span class="nv">StandardOutput</span><span class="o">=</span>tty
+ <span class="nv">RemainAfterExit</span><span class="o">=</span>yes
+ <span class="nv">SysVStartPriority</span><span class="o">=</span><span class="m">99</span>
+
+<span class="o">[</span>Install<span class="o">]</span>
+ <span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+
+<span class="c1"># Hit the &quot;esc&quot; button then type :wq! to write the file and exit vi</span>
+
+<span class="c1"># Create/edit /etc/rc.local</span>
+sudo vi /etc/rc.local
+<span class="c1"># If the file is empty add the following including the #</span>
+<span class="c1">#!/bin/bash</span>
+
+<span class="c1"># Then add this</span>
+sudo -u <span class="si">${</span><span class="nv">VIRT_USER</span><span class="si">}</span> bash <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Console/worker/start.sh
+
+<span class="c1"># If the file was empty add this as the last line</span>
+<span class="nb">exit</span> <span class="m">0</span>
+
+<span class="c1"># save, quit vi and set permissions</span>
+sudo chmod +x /etc/rc.local
+
+<span class="c1"># Enable it in systemd</span>
+sudo systemctl <span class="nb">enable</span> rc-local
+
+<span class="c1">#Start the rc-local compatibility layer and check if AOK</span>
+sudo systemctl start rc-local.service
+sudo systemctl status rc-local.service
+</pre></div>
+
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Once done, have a look at the diagnostics
+If any of the directories that MISP uses to store files is not writeable to the apache user, change the permissions
+you can do this by running the following commands:
+<div class="codehilite"><pre><span></span>sudo chmod -R 770 ${PATH_TO_MISP}/&lt;directory path with an indicated issue&gt;
+sudo chown -R misp:www-data ${PATH_TO_MISP}/&lt;directory path with an indicated issue&gt;
+</pre></div></p>
+</div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>If anything goes wrong, make sure that you check MISP's logs for errors:
+```</p>
+<h1 id="path_to_mispapptmplogserrorlog">${PATH_TO_MISP}/app/tmp/logs/error.log<a class="headerlink" href="#path_to_mispapptmplogserrorlog" title="Permanent link">&para;</a></h1>
+<h1 id="path_to_mispapptmplogsresque-worker-errorlog">${PATH_TO_MISP}/app/tmp/logs/resque-worker-error.log<a class="headerlink" href="#path_to_mispapptmplogsresque-worker-errorlog" title="Permanent link">&para;</a></h1>
+<h1 id="path_to_mispapptmplogsresque-scheduler-errorlog">${PATH_TO_MISP}/app/tmp/logs/resque-scheduler-error.log<a class="headerlink" href="#path_to_mispapptmplogsresque-scheduler-errorlog" title="Permanent link">&para;</a></h1>
+<h1 id="path_to_mispapptmplogsresque-2015-01-01log-where-the-actual-date-is-the-current-date">${PATH_TO_MISP}/app/tmp/logs/resque-2015-01-01.log // where the actual date is the current date<a class="headerlink" href="#path_to_mispapptmplogsresque-2015-01-01log-where-the-actual-date-is-the-current-date" title="Permanent link">&para;</a></h1>
+</div>
+<p>```</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you have installed the recommended Python 3 virtualenv to the recommended place of <strong>${PATH_TO_MISP}/venv</strong> set the following MISP configurable
+<div class="codehilite"><pre><span></span>sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
+</pre></div>
+or on CentOS
+<div class="codehilite"><pre><span></span>sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.python_bin<span class="s2">&quot; &quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/python<span class="s2">&quot;&quot;</span>
+</pre></div></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure that the STIX libraries and GnuPG work as intended, if not, refer to the relevant sections in the install guide you are currently reading.</p>
+</div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Now log in using the webinterface: http://misp/users/login<br />
+The default user/pass = <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#97;&#100;&#109;&#105;&#110;&#46;&#116;&#101;&#115;&#116;">&#97;&#100;&#109;&#105;&#110;&#64;&#97;&#100;&#109;&#105;&#110;&#46;&#116;&#101;&#115;&#116;</a>/admin<br />
+Using the server settings tool in the admin interface (Administration -&gt; Server Settings), set MISP up to your preference.<br />
+It is especially vital that no critical issues remain!<br />
+Don't forget to change the email, password and authentication key after installation.<br />
+Once done, have a look at the diagnostics.</p>
+</div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>If any of the directories that MISP uses to store files is not writeable to the apache user, change the permissions<br />
+you can do this by running the following commands:
+<div class="codehilite"><pre><span></span>chmod -R <span class="m">750</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/&lt;directory path with an indicated issue&gt;
+<span class="c1"># /!\ Depending on your OS replace www-data with apache or www or whatever user is the web server user.</span>
+chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/&lt;directory path with an indicated issue&gt;
+</pre></div></p>
+</div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>If anything goes wrong, make sure that you check MISP's logs for errors:
+<div class="codehilite"><pre><span></span># ${PATH_TO_MISP}/app/tmp/logs/error.log
+# ${PATH_TO_MISP}/app/tmp/logs/resque-worker-error.log
+# ${PATH_TO_MISP}/app/tmp/logs/resque-scheduler-error.log
+# ${PATH_TO_MISP}/app/tmp/logs/resque-2018-10-25.log //where the actual date is the current date
+</pre></div></p>
+</div>
+<h3 id="recommended-actions">Recommended actions<a class="headerlink" href="#recommended-actions" title="Permanent link">&para;</a></h3>
+<hr />
+<ul>
+<li>
+<p>By default CakePHP exposes its name and version in email headers. Apply a patch to remove this behavior.</p>
+</li>
+<li>
+<p>You should really harden your OS</p>
+</li>
+<li>You should really harden the configuration of Apache</li>
+<li>You should really harden the configuration of MySQL</li>
+<li>Keep your software up2date (MISP, CakePHP and everything else)</li>
+<li>Log and audit</li>
+</ul>
+<h1 id="hardening-a-base-system">Hardening a base system<a class="headerlink" href="#hardening-a-base-system" title="Permanent link">&para;</a></h1>
+<h2 id="intro">Intro<a class="headerlink" href="#intro" title="Permanent link">&para;</a></h2>
+<p>MISP is a web-based <strong>information sharing platform</strong>, by design it is kept rather simple and hardening can be done by following the common best practices.</p>
+<p>Bare in mind that neither the MISP documentation efforts or the core MISP project can give you the ultimate guide on how to harden your system.
+This is not the purpose of the MISP Project but the purpose and care of those individuals and organizations deploying MISP Instances.</p>
+<p>Nevertheless here is a very rough <strong>food for thoughts</strong> bulletpoint list for you to consider, and a list of some hardening ressources below.</p>
+<ul>
+<li>Are we using SSL by default? (Especially when syncing over the internet and exposing the API)</li>
+<li>How to we access the machine remotely? Via ssh? What is the path to get there? Does a <a href="https://en.wikipedia.org/wiki/Bastion_host">bastion host</a> make sense?</li>
+<li>Is the machine shared with other user accounts? Do I need to care about useri-land security due to this sharing?</li>
+<li>Is the instance deployed in the "<strong>cloud</strong>"? Is it a VPS? AWS? docker? ansible? kubernetes? whateverCloudContainterMagicIsFancibleNow?</li>
+<li>Do we need to encrypt the partitions where some data is stored?</li>
+<li>Are we redundant in case one MISP instance might fail?</li>
+<li>Is the database server and any other servers running on the machine bound to <strong>localhost</strong>? Do we need to expose because our setup is more complex?</li>
+<li>Do we have enough storage? What about <a href="https://misp-project.org/MISP-sizer/">MISP and size estimation</a> anyways?</li>
+<li>Do we care about BIOS updates?</li>
+<li>Do we care about physical access to the servers? (Disabling USB ports etc...)</li>
+<li>Is any fancy management engine à la <a href="https://en.wikipedia.org/wiki/Intel_Management_Engine">IME</a> in use?</li>
+</ul>
+<h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
+<p><a href="https://wiki.debian.org/Hardening">Debian Wiki Hardening</a></p>
+<p><a href="https://wiki.centos.org/HowTos/OS_Protection">CentOS Hardening</a></p>
+<p><a href="https://www.cyberciti.biz/tips/linux-security.html">Some Linux hardening tips</a></p>
+<h3 id="optional-features">Optional features<a class="headerlink" href="#optional-features" title="Permanent link">&para;</a></h3>
+<hr />
+<h4 id="misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-command">MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following command<a class="headerlink" href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-command" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo pip3 install pyzmq
+<span class="c1"># ZeroMQ depends on the Python client for Redis</span>
+sudo pip3 install redis
+</pre></div>
+
+<h4 id="experimental-ssdeep-correlations">Experimental ssdeep correlations<a class="headerlink" href="#experimental-ssdeep-correlations" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="c1"># installing ssdeep</span>
+wget http://downloads.sourceforge.net/project/ssdeep/ssdeep-2.13/ssdeep-2.13.tar.gz
+tar zxvf ssdeep-2.13.tar.gz
+<span class="nb">cd</span> ssdeep-2.13
+./configure
+make
+sudo make install
+ssdeep -h <span class="c1"># test</span>
+
+<span class="c1">#installing ssdeep_php</span>
+sudo pecl install ssdeep
+
+<span class="c1"># You should add &quot;extension=ssdeep.so&quot; to mods-available - Check /etc/php for your current version</span>
+<span class="nb">echo</span> <span class="s2">&quot;extension=ssdeep.so&quot;</span> <span class="p">|</span> sudo tee /etc/php/7.2/mods-available/ssdeep.ini
+sudo phpenmod ssdeep
+sudo service apache2 restart
+</pre></div>
+
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>If you want to add the misp modules functionality, follow the setup procedure described in misp-modules:<br />
+<a href="https://github.com/MISP/misp-modules#how-to-install-and-start-misp-modules">https://github.com/MISP/misp-modules#how-to-install-and-start-misp-modules</a><br />
+Then the enrichment, export and import modules can be enabled in MISP via the settings.</p>
+</div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Debian 9 \w postgresql
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../xINSTALL.tsurugi/" title="Tsurugi Linux" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Tsurugi Linux
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 MISP Project
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    
+      <a href="https://www.misp-project.org/" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/MISP" class="md-footer-social__link fa fa-github-alt"></a>
+    
+      <a href="https://twitter.com/MISPProject" class="md-footer-social__link fa fa-twitter"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.5e60981f.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

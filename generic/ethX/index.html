@@ -282,18 +282,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../../INSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
-      Ubuntu 18.04 \w webmin
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
       Debian stable
     </a>
@@ -404,6 +392,18 @@
   <li class="md-nav__item">
     <a href="../../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-nav__link">
       Debian 9 \w postgresql
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
+      Ubuntu 18.04 \w webmin
     </a>
   </li>
 
@@ -700,6 +700,9 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 <p class="admonition-title">Notice</p>
 <p>On recent Ubuntu install Netplan is default and you need to change the Network name.
 <div class="codehilite"><pre><span></span>sudo sed -i &quot;s/enp0s3/eth0/&quot; /etc/netplan/50-cloud-init.yaml
+</pre></div>
+OR on Ubuntu 19.04 (yay for changing this every 5 commits... #n00bs)
+<div class="codehilite"><pre><span></span>sudo sed -i &quot;s/enp0s3/eth0/&quot; /etc/netplan/01-netcfg.yaml
 </pre></div></p>
 </div>
                 

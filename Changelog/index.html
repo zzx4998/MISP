@@ -282,18 +282,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
-      Ubuntu 18.04 \w webmin
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
       Debian stable
     </a>
@@ -404,6 +392,18 @@
   <li class="md-nav__item">
     <a href="../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-nav__link">
       Debian 9 \w postgresql
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
+      Ubuntu 18.04 \w webmin
     </a>
   </li>
 
@@ -7365,6 +7365,19 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[users/mails] Added possibility to send a mail to all users of the
+  same organisation. [mokaddem]</li>
+<li>[users/mails] add confirmation popup before sending mails. [mokaddem]</li>
+<li>[freetext] Added BTC recognition, fixes #3864. [iglocska]</li>
+<li>
+<p>Various fixes to the reporting of validation errors for saving
+  attributes. [iglocska]</p>
+</li>
+<li>
+<p>view the failed/succeeded saves in batch imports, fixes #3866</p>
+</li>
+<li>fixed a bug that inserted junk into the flash messages, fixes #3863</li>
+<li>fixed a bug that removed all but the last entry in a failed batch import #3865</li>
 <li>
 <p>[stix2 import] Starting importing external pattern. [chrisr3d]</p>
 </li>
@@ -7387,12 +7400,13 @@
 <li>
 <p>major cause of death by overcorrelating</p>
 </li>
-<li>[search] Rework of the UI attribute search complete. [iglocska]</li>
-<li>[attribute search] Rework of the UI version of the search to unify the
-  functionalities with the event view. [iglocska]</li>
 <li>[doc] Added symlink to generic folder and added note what generic
   means/is. [Steve Clement]</li>
 <li>[doc] Added Tsurugi Linux install script. [Steve Clement]</li>
+<li>[search/sighting] Possiblity to quickly add sightings on ID or VALUE
+  when searching. [mokaddem]</li>
+<li>[search] Added possibility to directly sight an attribute after a
+  search. [mokaddem]</li>
 <li>
 <p>[stix import] Marking parsing at attribute level. [chrisr3d]</p>
 </li>
@@ -7401,41 +7415,54 @@
     event &amp; attribute levels</p>
 </li>
 <li>[statistics] Added local org and user/org counts. [iglocska]</li>
-<li>[search/sighting] Possiblity to quickly add sightings on ID or VALUE
-  when searching. [mokaddem]</li>
-<li>[search] Added possibility to directly sight an attribute after a
-  search. [mokaddem]</li>
+<li>[search] Rework of the UI attribute search complete. [iglocska]</li>
+<li>[attribute search] Rework of the UI version of the search to unify the
+  functionalities with the event view. [iglocska]</li>
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[doc] Centos 7 update to make misp-modules work. Some notes on
-  SELinux. [Steve Clement]</li>
-<li>[doc] FreeBSD base MISP now works well enough. [Steve Clement]</li>
-<li>[doc] Some more FreeBSD updates. [Steve Clement]</li>
-<li>[doc] Due to some mimimi, FreeBSD is now "back" in the Archives.
-  (Works on FreeBSD 12.0BETA4) [Steve Clement]</li>
-<li>[documentation] Link to the rest client from the automation page.
+<li>Bump PyMISP. [Raphaël Vinot]</li>
+<li>[misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[diag] Added warning message if getCurrentBranch() in Model/Server.php
+  returns empty. [Steve Clement]</li>
+<li>[contact email] Aligned button colours with the rest of the UI.
   [iglocska]</li>
-<li>[taxonomies] added the exercise taxonomy from CSIRT network
-  discussions. [Alexandre Dulaunoy]</li>
-<li>[taxonomies] updated to the latest version. [Alexandre Dulaunoy]</li>
-<li>
-<p>[stix2 import] Parsing relationships &amp; importing galaxies in the
+<li>[users/emails] Better comments. [mokaddem]</li>
+<li>[users/email] Changed behavior of sending mail to avoid code
+  duplication. [mokaddem]</li>
+</ul>
+<p>If an additional parameter is passed to the url, it will only shows the result of submitting the form without the submission
+- [eventview] changed default attribute sorting to timestamp-&gt;desc.
+  [mokaddem]
+- [doc] More hardening ressources. [Steve Clement]
+- [doc] Added hardening section. [Steve Clement]
+- [doc] Moved Ubuntu Webmin to experimental, as it is difficult to
+  maintain without working production webmin install. [Steve Clement]
+- [doc] Some updates to the Webmin install doc. [Steve Clement]
+- [doc] Kali 2018.4 tested. Added note that we need fresh-install.
+  [Steve Clement]
+- [doc] Centos 7 update to make misp-modules work. Some notes on
+  SELinux. [Steve Clement]
+- [doc] FreeBSD base MISP now works well enough. [Steve Clement]
+- [doc] Some more FreeBSD updates. [Steve Clement]
+- [doc] Due to some mimimi, FreeBSD is now "back" in the Archives.
+  (Works on FreeBSD 12.0BETA4) [Steve Clement]
+- [documentation] Link to the rest client from the automation page.
+  [iglocska]
+- [taxonomies] added the exercise taxonomy from CSIRT network
+  discussions. [Alexandre Dulaunoy]
+- [taxonomies] updated to the latest version. [Alexandre Dulaunoy]
+- [stix2 import] Parsing relationships &amp; importing galaxies in the
   appropriate level. [chrisr3d]</p>
-</li>
-<li>
-<p>Importing Galaxies in attribute level when
-    expected by relationships, and possible</p>
-</li>
+<ul>
+<li>Importing Galaxies in attribute level when
+    expected by relationships, and possible</li>
 <li>Importing Galaxies as before in event level
     otherwise</li>
 <li>[misp-taxonomies] updated with the new and latest changes. [Alexandre
   Dulaunoy]</li>
 <li>[enrichment] Linebreak handling for enrichment hovers. [iglocska]</li>
 <li>Bump PyMISP. [Raphaël Vinot]</li>
-<li>[seach] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />, more work on the attribute search's JS components.
-  [iglocska]</li>
-<li>[search] Further progress on the attribute search UI. [iglocska]</li>
 <li>[doc] Fixed folder typo. [Steve Clement]</li>
 <li>[doc] Added Tsurugi Linux to Index and changed some minor issue.
   [Steve Clement]</li>
@@ -7446,6 +7473,10 @@
 <li>[doc] functionalities updated to include the new ones. [Alexandre
   Dulaunoy]</li>
 <li>[doc] Small typo. [Steve Clement]</li>
+<li>[doc] Fixed yara in all guides. [Steve Clement]</li>
+<li>[doc] Experimental Debian install now works with PHP 7.3RC4 chg: [doc]
+  Some changes to variable use. [Steve Clement]</li>
+<li>[doc] Added lief python 3.7 egg issue. [Steve Clement]</li>
 <li>[doc] changing original MISP pipenv. [Alexandre Dulaunoy]</li>
 <li>[doc] fix how to get path for Cake PHP. [Alexandre Dulaunoy]</li>
 <li>[doc] default path for virtualenv fixed (matching the original one
@@ -7454,16 +7485,10 @@
   previously setup in the documentation) [Alexandre Dulaunoy]</li>
 <li>[misp-objects] updated to the latest version. [Alexandre Dulaunoy]</li>
 <li>Bump PyMISP. [Raphaël Vinot]</li>
-<li>[doc] Fixed yara in all guides. [Steve Clement]</li>
-<li>[doc] Experimental Debian install now works with PHP 7.3RC4 chg: [doc]
-  Some changes to variable use. [Steve Clement]</li>
-<li>[doc] Added lief python 3.7 egg issue. [Steve Clement]</li>
 <li>[doc] ${PATH_TO_MISP} everywhere. Added more granular php etc
   variable. [Steve Clement]</li>
 <li>[doc] Added more notices on misp-dashboard on Ubuntu 16.04. [Steve
   Clement]</li>
-<li>[view/search] close opened popover when clicking the document.
-  [mokaddem]</li>
 <li>[doc] the venv directory needs usr_t profile. [Steve Clement]</li>
 <li>[doc] Update Centos 6.x and 7.x chg: [doc] re-Added Ubuntu 16.04-LTS
   as an archived/old INSTALL Guide (tested working) chg: [doc] Adapted
@@ -7471,17 +7496,51 @@
 <li>[doc] updated Changelog.md to be more markdown friendly chg: [tools]
   Changed the way gen_misp_install_docs.sh parseses the changelog new:
   [tools] Added simple tool for git log sanitizing. [Steve Clement]</li>
+<li>[view/search] close opened popover when clicking the document.
+  [mokaddem]</li>
 <li>Bump Pymisp, misp-galaxy misp-objects taxonomies. [Raphaël Vinot]</li>
 <li>[statistics] Show % of users with pgp keys. [iglocska]</li>
 <li>[taxonomies] bumped. [iglocska]</li>
+<li>[taxonomies] updated. [iglocska]</li>
 <li>[sighting restSearch] API documentation fixed (/get is now
   /restSearch) [Alexandre Dulaunoy]</li>
-<li>[taxonomies] updated. [iglocska]</li>
-<li>[diag] Added warning message if getCurrentBranch() in Model/Server.php
-  returns empty. [Steve Clement]</li>
+<li>[seach] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />, more work on the attribute search's JS components.
+  [iglocska]</li>
+<li>[search] Further progress on the attribute search UI. [iglocska]</li>
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[API] Fix non exportable tags being included in the attribute level
+  restsearch. [iglocska]</li>
+<li>[API templates] Clarification about the serversettings API. [iglocska]</li>
+<li>Test for old school CSV download. [Raphaël Vinot]</li>
+<li>[install] Added pip3 installation before the venv installation.
+  [Andras Iklody]</li>
+<li>[instructions] Added missing virtualenv dependency. [Andras Iklody]</li>
+<li>[tools] misp-restore.sh incorrectly validating 'BackupFile' from the
+  command line. [Chris Ford]</li>
+<li>
+<p>[API] CSV ignore flag restored to old behaviour. [iglocska]</p>
+</li>
+<li>
+<p>if not set, only return published events / to_ids flagged events by default</p>
+</li>
+<li>setting ignore:0 will result in the default behaviour</li>
+<li>setting ignore:1 will result in unpublished events and non to_ids attributes being filtered out</li>
+<li>fixed a bug that broke the CSV api if ignore:0 was passed</li>
+<li>[sync] Fixed an issue preventing sharing group distributed data from
+  being pushed. [iglocska]</li>
+<li>
+<p>[objects] Fixes issue #3874. [iglocska]</p>
+</li>
+<li>
+<p>shouldn't be allowed in the first place</p>
+</li>
+<li>[admin/email] replaced hardcoded url into baseurl. [mokaddem]</li>
+<li>[users/emails] submission fix + cleaned code + comments. [mokaddem]</li>
+<li>[stix import] Fixed uuid fetching. [chrisr3d]</li>
+<li>[missing files] added missing templates. [iglocska]</li>
+<li>[stix import] Fixed Tags import. [chrisr3d]</li>
 <li>[stix export] Fixed dictionary update which requires lists and not
   tuples. [chrisr3d]</li>
 <li>
@@ -7538,6 +7597,7 @@
     since they are not modified. Thus declaring as
     tuples is more appropriate</p>
 </li>
+<li>[doc] Typo in index for Tsurugi Linux. [Steve Clement]</li>
 <li>
 <p>[stix2 import] Better selection of objects to parse in object_refs.
   [chrisr3d]</p>
@@ -7556,14 +7616,6 @@
 </li>
 <li>[stix2 import] Try-catching Report objects creator reference.
   [chrisr3d]</li>
-<li>[attribute search] Fixed invalid JS calls introduced as part of the
-  rework (<img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />) [iglocska]</li>
-<li>[api] Invalid handling of empty parameters in the built in parameter
-  builder. [iglocska]</li>
-<li>[tags] showAttributeTag function now correctly culls galaxy tags.
-  [iglocska]</li>
-<li>[doc] Typo in index for Tsurugi Linux. [Steve Clement]</li>
-<li>[stix export] Fixed function header missing self attribute. [chrisr3d]</li>
 <li>#3774 [restResponse] added missing <code>includeEventTags</code> entry.
   [mokaddem]</li>
 <li>[doc] Added note about WSGI issues on Ubuntu 16.04 chg: [doc]
@@ -7573,6 +7625,7 @@
   [Steve Clement]</li>
 <li>Travis build. [Raphaël Vinot]</li>
 <li>[acl] bumped ACLComponent. [mokaddem]</li>
+<li>[stix export] Fixed function header missing self attribute. [chrisr3d]</li>
 <li>[stix import] Using standard error instead of standard output for
   missing types in mappings. [chrisr3d]</li>
 <li>
@@ -7593,12 +7646,43 @@
 <li>STIX coming from multiple MISP events refers to
     STIX files created via the MISP to STIX export
     that can include multiple MISP events</li>
+<li>[attribute search] Fixed invalid JS calls introduced as part of the
+  rework (<img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />) [iglocska]</li>
+<li>[api] Invalid handling of empty parameters in the built in parameter
+  builder. [iglocska]</li>
+<li>[tags] showAttributeTag function now correctly culls galaxy tags.
+  [iglocska]</li>
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Steve Clement]</li>
-<li>Merge pull request #3868 from SteveClement/guides. [Steve Clement]</li>
+<li>Merge pull request #3891 from SteveClement/guides. [Steve Clement]</li>
 </ul>
+<p>new: [doc] Added hardening section
+- Merge branch '2.4' into guides. [Steve Clement]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #3879 from 8ear/patch-2. [Steve Clement]</p>
+<p>Update INSTALL.debian9.md
+- Update INSTALL.debian9.md. [Steve Clement]
+- Update INSTALL.debian9.md. [Max H]</p>
+<p>Add new MISP-MODULE apt dependencies
+- Merge pull request #3890 from SteveClement/guides. [Steve Clement]</p>
+<p>chg: [doc] Some updates to Kali/Ubuntu w webmin and small typo fix.
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]
+- Merge pull request #3880 from crford/fix-misp-restore. [Andras Iklody]</p>
+<p>fix: [tools] misp-restore.sh incorrectly validating 'BackupFile' from…
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Steve Clement]
+- Merge branch 'contact' into 2.4. [iglocska]
+- Merge branch '2.4' into contact. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #3826 from MISP/sortingOnTimestamp. [Steve Clement]</p>
+<p>chg: [eventview] changed default attribute sorting to timestamp-&gt;desc
+- Merge pull request #3868 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [doc] Updated FreeBSD and CentOS 7 install guides
 - Merge branch 'rest_link' into 2.4. [iglocska]
 - Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
@@ -7640,19 +7724,15 @@
 - Fixed double check if clause. [Axpatito]
 - Fix compare issue. [Axpatito]
 - Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Steve Clement]
 - Merge pull request #3844 from SteveClement/guides. [Steve Clement]</p>
 <p>fix: [doc] Typo in index for Tsurugi Linux.
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Steve Clement]
 - Merge pull request #3843 from SteveClement/guides. [Steve Clement]</p>
 <p>new: [doc] Added Tsurugi Linux install script
 - Merge branch '2.4' into guides. [Steve Clement]
 - Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
-- Merge branch '2.4' into guides. [Steve Clement]
 - Merge pull request #3821 from StefanKelm/2.4. [Andras Iklody]</p>
 <p>super tiny typos
 - Typo. [StefanKelm]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Steve Clement]
 - Merge pull request #3828 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [doc] ${PATH_TO_MISP} everywhere. Added more granular php etc var
 - Merge pull request #3816 from devnull-/patch-1. [Alexandre Dulaunoy]</p>
@@ -7663,10 +7743,8 @@
   [mokaddem]
 - Merge pull request #3825 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [doc] Added more notices on misp-dashboard on Ubuntu 16.04
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Steve Clement]
 - Merge pull request #3824 from SteveClement/guides. [Steve Clement]</p>
 <p>fix: [doc] Added note about WSGI issues on Ubuntu 16.04
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Steve Clement]
 - Merge pull request #3823 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [doc] Updates to guides: Ubuntu 16.04 - CentOS 6/7 - RedHat EL and updated mkdocs creation script
 - Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into 2.4.

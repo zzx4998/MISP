@@ -282,18 +282,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
-      Ubuntu 18.04 \w webmin
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
       Debian stable
     </a>
@@ -523,6 +511,19 @@
     9/ MISP configuration
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initialize-misp-configuration-and-set-some-defaults" title="Initialize MISP configuration and set some defaults" class="md-nav__link">
+    Initialize MISP configuration and set some defaults
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -580,6 +581,18 @@
   <li class="md-nav__item">
     <a href="../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-nav__link">
       Debian 9 \w postgresql
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
+      Ubuntu 18.04 \w webmin
     </a>
   </li>
 
@@ -965,6 +978,19 @@
   <a href="#9-misp-configuration" title="9/ MISP configuration" class="md-nav__link">
     9/ MISP configuration
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initialize-misp-configuration-and-set-some-defaults" title="Initialize MISP configuration and set some defaults" class="md-nav__link">
+    Initialize MISP configuration and set some defaults
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1353,159 +1379,159 @@ su -s /bin/bash apache -c &#39;scl enable rh-php70 /var/www/MISP/app/Console/wor
 vi /etc/rc.local
 # Add the following line at the end
 su -s /bin/bash apache -c &#39;scl enable rh-php70 /var/www/MISP/app/Console/worker/start.sh&#39;
+</pre></div>
 
-#### Initialize MISP configuration and set some defaults
-```bash
-# Initialize user and fetch Auth Key
-sudo -E $RUN_PHP &quot;$CAKE userInit -q&quot;
-AUTH_KEY=$(mysql -u $DBUSER_MISP -p$DBPASSWORD_MISP misp -e &quot;SELECT authkey FROM users;&quot; | tail -1)
+<h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="c1"># Initialize user and fetch Auth Key</span>
+sudo -E <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> userInit -q&quot;</span>
+<span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1<span class="k">)</span>
 
-# Setup some more MISP default via cake CLI
+<span class="c1"># Setup some more MISP default via cake CLI</span>
 
-# Change base url, either with this CLI command or in the UI
-sudo $RUN_PHP &quot;$CAKE Baseurl $MISP_BASEURL&quot;
-# example: &#39;baseurl&#39; =&gt; &#39;https://&lt;your.FQDN.here&gt;&#39;,
-# alternatively, you can leave this field empty if you would like to use relative pathing in MISP
-# &#39;baseurl&#39; =&gt; &#39;&#39;,
+<span class="c1"># Change base url, either with this CLI command or in the UI</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Baseurl </span><span class="nv">$MISP_BASEURL</span><span class="s2">&quot;</span>
+<span class="c1"># example: &#39;baseurl&#39; =&gt; &#39;https://&lt;your.FQDN.here&gt;&#39;,</span>
+<span class="c1"># alternatively, you can leave this field empty if you would like to use relative pathing in MISP</span>
+<span class="c1"># &#39;baseurl&#39; =&gt; &#39;&#39;,</span>
 
-# Tune global time outs
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Session.autoRegenerate&quot; 0&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Session.timeout&quot; 600&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Session.cookie_timeout&quot; 3600&quot;
+<span class="c1"># Tune global time outs</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Session.autoRegenerate<span class="s2">&quot; 0&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Session.timeout<span class="s2">&quot; 600&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Session.cookie_timeout<span class="s2">&quot; 3600&quot;</span>
 
-# Enable GnuPG
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;GnuPG.email&quot; &quot;admin@admin.test&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;GnuPG.homedir&quot; &quot;$PATH_TO_MISP/.gnupg&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;GnuPG.password&quot; &quot;Password1234&quot;&quot;
+<span class="c1"># Enable GnuPG</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>GnuPG.email<span class="s2">&quot; &quot;</span>admin@admin.test<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>GnuPG.homedir<span class="s2">&quot; &quot;</span><span class="nv">$PATH_TO_MISP</span>/.gnupg<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>GnuPG.password<span class="s2">&quot; &quot;</span>Password1234<span class="s2">&quot;&quot;</span>
 
-# Enable Enrichment set better timeouts
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Enrichment_services_enable&quot; true&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Enrichment_hover_enable&quot; true&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Enrichment_timeout&quot; 300&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Enrichment_hover_timeout&quot; 150&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Enrichment_cve_enabled&quot; true&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Enrichment_dns_enabled&quot; true&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Enrichment_services_url&quot; &quot;http://127.0.0.1&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Enrichment_services_port&quot; 6666&quot;
+<span class="c1"># Enable Enrichment set better timeouts</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Enrichment_services_enable<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Enrichment_hover_enable<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Enrichment_timeout<span class="s2">&quot; 300&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Enrichment_hover_timeout<span class="s2">&quot; 150&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Enrichment_cve_enabled<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Enrichment_dns_enabled<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Enrichment_services_url<span class="s2">&quot; &quot;</span>http://127.0.0.1<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Enrichment_services_port<span class="s2">&quot; 6666&quot;</span>
 
-# Enable Import modules set better timout
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Import_services_enable&quot; true&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Import_services_url&quot; &quot;http://127.0.0.1&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Import_services_port&quot; 6666&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Import_timeout&quot; 300&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Import_ocr_enabled&quot; true&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Import_csvimport_enabled&quot; true&quot;
+<span class="c1"># Enable Import modules set better timout</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Import_services_enable<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Import_services_url<span class="s2">&quot; &quot;</span>http://127.0.0.1<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Import_services_port<span class="s2">&quot; 6666&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Import_timeout<span class="s2">&quot; 300&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Import_ocr_enabled<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Import_csvimport_enabled<span class="s2">&quot; true&quot;</span>
 
-# Enable Export modules set better timout
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Export_services_enable&quot; true&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Export_services_url&quot; &quot;http://127.0.0.1&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Export_services_port&quot; 6666&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Export_timeout&quot; 300&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Export_pdfexport_enabled&quot; true&quot;
+<span class="c1"># Enable Export modules set better timout</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Export_services_enable<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Export_services_url<span class="s2">&quot; &quot;</span>http://127.0.0.1<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Export_services_port<span class="s2">&quot; 6666&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Export_timeout<span class="s2">&quot; 300&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Export_pdfexport_enabled<span class="s2">&quot; true&quot;</span>
 
-# Enable installer org and tune some configurables
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.host_org_id&quot; 1&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.email&quot; &quot;info@admin.test&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.disable_emailing&quot; true&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.contact&quot; &quot;info@admin.test&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.disablerestalert&quot; true&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.showCorrelationsOnIndex&quot; true&quot;
+<span class="c1"># Enable installer org and tune some configurables</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.host_org_id<span class="s2">&quot; 1&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.email<span class="s2">&quot; &quot;</span>info@admin.test<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.disable_emailing<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.contact<span class="s2">&quot; &quot;</span>info@admin.test<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.disablerestalert<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.showCorrelationsOnIndex<span class="s2">&quot; true&quot;</span>
 
-# Provisional Cortex tunes
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Cortex_services_enable&quot; false&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Cortex_services_url&quot; &quot;http://127.0.0.1&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Cortex_services_port&quot; 9000&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Cortex_timeout&quot; 120&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Cortex_services_url&quot; &quot;http://127.0.0.1&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Cortex_services_port&quot; 9000&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Cortex_services_timeout&quot; 120&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Cortex_services_authkey&quot; &quot;&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Cortex_ssl_verify_peer&quot; false&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Cortex_ssl_verify_host&quot; false&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Cortex_ssl_allow_self_signed&quot; true&quot;
+<span class="c1"># Provisional Cortex tunes</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Cortex_services_enable<span class="s2">&quot; false&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Cortex_services_url<span class="s2">&quot; &quot;</span>http://127.0.0.1<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Cortex_services_port<span class="s2">&quot; 9000&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Cortex_timeout<span class="s2">&quot; 120&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Cortex_services_url<span class="s2">&quot; &quot;</span>http://127.0.0.1<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Cortex_services_port<span class="s2">&quot; 9000&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Cortex_services_timeout<span class="s2">&quot; 120&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Cortex_services_authkey<span class="s2">&quot; &quot;&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Cortex_ssl_verify_peer<span class="s2">&quot; false&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Cortex_ssl_verify_host<span class="s2">&quot; false&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Cortex_ssl_allow_self_signed<span class="s2">&quot; true&quot;</span>
 
-# Various plugin sightings settings
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Sightings_policy&quot; 0&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Sightings_anonymise&quot; false&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.Sightings_range&quot; 365&quot;
+<span class="c1"># Various plugin sightings settings</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Sightings_policy<span class="s2">&quot; 0&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Sightings_anonymise<span class="s2">&quot; false&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Sightings_range<span class="s2">&quot; 365&quot;</span>
 
-# Plugin CustomAuth tuneable
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.CustomAuth_disable_logout&quot; false&quot;
+<span class="c1"># Plugin CustomAuth tuneable</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.CustomAuth_disable_logout<span class="s2">&quot; false&quot;</span>
 
-# RPZ Plugin settings
+<span class="c1"># RPZ Plugin settings</span>
 
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.RPZ_policy&quot; &quot;DROP&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.RPZ_walled_garden&quot; &quot;127.0.0.1&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.RPZ_serial&quot; &quot;\$date00&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.RPZ_refresh&quot; &quot;2h&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.RPZ_retry&quot; &quot;30m&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.RPZ_expiry&quot; &quot;30d&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.RPZ_minimum_ttl&quot; &quot;1h&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.RPZ_ttl&quot; &quot;1w&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.RPZ_ns&quot; &quot;localhost.&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.RPZ_ns_alt&quot; &quot;&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Plugin.RPZ_email&quot; &quot;root.localhost&quot;&quot;
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.RPZ_policy<span class="s2">&quot; &quot;</span>DROP<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.RPZ_walled_garden<span class="s2">&quot; &quot;</span><span class="m">127</span>.0.0.1<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.RPZ_serial<span class="s2">&quot; &quot;</span><span class="se">\$</span>date00<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.RPZ_refresh<span class="s2">&quot; &quot;</span>2h<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.RPZ_retry<span class="s2">&quot; &quot;</span>30m<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.RPZ_expiry<span class="s2">&quot; &quot;</span>30d<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.RPZ_minimum_ttl<span class="s2">&quot; &quot;</span>1h<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.RPZ_ttl<span class="s2">&quot; &quot;</span>1w<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.RPZ_ns<span class="s2">&quot; &quot;</span>localhost.<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.RPZ_ns_alt<span class="s2">&quot; &quot;&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.RPZ_email<span class="s2">&quot; &quot;</span>root.localhost<span class="s2">&quot;&quot;</span>
 
-# Force defaults to make MISP Server Settings less RED
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.language&quot; &quot;eng&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.proposals_block_attributes&quot; false&quot;
+<span class="c1"># Force defaults to make MISP Server Settings less RED</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.language<span class="s2">&quot; &quot;</span>eng<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.proposals_block_attributes<span class="s2">&quot; false&quot;</span>
 
-## Redis block
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.redis_host&quot; &quot;127.0.0.1&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.redis_port&quot; 6379&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.redis_database&quot; 13&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.redis_password&quot; &quot;&quot;&quot;
+<span class="c1">## Redis block</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.redis_host<span class="s2">&quot; &quot;</span><span class="m">127</span>.0.0.1<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.redis_port<span class="s2">&quot; 6379&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.redis_database<span class="s2">&quot; 13&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.redis_password<span class="s2">&quot; &quot;&quot;&quot;</span>
 
-# Force defaults to make MISP Server Settings less YELLOW
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.ssdeep_correlation_threshold&quot; 40&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.extended_alert_subject&quot; false&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.default_event_threat_level&quot; 4&quot;
+<span class="c1"># Force defaults to make MISP Server Settings less YELLOW</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.ssdeep_correlation_threshold<span class="s2">&quot; 40&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.extended_alert_subject<span class="s2">&quot; false&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.default_event_threat_level<span class="s2">&quot; 4&quot;</span>
 
-##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.newUserText&quot; &quot;Dear new MISP user,\\n\\nWe would hereby like to welcome you to the \$org MISP community.\\n\\n Use the credentials below to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nPassword: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;&quot;
-##sudo $CAKE Admin setSetting &quot;MISP.passwordResetText&quot; &quot;Dear MISP user,\\n\\nA password reset has been triggered for your account. Use the below provided temporary password to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nYour temporary password: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.enableEventBlacklisting&quot; true&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.enableOrgBlacklisting&quot; true&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.log_client_ip&quot; false&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.log_auth&quot; false&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.disableUserSelfManagement&quot; false&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.block_event_alert&quot; false&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.block_event_alert_tag&quot; &quot;no-alerts=\&quot;true\&quot;&quot;&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.block_old_event_alert&quot; false&quot;
-##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.block_old_event_alert_age&quot; &quot;&quot;&quot;
-##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.incoming_tags_disabled_by_default&quot; false&quot;
-##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.footermidleft&quot; &quot;This is an initial install&quot;&quot;
-##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.footermidright&quot; &quot;Please configure and harden accordingly&quot;&quot;
-##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.welcome_text_top&quot; &quot;Initial Install, please configure&quot;&quot;
-##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.welcome_text_bottom&quot; &quot;Welcome to MISP, change this message in MISP Settings&quot;&quot;
+<span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.newUserText&quot; &quot;Dear new MISP user,\\n\\nWe would hereby like to welcome you to the \$org MISP community.\\n\\n Use the credentials below to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nPassword: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;&quot;</span>
+<span class="c1">##sudo $CAKE Admin setSetting &quot;MISP.passwordResetText&quot; &quot;Dear MISP user,\\n\\nA password reset has been triggered for your account. Use the below provided temporary password to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nYour temporary password: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.enableEventBlacklisting<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.enableOrgBlacklisting<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.log_client_ip<span class="s2">&quot; false&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.log_auth<span class="s2">&quot; false&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.disableUserSelfManagement<span class="s2">&quot; false&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.block_event_alert<span class="s2">&quot; false&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.block_event_alert_tag<span class="s2">&quot; &quot;</span>no-alerts<span class="o">=</span><span class="se">\&quot;</span>true<span class="se">\&quot;</span><span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.block_old_event_alert<span class="s2">&quot; false&quot;</span>
+<span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.block_old_event_alert_age&quot; &quot;&quot;&quot;</span>
+<span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.incoming_tags_disabled_by_default&quot; false&quot;</span>
+<span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.footermidleft&quot; &quot;This is an initial install&quot;&quot;</span>
+<span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.footermidright&quot; &quot;Please configure and harden accordingly&quot;&quot;</span>
+<span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.welcome_text_top&quot; &quot;Initial Install, please configure&quot;&quot;</span>
+<span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.welcome_text_bottom&quot; &quot;Welcome to MISP, change this message in MISP Settings&quot;&quot;</span>
 
-# Force defaults to make MISP Server Settings less GREEN
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Security.password_policy_length&quot; 12&quot;
-##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Security.password_policy_complexity&quot; &#39;/^((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$|.{16,}/&#39;&quot;
-# Tune global time outs
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Session.autoRegenerate&quot; 0&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Session.timeout&quot; 600&quot;
-sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Session.cookie_timeout&quot; 3600&quot;
+<span class="c1"># Force defaults to make MISP Server Settings less GREEN</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Security.password_policy_length<span class="s2">&quot; 12&quot;</span>
+<span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;Security.password_policy_complexity&quot; &#39;/^((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$|.{16,}/&#39;&quot;</span>
+<span class="c1"># Tune global time outs</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Session.autoRegenerate<span class="s2">&quot; 0&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Session.timeout<span class="s2">&quot; 600&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Session.cookie_timeout<span class="s2">&quot; 3600&quot;</span>
 
-# Update the galaxies…
-sudo $RUN_PHP &quot;$CAKE Admin updateGalaxies&quot;
+<span class="c1"># Update the galaxies…</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin updateGalaxies&quot;</span>
 
-# Updating the taxonomies…
-sudo $RUN_PHP &quot;$CAKE Admin updateTaxonomies&quot;
+<span class="c1"># Updating the taxonomies…</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin updateTaxonomies&quot;</span>
 
-# Updating the warning lists…
-##sudo $RUN_PHP &quot;$CAKE Admin updateWarningLists&quot;
-curl --header &quot;Authorization: $AUTH_KEY&quot; --header &quot;Accept: application/json&quot; --header &quot;Content-Type: application/json&quot; -k -X POST http://127.0.0.1/warninglists/update
+<span class="c1"># Updating the warning lists…</span>
+<span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin updateWarningLists&quot;</span>
+curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST http://127.0.0.1/warninglists/update
 
-# Updating the notice lists…
-## sudo $RUN_PHP &quot;$CAKE Admin updateNoticeLists&quot;
-curl --header &quot;Authorization: $AUTH_KEY&quot; --header &quot;Accept: application/json&quot; --header &quot;Content-Type: application/json&quot; -k -X POST http://127.0.0.1/noticelists/update
+<span class="c1"># Updating the notice lists…</span>
+<span class="c1">## sudo $RUN_PHP &quot;$CAKE Admin updateNoticeLists&quot;</span>
+curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST http://127.0.0.1/noticelists/update
 
-# Updating the object templates…
-##sudo $RUN_PHP &quot;$CAKE Admin updateObjectTemplates&quot;
-curl --header &quot;Authorization: $AUTH_KEY&quot; --header &quot;Accept: application/json&quot; --header &quot;Content-Type: application/json&quot; -k -X POST http://127.0.0.1/objectTemplates/update
+<span class="c1"># Updating the object templates…</span>
+<span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin updateObjectTemplates&quot;</span>
+curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST http://127.0.0.1/objectTemplates/update
 
-# Set MISP Live
-sudo $RUN_PHP &quot;$CAKE Live $MISP_LIVE&quot;
+<span class="c1"># Set MISP Live</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Live </span><span class="nv">$MISP_LIVE</span><span class="s2">&quot;</span>
 </pre></div>
 
 <div class="admonition warning">
@@ -1562,6 +1588,29 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <li>Keep your software up2date (MISP, CakePHP and everything else)</li>
 <li>Log and audit</li>
 </ul>
+<h1 id="hardening-a-base-system">Hardening a base system<a class="headerlink" href="#hardening-a-base-system" title="Permanent link">&para;</a></h1>
+<h2 id="intro">Intro<a class="headerlink" href="#intro" title="Permanent link">&para;</a></h2>
+<p>MISP is a web-based <strong>information sharing platform</strong>, by design it is kept rather simple and hardening can be done by following the common best practices.</p>
+<p>Bare in mind that neither the MISP documentation efforts or the core MISP project can give you the ultimate guide on how to harden your system.
+This is not the purpose of the MISP Project but the purpose and care of those individuals and organizations deploying MISP Instances.</p>
+<p>Nevertheless here is a very rough <strong>food for thoughts</strong> bulletpoint list for you to consider, and a list of some hardening ressources below.</p>
+<ul>
+<li>Are we using SSL by default? (Especially when syncing over the internet and exposing the API)</li>
+<li>How to we access the machine remotely? Via ssh? What is the path to get there? Does a <a href="https://en.wikipedia.org/wiki/Bastion_host">bastion host</a> make sense?</li>
+<li>Is the machine shared with other user accounts? Do I need to care about useri-land security due to this sharing?</li>
+<li>Is the instance deployed in the "<strong>cloud</strong>"? Is it a VPS? AWS? docker? ansible? kubernetes? whateverCloudContainterMagicIsFancibleNow?</li>
+<li>Do we need to encrypt the partitions where some data is stored?</li>
+<li>Are we redundant in case one MISP instance might fail?</li>
+<li>Is the database server and any other servers running on the machine bound to <strong>localhost</strong>? Do we need to expose because our setup is more complex?</li>
+<li>Do we have enough storage? What about <a href="https://misp-project.org/MISP-sizer/">MISP and size estimation</a> anyways?</li>
+<li>Do we care about BIOS updates?</li>
+<li>Do we care about physical access to the servers? (Disabling USB ports etc...)</li>
+<li>Is any fancy management engine à la <a href="https://en.wikipedia.org/wiki/Intel_Management_Engine">IME</a> in use?</li>
+</ul>
+<h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
+<p><a href="https://wiki.debian.org/Hardening">Debian Wiki Hardening</a></p>
+<p><a href="https://wiki.centos.org/HowTos/OS_Protection">CentOS Hardening</a></p>
+<p><a href="https://www.cyberciti.biz/tips/linux-security.html">Some Linux hardening tips</a></p>
                 
                   
                 

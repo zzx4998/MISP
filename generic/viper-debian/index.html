@@ -282,18 +282,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../../INSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
-      Ubuntu 18.04 \w webmin
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
       Debian stable
     </a>
@@ -404,6 +392,18 @@
   <li class="md-nav__item">
     <a href="../../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-nav__link">
       Debian 9 \w postgresql
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
+      Ubuntu 18.04 \w webmin
     </a>
   </li>
 
@@ -698,7 +698,7 @@ If you have python3.7 installed make sure <strong>virtualenv</strong> uses <stro
 sudo apt-get install -y libssl-dev swig python3-ssdeep p7zip-full unrar-free sqlite python3-pyclamd exiftool radare2 python3-magic python3-sqlalchemy python3-prettytable
 git clone https://github.com/viper-framework/viper.git
 <span class="nb">cd</span> viper
-virtualenv -p python3 venv
+virtualenv -p python3.6 venv
 git submodule update --init --recursive
 ./venv/bin/pip install scrapy
 ./venv/bin/pip install -r requirements.txt

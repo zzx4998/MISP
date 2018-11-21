@@ -566,18 +566,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
-      Ubuntu 18.04 \w webmin
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
       Debian stable
     </a>
@@ -688,6 +676,18 @@
   <li class="md-nav__item">
     <a href="../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-nav__link">
       Debian 9 \w postgresql
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
+      Ubuntu 18.04 \w webmin
     </a>
   </li>
 
@@ -1217,7 +1217,9 @@
 <h2 id="for-ubuntu-18041-server">for Ubuntu 18.04.1-server<a class="headerlink" href="#for-ubuntu-18041-server" title="Permanent link">&para;</a></h2>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>Tested working by @SteveClement on 20181025 (works with <strong>Ubuntu 18.10</strong> too)</p>
+<p>Tested working by @SteveClement on 20181120 (works with <strong>Ubuntu 18.10</strong> too)
+As of 20181120 on <strong>Ubuntu 19.04</strong> you need to use Python 3.6 as LIEF with 3.7 is not "eggED" yet.
+You will need to <strong>sudo apt install python3.6-dev</strong> to make everything work according to this guide.</p>
 </div>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
@@ -1308,6 +1310,9 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 <p class="admonition-title">Notice</p>
 <p>On recent Ubuntu install Netplan is default and you need to change the Network name.
 <div class="codehilite"><pre><span></span>sudo sed -i &quot;s/enp0s3/eth0/&quot; /etc/netplan/50-cloud-init.yaml
+</pre></div>
+OR on Ubuntu 19.04 (yay for changing this every 5 commits... #n00bs)
+<div class="codehilite"><pre><span></span>sudo sed -i &quot;s/enp0s3/eth0/&quot; /etc/netplan/01-netcfg.yaml
 </pre></div></p>
 </div>
 <h4 id="make-sure-your-system-is-up2date">Make sure your system is up2date<a class="headerlink" href="#make-sure-your-system-is-up2date" title="Permanent link">&para;</a></h4>
@@ -1331,7 +1336,7 @@ sudo postfix reload
 <span class="c1"># sudo add-apt-repository universe</span>
 
 <span class="c1"># Install the dependencies: (some might already be installed)</span>
-sudo apt-get install curl gcc git gnupg-agent make python python3 openssl redis-server sudo vim zip -y
+sudo apt-get install curl gcc git gnupg-agent make python python3 openssl redis-server sudo vim zip virtualenv -y
 
 <span class="c1"># Install MariaDB (a MySQL fork/alternative)</span>
 sudo apt-get install mariadb-client mariadb-server -y
@@ -1399,7 +1404,9 @@ sudo -u www-data git submodule foreach --recursive git config core.filemode <spa
 sudo -u www-data git config core.filemode <span class="nb">false</span>
 
 <span class="c1"># Create a python3 virtualenv</span>
-sudo -u www-data virtualenv -p python3 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
+sudo apt-get install python3-pip
+pip3 install virtualenv
+sudo -u www-data virtualenv -p python3.6 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
 
 <span class="c1"># make pip happy</span>
 sudo mkdir /var/www/.cache/
@@ -1635,7 +1642,7 @@ sudo -u www-data sh -c <span class="s2">&quot;gpg --homedir </span><span class="
 <p class="admonition-title">Notice</p>
 <p>If entropy is not high enough, you can install havegd and then start the service
 <div class="codehilite"><pre><span></span>sudo apt install haveged -y
-sudo service havegd start
+sudo service haveged start
 </pre></div></p>
 </div>
 <div class="codehilite"><pre><span></span><span class="c1"># To make the background workers start on boot</span>
@@ -1834,7 +1841,7 @@ sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</spa
 sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
 
 <span class="c1"># Start misp-modules</span>
-sudo -u www-data misp-modules -l <span class="m">127</span>.0.0.1 -s <span class="p">&amp;</span>
+sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/misp-modules -l <span class="m">127</span>.0.0.1 -s <span class="p">&amp;</span>
 
 <span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span>
 <span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>
@@ -1989,7 +1996,7 @@ If you have python3.7 installed make sure <strong>virtualenv</strong> uses <stro
 sudo apt-get install -y libssl-dev swig python3-ssdeep p7zip-full unrar-free sqlite python3-pyclamd exiftool radare2 python3-magic python3-sqlalchemy python3-prettytable
 git clone https://github.com/viper-framework/viper.git
 <span class="nb">cd</span> viper
-virtualenv -p python3 venv
+virtualenv -p python3.6 venv
 git submodule update --init --recursive
 ./venv/bin/pip install scrapy
 ./venv/bin/pip install -r requirements.txt
@@ -2045,7 +2052,7 @@ cmake .. <span class="o">&amp;&amp;</span> make
 sudo make install
 sudo ldconfig
 <span class="nb">cd</span> ../../mail_to_misp
-virtualenv -p python3 venv
+virtualenv -p python3.6 venv
 ./venv/bin/pip install -r requirements.txt
 cp mail_to_misp_config.py-example mail_to_misp_config.py
 
@@ -2053,6 +2060,29 @@ sed -i <span class="s2">&quot;s/^misp_url\ =\ &#39;YOUR_MISP_URL&#39;/misp_url\ 
 sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
 </pre></div>
 
+<h1 id="hardening-a-base-system">Hardening a base system<a class="headerlink" href="#hardening-a-base-system" title="Permanent link">&para;</a></h1>
+<h2 id="intro">Intro<a class="headerlink" href="#intro" title="Permanent link">&para;</a></h2>
+<p>MISP is a web-based <strong>information sharing platform</strong>, by design it is kept rather simple and hardening can be done by following the common best practices.</p>
+<p>Bare in mind that neither the MISP documentation efforts or the core MISP project can give you the ultimate guide on how to harden your system.
+This is not the purpose of the MISP Project but the purpose and care of those individuals and organizations deploying MISP Instances.</p>
+<p>Nevertheless here is a very rough <strong>food for thoughts</strong> bulletpoint list for you to consider, and a list of some hardening ressources below.</p>
+<ul>
+<li>Are we using SSL by default? (Especially when syncing over the internet and exposing the API)</li>
+<li>How to we access the machine remotely? Via ssh? What is the path to get there? Does a <a href="https://en.wikipedia.org/wiki/Bastion_host">bastion host</a> make sense?</li>
+<li>Is the machine shared with other user accounts? Do I need to care about useri-land security due to this sharing?</li>
+<li>Is the instance deployed in the "<strong>cloud</strong>"? Is it a VPS? AWS? docker? ansible? kubernetes? whateverCloudContainterMagicIsFancibleNow?</li>
+<li>Do we need to encrypt the partitions where some data is stored?</li>
+<li>Are we redundant in case one MISP instance might fail?</li>
+<li>Is the database server and any other servers running on the machine bound to <strong>localhost</strong>? Do we need to expose because our setup is more complex?</li>
+<li>Do we have enough storage? What about <a href="https://misp-project.org/MISP-sizer/">MISP and size estimation</a> anyways?</li>
+<li>Do we care about BIOS updates?</li>
+<li>Do we care about physical access to the servers? (Disabling USB ports etc...)</li>
+<li>Is any fancy management engine à la <a href="https://en.wikipedia.org/wiki/Intel_Management_Engine">IME</a> in use?</li>
+</ul>
+<h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
+<p><a href="https://wiki.debian.org/Hardening">Debian Wiki Hardening</a></p>
+<p><a href="https://wiki.centos.org/HowTos/OS_Protection">CentOS Hardening</a></p>
+<p><a href="https://www.cyberciti.biz/tips/linux-security.html">Some Linux hardening tips</a></p>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>If you want to add the misp modules functionality, follow the setup procedure described in misp-modules:<br />
@@ -2094,13 +2124,13 @@ Then the enrichment, export and import modules can be enabled in MISP via the se
           </a>
         
         
-          <a href="../INSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../INSTALL.debian9/" title="Debian stable" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Ubuntu 18.04 \w webmin
+                Debian stable
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
