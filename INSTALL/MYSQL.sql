@@ -227,6 +227,28 @@ CREATE TABLE IF NOT EXISTS `event_tags` (
 -- -------------------------------------------------------
 
 --
+-- Table structure for `event_tags`
+--
+
+CREATE TABLE IF NOT EXISTS `event_graph` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `event_id` int(11) NOT NULL,
+    `user_id` int(11) NOT NULL,
+    `org_id` int(11) NOT NULL,
+    `timestamp` int(11) NOT NULL DEFAULT 0,
+    `network_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+    `network_json` MEDIUMTEXT NOT NULL,
+    `preview_img` MEDIUMTEXT,
+    PRIMARY KEY (id),
+    INDEX `event_id` (`event_id`),
+    INDEX `user_id` (`user_id`),
+    INDEX `org_id` (`org_id`),
+    INDEX `timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -------------------------------------------------------
+
+--
 -- Table structure for `favourite_tags`
 --
 
@@ -320,6 +342,7 @@ CREATE TABLE IF NOT EXISTS galaxies (
 CREATE TABLE IF NOT EXISTS galaxy_clusters (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uuid` varchar(255) COLLATE utf8_bin NOT NULL,
+  `collection_uuid` varchar(255) COLLATE utf8_bin NOT NULL,
   `type` varchar(255) COLLATE utf8_bin NOT NULL,
   `value` text COLLATE utf8_bin NOT NULL,
   `tag_name` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
@@ -331,6 +354,7 @@ CREATE TABLE IF NOT EXISTS galaxy_clusters (
   PRIMARY KEY (id),
   INDEX `value` (`value`(255)),
   INDEX `uuid` (`uuid`),
+  INDEX `collection_uuid` (`collection_uuid`),
   INDEX `galaxy_id` (`galaxy_id`),
   INDEX `version` (`version`),
   INDEX `tag_name` (`tag_name`),
@@ -532,7 +556,7 @@ CREATE TABLE IF NOT EXISTS object_references (
   `referenced_type` int(11) NOT NULL DEFAULT 0,
   `relationship_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `comment` text COLLATE utf8_bin NOT NULL,
-  `deleted` TINYINT NOT NULL DEFAULT 0,
+  `deleted` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
   INDEX `source_uuid` (`source_uuid`),
   INDEX `referenced_uuid` (`referenced_uuid`),
@@ -737,6 +761,7 @@ CREATE TABLE IF NOT EXISTS `servers` (
   `pull_rules` text COLLATE utf8_bin NOT NULL,
   `push_rules` text COLLATE utf8_bin NOT NULL,
   `cert_file` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `skip_proxy` tinyint(1) NOT NULL DEFAULT 0,
   `client_cert_file` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `internal` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
@@ -907,9 +932,11 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `org_id` tinyint(1) NOT NULL DEFAULT 0,
   `user_id` int(11) NOT NULL DEFAULT 0,
   `hide_tag` tinyint(1) NOT NULL DEFAULT 0,
+  `numerical_value` int(11) NULL.
   PRIMARY KEY (`id`),
   INDEX `name` (`name`(255)),
   INDEX `org_id` (`org_id`),
+  INDEX `numerical_value` (`numerical_value`),
   INDEX `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -959,7 +986,9 @@ CREATE TABLE IF NOT EXISTS `taxonomy_entries` (
   `value` text COLLATE utf8_bin NOT NULL,
   `expanded` text COLLATE utf8_bin,
   `colour` varchar(7) CHARACTER SET utf8 COLLATE utf8_bin,
+  `numerical_value` int(11) NULL,
   PRIMARY KEY (`id`),
+  INDEX `numerical_value` (`numerical_value`),
   INDEX `taxonomy_predicate_id` (`taxonomy_predicate_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -975,6 +1004,7 @@ CREATE TABLE IF NOT EXISTS `taxonomy_predicates` (
   `value` text COLLATE utf8_bin NOT NULL,
   `expanded` text COLLATE utf8_bin,
   `colour` varchar(7) CHARACTER SET utf8 COLLATE utf8_bin,
+  `description` text CHARACTER SET UTF8 collate utf8_bin,
   PRIMARY KEY (`id`),
   INDEX `taxonomy_id` (`taxonomy_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -1150,6 +1180,22 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `user_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `user_settings` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `setting` varchar(255) COLLATE utf8_bin NOT NULL,
+    `value` text COLLATE utf8_bin NOT NULL,
+    `user_id` int(11) NOT NULL,
+    INDEX `setting` (`setting`),
+    INDEX `user_id` (`user_id`),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `warninglists`
 --
 
@@ -1210,7 +1256,7 @@ CREATE TABLE IF NOT EXISTS `whitelist` (
 --
 
 INSERT INTO `admin_settings` (`id`, `setting`, `value`) VALUES
-(1, 'db_version', '11');
+(1, 'db_version', 26);
 
 INSERT INTO `feeds` (`id`, `provider`, `name`, `url`, `distribution`, `default`, `enabled`) VALUES
 (1, 'CIRCL', 'CIRCL OSINT Feed', 'https://www.circl.lu/doc/misp/feed-osint', 3, 1, 0),
