@@ -932,13 +932,13 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `org_id` tinyint(1) NOT NULL DEFAULT 0,
   `user_id` int(11) NOT NULL DEFAULT 0,
   `hide_tag` tinyint(1) NOT NULL DEFAULT 0,
-  `numerical_value` int(11) NULL.
+  `numerical_value` int(11) NULL,
   PRIMARY KEY (`id`),
   INDEX `name` (`name`(255)),
   INDEX `org_id` (`org_id`),
   INDEX `numerical_value` (`numerical_value`),
   INDEX `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 
 -- --------------------------------------------------------
