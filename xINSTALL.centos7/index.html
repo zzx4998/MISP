@@ -2,7 +2,7 @@
 
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
@@ -38,7 +38,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.0.6">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
     
     
       
@@ -46,12 +46,12 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.572ca0f0.css">
       
       
     
     
-      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+      <script src="../assets/javascripts/modernizr.8c900955.js"></script>
     
     
       
@@ -61,6 +61,7 @@
       
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
     
     
   </head>
@@ -1122,7 +1123,7 @@ sudo yum install rh-php71 rh-php71-php-fpm rh-php71-php-devel rh-php71-php-mysql
 <span class="c1"># https://www.softwarecollections.org/en/scls/rhscl/rh-python36/</span>
 sudo yum install rh-python36 -y
 
-<span class="c1"># rh-php71-php only provided mod_php for httpd24-httpd from SCL</span>
+<span class="c1"># rh-php71-php only provided mod_ssl mod_php for httpd24-httpd from SCL</span>
 <span class="c1"># if we want to use httpd from CentOS base we can use rh-php71-php-fpm instead</span>
 sudo systemctl <span class="nb">enable</span> rh-php71-php-fpm.service
 sudo systemctl start  rh-php71-php-fpm.service
@@ -1169,7 +1170,7 @@ sudo -u apache git submodule foreach --recursive git config core.filemode <span 
 sudo -u apache <span class="nv">$RUN_PYTHON</span> <span class="s2">&quot;virtualenv -p python3 </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/venv&quot;</span>
 sudo mkdir /usr/share/httpd/.cache
 sudo chown apache:apache /usr/share/httpd/.cache
-sudo -u apache <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U pip
+sudo -u apache <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U pip setuptools
 
 <span class="c1"># install Mitre&#39;s STIX and its dependencies by running the following commands:</span>
 sudo yum install python-importlib python-lxml python-dateutil python-six -y
@@ -1199,6 +1200,10 @@ sudo -u apache <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U pyt
 <span class="nb">cd</span> /var/www/MISP/app/files/scripts/
 sudo -u apache git clone https://github.com/CybOXProject/mixbox.git
 <span class="nb">cd</span> /var/www/MISP/app/files/scripts/mixbox
+sudo -u apache <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
+
+<span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
+<span class="nb">cd</span> /var/www/MISP/cti-python-stix2
 sudo -u apache <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
 
 <span class="c1"># install PyMISP</span>
@@ -1353,7 +1358,12 @@ If it is disabled, you can ignore the <strong>chcon/setsebool/semanage/checkmodu
 <div class="codehilite"><pre><span></span><span class="c1"># Now configure your apache server with the DocumentRoot /var/www/MISP/app/webroot/</span>
 <span class="c1"># A sample vhost can be found in /var/www/MISP/INSTALL/apache.misp.centos7</span>
 
-sudo cp /var/www/MISP/INSTALL/apache.misp.centos7 /etc/httpd/conf.d/misp.conf
+sudo cp /var/www/MISP/INSTALL/apache.misp.centos7.ssl /etc/httpd/conf.d/misp.ssl.conf
+
+<span class="c1"># If a valid SSL certificate is not already created for the server, create a self-signed certificate:</span>
+sudo openssl req -newkey rsa:4096 -days <span class="m">365</span> -nodes -x509 <span class="se">\</span>
+-subj <span class="s2">&quot;/C=</span><span class="si">${</span><span class="nv">OPENSSL_C</span><span class="si">}</span><span class="s2">/ST=</span><span class="si">${</span><span class="nv">OPENSSL_ST</span><span class="si">}</span><span class="s2">/L=</span><span class="si">${</span><span class="nv">OPENSSL_L</span><span class="si">}</span><span class="s2">/O=</span><span class="si">${</span><span class="nv">OPENSSL_O</span><span class="si">}</span><span class="s2">/OU=</span><span class="si">${</span><span class="nv">OPENSSL_OU</span><span class="si">}</span><span class="s2">/CN=</span><span class="si">${</span><span class="nv">OPENSSL_CN</span><span class="si">}</span><span class="s2">/emailAddress=</span><span class="si">${</span><span class="nv">OPENSSL_EMAILADDRESS</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+-keyout /etc/pki/tls/private/misp.local.key -out /etc/pki/tls/certs/misp.local.crt
 
 <span class="c1"># Since SELinux is enabled, we need to allow httpd to write to certain directories</span>
 sudo chcon -t usr_t /var/www/MISP/venv
@@ -1384,10 +1394,11 @@ sudo systemctl start  httpd.service
 
 <span class="c1"># Open a hole in the iptables firewall</span>
 sudo firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">80</span>/tcp --permanent
+sudo firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">443</span>/tcp --permanent
 sudo firewall-cmd --reload
 
 <span class="c1"># We seriously recommend using only HTTPS / SSL !</span>
-<span class="c1"># Add SSL support by running: yum install mod_ssl</span>
+<span class="c1"># Add SSL support by running: sudo yum install mod_ssl</span>
 <span class="c1"># Check out the apache.misp.ssl file for an example</span>
 </pre></div>
 
@@ -1395,14 +1406,6 @@ sudo firewall-cmd --reload
 <p class="admonition-title">Warning</p>
 <p>To be fixed - Place holder</p>
 </div>
-<div class="codehilite"><pre><span></span>sudo mkdir /etc/ssl/private
-sudo chmod <span class="m">700</span> /etc/ssl/private
-<span class="c1"># If a valid SSL certificate is not already created for the server, create a self-signed certificate:</span>
-sudo openssl req -newkey rsa:4096 -days <span class="m">365</span> -nodes -x509 <span class="se">\</span>
--subj <span class="s2">&quot;/C=</span><span class="si">${</span><span class="nv">OPENSSL_C</span><span class="si">}</span><span class="s2">/ST=</span><span class="si">${</span><span class="nv">OPENSSL_ST</span><span class="si">}</span><span class="s2">/L=</span><span class="si">${</span><span class="nv">OPENSSL_L</span><span class="si">}</span><span class="s2">/O=</span><span class="si">${</span><span class="nv">OPENSSL_O</span><span class="si">}</span><span class="s2">/OU=</span><span class="si">${</span><span class="nv">OPENSSL_OU</span><span class="si">}</span><span class="s2">/CN=</span><span class="si">${</span><span class="nv">OPENSSL_CN</span><span class="si">}</span><span class="s2">/emailAddress=</span><span class="si">${</span><span class="nv">OPENSSL_EMAILADDRESS</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
--keyout /etc/ssl/private/misp.local.key -out /etc/ssl/private/misp.local.crt
-</pre></div>
-
 <h3 id="8-log-rotation">8/ Log rotation<a class="headerlink" href="#8-log-rotation" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="codehilite"><pre><span></span><span class="c1"># MISP saves the stdout and stderr of it&#39;s workers in /var/www/MISP/app/tmp/logs</span>
@@ -1528,13 +1531,10 @@ cd /usr/local/src/
 git clone https://github.com/MISP/misp-modules.git
 cd misp-modules
 # pip install
-sudo $PATH_TO_MISP/venv/bin/pip install -I -r REQUIREMENTS
+sudo -u apache $PATH_TO_MISP/venv/bin/pip install -I -r REQUIREMENTS
 sudo -u apache $PATH_TO_MISP/venv/bin/pip install .
-sudo yum install rubygem-rouge -y
+sudo yum install rubygem-rouge rubygem-asciidoctor -y
 ##sudo gem install asciidoctor-pdf --pre
-
-# install STIX2.0 library to support STIX 2.0 export:
-sudo -u apache $PATH_TO_MISP/venv/bin/pip install stix2
 
 # install additional dependencies for extended object generation and extraction
 sudo -u apache ${PATH_TO_MISP}/venv/bin/pip install maec lief python-magic pathlib
@@ -1550,6 +1550,9 @@ sudo sed -i -e &#39;$i \sudo -u apache /var/www/MISP/venv/bin/misp-modules -l 12
 <div class="codehilite"><pre><span></span><span class="c1"># Initialize user and fetch Auth Key</span>
 sudo -E <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> userInit -q&quot;</span>
 <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1<span class="k">)</span>
+
+<span class="c1"># A small sleep to make sure all the db migrations are done, in case of copy-pasta</span>
+sleep <span class="m">30</span>
 
 <span class="c1"># Setup some more MISP default via cake CLI</span>
 
@@ -1702,7 +1705,7 @@ sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class=
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>If you have installed the recommended Python 3 virtualenv to the recommended place of <strong>${PATH_TO_MISP}/venv</strong> set the following MISP configurable
-<div class="codehilite"><pre><span></span>sudo <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
+<div class="codehilite"><pre><span></span>sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
 </pre></div>
 or on CentOS
 <div class="codehilite"><pre><span></span>sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.python_bin<span class="s2">&quot; &quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/python<span class="s2">&quot;&quot;</span>
@@ -1862,7 +1865,7 @@ This is not the purpose of the MISP Project but the purpose and care of those in
       
     </div>
     
-      <script src="../assets/javascripts/application.5e60981f.js"></script>
+      <script src="../assets/javascripts/application.b41f3d20.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
