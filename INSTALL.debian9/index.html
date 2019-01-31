@@ -1487,16 +1487,8 @@ sudo a2enmod ssl rewrite
 sudo a2dissite <span class="m">000</span>-default
 sudo a2ensite default-ssl
 sudo a2enmod headers
-
-<span class="c1"># Switch to python3 by default (optional)</span>
-
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 <span class="m">1</span>
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.5 <span class="m">2</span>
 </pre></div>
 
-<p>To flip between the 2 pythons use <em>update-alternatives</em>
-<div class="codehilite"><pre><span></span>sudo update-alternatives --config python
-</pre></div></p>
 <h4 id="apply-all-changes">Apply all changes<a class="headerlink" href="#apply-all-changes" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>sudo systemctl restart apache2
 </pre></div>

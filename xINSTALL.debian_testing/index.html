@@ -620,6 +620,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#make-some-misp-modules-available" title="Make some misp-modules available" class="md-nav__link">
+    Make some misp-modules available
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1287,6 +1294,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#make-some-misp-modules-available" title="Make some misp-modules available" class="md-nav__link">
+    Make some misp-modules available
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1643,16 +1657,8 @@ sudo a2dismod status
 sudo a2enmod ssl rewrite
 sudo a2dissite <span class="m">000</span>-default
 sudo a2ensite default-ssl
-
-<span class="c1"># Switch to python3 by default (optional)</span>
-
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 <span class="m">1</span>
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 <span class="m">2</span>
 </pre></div>
 
-<p>To flip between the 2 pythons use <em>update-alternatives</em>
-<div class="codehilite"><pre><span></span>sudo update-alternatives --config python
-</pre></div></p>
 <h4 id="apply-all-changes">Apply all changes<a class="headerlink" href="#apply-all-changes" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>sudo systemctl restart apache2
 </pre></div>
@@ -2103,6 +2109,12 @@ sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><
 
 <span class="c1"># Start misp-modules</span>
 sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/misp-modules -l <span class="m">0</span>.0.0.0 -s <span class="p">&amp;</span>
+</pre></div>
+
+<h4 id="make-some-misp-modules-available">Make some misp-modules available<a class="headerlink" href="#make-some-misp-modules-available" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_asn_history_enabled&quot;</span> <span class="nb">true</span>
+sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_cve_enabled&quot;</span> <span class="nb">true</span>
+sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_dns_enabled&quot;</span> <span class="nb">true</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span>

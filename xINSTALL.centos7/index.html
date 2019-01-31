@@ -487,8 +487,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#copypaste" title="copy/paste:" class="md-nav__link">
-    copy/paste:
+  <a href="#manual-procedure" title="Manual procedure:" class="md-nav__link">
+    Manual procedure:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#same-as-manual-but-for-copypaste-foo" title="Same as Manual but for copy/paste foo:" class="md-nav__link">
+    Same as Manual but for copy/paste foo:
   </a>
   
 </li>
@@ -943,8 +950,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#copypaste" title="copy/paste:" class="md-nav__link">
-    copy/paste:
+  <a href="#manual-procedure" title="Manual procedure:" class="md-nav__link">
+    Manual procedure:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#same-as-manual-but-for-copypaste-foo" title="Same as Manual but for copy/paste foo:" class="md-nav__link">
+    Same as Manual but for copy/paste foo:
   </a>
   
 </li>
@@ -1028,6 +1042,16 @@
 <h2 id="for-centos-7x">for CentOS 7.x<a class="headerlink" href="#for-centos-7x" title="Permanent link">&para;</a></h2>
 <h3 id="0-misp-centos-7-minimal-netinstall-status">0/ MISP CentOS 7 Minimal NetInstall - Status<a class="headerlink" href="#0-misp-centos-7-minimal-netinstall-status" title="Permanent link">&para;</a></h3>
 <hr />
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Maintained and tested by the community.<br />
+Parts of the installation procedures can also be found in the automatic VM generator script <a href="https://github.com/MISP/misp-packer/blob/18.04/scripts/bootstrap.sh">bootstrap.sh</a> of misp-packer.</p>
+</div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>There are technically only minor differences between CentOS and RHEL.<br />
+For more information on what might differ, <a href="https://unix.stackexchange.com/questions/27323/is-centos-exactly-the-same-as-rhel">this StackExchange</a> question might answer some questions.</p>
+</div>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>Semi-maintained and tested by @SteveClement, CentOS 7.5-1804 on 20181113<br />
@@ -1114,7 +1138,13 @@ sudo yum install centos-release-scl -y
 sudo yum install vim -y
 
 <span class="c1"># Install the dependencies:</span>
-sudo yum install gcc git httpd zip redis mariadb mariadb-server python-devel python-pip python-zmq libxslt-devel zlib-devel ssdeep-devel -y
+sudo yum install gcc git zip <span class="se">\</span>
+       httpd <span class="se">\</span>
+       mod_ssl <span class="se">\</span>
+       redis <span class="se">\</span>
+       mariadb mariadb-server <span class="se">\</span>
+       python-devel python-pip python-zmq <span class="se">\</span>
+       libxslt-devel zlib-devel ssdeep-devel -y
 
 <span class="c1"># Install PHP 7.1 from SCL, see https://www.softwarecollections.org/en/scls/rhscl/rh-php71/</span>
 sudo yum install rh-php71 rh-php71-php-fpm rh-php71-php-devel rh-php71-php-mysqlnd rh-php71-php-mbstring rh-php71-php-xml rh-php71-php-bcmath rh-php71-php-opcache -y
@@ -1123,13 +1153,8 @@ sudo yum install rh-php71 rh-php71-php-fpm rh-php71-php-devel rh-php71-php-mysql
 <span class="c1"># https://www.softwarecollections.org/en/scls/rhscl/rh-python36/</span>
 sudo yum install rh-python36 -y
 
-<span class="c1"># rh-php71-php only provided mod_ssl mod_php for httpd24-httpd from SCL</span>
-<span class="c1"># if we want to use httpd from CentOS base we can use rh-php71-php-fpm instead</span>
 sudo systemctl <span class="nb">enable</span> rh-php71-php-fpm.service
 sudo systemctl start  rh-php71-php-fpm.service
-
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear channel-update pear.php.net&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install Crypt_GPG&quot;</span>    <span class="c1"># we need version &gt;1.3.0</span>
 </pre></div>
 
 <div class="admonition notice">
@@ -1155,7 +1180,7 @@ sudo chown apache:apache <span class="nv">$PATH_TO_MISP</span>
 <span class="nb">cd</span> /var/www
 sudo -u apache git clone https://github.com/MISP/MISP.git
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>
-sudo -u apache git checkout tags/<span class="k">$(</span>git describe --tags <span class="sb">`</span>git rev-list --tags --max-count<span class="o">=</span><span class="m">1</span><span class="sb">`</span><span class="k">)</span>
+<span class="c1">##sudo -u apache git checkout tags/$(git describe --tags `git rev-list --tags --max-count=1`)</span>
 <span class="c1"># if the last shortcut doesn&#39;t work, specify the latest version manually</span>
 <span class="c1"># example: git checkout tags/v2.4.XY</span>
 <span class="c1"># the message regarding a &quot;detached HEAD state&quot; is expected behaviour</span>
@@ -1165,6 +1190,10 @@ sudo -u apache git checkout tags/<span class="k">$(</span>git describe --tags <s
 sudo -u apache git submodule update --init --recursive
 <span class="c1"># Make git ignore filesystem permission differences for submodules</span>
 sudo -u apache git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
+
+<span class="c1"># Install packaged pears</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/INSTALL/dependencies/Console_CommandLine/package.xml&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/INSTALL/dependencies/Crypt_GPG/package.xml&quot;</span>
 
 <span class="c1"># Create a python3 virtualenv</span>
 sudo -u apache <span class="nv">$RUN_PYTHON</span> <span class="s2">&quot;virtualenv -p python3 </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/venv&quot;</span>
@@ -1231,7 +1260,9 @@ sudo -u apache <span class="nv">$RUN_PHP</span> <span class="s2">&quot;php compo
 sudo -u apache <span class="nv">$RUN_PHP</span> <span class="s2">&quot;php composer.phar config vendor-dir Vendor&quot;</span>
 sudo -u apache <span class="nv">$RUN_PHP</span> <span class="s2">&quot;php composer.phar install&quot;</span>
 
-<span class="c1"># CakeResque normally uses phpredis to connect to redis, but it has a (buggy) fallback connector through Redisent. It is highly advised to install phpredis using &quot;yum install php-redis&quot;</span>
+<span class="c1"># CakeResque normally uses phpredis to connect to redis, but it has a (buggy) </span>
+<span class="c1"># fallback connector through Redisent.</span>
+<span class="c1"># It is highly advised to install phpredis using &quot;yum install php-redis&quot;</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pecl install redis&quot;</span>
 <span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> <span class="p">|</span>sudo tee /etc/opt/rh/rh-php71/php-fpm.d/redis.ini
 sudo ln -s ../php-fpm.d/redis.ini /etc/opt/rh/rh-php71/php.d/99-redis.ini
@@ -1263,9 +1294,11 @@ sudo chown -R root:apache /var/www/MISP
 sudo find /var/www/MISP -type d -exec chmod <span class="nv">g</span><span class="o">=</span>rx <span class="o">{}</span> <span class="se">\;</span>
 sudo chmod -R g+r,o<span class="o">=</span> /var/www/MISP
 sudo chmod -R <span class="m">750</span> /var/www/MISP
-sudo chmod -R g+ws /var/www/MISP/app/tmp
+sudo chmod -R g+xws /var/www/MISP/app/tmp
 sudo chmod -R g+ws /var/www/MISP/app/files
 sudo chmod -R g+ws /var/www/MISP/app/files/scripts/tmp
+sudo chmod -R g+rw /var/www/MISP/venv
+sudo chmod -R g+rw /var/www/MISP/.git
 sudo chown apache:apache /var/www/MISP/app/files
 sudo chown apache:apache /var/www/MISP/app/files/terms
 sudo chown apache:apache /var/www/MISP/app/files/scripts/tmp
@@ -1318,9 +1351,10 @@ sudo yum remove tcl expect -y
 <span class="nb">echo</span> <span class="o">[</span>mysqld<span class="o">]</span> <span class="p">|</span>sudo tee /etc/my.cnf.d/bind-address.cnf
 <span class="nb">echo</span> bind-address<span class="o">=</span><span class="m">127</span>.0.0.1 <span class="p">|</span>sudo tee -a /etc/my.cnf.d/bind-address.cnf
 sudo systemctl restart mariadb.service
+</pre></div>
 
-
-<span class="c1"># Enter the mysql shell</span>
+<h4 id="manual-procedure">Manual procedure:<a class="headerlink" href="#manual-procedure" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="c1"># Enter the mysql shell</span>
 mysql -u root -p
 </pre></div>
 
@@ -1330,7 +1364,7 @@ MariaDB [(none)]&gt; grant all privileges on misp.* to misp@localhost ;
 MariaDB [(none)]&gt; exit
 </pre></div>
 
-<h4 id="copypaste">copy/paste:<a class="headerlink" href="#copypaste" title="Permanent link">&para;</a></h4>
+<h4 id="same-as-manual-but-for-copypaste-foo">Same as Manual but for copy/paste foo:<a class="headerlink" href="#same-as-manual-but-for-copypaste-foo" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;create database </span><span class="nv">$DBNAME</span><span class="s2">;&quot;</span>
 sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant usage on *.* to </span><span class="nv">$DBNAME</span><span class="s2">@localhost identified by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
 sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant all privileges on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
@@ -1359,6 +1393,21 @@ If it is disabled, you can ignore the <strong>chcon/setsebool/semanage/checkmodu
 <span class="c1"># A sample vhost can be found in /var/www/MISP/INSTALL/apache.misp.centos7</span>
 
 sudo cp /var/www/MISP/INSTALL/apache.misp.centos7.ssl /etc/httpd/conf.d/misp.ssl.conf
+sudo rm /etc/httpd/conf.d/ssl.conf
+sudo chmod <span class="m">644</span> /etc/httpd/conf.d/misp.ssl.conf
+sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 443&#39;</span> /etc/httpd/conf/httpd.conf
+<span class="nb">echo</span> <span class="nv">$OPENSSL_CN</span>
+sudo systemctl start httpd.service
+sudo openssl dhparam -out /etc/pki/tls/certs/dhparam.pem <span class="m">4096</span>
+sudo openssl genrsa -des3 -passout pass:x -out /tmp/misp.local.key <span class="m">4096</span>
+sudo openssl rsa -passin pass:x -in /tmp/misp.local.key -out /etc/pki/tls/certs/misp.local.key
+sudo rm /tmp/misp.local.key
+sudo openssl req -new -subj <span class="s2">&quot;/C=</span><span class="si">${</span><span class="nv">OPENSSL_C</span><span class="si">}</span><span class="s2">/ST=</span><span class="si">${</span><span class="nv">OPENSSL_ST</span><span class="si">}</span><span class="s2">/L=</span><span class="si">${</span><span class="nv">OPENSSL_L</span><span class="si">}</span><span class="s2">/O=</span><span class="si">${</span><span class="nv">OPENSSL_O</span><span class="si">}</span><span class="s2">/OU=</span><span class="si">${</span><span class="nv">OPENSSL_OU</span><span class="si">}</span><span class="s2">/CN=</span><span class="si">${</span><span class="nv">OPENSSL_CN</span><span class="si">}</span><span class="s2">/emailAddress=</span><span class="si">${</span><span class="nv">OPENSSL_EMAILADDRESS</span><span class="si">}</span><span class="s2">&quot;</span> -key /etc/pki/tls/certs/misp.local.key -out /etc/pki/tls/certs/misp.local.csr
+sudo openssl x509 -req -days <span class="m">365</span> -in /etc/pki/tls/certs/misp.local.csr -signkey /etc/pki/tls/private/misp.local.key -out /etc/pki/tls/certs/misp.local.crt
+sudo ln -s /etc/pki/tls/certs/misp.local.csr /etc/pki/tls/certs/misp-chain.crt
+cat /etc/pki/tls/certs/dhparam.pem <span class="p">|</span>sudo tee -a /etc/pki/tls/certs/misp.local.crt 
+
+sudo systemctl restart httpd.service
 
 <span class="c1"># If a valid SSL certificate is not already created for the server, create a self-signed certificate:</span>
 sudo openssl req -newkey rsa:4096 -days <span class="m">365</span> -nodes -x509 <span class="se">\</span>
@@ -1372,7 +1421,9 @@ sudo chcon -t httpd_sys_rw_content_t /var/www/MISP/app/files/terms
 sudo chcon -t httpd_sys_rw_content_t /var/www/MISP/app/files/scripts/tmp
 sudo chcon -t httpd_sys_rw_content_t /var/www/MISP/app/Plugin/CakeResque/tmp
 sudo chcon -R -t usr_t /var/www/MISP/venv
+sudo chcon -R -t httpd_sys_rw_content_t /var/www/MISP/.git
 sudo chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/tmp
+sudo chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/Config
 sudo chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/tmp/logs
 sudo chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/webroot/img/orgs
 sudo chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/webroot/img/custom
@@ -1528,17 +1579,17 @@ sudo yum install -y openjpeg-devel
 sudo chmod 2777 /usr/local/src
 sudo chown root:users /usr/local/src
 cd /usr/local/src/
-git clone https://github.com/MISP/misp-modules.git
+sudo -u apache git clone https://github.com/MISP/misp-modules.git
 cd misp-modules
 # pip install
-sudo -u apache $PATH_TO_MISP/venv/bin/pip install -I -r REQUIREMENTS
-sudo -u apache $PATH_TO_MISP/venv/bin/pip install .
+sudo -H -u apache $PATH_TO_MISP/venv/bin/pip install -I -r REQUIREMENTS
+sudo -H -u apache $PATH_TO_MISP/venv/bin/pip install .
 sudo yum install rubygem-rouge rubygem-asciidoctor -y
 ##sudo gem install asciidoctor-pdf --pre
 
 # install additional dependencies for extended object generation and extraction
-sudo -u apache ${PATH_TO_MISP}/venv/bin/pip install maec lief python-magic pathlib
-sudo -u apache ${PATH_TO_MISP}/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
+sudo -H -u apache ${PATH_TO_MISP}/venv/bin/pip install maec lief python-magic pathlib
+sudo -H -u apache ${PATH_TO_MISP}/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
 
 # Start misp-modules
 sudo -u apache ${PATH_TO_MISP}/venv/bin/misp-modules -l 0.0.0.0 -s &amp;
@@ -1604,6 +1655,7 @@ sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class=
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.contact<span class="s2">&quot; &quot;</span>info@admin.test<span class="s2">&quot;&quot;</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.disablerestalert<span class="s2">&quot; true&quot;</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.showCorrelationsOnIndex<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.default_event_tag_collection<span class="s2">&quot; 0&quot;</span>
 
 <span class="c1"># Provisional Cortex tunes</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.Cortex_services_enable<span class="s2">&quot; false&quot;</span>
@@ -1655,7 +1707,7 @@ sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class=
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.extended_alert_subject<span class="s2">&quot; false&quot;</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.default_event_threat_level<span class="s2">&quot; 4&quot;</span>
 
-<span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin setSetting &quot;MISP.newUserText&quot; &quot;Dear new MISP user,\\n\\nWe would hereby like to welcome you to the \$org MISP community.\\n\\n Use the credentials below to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nPassword: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;&quot;</span>
+<span class="c1">##sudo $RUN_PHP &#39;$CAKE Admin setSetting &quot;MISP.newUserText&quot; &quot;Dear new MISP user,\\n\\nWe would hereby like to welcome you to the \$org MISP community.\\n\\n Use the credentials below to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nPassword: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;&#39;</span>
 <span class="c1">##sudo $CAKE Admin setSetting &quot;MISP.passwordResetText&quot; &quot;Dear MISP user,\\n\\nA password reset has been triggered for your account. Use the below provided temporary password to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nYour temporary password: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;&quot;</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.enableEventBlacklisting<span class="s2">&quot; true&quot;</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.enableOrgBlacklisting<span class="s2">&quot; true&quot;</span>
@@ -1681,22 +1733,23 @@ sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class=
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Session.cookie_timeout<span class="s2">&quot; 3600&quot;</span>
 
 <span class="c1"># Update the galaxies…</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin updateGalaxies&quot;</span>
+<span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin updateGalaxies&quot;</span>
+curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/galaxies/update
 
 <span class="c1"># Updating the taxonomies…</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin updateTaxonomies&quot;</span>
 
 <span class="c1"># Updating the warning lists…</span>
 <span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin updateWarningLists&quot;</span>
-curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST http://127.0.0.1/warninglists/update
+curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/warninglists/update
 
 <span class="c1"># Updating the notice lists…</span>
 <span class="c1">## sudo $RUN_PHP &quot;$CAKE Admin updateNoticeLists&quot;</span>
-curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST http://127.0.0.1/noticelists/update
+curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/noticelists/update
 
 <span class="c1"># Updating the object templates…</span>
 <span class="c1">##sudo $RUN_PHP &quot;$CAKE Admin updateObjectTemplates&quot;</span>
-curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST http://127.0.0.1/objectTemplates/update
+curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/objectTemplates/update
 
 <span class="c1"># Set MISP Live</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Live </span><span class="nv">$MISP_LIVE</span><span class="s2">&quot;</span>
