@@ -688,13 +688,30 @@
                 
                 <h4 id="network-interface-name-salvage-optional">Network Interface Name salvage (optional)<a class="headerlink" href="#network-interface-name-salvage-optional" title="Permanent link">&para;</a></h4>
 <p>This will bring back 'ethX' e.g: eth0</p>
-<div class="codehilite"><pre><span></span><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&quot;net.ifnames=0 biosdevname=0&quot;</span>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-end interfaces.sh&gt;</span>
+<span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&quot;net.ifnames=0 biosdevname=0&quot;</span>
 <span class="nv">DEFAULT_GRUB</span><span class="o">=</span>/etc/default/grub
-<span class="k">for</span> key in GRUB_CMDLINE_LINUX
-<span class="k">do</span>
-    sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\)=.*/\1=\&quot;</span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">\&quot;/&quot;</span> <span class="nv">$DEFAULT_GRUB</span>
-<span class="k">done</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;--- Using old style name (ethX) for interfaces&quot;</span>
+<span class="c1">#for key in GRUB_CMDLINE_LINUX</span>
+<span class="c1">#do</span>
+<span class="c1">#    sudo sed -i &quot;s/^\($key\)=.*/\1=\&quot;$(eval echo \${$key})\&quot;/&quot; $DEFAULT_GRUB</span>
+<span class="c1">#done</span>
+sed  -r  <span class="s1">&#39;s/^(GRUB_CMDLINE_LINUX=).*/\1\&quot;net\.ifnames=0\ biosdevname=0\&quot;/&#39;</span> /etc/default/grub <span class="p">|</span> sudo tee /etc/default/grub &gt; /dev/null
+
+<span class="c1"># install ifupdown since ubuntu 18.04</span>
+sudo apt-get update
+sudo apt-get install -y ifupdown
+
+<span class="c1"># enable eth0</span>
+<span class="nb">echo</span> <span class="s2">&quot;--- Configuring eth0&quot;</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;# The primary network interface</span>
+<span class="s2">auto eth0</span>
+<span class="s2">iface eth0 inet dhcp&quot;</span> <span class="p">|</span> sudo tee /etc/network/interfaces
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo update-grub  &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+<span class="c1"># &lt;snippet-end interfaces.sh&gt;</span>
 </pre></div>
 
 <div class="admonition notice">

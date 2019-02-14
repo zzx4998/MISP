@@ -700,16 +700,30 @@
                   <h1>Sudo etckeeper</h1>
                 
                 <h4 id="install-etckeeper-and-sudo-optional">install etckeeper and sudo (optional)<a class="headerlink" href="#install-etckeeper-and-sudo-optional" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>su -
-apt install -y etckeeper
-apt install -y sudo
-adduser misp sudo
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_sudoKeeper.sh&gt;</span>
+<span class="c1"># check if sudo is installed</span>
+checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Checking for sudo and installing etckeeper&quot;</span>
+  <span class="k">if</span> <span class="o">[[</span> ! -f <span class="k">$(</span>which sudo<span class="k">)</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    su -c <span class="s2">&quot;apt install etckeeper -y&quot;</span>
+    su -c <span class="s2">&quot;apt install sudo -y&quot;</span>
+    <span class="c1"># TODO: Fix this, user misp might not exist</span>
+    su -c <span class="s2">&quot;adduser misp sudo&quot;</span>
+  <span class="k">else</span>
+    sudo apt install etckeeper -y
+  <span class="k">fi</span>
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 0_sudoKeeper.sh&gt;</span>
 </pre></div>
 
 <h5 id="add-the-misp-user-to-staff-and-www-data-mandatory">add the misp user to staff and www-data (mandatory)<a class="headerlink" href="#add-the-misp-user-to-staff-and-www-data-mandatory" title="Permanent link">&para;</a></h5>
-<div class="codehilite"><pre><span></span><span class="c1"># Add the user to the staff group to be able to write to /usr/local/src</span>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin add-user.sh&gt;</span>
+<span class="c1"># Add the user to the staff group to be able to write to /usr/local/src</span>
+<span class="c1"># TODO: Fix this, user misp might not exist</span>
 sudo adduser misp staff
 sudo adduser misp www-data
+<span class="c1"># &lt;snippet-end add-user.sh&gt;</span>
+<span class="c1"># Logout and back in to make the group changes take effect.</span>
 <span class="nb">logout</span>
 </pre></div>
                 

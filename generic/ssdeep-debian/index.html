@@ -701,21 +701,26 @@
                 
                 <h4 id="experimental-ssdeep-correlations">Experimental ssdeep correlations<a class="headerlink" href="#experimental-ssdeep-correlations" title="Permanent link">&para;</a></h4>
 <h5 id="installing-ssdeep">installing ssdeep<a class="headerlink" href="#installing-ssdeep" title="Permanent link">&para;</a></h5>
-<div class="codehilite"><pre><span></span>cd /usr/local/src
-wget https://github.com/ssdeep-project/ssdeep/releases/download/release-2.14.1/ssdeep-2.14.1.tar.gz
-tar zxvf ssdeep-2.14.1.tar.gz
-cd ssdeep-2.14.1
-./configure --datadir=/usr --prefix=/usr --localstatedir=/var --sysconfdir=/etc
-make
-sudo make install
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 6_ssdeep.sh&gt;</span>
+ssdeep <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Install ssdeep 2.14.1&quot;</span>
+  <span class="nb">cd</span> /usr/local/src
+  <span class="nv">$SUDO_USER</span> wget https://github.com/ssdeep-project/ssdeep/releases/download/release-2.14.1/ssdeep-2.14.1.tar.gz
+  <span class="nv">$SUDO_USER</span> tar zxvf ssdeep-2.14.1.tar.gz
+  <span class="nb">cd</span> ssdeep-2.14.1
+  <span class="nv">$SUDO_USER</span> ./configure --datadir<span class="o">=</span>/usr --prefix<span class="o">=</span>/usr --localstatedir<span class="o">=</span>/var --sysconfdir<span class="o">=</span>/etc
+  <span class="nv">$SUDO_USER</span> make
+  sudo make install
 
-#installing ssdeep_php
-sudo pecl install ssdeep
+  <span class="c1">#installing ssdeep_php</span>
+  sudo pecl install ssdeep
 
-# You should add &quot;extension=ssdeep.so&quot; to mods-available - Check /etc/php for your current version
-echo &quot;extension=ssdeep.so&quot; | sudo tee ${PHP_ETC_BASE}/mods-available/ssdeep.ini
-sudo phpenmod ssdeep
-sudo service apache2 restart
+  <span class="c1"># You should add &quot;extension=ssdeep.so&quot; to mods-available - Check /etc/php for your current version</span>
+  <span class="nb">echo</span> <span class="s2">&quot;extension=ssdeep.so&quot;</span> <span class="p">|</span> sudo tee <span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/mods-available/ssdeep.ini
+  sudo phpenmod ssdeep
+  sudo service apache2 restart
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 6_ssdeep.sh&gt;</span>
 </pre></div>
                 
                   

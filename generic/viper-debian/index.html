@@ -688,32 +688,70 @@
                 
                 <h4 id="install-viper-framework-with-a-virtualenv">Install viper framework (with a virtualenv)<a class="headerlink" href="#install-viper-framework-with-a-virtualenv" title="Permanent link">&para;</a></h4>
 <hr />
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Viper has <strong>lief</strong> as a dependency, lief only has an .egg for Python3.6 NOT Python3.7<br />
-If you have python3.7 installed make sure <strong>virtualenv</strong> uses <strong>python3.6</strong><br />
-<div class="codehilite"><pre><span></span>virtualenv -p python3.6 venv
-</pre></div></p>
-</div>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> /usr/local/src/
-sudo apt-get install libssl-dev swig python3-ssdeep p7zip-full unrar-free sqlite python3-pyclamd exiftool radare2 python3-magic python3-sqlalchemy python3-prettytable -y
-git clone https://github.com/viper-framework/viper.git
-<span class="nb">cd</span> viper
-virtualenv -p python3.6 venv
-git submodule update --init --recursive
-./venv/bin/pip install scrapy
-./venv/bin/pip install -r requirements.txt
-sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-cli
-sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-web
-/usr/local/src/viper/viper-cli -h
-/usr/local/src/viper/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
-<span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/environment
-sed -i <span class="s2">&quot;s/^misp_url\ =/misp_url\ =\ http:\/\/localhost/g&quot;</span> ~/.viper/viper.conf
-sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">/g&quot;</span> ~/.viper/viper.conf
-<span class="c1"># Reset admin password to: admin/Password1234</span>
-sqlite3 ~/.viper/admin.db <span class="s1">&#39;UPDATE auth_user SET password=&quot;pbkdf2_sha256$100000$iXgEJh8hz7Cf$vfdDAwLX8tko1t0M1TLTtGlxERkNnltUnMhbv56wK/U=&quot;&#39;</span>
-<span class="c1"># Add viper-web to rc.local to be started on boot</span>
-sudo sed -i -e <span class="s1">&#39;$i \sudo -u misp /usr/local/src/viper/viper-web -p 8888 -H 0.0.0.0 &gt; /tmp/viper-web_rc.local.log &amp;\n&#39;</span> /etc/rc.local
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 6_viper.sh&gt;</span>
+<span class="c1"># Main Viper install function</span>
+viper <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Installing Viper dependencies&quot;</span>
+  <span class="nb">cd</span> /usr/local/src/
+  sudo apt-get install <span class="se">\</span>
+    libssl-dev swig python3-ssdeep p7zip-full unrar-free sqlite python3-pyclamd exiftool radare2 <span class="se">\</span>
+    python3-magic python3-sqlalchemy python3-prettytable libffi-dev -y
+  <span class="nb">echo</span> <span class="s2">&quot;Cloning Viper&quot;</span>
+  <span class="nv">$SUDO_USER</span> git clone https://github.com/viper-framework/viper.git
+  sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper
+  <span class="nb">cd</span> viper
+  <span class="nb">echo</span> <span class="s2">&quot;Creating virtualenv&quot;</span>
+  <span class="nv">$SUDO_USER</span> virtualenv -p python3 venv
+  <span class="nb">echo</span> <span class="s2">&quot;Submodule update&quot;</span>
+  <span class="c1"># TODO: Check for current user install permissions</span>
+  <span class="nv">$SUDO_USER</span> git submodule update --init --recursive
+  <span class="c1">##$SUDO git submodule update --init --recursive</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Pip install deps&quot;</span>
+  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install SQLAlchemy PrettyTable python-magic
+  <span class="nb">echo</span> <span class="s2">&quot;pip install scrapy&quot;</span>
+  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install scrapy
+  <span class="nb">echo</span> <span class="s2">&quot;install lief&quot;</span>
+  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+  <span class="nb">echo</span> <span class="s2">&quot;pip install reqs&quot;</span>
+  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install -r requirements.txt
+  <span class="nv">$SUDO_USER</span> sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-cli
+  <span class="nv">$SUDO_USER</span> sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-web
+  <span class="nb">echo</span> <span class="s2">&quot;pip uninstall yara&quot;</span>
+  <span class="nv">$SUDO_USER</span> ./venv/bin/pip uninstall yara -y
+  <span class="nb">echo</span> <span class="s2">&quot;Launching viper-cli&quot;</span>
+  <span class="c1"># TODO: Perms</span>
+  <span class="c1">#$SUDO /usr/local/src/viper/viper-cli -h &gt; /dev/null</span>
+  /usr/local/src/viper/viper-cli -h &gt; /dev/null
+  <span class="nb">echo</span> <span class="s2">&quot;Launching viper-web&quot;</span>
+  <span class="c1"># TODO: Perms</span>
+  /usr/local/src/viper/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
+  <span class="c1">#$SUDO /usr/local/src/viper/viper-web -p 8888 -H 0.0.0.0 &amp;</span>
+  <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/environment
+  <span class="nb">echo</span> <span class="s2">&quot;. /etc/environment&quot;</span> &gt;&gt; /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/.profile
+
+  <span class="c1"># TODO: Perms, MISP_USER_HOME, nasty hack cuz Kali on R00t</span>
+  <span class="k">if</span> <span class="o">[</span> -f /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/.viper/viper.conf <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">VIPER_HOME</span><span class="o">=</span><span class="s2">&quot;/home/</span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">/.viper&quot;</span>
+  <span class="k">else</span>
+    <span class="nv">VIPER_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/.viper&quot;</span>
+  <span class="k">fi</span>
+
+  <span class="nb">echo</span> <span class="s2">&quot;Setting misp_url/misp_key&quot;</span>
+  <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_url\ =/misp_url\ =\ http:\/\/localhost/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
+  <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="nv">$AUTH_KEY</span><span class="s2">/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
+  <span class="c1"># Reset admin password to: admin/Password1234</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Fixing admin.db with default password&quot;</span>
+  <span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="k">$(</span>sqlite3 <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/admin.db <span class="s1">&#39;UPDATE auth_user SET password=&quot;pbkdf2_sha256$100000$iXgEJh8hz7Cf$vfdDAwLX8tko1t0M1TLTtGlxERkNnltUnMhbv56wK/U=&quot;&#39;</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span><span class="s2">&quot;</span> -ne <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
+    <span class="c1"># FIXME This might lead to a race condition, the while loop is sub-par</span>
+    sudo chown <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/admin.db
+    <span class="nb">echo</span> <span class="s2">&quot;Updating viper-web admin password, giving process time to start-up, sleeping 5, 4, 3,…&quot;</span>
+    sleep <span class="m">6</span>
+  <span class="k">done</span>
+
+  <span class="c1"># Add viper-web to rc.local to be started on boot</span>
+  sudo sed -i -e <span class="s1">&#39;$i \sudo -u misp /usr/local/src/viper/viper-web -p 8888 -H 0.0.0.0 &gt; /tmp/viper-web_rc.local.log &amp;\n&#39;</span> /etc/rc.local
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 6_viper.sh&gt;</span>
 </pre></div>
                 
                   

@@ -688,77 +688,98 @@
                 
                 <h4 id="misp-dashboard">MISP Dashboard<a class="headerlink" href="#misp-dashboard" title="Permanent link">&para;</a></h4>
 <hr />
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www
-sudo mkdir misp-dashboard
-sudo chown www-data:www-data misp-dashboard
-sudo -u www-data git clone https://github.com/MISP/misp-dashboard.git
-<span class="nb">cd</span> misp-dashboard
-sudo -H /var/www/misp-dashboard/install_dependencies.sh
-sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
-sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 0.0.0.0:8001&#39;</span> /etc/apache2/ports.conf
-sudo apt install libapache2-mod-wsgi-py3 -y
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 4_misp-dashboard.sh&gt;</span>
+<span class="c1"># Main MISP Dashboard install function</span>
+mispDashboard <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Install misp-dashboard&quot;</span>
+  <span class="c1"># Install pyzmq to main MISP venv</span>
+  debug <span class="s2">&quot;Installing PyZMQ&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyzmq
+  <span class="nb">cd</span> /var/www
+  sudo mkdir misp-dashboard
+  sudo chown www-data:www-data misp-dashboard
 
-<span class="nb">echo</span> <span class="s2">&quot;&lt;VirtualHost *:8001&gt;</span>
-<span class="s2">    ServerAdmin admin@misp.local</span>
-<span class="s2">    ServerName misp.local</span>
-<span class="s2">    DocumentRoot /var/www/misp-dashboard</span>
+  <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git
+  <span class="nb">cd</span> misp-dashboard
+  sudo -H /var/www/misp-dashboard/install_dependencies.sh
+  sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
+  sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 0.0.0.0:8001&#39;</span> /etc/apache2/ports.conf
+  sudo apt install libapache2-mod-wsgi-py3 -y
+  <span class="nb">echo</span> <span class="s2">&quot;&lt;VirtualHost *:8001&gt;</span>
+<span class="s2">      ServerAdmin admin@misp.local</span>
+<span class="s2">      ServerName misp.local</span>
 
-<span class="s2">    WSGIDaemonProcess misp-dashboard \</span>
-<span class="s2">       user=misp group=misp \</span>
-<span class="s2">       python-home=/var/www/misp-dashboard/DASHENV \</span>
-<span class="s2">       processes=1 \</span>
-<span class="s2">       threads=15 \</span>
-<span class="s2">       maximum-requests=5000 \</span>
-<span class="s2">       listen-backlog=100 \</span>
-<span class="s2">       queue-timeout=45 \</span>
-<span class="s2">       socket-timeout=60 \</span>
-<span class="s2">       connect-timeout=15 \</span>
-<span class="s2">       request-timeout=60 \</span>
-<span class="s2">       inactivity-timeout=0 \</span>
-<span class="s2">       deadlock-timeout=60 \</span>
-<span class="s2">       graceful-timeout=15 \</span>
-<span class="s2">       eviction-timeout=0 \</span>
-<span class="s2">       shutdown-timeout=5 \</span>
-<span class="s2">       send-buffer-size=0 \</span>
-<span class="s2">       receive-buffer-size=0 \</span>
-<span class="s2">       header-buffer-size=0 \</span>
-<span class="s2">       response-buffer-size=0 \</span>
-<span class="s2">       server-metrics=Off</span>
-<span class="s2">    WSGIScriptAlias / /var/www/misp-dashboard/misp-dashboard.wsgi</span>
-<span class="s2">    &lt;Directory /var/www/misp-dashboard&gt;</span>
-<span class="s2">        WSGIProcessGroup misp-dashboard</span>
-<span class="s2">        WSGIApplicationGroup %{GLOBAL}</span>
-<span class="s2">        Require all granted</span>
-<span class="s2">    &lt;/Directory&gt;</span>
-<span class="s2">    LogLevel info</span>
-<span class="s2">    ErrorLog /var/log/apache2/misp-dashboard.local_error.log</span>
-<span class="s2">    CustomLog /var/log/apache2/misp-dashboard.local_access.log combined</span>
-<span class="s2">    ServerSignature Off</span>
-<span class="s2">&lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> sudo tee /etc/apache2/sites-available/misp-dashboard.conf
+<span class="s2">      DocumentRoot /var/www/misp-dashboard</span>
 
-sudo a2ensite misp-dashboard
-sudo systemctl reload apache2
+<span class="s2">      WSGIDaemonProcess misp-dashboard \</span>
+<span class="s2">         user=misp group=misp \</span>
+<span class="s2">         python-home=/var/www/misp-dashboard/DASHENV \</span>
+<span class="s2">         processes=1 \</span>
+<span class="s2">         threads=15 \</span>
+<span class="s2">         maximum-requests=5000 \</span>
+<span class="s2">         listen-backlog=100 \</span>
+<span class="s2">         queue-timeout=45 \</span>
+<span class="s2">         socket-timeout=60 \</span>
+<span class="s2">         connect-timeout=15 \</span>
+<span class="s2">         request-timeout=60 \</span>
+<span class="s2">         inactivity-timeout=0 \</span>
+<span class="s2">         deadlock-timeout=60 \</span>
+<span class="s2">         graceful-timeout=15 \</span>
+<span class="s2">         eviction-timeout=0 \</span>
+<span class="s2">         shutdown-timeout=5 \</span>
+<span class="s2">         send-buffer-size=0 \</span>
+<span class="s2">         receive-buffer-size=0 \</span>
+<span class="s2">         header-buffer-size=0 \</span>
+<span class="s2">         response-buffer-size=0 \</span>
+<span class="s2">         server-metrics=Off</span>
 
-<span class="c1"># Add misp-dashboard to rc.local to start on boot.</span>
-sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data bash /var/www/misp-dashboard/start_all.sh &gt; /tmp/misp-dashboard_rc.local.log\n&#39;</span> /etc/rc.local
+<span class="s2">      WSGIScriptAlias / /var/www/misp-dashboard/misp-dashboard.wsgi</span>
 
-<span class="c1"># Enable ZeroMQ for misp-dashboard</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_enable&quot;</span> <span class="nb">true</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_event_notifications_enable&quot;</span> <span class="nb">true</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_notifications_enable&quot;</span> <span class="nb">true</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_reference_notifications_enable&quot;</span> <span class="nb">true</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_attribute_notifications_enable&quot;</span> <span class="nb">true</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_sighting_notifications_enable&quot;</span> <span class="nb">true</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_user_notifications_enable&quot;</span> <span class="nb">true</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_organisation_notifications_enable&quot;</span> <span class="nb">true</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_port&quot;</span> <span class="m">50000</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_host&quot;</span> <span class="s2">&quot;localhost&quot;</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_port&quot;</span> <span class="m">6379</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_database&quot;</span> <span class="m">1</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_namespace&quot;</span> <span class="s2">&quot;mispq&quot;</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_include_attachments&quot;</span> <span class="nb">false</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_tag_notifications_enable&quot;</span> <span class="nb">false</span>
-sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_audit_notifications_enable&quot;</span> <span class="nb">false</span>
+<span class="s2">      &lt;Directory /var/www/misp-dashboard&gt;</span>
+<span class="s2">          WSGIProcessGroup misp-dashboard</span>
+<span class="s2">          WSGIApplicationGroup %{GLOBAL}</span>
+<span class="s2">          Require all granted</span>
+<span class="s2">      &lt;/Directory&gt;</span>
+
+<span class="s2">      LogLevel info</span>
+<span class="s2">      ErrorLog /var/log/apache2/misp-dashboard.local_error.log</span>
+<span class="s2">      CustomLog /var/log/apache2/misp-dashboard.local_access.log combined</span>
+<span class="s2">      ServerSignature Off</span>
+<span class="s2">  &lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> sudo tee /etc/apache2/sites-available/misp-dashboard.conf
+
+  <span class="c1"># Enable misp-dashboard in apache and reload</span>
+  sudo a2ensite misp-dashboard
+  sudo systemctl restart apache2
+
+  <span class="c1"># Needs to be started after apache2 is reloaded so the port status check works</span>
+  <span class="nv">$SUDO_WWW</span> bash /var/www/misp-dashboard/start_all.sh
+
+  <span class="c1"># Add misp-dashboard to rc.local to start on boot.</span>
+  sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data bash /var/www/misp-dashboard/start_all.sh &gt; /tmp/misp-dashboard_rc.local.log\n&#39;</span> /etc/rc.local
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 4_misp-dashboard.sh&gt;</span>
+
+<span class="c1"># &lt;snippet-begin 4_misp-dashboard-cake.sh&gt;</span>
+dashboardCAKE <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># Enable ZeroMQ for misp-dashboard</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_enable&quot;</span> <span class="nb">true</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_event_notifications_enable&quot;</span> <span class="nb">true</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_notifications_enable&quot;</span> <span class="nb">true</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_reference_notifications_enable&quot;</span> <span class="nb">true</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_attribute_notifications_enable&quot;</span> <span class="nb">true</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_sighting_notifications_enable&quot;</span> <span class="nb">true</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_user_notifications_enable&quot;</span> <span class="nb">true</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_organisation_notifications_enable&quot;</span> <span class="nb">true</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_port&quot;</span> <span class="m">50000</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_host&quot;</span> <span class="s2">&quot;localhost&quot;</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_port&quot;</span> <span class="m">6379</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_database&quot;</span> <span class="m">1</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_namespace&quot;</span> <span class="s2">&quot;mispq&quot;</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_include_attachments&quot;</span> <span class="nb">false</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_tag_notifications_enable&quot;</span> <span class="nb">false</span>
+  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_audit_notifications_enable&quot;</span> <span class="nb">false</span>
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 4_misp-dashboard-cake.sh&gt;</span>
 </pre></div>
                 
                   

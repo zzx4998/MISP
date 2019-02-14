@@ -535,6 +535,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#misp-dashboard-on-centos" title="MISP Dashboard on CentOS" class="md-nav__link">
+    MISP Dashboard on CentOS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#initialize-misp-configuration-and-set-some-defaults" title="Initialize MISP configuration and set some defaults" class="md-nav__link">
     Initialize MISP configuration and set some defaults
   </a>
@@ -998,6 +1005,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#misp-dashboard-on-centos" title="MISP Dashboard on CentOS" class="md-nav__link">
+    MISP Dashboard on CentOS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#initialize-misp-configuration-and-set-some-defaults" title="Initialize MISP configuration and set some defaults" class="md-nav__link">
     Initialize MISP configuration and set some defaults
   </a>
@@ -1059,47 +1073,76 @@ It is still considered experimental as not everything works seemlessly.</p>
 </div>
 <p>CentOS 7.5-1804 <a href="http://mirror.centos.org/centos/7.5.1804/os/x86_64/">NetInstallURL</a></p>
 <h4 id="misp-configuration-variables">MISP configuration variables<a class="headerlink" href="#misp-configuration-variables" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><span class="c1"># MISP configuration variables</span>
-<span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s1">&#39;/var/www/MISP&#39;</span>
-<span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
-<span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;&quot;&quot;&#39;</span>
-<span class="nv">MISP_LIVE</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_global-vars.sh&gt;</span>
+MISPvars <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Setting generic </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> variables shared by all flavours&quot;</span>
+  <span class="c1"># Local non-root MISP user</span>
+  <span class="nv">MISP_USER</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+  <span class="nv">MISP_PASSWORD</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
 
-<span class="c1"># Database configuration</span>
-<span class="nv">DBHOST</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span>
-<span class="nv">DBNAME</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
-<span class="nv">DBUSER_ADMIN</span><span class="o">=</span><span class="s1">&#39;root&#39;</span>
-<span class="nv">DBPASSWORD_ADMIN</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
-<span class="nv">DBUSER_MISP</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
-<span class="nv">DBPASSWORD_MISP</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
+  <span class="c1"># The web server user</span>
+  <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
 
-<span class="c1"># Webserver configuration</span>
-<span class="nv">FQDN</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span>
+  <span class="c1"># MISP configuration variables</span>
+  <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s1">&#39;/var/www/MISP&#39;</span>
 
-<span class="c1"># OpenSSL configuration</span>
-<span class="nv">OPENSSL_CN</span><span class="o">=</span><span class="s1">&#39;Common Name&#39;</span>
-<span class="nv">OPENSSL_C</span><span class="o">=</span><span class="s1">&#39;LU&#39;</span>
-<span class="nv">OPENSSL_ST</span><span class="o">=</span><span class="s1">&#39;State&#39;</span>
-<span class="nv">OPENSSL_L</span><span class="o">=</span><span class="s1">&#39;Location&#39;</span>
-<span class="nv">OPENSSL_O</span><span class="o">=</span><span class="s1">&#39;Organization&#39;</span>
-<span class="nv">OPENSSL_OU</span><span class="o">=</span><span class="s1">&#39;Organizational Unit&#39;</span>
-<span class="nv">OPENSSL_EMAILADDRESS</span><span class="o">=</span><span class="s1">&#39;info@localhost&#39;</span>
+  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$FQDN</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">FQDN</span><span class="o">=</span><span class="s2">&quot;misp.local&quot;</span>
+  <span class="k">fi</span>
 
-<span class="c1"># GPG configuration</span>
-<span class="nv">GPG_REAL_NAME</span><span class="o">=</span><span class="s1">&#39;Autogenerated Key&#39;</span>
-<span class="nv">GPG_COMMENT</span><span class="o">=</span><span class="s1">&#39;WARNING: MISP AutoGenerated Key consider this Key VOID!&#39;</span>
-<span class="nv">GPG_EMAIL_ADDRESS</span><span class="o">=</span><span class="s1">&#39;admin@admin.test&#39;</span>
-<span class="nv">GPG_KEY_LENGTH</span><span class="o">=</span><span class="s1">&#39;2048&#39;</span>
-<span class="nv">GPG_PASSPHRASE</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
+  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$MISP_BASEURL</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;&quot;&quot;&#39;</span>
+  <span class="k">fi</span>
 
-<span class="c1"># php.ini configuration</span>
-<span class="nv">upload_max_filesize</span><span class="o">=</span>50M
-<span class="nv">post_max_size</span><span class="o">=</span>50M
-<span class="nv">max_execution_time</span><span class="o">=</span><span class="m">300</span>
-<span class="nv">memory_limit</span><span class="o">=</span>512M
+  <span class="nv">MISP_LIVE</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
 
-<span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>
+  <span class="c1"># Database configuration</span>
+  <span class="nv">DBHOST</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span>
+  <span class="nv">DBNAME</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+  <span class="nv">DBUSER_ADMIN</span><span class="o">=</span><span class="s1">&#39;root&#39;</span>
+  <span class="nv">DBPASSWORD_ADMIN</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
+  <span class="nv">DBUSER_MISP</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+  <span class="nv">DBPASSWORD_MISP</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
+
+  <span class="c1"># OpenSSL configuration</span>
+  <span class="nv">OPENSSL_CN</span><span class="o">=</span><span class="nv">$FQDN</span>
+  <span class="nv">OPENSSL_C</span><span class="o">=</span><span class="s1">&#39;LU&#39;</span>
+  <span class="nv">OPENSSL_ST</span><span class="o">=</span><span class="s1">&#39;State&#39;</span>
+  <span class="nv">OPENSSL_L</span><span class="o">=</span><span class="s1">&#39;Location&#39;</span>
+  <span class="nv">OPENSSL_O</span><span class="o">=</span><span class="s1">&#39;Organization&#39;</span>
+  <span class="nv">OPENSSL_OU</span><span class="o">=</span><span class="s1">&#39;Organizational Unit&#39;</span>
+  <span class="nv">OPENSSL_EMAILADDRESS</span><span class="o">=</span><span class="s2">&quot;info@</span><span class="nv">$FQDN</span><span class="s2">&quot;</span>
+
+  <span class="c1"># GPG configuration</span>
+  <span class="nv">GPG_REAL_NAME</span><span class="o">=</span><span class="s1">&#39;Autogenerated Key&#39;</span>
+  <span class="nv">GPG_COMMENT</span><span class="o">=</span><span class="s1">&#39;WARNING: MISP AutoGenerated Key consider this Key VOID!&#39;</span>
+  <span class="nv">GPG_EMAIL_ADDRESS</span><span class="o">=</span><span class="s1">&#39;admin@admin.test&#39;</span>
+  <span class="nv">GPG_KEY_LENGTH</span><span class="o">=</span><span class="s1">&#39;2048&#39;</span>
+  <span class="nv">GPG_PASSPHRASE</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
+
+  <span class="c1"># debug alias to make sure people are not confused when blindly copy pasting blobs of code</span>
+  <span class="nb">alias</span> <span class="nv">debug</span><span class="o">=</span><span class="s2">&quot;echo -e&quot;</span>
+
+  <span class="c1"># checkAptLock alias to make sure people are not confused when blindly copy pasting blobs of code</span>
+  <span class="nb">alias</span> <span class="nv">checkAptLock</span><span class="o">=</span><span class="s2">&quot;echo &#39;Function used in Installer to make sure apt is not locked&#39;&quot;</span>
+
+  <span class="c1"># php.ini configuration</span>
+  <span class="nv">upload_max_filesize</span><span class="o">=</span>50M
+  <span class="nv">post_max_size</span><span class="o">=</span>50M
+  <span class="nv">max_execution_time</span><span class="o">=</span><span class="m">300</span>
+  <span class="nv">memory_limit</span><span class="o">=</span>512M
+
+  <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
+
+  <span class="c1"># sudo config to run $LUSER commands</span>
+  <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
+  <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
+
+  <span class="nb">echo</span> <span class="s2">&quot;The following DB Passwords were generated...&quot;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Admin (</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">) DB Password: </span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;User  (</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">) DB Password: </span><span class="si">${</span><span class="nv">DBPASSWORD_MISP</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 0_global-vars.sh&gt;</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="c1"># CentOS Specific</span>
@@ -1400,7 +1443,7 @@ sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 443&#39;</span> /etc/httpd
 sudo systemctl start httpd.service
 sudo openssl dhparam -out /etc/pki/tls/certs/dhparam.pem <span class="m">4096</span>
 sudo openssl genrsa -des3 -passout pass:x -out /tmp/misp.local.key <span class="m">4096</span>
-sudo openssl rsa -passin pass:x -in /tmp/misp.local.key -out /etc/pki/tls/certs/misp.local.key
+sudo openssl rsa -passin pass:x -in /tmp/misp.local.key -out /etc/pki/tls/private/misp.local.key
 sudo rm /tmp/misp.local.key
 sudo openssl req -new -subj <span class="s2">&quot;/C=</span><span class="si">${</span><span class="nv">OPENSSL_C</span><span class="si">}</span><span class="s2">/ST=</span><span class="si">${</span><span class="nv">OPENSSL_ST</span><span class="si">}</span><span class="s2">/L=</span><span class="si">${</span><span class="nv">OPENSSL_L</span><span class="si">}</span><span class="s2">/O=</span><span class="si">${</span><span class="nv">OPENSSL_O</span><span class="si">}</span><span class="s2">/OU=</span><span class="si">${</span><span class="nv">OPENSSL_OU</span><span class="si">}</span><span class="s2">/CN=</span><span class="si">${</span><span class="nv">OPENSSL_CN</span><span class="si">}</span><span class="s2">/emailAddress=</span><span class="si">${</span><span class="nv">OPENSSL_EMAILADDRESS</span><span class="si">}</span><span class="s2">&quot;</span> -key /etc/pki/tls/certs/misp.local.key -out /etc/pki/tls/certs/misp.local.csr
 sudo openssl x509 -req -days <span class="m">365</span> -in /etc/pki/tls/certs/misp.local.csr -signkey /etc/pki/tls/private/misp.local.key -out /etc/pki/tls/certs/misp.local.crt
@@ -1420,6 +1463,7 @@ sudo chcon -t httpd_sys_rw_content_t /var/www/MISP/app/files
 sudo chcon -t httpd_sys_rw_content_t /var/www/MISP/app/files/terms
 sudo chcon -t httpd_sys_rw_content_t /var/www/MISP/app/files/scripts/tmp
 sudo chcon -t httpd_sys_rw_content_t /var/www/MISP/app/Plugin/CakeResque/tmp
+sudo chcon -t httpd_sys_script_exec_t /var/www/MISP/app/Console/cake
 sudo chcon -R -t usr_t /var/www/MISP/venv
 sudo chcon -R -t httpd_sys_rw_content_t /var/www/MISP/.git
 sudo chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/tmp
@@ -1438,6 +1482,9 @@ sudo chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/webroot/img/custom
 
 <span class="c1"># Allow httpd to connect to the redis server and php-fpm over tcp/ip</span>
 sudo setsebool -P httpd_can_network_connect on
+
+<span class="c1"># Allow httpd to send emails from php</span>
+sudo setsebool -P httpd_can_sendmail on
 
 <span class="c1"># Enable and start the httpd service</span>
 sudo systemctl <span class="nb">enable</span> httpd.service
@@ -1595,6 +1642,81 @@ sudo -H -u apache ${PATH_TO_MISP}/venv/bin/pip install git+https://github.com/kb
 sudo -u apache ${PATH_TO_MISP}/venv/bin/misp-modules -l 0.0.0.0 -s &amp;
 
 sudo sed -i -e &#39;$i \sudo -u apache /var/www/MISP/venv/bin/misp-modules -l 127.0.0.1 -s &amp;\n&#39; /etc/rc.local
+</pre></div>
+
+<h4 id="misp-dashboard-on-centos">MISP Dashboard on CentOS<a class="headerlink" href="#misp-dashboard-on-centos" title="Permanent link">&para;</a></h4>
+<hr />
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www
+sudo mkdir misp-dashboard
+sudo chown www-data:www-data misp-dashboard
+sudo -u www-data git clone https://github.com/MISP/misp-dashboard.git
+<span class="nb">cd</span> misp-dashboard
+sudo -H /var/www/misp-dashboard/install_dependencies.sh
+sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
+sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 0.0.0.0:8001&#39;</span> /etc/apache2/ports.conf
+sudo apt install libapache2-mod-wsgi-py3 -y
+
+<span class="nb">echo</span> <span class="s2">&quot;&lt;VirtualHost *:8001&gt;</span>
+<span class="s2">    ServerAdmin admin@misp.local</span>
+<span class="s2">    ServerName misp.local</span>
+<span class="s2">    DocumentRoot /var/www/misp-dashboard</span>
+
+<span class="s2">    WSGIDaemonProcess misp-dashboard \</span>
+<span class="s2">       user=misp group=misp \</span>
+<span class="s2">       python-home=/var/www/misp-dashboard/DASHENV \</span>
+<span class="s2">       processes=1 \</span>
+<span class="s2">       threads=15 \</span>
+<span class="s2">       maximum-requests=5000 \</span>
+<span class="s2">       listen-backlog=100 \</span>
+<span class="s2">       queue-timeout=45 \</span>
+<span class="s2">       socket-timeout=60 \</span>
+<span class="s2">       connect-timeout=15 \</span>
+<span class="s2">       request-timeout=60 \</span>
+<span class="s2">       inactivity-timeout=0 \</span>
+<span class="s2">       deadlock-timeout=60 \</span>
+<span class="s2">       graceful-timeout=15 \</span>
+<span class="s2">       eviction-timeout=0 \</span>
+<span class="s2">       shutdown-timeout=5 \</span>
+<span class="s2">       send-buffer-size=0 \</span>
+<span class="s2">       receive-buffer-size=0 \</span>
+<span class="s2">       header-buffer-size=0 \</span>
+<span class="s2">       response-buffer-size=0 \</span>
+<span class="s2">       server-metrics=Off</span>
+<span class="s2">    WSGIScriptAlias / /var/www/misp-dashboard/misp-dashboard.wsgi</span>
+<span class="s2">    &lt;Directory /var/www/misp-dashboard&gt;</span>
+<span class="s2">        WSGIProcessGroup misp-dashboard</span>
+<span class="s2">        WSGIApplicationGroup %{GLOBAL}</span>
+<span class="s2">        Require all granted</span>
+<span class="s2">    &lt;/Directory&gt;</span>
+<span class="s2">    LogLevel info</span>
+<span class="s2">    ErrorLog /var/log/apache2/misp-dashboard.local_error.log</span>
+<span class="s2">    CustomLog /var/log/apache2/misp-dashboard.local_access.log combined</span>
+<span class="s2">    ServerSignature Off</span>
+<span class="s2">&lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> sudo tee /etc/apache2/sites-available/misp-dashboard.conf
+
+sudo a2ensite misp-dashboard
+sudo systemctl reload apache2
+
+<span class="c1"># Add misp-dashboard to rc.local to start on boot.</span>
+sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data bash /var/www/misp-dashboard/start_all.sh &gt; /tmp/misp-dashboard_rc.local.log\n&#39;</span> /etc/rc.local
+
+<span class="c1"># Enable ZeroMQ for misp-dashboard</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_enable<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_event_notifications_enable<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_object_notifications_enable<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_object_reference_notifications_enable<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_attribute_notifications_enable<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_sighting_notifications_enable<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_user_notifications_enable<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_organisation_notifications_enable<span class="s2">&quot; true&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_port<span class="s2">&quot; 50000&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_host<span class="s2">&quot; &quot;</span>localhost<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_port<span class="s2">&quot; 6379&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_database<span class="s2">&quot; 1&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_namespace<span class="s2">&quot; &quot;</span>mispq<span class="s2">&quot;&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_include_attachments<span class="s2">&quot; false&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_tag_notifications_enable<span class="s2">&quot; false&quot;</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_audit_notifications_enable<span class="s2">&quot; false&quot;</span>
 </pre></div>
 
 <h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>

@@ -1,0 +1,1353 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="MISP Project - Install Guides">
+      
+      
+        <link rel="canonical" href="https://www.misp-project.org/generic/supportFunctions/">
+      
+      
+        <meta name="author" content="MISP Project">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
+    
+    
+      
+        <title>supportFunctions - MISP Install Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.572ca0f0.css">
+      
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.8c900955.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://www.misp-project.org/" title="MISP Install Documentation" class="md-header-nav__button md-logo">
+          
+            <img src="../../img/misp.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                MISP Install Documentation
+              </span>
+              <span class="md-header-nav__topic">
+                supportFunctions
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/MISP/MISP" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      MISP/MISP
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://www.misp-project.org/" title="MISP Install Documentation" class="md-nav__button md-logo">
+      
+        <img src="../../img/misp.png" width="48" height="48">
+      
+    </a>
+    MISP Install Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/MISP/MISP" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      MISP/MISP
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Install Guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Install Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../INSTALL.ubuntu1804/" title="Ubuntu 18.04" class="md-nav__link">
+      Ubuntu 18.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
+      Debian stable
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
+      Kali Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../INSTALL.rhel7/" title="Redhat Enterprise Linux 7" class="md-nav__link">
+      Redhat Enterprise Linux 7
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      xInstall Guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        xInstall Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL/" title="Warning" class="md-nav__link">
+      Warning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
+      Centos 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.centos7/" title="Centos 7" class="md-nav__link">
+      Centos 7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.debian_testing/" title="Debian testing" class="md-nav__link">
+      Debian testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-nav__link">
+      Debian 9 \w postgresql
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
+      Ubuntu 18.04 \w webmin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.tsurugi/" title="Tsurugi Linux" class="md-nav__link">
+      Tsurugi Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.4" class="md-nav__link">
+      OpenBSD 6.4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.rhel7/" title="Redhat Enterprise Linux 7.6 (BETA)" class="md-nav__link">
+      Redhat Enterprise Linux 7.6 (BETA)
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Config Guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Config Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../CONFIG.elasticsearch-logging/" title="Elastic Search Logging" class="md-nav__link">
+      Elastic Search Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../CONFIG.s3-attachments/" title="Amazon S3 attachments" class="md-nav__link">
+      Amazon S3 attachments
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../CONFIG.SMIME/" title="S/MIME" class="md-nav__link">
+      S/MIME
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../UPDATE/" title="Update MISP" class="md-nav__link">
+      Update MISP
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../UPGRADE/" title="Upgrading MISP" class="md-nav__link">
+      Upgrading MISP
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Old guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Old guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../archive/old-2_3to2_4-UPGRADE/" title="2.3 to 2.4 upgrade" class="md-nav__link">
+      2.3 to 2.4 upgrade
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../archive/INSTALL.ubuntu1604/" title="Ubuntu 16.04" class="md-nav__link">
+      Ubuntu 16.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../archive/xINSTALL.FreeBSD/" title="FreeBSD" class="md-nav__link">
+      FreeBSD
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      About
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        About
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Changelog/" title="MISP Release Notes" class="md-nav__link">
+      MISP Release Notes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>supportFunctions</h1>
+                
+                <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_support-functions.sh&gt;</span>
+<span class="c1"># Leave empty for NO debug messages, if run with set -x or bash -x it will enable DEBUG by default</span>
+<span class="nv">DEBUG</span><span class="o">=</span>
+
+<span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$-</span><span class="s2">&quot;</span> in
+  *x*<span class="o">)</span>  <span class="nv">NO_PROGRESS</span><span class="o">=</span><span class="m">1</span><span class="p">;</span> <span class="nv">DEBUG</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+  *<span class="o">)</span>    <span class="nv">NO_PROGRESS</span><span class="o">=</span><span class="m">0</span> <span class="p">;;</span>
+<span class="k">esac</span>
+
+<span class="c1">## Function Section ##</span>
+
+<span class="c1">## Usage of this script</span>
+usage <span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;bash&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WEB_INSTALL</span><span class="o">=</span><span class="m">1</span>
+    <span class="nv">SCRIPT_NAME</span><span class="o">=</span><span class="s2">&quot;Web Installer Command&quot;</span>
+  <span class="k">else</span>
+    <span class="nv">SCRIPT_NAME</span><span class="o">=</span><span class="nv">$0</span>
+  <span class="k">fi</span>
+
+  <span class="nb">exec</span> <span class="p">&amp;</span>&gt; /dev/tty
+  space
+  <span class="nb">echo</span> -e <span class="s2">&quot;Please specify what type of </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> setup you want to install.&quot;</span>
+  space
+  <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">SCRIPT_NAME</span><span class="si">}</span><span class="s2"> -c | Install ONLY </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> Core&quot;</span>                   <span class="c1"># core</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;                -M | </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> modules&quot;</span>        <span class="c1"># modules</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;                -D | </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> dashboard&quot;</span>      <span class="c1"># dashboard</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;                -V | Viper&quot;</span>                            <span class="c1"># viper</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;                -m | Mail 2 </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>         <span class="c1"># mail2</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;                -S | Experimental ssdeep correlations&quot;</span> <span class="c1"># ssdeep</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;                -A | Install </span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="s2">all</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> of the above&quot;</span> <span class="c1"># all</span>
+  space
+  <span class="nb">echo</span> -e <span class="s2">&quot;                -C | Only do </span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="s2">pre-install checks and exit</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># pre</span>
+  space
+  <span class="nb">echo</span> -e <span class="s2">&quot;                -u | Do an unattanded Install, no questions asked&quot;</span>      <span class="c1"># UNATTENDED</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">       -U | Attempt and upgrade of selected item</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>         <span class="c1"># UPGRADE</span>
+  space
+  <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">Some parameters want to be hidden: </span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">       -f | Force test install on current Ubuntu LTS schim, add -B for 18.04 -&gt; 18.10, or -BB 18.10 -&gt; 19.10)</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># FORCE</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;Options can be combined: </span><span class="si">${</span><span class="nv">SCRIPT_NAME</span><span class="si">}</span><span class="s2"> -c -V -D # Will install Core+Viper+Dashboard&quot;</span>
+  space
+  <span class="nb">echo</span> -e <span class="s2">&quot;Recommended is either a barebone MISP install (ideal for syncing from other instances) or&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;MISP + modules - </span><span class="si">${</span><span class="nv">SCRIPT_NAME</span><span class="si">}</span><span class="s2"> -c -M&quot;</span>
+  space
+<span class="o">}</span>
+
+<span class="c1"># Check if element is contained in array</span>
+containsElement <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">local</span> e <span class="nv">match</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+  <span class="nb">shift</span>
+  <span class="k">for</span> e<span class="p">;</span> <span class="k">do</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$e</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="nv">$match</span><span class="s2">&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="k">return</span> <span class="m">0</span><span class="p">;</span> <span class="k">done</span>
+  <span class="k">return</span> <span class="m">1</span>
+<span class="o">}</span>
+
+checkOpt <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># checkOpt feature</span>
+  containsElement <span class="nv">$1</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">options</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+setOpt <span class="o">()</span> <span class="o">{</span>
+  <span class="nv">options</span><span class="o">=()</span>
+  <span class="k">for</span> o in <span class="nv">$@</span><span class="p">;</span> <span class="k">do</span> 
+    <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$o</span><span class="s2">&quot;</span> in
+      <span class="o">(</span><span class="s2">&quot;-c&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;core&quot;</span><span class="p">;</span> <span class="nv">CORE</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+      <span class="o">(</span><span class="s2">&quot;-V&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;viper&quot;</span><span class="p">;</span> <span class="nv">VIPER</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+      <span class="o">(</span><span class="s2">&quot;-M&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;modules&quot;</span><span class="p">;</span> <span class="nv">MODULES</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+      <span class="o">(</span><span class="s2">&quot;-D&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;dashboard&quot;</span><span class="p">;</span> <span class="nv">DASHBOARD</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+      <span class="o">(</span><span class="s2">&quot;-m&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;mail2&quot;</span><span class="p">;</span> <span class="nv">MAIL2</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+      <span class="o">(</span><span class="s2">&quot;-S&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;ssdeep&quot;</span><span class="p">;</span> <span class="nv">SSDEEP</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+      <span class="o">(</span><span class="s2">&quot;-A&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;all&quot;</span><span class="p">;</span> <span class="nv">ALL</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+      <span class="o">(</span><span class="s2">&quot;-C&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;pre&quot;</span><span class="p">;</span> <span class="nv">PRE</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+      <span class="o">(</span><span class="s2">&quot;-U&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;upgrade&quot;</span><span class="p">;</span> <span class="nv">UPGRADE</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+      <span class="o">(</span><span class="s2">&quot;-u&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;unattended&quot;</span><span class="p">;</span> <span class="nv">UNATTENDED</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+      <span class="o">(</span><span class="s2">&quot;-f&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;force&quot;</span><span class="p">;</span> <span class="nv">FORCE</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+      <span class="o">(</span>*<span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$o</span><span class="s2"> is not a valid argument&quot;</span><span class="p">;</span> <span class="nb">exit</span> <span class="m">1</span> <span class="p">;;</span>
+    <span class="k">esac</span>
+  <span class="k">done</span>
+<span class="o">}</span>
+
+<span class="c1"># Extract debian flavour</span>
+checkFlavour <span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">[</span> -z <span class="k">$(</span>which lsb_release<span class="k">)</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    checkAptLock
+    sudo apt install lsb-release dialog -y
+  <span class="k">fi</span>
+
+  <span class="nv">FLAVOUR</span><span class="o">=</span><span class="k">$(</span>lsb_release -s -i <span class="p">|</span>tr <span class="o">[</span>A-Z<span class="o">]</span> <span class="o">[</span>a-z<span class="o">]</span><span class="k">)</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">FLAVOUR</span> <span class="o">==</span> <span class="s2">&quot;ubuntu&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">RELEASE</span><span class="o">=</span><span class="k">$(</span>lsb_release -s -r<span class="k">)</span>
+    debug <span class="s2">&quot;We detected the following Linux flavour: </span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="k">$(</span>tr <span class="s1">&#39;[:lower:]&#39;</span> <span class="s1">&#39;[:upper:]&#39;</span> <span class="o">&lt;&lt;&lt;</span> <span class="si">${</span><span class="nv">FLAVOUR</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span><span class="k">)</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">RELEASE</span><span class="si">}${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">else</span>
+    debug <span class="s2">&quot;We detected the following Linux flavour: </span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="k">$(</span>tr <span class="s1">&#39;[:lower:]&#39;</span> <span class="s1">&#39;[:upper:]&#39;</span> <span class="o">&lt;&lt;&lt;</span> <span class="si">${</span><span class="nv">FLAVOUR</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span><span class="k">)</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="p">:</span><span class="nv">1</span><span class="si">}${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1"># Extract manufacturer</span>
+checkManufacturer <span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">[</span> ! -f <span class="k">$(</span>which dmidecode<span class="k">)</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    checkAptLock
+    sudo apt install dmidecode -y
+  <span class="k">fi</span>
+  <span class="nv">MANUFACTURER</span><span class="o">=</span><span class="k">$(</span>sudo dmidecode -s system-manufacturer<span class="k">)</span>
+  <span class="nb">echo</span> <span class="nv">$MANUFACTURER</span>
+<span class="o">}</span>
+
+<span class="c1"># Dynamic horizontal spacer</span>
+space <span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$NO_PROGRESS</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="k">return</span>
+  <span class="k">fi</span>
+  <span class="c1"># Check terminal width</span>
+  <span class="nv">num</span><span class="o">=</span><span class="sb">`</span>tput cols<span class="sb">`</span>
+  <span class="k">for</span> i in <span class="sb">`</span>seq <span class="m">1</span> <span class="nv">$num</span><span class="sb">`</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nb">echo</span> -n <span class="s2">&quot;-&quot;</span>
+  <span class="k">done</span>
+  <span class="nb">echo</span> <span class="s2">&quot;&quot;</span>
+<span class="o">}</span>
+
+<span class="c1"># Spinner so the user knows something is happening</span>
+spin<span class="o">()</span>
+<span class="o">{</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$NO_PROGRESS</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="k">return</span>
+  <span class="k">fi</span>
+  <span class="nv">spinner</span><span class="o">=</span><span class="s2">&quot;/|\\-/|\\-&quot;</span>
+  <span class="k">while</span> :
+  <span class="k">do</span>
+    <span class="k">for</span> i in <span class="sb">`</span>seq <span class="m">0</span> <span class="m">7</span><span class="sb">`</span>
+    <span class="k">do</span>
+      <span class="nb">echo</span> -n <span class="s2">&quot;</span><span class="si">${</span><span class="nv">spinner</span><span class="p">:</span><span class="nv">$i</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="nb">echo</span> -en <span class="s2">&quot;\010&quot;</span>
+      sleep <span class="m">0</span>.<span class="nv">$i</span>
+    <span class="k">done</span>
+  <span class="k">done</span>
+<span class="o">}</span>
+
+<span class="c1"># Progress bar</span>
+progress <span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$NO_PROGRESS</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="k">return</span>
+  <span class="k">fi</span>
+  <span class="nv">bar</span><span class="o">=</span><span class="s2">&quot;#&quot;</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$progress</span> -ge <span class="m">100</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> -ne <span class="s2">&quot;#####################################################################################################  (100%)\r&quot;</span>
+    <span class="k">return</span>
+  <span class="k">fi</span>
+  <span class="nv">progress</span><span class="o">=</span>$<span class="o">[</span><span class="nv">$progress</span>+<span class="nv">$1</span><span class="o">]</span>
+  <span class="k">for</span> p in <span class="k">$(</span>seq <span class="m">1</span> <span class="nv">$progress</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nv">bar</span><span class="o">+=</span><span class="s2">&quot;#&quot;</span>
+    <span class="nb">echo</span> -ne <span class="s2">&quot;</span><span class="nv">$bar</span><span class="s2">  (</span><span class="nv">$p</span><span class="s2">%)\r&quot;</span>
+  <span class="k">done</span>
+  <span class="nb">echo</span> -ne <span class="s1">&#39;\n&#39;</span>
+<span class="o">}</span>
+
+<span class="c1"># Check locale</span>
+checkLocale <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Checking Locale&quot;</span>
+  <span class="c1"># If locale is missing, generate and install a common UTF-8</span>
+  <span class="k">if</span> <span class="o">[</span> ! -f /etc/default/locale <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    checkAptLock
+    sudo apt install locales -y
+    sudo locale-gen en_US.UTF-8
+    sudo update-locale <span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8 <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1"># Simple function to check command exit code</span>
+checkFail <span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$2</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;iAmError: </span><span class="nv">$1</span><span class="s2">&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;The last command exited with error code: </span><span class="nv">$2</span><span class="s2">&quot;</span>
+    <span class="nb">exit</span> <span class="nv">$2</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1"># Check if misp user is present and if run as root</span>
+checkID <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Checking if run as root and </span><span class="nv">$MISP_USER</span><span class="s2"> is present&quot;</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$EUID</span> <span class="o">==</span> <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;This script cannot be run as a root&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+  <span class="k">elif</span> <span class="o">[[</span> <span class="k">$(</span>id <span class="nv">$MISP_USER</span> &gt;/dev/null<span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
+      <span class="nb">echo</span> <span class="s2">&quot;There is NO user called &#39;</span><span class="nv">$MISP_USER</span><span class="s2">&#39; create a user &#39;</span><span class="nv">$MISP_USER</span><span class="s2">&#39; or continue as </span><span class="nv">$USER</span><span class="s2">? (y/n) &quot;</span>
+      <span class="nb">read</span> ANSWER
+      <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>tr <span class="o">[</span>A-Z<span class="o">]</span> <span class="o">[</span>a-z<span class="o">]</span><span class="k">)</span>
+    <span class="k">else</span>
+      <span class="nv">ANSWER</span><span class="o">=</span><span class="s2">&quot;y&quot;</span>
+    <span class="k">fi</span>
+
+    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$ANSWER</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      sudo useradd -s /bin/bash -m -G adm,cdrom,sudo,dip,plugdev,www-data,staff <span class="nv">$MISP_USER</span>
+      <span class="nb">echo</span> <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_PASSWORD</span> <span class="p">|</span> sudo chpasswd
+      <span class="nb">echo</span> <span class="s2">&quot;User </span><span class="nv">$MISP_USER</span><span class="s2"> added, password is: </span><span class="nv">$MISP_PASSWORD</span><span class="s2">&quot;</span>
+    <span class="k">elif</span> <span class="o">[[</span> <span class="nv">$ANSWER</span> <span class="o">==</span> <span class="s2">&quot;n&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="nb">echo</span> <span class="s2">&quot;Using </span><span class="nv">$USER</span><span class="s2"> as install user, hope that is what you want.&quot;</span>
+      <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Adding </span><span class="nv">$USER</span><span class="s2"> to groups www-data and staff</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="nv">MISP_USER</span><span class="o">=</span><span class="nv">$USER</span>
+      sudo adduser <span class="nv">$MISP_USER</span> staff
+      sudo adduser <span class="nv">$MISP_USER</span> www-data
+    <span class="k">else</span>
+      <span class="nb">echo</span> <span class="s2">&quot;yes or no was asked, try again.&quot;</span>
+      sudo adduser <span class="nv">$MISP_USER</span> staff
+      sudo adduser <span class="nv">$MISP_USER</span> www-data
+      <span class="nb">exit</span> <span class="m">1</span>
+    <span class="k">fi</span>
+  <span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&quot;User </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> exists, skipping creation&quot;</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Adding </span><span class="nv">$MISP_USER</span><span class="s2"> to groups www-data and staff</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+    sudo adduser <span class="nv">$MISP_USER</span> staff
+    sudo adduser <span class="nv">$MISP_USER</span> www-data
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1"># pre-install check to make sure what we will be installing on, is ready and not a half installed system</span>
+preInstall <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Place-holder, not implemented yet.</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="nb">exit</span>
+<span class="o">}</span>
+
+<span class="c1"># Upgrade function</span>
+upgrade <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Place-holder, not implemented yet.</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="nb">exit</span>
+<span class="o">}</span>
+
+<span class="c1"># check is /usr/local/src is RW by misp user</span>
+checkUsrLocalSrc <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s2">&quot;&quot;</span>
+  <span class="k">if</span> <span class="o">[[</span> -e /usr/local/src <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WRITEABLE</span><span class="o">=</span><span class="k">$(</span>sudo -H -u <span class="nv">$MISP_USER</span> touch /usr/local/src <span class="m">2</span>&gt; /dev/null <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$WRITEABLE</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="nb">echo</span> <span class="s2">&quot;Good, /usr/local/src exists and is writeable as </span><span class="nv">$MISP_USER</span><span class="s2">&quot;</span>
+    <span class="k">else</span>
+      <span class="c1"># TODO: The below might be shorter, more elegant and more modern</span>
+      <span class="c1">#[[ -n $KALI ]] || [[ -n $UNATTENDED ]] &amp;&amp; echo &quot;Just do it&quot; </span>
+      <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$KALI</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> -o <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nv">ANSWER</span><span class="o">=</span><span class="s2">&quot;y&quot;</span>
+      <span class="k">else</span>
+        space
+        <span class="nb">echo</span> <span class="s2">&quot;/usr/local/src need to be writeable by </span><span class="nv">$MISP_USER</span><span class="s2"> for misp-modules, viper etc.&quot;</span>
+        <span class="nb">echo</span> -n <span class="s2">&quot;Permission to fix? (y/n) &quot;</span>
+        <span class="nb">read</span> ANSWER
+        <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>tr <span class="o">[</span>A-Z<span class="o">]</span> <span class="o">[</span>a-z<span class="o">]</span><span class="k">)</span>
+        space
+      <span class="k">fi</span>
+      <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$ANSWER</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        sudo chmod <span class="m">2775</span> /usr/local/src
+        sudo chown root:staff /usr/local/src
+      <span class="k">fi</span>
+    <span class="k">fi</span>
+  <span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&quot;/usr/local/src does not exist, creating.&quot;</span>
+    mkdir /usr/local/src
+    sudo chmod <span class="m">2775</span> /usr/local/src
+    sudo chown root:staff /usr/local/src
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+kaliSpaceSaver <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># Future function in case Kali overlay on LiveCD is full</span>
+  <span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Not implement</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+<span class="c1"># Because Kali is l33t we make sure we run as root</span>
+kaliOnRootR0ckz <span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$EUID</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+   <span class="nb">echo</span> <span class="s2">&quot;This script must be run as root&quot;</span>
+   <span class="nb">exit</span> <span class="m">1</span>
+  <span class="k">elif</span> <span class="o">[[</span> <span class="k">$(</span>id <span class="nv">$MISP_USER</span> &gt;/dev/null<span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    useradd -s /bin/bash -m -G adm,cdrom,sudo,dip,plugdev,www-data,staff <span class="nv">$MISP_USER</span>
+    <span class="nb">echo</span> <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_PASSWORD</span> <span class="p">|</span> chpasswd
+  <span class="k">else</span>
+    <span class="c1"># TODO: Make sure we consider this further down the road</span>
+    <span class="nb">echo</span> <span class="s2">&quot;User </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> exists, skipping creation&quot;</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+setBaseURL <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Setting Base URL&quot;</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="k">$(</span>checkManufacturer<span class="k">)</span> !<span class="o">=</span> <span class="s2">&quot;innotek GmbH&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    debug <span class="s2">&quot;We guess that this is a physical machine and cannot possibly guess what the MISP_BASEURL might be.&quot;</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
+      <span class="nb">echo</span> <span class="s2">&quot;You can now enter your own MISP_BASEURL, if you wish to NOT do that, the MISP_BASEURL will be empty, which will work, but ideally you configure it afterwards.&quot;</span>
+      <span class="nb">echo</span> <span class="s2">&quot;Do you want to change it now? (y/n) &quot;</span>
+      <span class="nb">read</span> ANSWER
+      <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>tr <span class="o">[</span>A-Z<span class="o">]</span> <span class="o">[</span>a-z<span class="o">]</span><span class="k">)</span>
+      <span class="k">if</span> <span class="o">[[</span> <span class="nv">$ANSWER</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&quot;Please enter the Base URL, e.g: &#39;https://example.org&#39;&quot;</span>
+        <span class="nb">echo</span> -n <span class="s2">&quot;Enter Base URL: &quot;</span>
+        <span class="nb">read</span> MISP_BASEURL
+      <span class="k">else</span>
+        <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;&quot;&quot;&#39;</span>
+      <span class="k">fi</span>
+    <span class="k">else</span>
+        <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s2">&quot;https://misp.local&quot;</span>
+        <span class="c1"># Webserver configuration</span>
+        <span class="nv">FQDN</span><span class="o">=</span><span class="s1">&#39;misp.local&#39;</span>
+    <span class="k">fi</span>
+  <span class="k">elif</span> <span class="o">[[</span> <span class="nv">$KALI</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s2">&quot;https://misp.local&quot;</span>
+    <span class="c1"># Webserver configuration</span>
+    <span class="nv">FQDN</span><span class="o">=</span><span class="s1">&#39;misp.local&#39;</span>
+  <span class="k">else</span>
+    <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;https://localhost:8443&#39;</span>
+    <span class="c1"># Webserver configuration</span>
+    <span class="nv">FQDN</span><span class="o">=</span><span class="s1">&#39;localhost.localdomain&#39;</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1"># Test and install software RNG</span>
+installRNG <span class="o">()</span> <span class="o">{</span>
+  sudo modprobe tpm-rng <span class="m">2</span>&gt; /dev/null
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> -eq <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> 
+    <span class="nb">echo</span> tpm-rng <span class="p">|</span> sudo tee -a /etc/modules
+  <span class="k">fi</span>
+  checkAptLock
+  sudo apt install -qy rng-tools <span class="c1"># This might fail on TPM grounds, enable the security chip in your BIOS</span>
+  sudo service rng-tools start
+
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> -eq <span class="s2">&quot;1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> 
+    sudo apt purge -qy rng-tools
+    sudo apt install -qy haveged
+    sudo /etc/init.d/haveged start
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1"># Kali upgrade</span>
+kaliUpgrade <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Running various Kali upgrade tasks&quot;</span>
+  sudo apt update
+  checkAptLock
+  sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt install --only-upgrade bash libc6 -y
+  sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt autoremove -y
+<span class="o">}</span>
+
+<span class="c1"># Disables sleep</span>
+disableSleep <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Disabling sleep etc if run from a Laptop as the install might take some time…&quot;</span> &gt; /dev/tty
+  gsettings <span class="nb">set</span> org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout <span class="m">0</span> <span class="m">2</span>&gt; /dev/null
+  gsettings <span class="nb">set</span> org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout <span class="m">0</span> <span class="m">2</span>&gt; /dev/null
+  gsettings <span class="nb">set</span> org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type nothing <span class="m">2</span>&gt; /dev/null
+  gsettings <span class="nb">set</span> org.gnome.desktop.screensaver lock-enabled <span class="nb">false</span> <span class="m">2</span>&gt; /dev/null
+  gsettings <span class="nb">set</span> org.gnome.desktop.screensaver idle-activation-enabled <span class="nb">false</span> <span class="m">2</span>&gt; /dev/null
+
+  setterm -blank <span class="m">0</span> -powersave off -powerdown <span class="m">0</span>
+  xset s <span class="m">0</span> <span class="m">0</span> <span class="m">2</span>&gt; /dev/null
+  xset dpms <span class="m">0</span> <span class="m">0</span> <span class="m">2</span>&gt; /dev/null
+  xset dpms force off
+  xset s off <span class="m">2</span>&gt; /dev/null
+  service sleepd stop
+  <span class="nb">kill</span> <span class="k">$(</span>lsof <span class="p">|</span> grep <span class="s1">&#39;sleepd&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+  checkAptLock
+<span class="o">}</span>
+
+<span class="c1"># Remove alias if present</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="k">$(</span><span class="nb">type</span> -t checkAptLock<span class="k">)</span> <span class="o">==</span> <span class="s2">&quot;alias&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> <span class="nb">unalias</span> checkAptLock<span class="p">;</span> <span class="k">fi</span>
+<span class="c1"># Simple function to make sure APT is not locked</span>
+checkAptLock <span class="o">()</span> <span class="o">{</span>
+  <span class="nv">SLEEP</span><span class="o">=</span><span class="m">3</span>
+  <span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$DONE</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
+    sudo apt-get check <span class="m">2</span>&gt; /dev/null &gt; /dev/null <span class="o">&amp;&amp;</span> <span class="nv">DONE</span><span class="o">=</span><span class="m">0</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">apt</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> is maybe </span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">locked</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">, waiting </span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="nv">$SLEEP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> seconds.&quot;</span> &gt; /dev/tty
+    sleep <span class="nv">$SLEEP</span>
+    <span class="nv">SLEEP</span><span class="o">=</span>$<span class="o">[</span><span class="nv">$SLEEP</span>+3<span class="o">]</span>
+  <span class="k">done</span>
+  <span class="nb">unset</span> DONE
+<span class="o">}</span>
+
+<span class="c1"># &lt;snippet-begin 0_installDepsPhp73.sh&gt;</span>
+<span class="c1"># Install Php 7.3 deps</span>
+installDepsPhp73 <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Installing PHP 7.3 dependencies&quot;</span>
+  <span class="nv">PHP_ETC_BASE</span><span class="o">=</span>/etc/php/7.3
+  <span class="nv">PHP_INI</span><span class="o">=</span><span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/apache2/php.ini
+  sudo apt update
+  checkAptLock
+  sudo apt install -qy <span class="se">\</span>
+  libapache2-mod-php7.3 <span class="se">\</span>
+  php7.3 php7.3-cli <span class="se">\</span>
+  php7.3-dev <span class="se">\</span>
+  php7.3-json php7.3-xml php7.3-mysql php7.3-opcache php7.3-readline php7.3-mbstring <span class="se">\</span>
+  php-pear <span class="se">\</span>
+  php-redis php-gnupg
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 0_installDepsPhp73.sh&gt;</span>
+
+<span class="c1"># Installing core dependencies</span>
+installDeps <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Installing core dependencies&quot;</span>
+  checkAptLock
+  sudo apt update
+  sudo apt install -qy etckeeper
+  <span class="c1"># Skip dist-upgrade for now, pulls in 500+ updated packages</span>
+  <span class="c1">#sudo apt -y dist-upgrade</span>
+  <span class="nv">gitMail</span><span class="o">=</span><span class="k">$(</span>git config --global --get user.email <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> -eq <span class="s2">&quot;1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> 
+    git config --global user.email <span class="s2">&quot;root@kali.lan&quot;</span>
+  <span class="k">fi</span>
+  <span class="nv">gitUser</span><span class="o">=</span><span class="k">$(</span>git config --global --get user.name <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> -eq <span class="s2">&quot;1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> 
+    git config --global user.name <span class="s2">&quot;Root User&quot;</span>
+  <span class="k">fi</span>
+
+  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$UNATTENDED</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt install -qy postfix <span class="o">||</span> sudo apt install -qy postfix
+
+  sudo apt install -qy <span class="se">\</span>
+  curl gcc git gnupg-agent make openssl redis-server neovim zip libyara-dev python3-yara python3-redis python3-zmq <span class="se">\</span>
+  mariadb-client <span class="se">\</span>
+  mariadb-server <span class="se">\</span>
+  apache2 apache2-doc apache2-utils <span class="se">\</span>
+  python3-dev python3-pip libpq5 libjpeg-dev libfuzzy-dev ruby asciidoctor <span class="se">\</span>
+  libxml2-dev libxslt1-dev zlib1g-dev python3-setuptools expect
+
+  installRNG
+<span class="o">}</span>
+
+<span class="c1"># On Kali, the redis start-up script is broken. This tries to fix it.</span>
+fixRedis <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># As of 20190124 redis-server init.d scripts are broken and need to be replaced</span>
+  sudo mv /etc/init.d/redis-server /etc/init.d/redis-server_<span class="sb">`</span>date +%Y%m%d<span class="sb">`</span>
+
+  <span class="nb">echo</span> <span class="s1">&#39;#! /bin/sh</span>
+<span class="s1">### BEGIN INIT INFO</span>
+<span class="s1"># Provides:     redis-server</span>
+<span class="s1"># Required-Start:   $syslog</span>
+<span class="s1"># Required-Stop:    $syslog</span>
+<span class="s1"># Should-Start:     $local_fs</span>
+<span class="s1"># Should-Stop:      $local_fs</span>
+<span class="s1"># Default-Start:    2 3 4 5</span>
+<span class="s1"># Default-Stop:     0 1 6</span>
+<span class="s1"># Short-Description:    redis-server - Persistent key-value db</span>
+<span class="s1"># Description:      redis-server - Persistent key-value db</span>
+<span class="s1">### END INIT INFO</span>
+
+<span class="s1">PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</span>
+<span class="s1">DAEMON=/usr/bin/redis-server</span>
+<span class="s1">DAEMON_ARGS=/etc/redis/redis.conf</span>
+<span class="s1">NAME=redis-server</span>
+<span class="s1">DESC=redis-server</span>
+<span class="s1">PIDFILE=/var/run/redis.pid</span>
+
+<span class="s1">test -x $DAEMON || exit 0</span>
+<span class="s1">test -x $DAEMONBOOTSTRAP || exit 0</span>
+
+<span class="s1">set -e</span>
+
+<span class="s1">case &quot;$1&quot; in</span>
+<span class="s1">  start)</span>
+<span class="s1">    echo -n &quot;Starting $DESC: &quot;</span>
+<span class="s1">    touch $PIDFILE</span>
+<span class="s1">    chown redis:redis $PIDFILE</span>
+<span class="s1">    if start-stop-daemon --start --quiet --umask 007 --pidfile $PIDFILE --chuid redis:redis --exec $DAEMON -- $DAEMON_ARGS</span>
+<span class="s1">    then</span>
+<span class="s1">        echo &quot;$NAME.&quot;</span>
+<span class="s1">    else</span>
+<span class="s1">        echo &quot;failed&quot;</span>
+<span class="s1">    fi</span>
+<span class="s1">    ;;</span>
+<span class="s1">  stop)</span>
+<span class="s1">    echo -n &quot;Stopping $DESC: &quot;</span>
+<span class="s1">    if start-stop-daemon --stop --retry 10 --quiet --oknodo --pidfile $PIDFILE --exec $DAEMON</span>
+<span class="s1">    then</span>
+<span class="s1">        echo &quot;$NAME.&quot;</span>
+<span class="s1">    else</span>
+<span class="s1">        echo &quot;failed&quot;</span>
+<span class="s1">    fi</span>
+<span class="s1">    rm -f $PIDFILE</span>
+<span class="s1">    ;;</span>
+
+<span class="s1">  restart|force-reload)</span>
+<span class="s1">    ${0} stop</span>
+<span class="s1">    ${0} start</span>
+<span class="s1">    ;;</span>
+<span class="s1">  *)</span>
+<span class="s1">    echo &quot;Usage: /etc/init.d/$NAME {start|stop|restart|force-reload}&quot; &gt;&amp;2</span>
+<span class="s1">    exit 1</span>
+<span class="s1">    ;;</span>
+<span class="s1">esac</span>
+
+<span class="s1">exit 0&#39;</span> <span class="p">|</span> sudo tee /etc/init.d/redis-server
+  sudo chmod <span class="m">755</span> /etc/init.d/redis-server
+  sudo /etc/init.d/redis-server start
+<span class="o">}</span>
+
+<span class="c1"># generate MISP apache conf</span>
+genApacheConf <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s2">&quot;&lt;VirtualHost _default_:80&gt;</span>
+<span class="s2">          ServerAdmin admin@localhost.lu</span>
+<span class="s2">          ServerName misp.local</span>
+
+<span class="s2">          Redirect permanent / https://misp.local</span>
+
+<span class="s2">          LogLevel warn</span>
+<span class="s2">          ErrorLog /var/log/apache2/misp.local_error.log</span>
+<span class="s2">          CustomLog /var/log/apache2/misp.local_access.log combined</span>
+<span class="s2">          ServerSignature Off</span>
+<span class="s2">  &lt;/VirtualHost&gt;</span>
+
+<span class="s2">  &lt;VirtualHost _default_:443&gt;</span>
+<span class="s2">          ServerAdmin admin@localhost.lu</span>
+<span class="s2">          ServerName misp.local</span>
+<span class="s2">          DocumentRoot </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/webroot</span>
+
+<span class="s2">          &lt;Directory </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/webroot&gt;</span>
+<span class="s2">                  Options -Indexes</span>
+<span class="s2">                  AllowOverride all</span>
+<span class="s2">                    Require all granted</span>
+<span class="s2">                  Order allow,deny</span>
+<span class="s2">                  allow from all</span>
+<span class="s2">          &lt;/Directory&gt;</span>
+
+<span class="s2">          SSLEngine On</span>
+<span class="s2">          SSLCertificateFile /etc/ssl/private/misp.local.crt</span>
+<span class="s2">          SSLCertificateKeyFile /etc/ssl/private/misp.local.key</span>
+<span class="s2">  #        SSLCertificateChainFile /etc/ssl/private/misp-chain.crt</span>
+
+<span class="s2">          LogLevel warn</span>
+<span class="s2">          ErrorLog /var/log/apache2/misp.local_error.log</span>
+<span class="s2">          CustomLog /var/log/apache2/misp.local_access.log combined</span>
+<span class="s2">          ServerSignature Off</span>
+<span class="s2">          Header set X-Content-Type-Options nosniff</span>
+<span class="s2">          Header set X-Frame-Options DENY</span>
+<span class="s2">  &lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> tee /etc/apache2/sites-available/misp-ssl.conf
+<span class="o">}</span>
+
+<span class="c1"># Add git pull update mechanism to rc.local - TODO: Make this better</span>
+gitPullAllRCLOCAL <span class="o">()</span> <span class="o">{</span>
+  sed -i -e <span class="s1">&#39;$i \git_dirs=&quot;/usr/local/src/misp-modules/ /var/www/misp-dashboard /usr/local/src/faup /usr/local/src/mail_to_misp /usr/local/src/misp-modules /usr/local/src/viper /var/www/misp-dashboard&quot;\n&#39;</span> /etc/rc.local
+  sed -i -e <span class="s1">&#39;$i \for d in $git_dirs; do\n&#39;</span> /etc/rc.local
+  sed -i -e <span class="s1">&#39;$i \    echo &quot;Updating ${d}&quot;\n&#39;</span> /etc/rc.local
+  sed -i -e <span class="s1">&#39;$i \    cd $d &amp;&amp; sudo git pull &amp;\n&#39;</span> /etc/rc.local
+  sed -i -e <span class="s1">&#39;$i \done\n&#39;</span> /etc/rc.local
+<span class="o">}</span>
+
+<span class="c1"># Composer on php 7.2 does not need any special treatment the provided phar works well</span>
+composer72 <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
+  mkdir /var/www/.composer <span class="p">;</span> chown www-data:www-data /var/www/.composer
+  <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
+  <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
+  <span class="nv">$SUDO_WWW</span> php composer.phar install
+<span class="o">}</span>
+
+<span class="c1"># Composer on php 7.3 needs a recent version of composer.phar</span>
+composer73 <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
+  mkdir /var/www/.composer <span class="p">;</span> chown www-data:www-data /var/www/.composer
+  <span class="c1"># Update composer.phar</span>
+  <span class="c1"># If hash changes, check here: https://getcomposer.org/download/ and replace with the correct one</span>
+  <span class="c1"># Current Sum for: v1.8.3</span>
+  <span class="nv">SHA384_SUM</span><span class="o">=</span><span class="s1">&#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;</span>
+  sudo -H -u www-data php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
+  sudo -H -u www-data php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;</span><span class="nv">$SHA384_SUM</span><span class="s2">&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); exit(137); } echo PHP_EOL;&quot;</span>
+  checkFail <span class="s2">&quot;composer.phar checksum failed, please investigate manually. &quot;</span> <span class="nv">$?</span>
+  sudo -H -u www-data php composer-setup.php
+  sudo -H -u www-data php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
+  <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
+  <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
+  <span class="nv">$SUDO_WWW</span> php composer.phar install
+<span class="o">}</span>
+
+<span class="c1"># Enable various core services</span>
+enableServices <span class="o">()</span> <span class="o">{</span>
+    update-rc.d mysql <span class="nb">enable</span>
+    update-rc.d apache2 <span class="nb">enable</span>
+    update-rc.d redis-server <span class="nb">enable</span>
+<span class="o">}</span>
+
+<span class="c1"># Generate rc.local</span>
+genRCLOCAL <span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">[</span> ! -e /etc/rc.local <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="nb">echo</span> <span class="s1">&#39;#!/bin/sh -e&#39;</span> <span class="p">|</span> tee -a /etc/rc.local
+      <span class="nb">echo</span> <span class="s1">&#39;exit 0&#39;</span> <span class="p">|</span> tee -a /etc/rc.local
+      chmod u+x /etc/rc.local
+  <span class="k">fi</span>
+
+  sed -i -e <span class="s1">&#39;$i \echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled\n&#39;</span> /etc/rc.local
+  sed -i -e <span class="s1">&#39;$i \echo 1024 &gt; /proc/sys/net/core/somaxconn\n&#39;</span> /etc/rc.local
+  sed -i -e <span class="s1">&#39;$i \sysctl vm.overcommit_memory=1\n&#39;</span> /etc/rc.local
+  sed -i -e <span class="s1">&#39;$i \sudo -u www-data bash /var/www/MISP/app/Console/worker/start.sh\n&#39;</span> /etc/rc.local
+<span class="o">}</span>
+
+<span class="c1"># Final function to let the user know what happened</span>
+theEnd <span class="o">()</span> <span class="o">{</span>
+  space
+  <span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span> &gt; /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/mysql.txt
+  <span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span> &gt;&gt; /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/mysql.txt
+  <span class="nb">echo</span> <span class="s2">&quot;Authkey: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> &gt; /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/MISP-authkey.txt
+
+  clear
+  space
+  <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> Installed, access here: </span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="nb">echo</span>
+  <span class="nb">echo</span> <span class="s2">&quot;User: admin@admin.test&quot;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Password: admin&quot;</span>
+  space
+  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$DASHBOARD</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> Dashboard, access here: </span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">:8001&quot;</span>
+  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$DASHBOARD</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> space
+  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$VIPER</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s2">&quot;viper-web installed, access here: </span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">:8888&quot;</span>
+  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$VIPER</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s2">&quot;viper-cli configured with your </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Site Admin Auth Key</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$VIPER</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
+  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$VIPER</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;User: admin&quot;</span>
+  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$VIPER</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;Password: Password1234&quot;</span>
+  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$VIPER</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> space
+  <span class="nb">echo</span> -e <span class="s2">&quot;The following files were created and need either </span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">protection or removal</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> (</span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="s2">shred</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> on the CLI)&quot;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;/home/</span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">/mysql.txt&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Contents:</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  cat /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/mysql.txt
+  <span class="nb">echo</span> <span class="s2">&quot;/home/</span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">/MISP-authkey.txt&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Contents:</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  cat /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/MISP-authkey.txt
+  space
+  <span class="nb">echo</span> -e <span class="s2">&quot;The </span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">LOCAL</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> system credentials:&quot;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;User: </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Password: </span><span class="si">${</span><span class="nv">MISP_PASSWORD</span><span class="si">}</span><span class="s2"> # Or the password you used of your custom user&quot;</span>
+  space
+  <span class="nb">echo</span> <span class="s2">&quot;To enable outgoing mails via postfix set a permissive SMTP server for the domains you want to contact:&quot;</span>
+  <span class="nb">echo</span>
+  <span class="nb">echo</span> <span class="s2">&quot;sudo postconf -e &#39;relayhost = example.com&#39;&quot;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;sudo postfix reload&quot;</span>
+  space
+  <span class="nb">echo</span> -e <span class="s2">&quot;Enjoy using </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">. For any issues see here: https://github.com/MISP/MISP/issues&quot;</span>
+  space
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">$UNATTENDED</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Unattended install!</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;This means we guessed the Base URL, it might be wrong, please double check.&quot;</span>
+    space
+  <span class="k">fi</span>
+
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$USER</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;</span><span class="nv">$MISP_USER</span><span class="s2">&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    sudo su - <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+<span class="c1">## End Function Section Nothing allowed in .md after this line ##</span>
+<span class="c1"># &lt;snippet-end 0_support-functions.sh&gt;</span>
+</pre></div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 MISP Project
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://www.misp-project.org/" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/MISP" class="md-footer-social__link fa fa-github-alt"></a>
+    
+      <a href="https://twitter.com/MISPProject" class="md-footer-social__link fa fa-twitter"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.b41f3d20.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

@@ -688,30 +688,34 @@
                 
                 <h4 id="install-mail-to-misp">Install mail to misp<a class="headerlink" href="#install-mail-to-misp" title="Permanent link">&para;</a></h4>
 <hr />
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>mail_to_misp has <strong>lief</strong> as a dependency, lief only has an .egg for Python3.6 NOT Python3.7<br />
-If you have python3.7 installed make sure <strong>virtualenv</strong> uses <strong>python3.6</strong><br />
-<div class="codehilite"><pre><span></span>virtualenv -p python3.6 venv
-</pre></div></p>
-</div>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> /usr/local/src/
-sudo apt-get install cmake -y
-git clone https://github.com/MISP/mail_to_misp.git
-git clone https://github.com/stricaud/faup.git
-<span class="nb">cd</span> faup
-sudo mkdir -p build
-<span class="nb">cd</span> build
-cmake .. <span class="o">&amp;&amp;</span> make
-sudo make install
-sudo ldconfig
-<span class="nb">cd</span> ../../mail_to_misp
-virtualenv -p python3.6 venv
-./venv/bin/pip install -r requirements.txt
-cp mail_to_misp_config.py-example mail_to_misp_config.py
-
-sed -i <span class="s2">&quot;s/^misp_url\ =\ &#39;YOUR_MISP_URL&#39;/misp_url\ =\ &#39;http:\/\/localhost&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
-sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 5_mail_to_misp.sh&gt;</span>
+<span class="c1"># Main mail2misp install function</span>
+mail2misp <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Installing Mail2</span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="nb">cd</span> /usr/local/src/
+  sudo apt-get install cmake libcaca-dev -y
+  <span class="nv">$SUDO_USER</span> git clone https://github.com/MISP/mail_to_misp.git
+  <span class="nv">$SUDO_USER</span> git clone git://github.com/stricaud/faup.git faup
+  sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup mail_to_misp
+  <span class="nb">cd</span> faup
+  <span class="c1"># TODO Check permissions</span>
+  <span class="c1">##$SUDO mkdir -p build</span>
+  <span class="nv">$SUDO_USER</span> mkdir -p build
+  <span class="nb">cd</span> build
+  <span class="nv">$SUDO_USER</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_USER</span> make
+  <span class="c1">##$SUDO cmake .. &amp;&amp; $SUDO make</span>
+  sudo make install
+  sudo ldconfig
+  <span class="nb">cd</span> ../../mail_to_misp
+  <span class="nv">$SUDO_USER</span> virtualenv -p python3 venv
+  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install -r requirements.txt
+  <span class="nv">$SUDO_USER</span> cp mail_to_misp_config.py-example mail_to_misp_config.py
+  <span class="c1">##$SUDO cp mail_to_misp_config.py-example mail_to_misp_config.py</span>
+  <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_url\ =\ &#39;YOUR_MISP_URL&#39;/misp_url\ =\ &#39;https:\/\/localhost&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+  <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 5_mail_to_misp.sh&gt;</span>
 </pre></div>
                 
                   
