@@ -7803,34 +7803,34 @@
   Clement]</li>
 <li>[installer] Added some known Debian based falvours. [Steve Clement]</li>
 <li>Remove unnecessary settings. [iwitz]</li>
-<li>Set apache as files owner. [iwitz]</li>
+<li>Set apache as files owner. [iwitz]
+  this is to be able to update through the web interface</li>
+<li>Update software versions. [iwitz]</li>
+<li>[refactor] Side menu generic templates moved. [iglocska]</li>
+<li>[UI] Some modifications to the side menu link element. [iglocska]</li>
+<li>Test url for proxy. [iwitz]
+  this way the check works even if only github is whitelisted by the web proxy</li>
+<li>[doc] license for the logos added. [Alexandre Dulaunoy]</li>
+<li>Add stix2 installation. [iwitz]</li>
+<li>[misp-objects] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[Tag search API] now also accepts synonyms as input. [iglocska]</li>
+<li>[documentation] Added new CLI function to automation page. [iglocska]</li>
+<li>Improved setup bug workaround. [iwitz]</li>
+<li>Update php version warning. [iwitz]</li>
+<li>No more assumption that only 1 shell is used. [iwitz]
+  scl enable was used in step 3 to make php, mysql and redis available in a new shell and during the rest of the installation process it was assumed that the same shell was used. The steps are a bit less interdependent now.</li>
+<li>Add index to all commands. [iwitz]
+  this is useful when only some steps apply to a particular environment</li>
+<li>Tell people to <em>not</em> use this document. [Raphaël Vinot]</li>
+<li>Bump PyMISP. [Raphaël Vinot]</li>
+<li>[internal] Moved time resolution to appmodel. [iglocska]</li>
+<li>[objects] misp object templates updated to the latest version.
+  [Alexandre Dulaunoy]</li>
+<li>[PyMISP] Bump version. [Raphaël Vinot]</li>
+<li>[generic_picker] Prevents multiple useless redrawing. [mokaddem]</li>
+<li>[misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[taxonomies] updated to the latest version. [Alexandre Dulaunoy]</li>
 </ul>
-<p>this is to be able to update through the web interface
-- Update software versions. [iwitz]
-- [refactor] Side menu generic templates moved. [iglocska]
-- [UI] Some modifications to the side menu link element. [iglocska]
-- Test url for proxy. [iwitz]</p>
-<p>this way the check works even if only github is whitelisted by the web proxy
-- [doc] license for the logos added. [Alexandre Dulaunoy]
-- Add stix2 installation. [iwitz]
-- [misp-objects] updated to the latest version. [Alexandre Dulaunoy]
-- [Tag search API] now also accepts synonyms as input. [iglocska]
-- [documentation] Added new CLI function to automation page. [iglocska]
-- Improved setup bug workaround. [iwitz]
-- Update php version warning. [iwitz]
-- No more assumption that only 1 shell is used. [iwitz]</p>
-<p>scl enable was used in step 3 to make php, mysql and redis available in a new shell and during the rest of the installation process it was assumed that the same shell was used. The steps are a bit less interdependent now.
-- Add index to all commands. [iwitz]</p>
-<p>this is useful when only some steps apply to a particular environment
-- Tell people to <em>not</em> use this document. [Raphaël Vinot]
-- Bump PyMISP. [Raphaël Vinot]
-- [internal] Moved time resolution to appmodel. [iglocska]
-- [objects] misp object templates updated to the latest version.
-  [Alexandre Dulaunoy]
-- [PyMISP] Bump version. [Raphaël Vinot]
-- [generic_picker] Prevents multiple useless redrawing. [mokaddem]
-- [misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]
-- [taxonomies] updated to the latest version. [Alexandre Dulaunoy]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
 <li>[installer] Variable typo for Base URL chg: [installer] Renamed
@@ -7862,33 +7862,35 @@
 </li>
 <li>[UI] Fixed extended by field. [iglocska]</li>
 <li>Rhel7 diagnostics page detection. [iwitz]</li>
-<li>Working directory in update function. [iwitz]</li>
-</ul>
-<p>fixes a path problem mentioned in issue #3528
-- [UI] Fixed menu linking for change_pw action. [iglocska]
-- [CS] tab fixes. [iglocska]
-- [CS] indentation fix. [iglocska]
-- [UI] Potential fix for the weird popover behaviour. [iglocska]
-- [UI] restored user menu when viewing a user's profile as admin.
-  [iglocska]
-- Typo in tag ID query. [Hannah Ward]
-- [Feeds API] blackholes due to invalid csrf check relaxation call.
-  [iglocska]
-- Bugfix of event info not shown when MISP.showorgalternate is on.
-  [Christophe Vandeplas]
-- [UI] Trailing  removed from org names on the event index. [iglocska]
-- [API] Galaxies still present as Tag in JSON export fixes #4133.
-  [Christophe Vandeplas]
-- [style] consistent space indentation. [Christophe Vandeplas]
-- [ACL] tags/search added to the ACL. [iglocska]
-- Do not use obsolete rc.local init file. [iwitz]
-- [stix import] Fixed detection of observable_composition objects.
+<li>Working directory in update function. [iwitz]
+  fixes a path problem mentioned in issue #3528</li>
+<li>[UI] Fixed menu linking for change_pw action. [iglocska]</li>
+<li>[CS] tab fixes. [iglocska]</li>
+<li>[CS] indentation fix. [iglocska]</li>
+<li>[UI] Potential fix for the weird popover behaviour. [iglocska]</li>
+<li>[UI] restored user menu when viewing a user's profile as admin.
+  [iglocska]</li>
+<li>Typo in tag ID query. [Hannah Ward]</li>
+<li>[Feeds API] blackholes due to invalid csrf check relaxation call.
+  [iglocska]</li>
+<li>Bugfix of event info not shown when MISP.showorgalternate is on.
+  [Christophe Vandeplas]</li>
+<li>[UI] Trailing  removed from org names on the event index. [iglocska]</li>
+<li>[API] Galaxies still present as Tag in JSON export fixes #4133.
+  [Christophe Vandeplas]</li>
+<li>[style] consistent space indentation. [Christophe Vandeplas]</li>
+<li>[ACL] tags/search added to the ACL. [iglocska]</li>
+<li>Do not use obsolete rc.local init file. [iwitz]</li>
+<li>
+<p>[stix import] Fixed detection of observable_composition objects.
   [chrisr3d]</p>
-<ul>
-<li>Was sometimes passing the text even if no observable
+</li>
+<li>
+<p>Was sometimes passing the text even if no observable
     composition object was actually defined, because an
     observable object can have the observable_composition
-    attribute even when it has no actual value</li>
+    attribute even when it has no actual value</p>
+</li>
 <li>
 <p>[stix 1&amp;2 import] Using local version of PyMISP &amp; MISP Objects.
   [chrisr3d]</p>
@@ -7936,119 +7938,74 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #4152 from SteveClement/guides. [Steve Clement]</li>
-</ul>
-<p>new: [installer] MISP has now an Install Script for Ubuntu 18.04 - 18.10 and Kali
-- Merge branch '2.4' into guides. [Steve Clement]
-- Merge pull request #4146 from hackunagi/2.4. [Alexandre Dulaunoy]</p>
-<p>Fix on folder with misp.local.key
-- Merge pull request #2 from hackunagi/hackunagi-patch-1. [Carlos
-  Borges]</p>
-<p>Fixing folder with misp.local.key
-- Fixing folder with misp.local.key. [Carlos Borges]</p>
-<p>### Work environment</p>
-<table>
-<thead>
-<tr>
-<th>Questions</th>
-<th>Answers</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Type of issue</td>
-<td>Documentation Update</td>
-</tr>
-<tr>
-<td>OS version (server)</td>
-<td>CentOS</td>
-</tr>
-<tr>
-<td>OS version (client)</td>
-<td>Ubuntu, ...</td>
-</tr>
-<tr>
-<td>PHP version</td>
-<td>7.1</td>
-</tr>
-<tr>
-<td>MISP version / git hash</td>
-<td>2.4</td>
-</tr>
-<tr>
-<td>Browser</td>
-<td>If applicable</td>
-</tr>
-</tbody>
-</table>
-<p>### Expected behavior
-  Follow procedures to install, with no errors.</p>
-<p>### Actual behavior
-  Error to create ssl keys, while following procedures.
-  The steps to create openssl private keys on line 335 point to file in /etc/pki/tls/certs/misp.local.key, while later in line 338 it looks for file in /etc/pki/tls/certs/misp.local.key.</p>
-<p>### Steps to reproduce the behavior</p>
-<p>### Logs, screenshots, configuration dump, ...
-- Merge pull request #1 from MISP/2.4. [Carlos Borges]</p>
-<p>Merge to original MISP repository
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge pull request #4136 from iwitz/fix-rhel7-diagnostics-page.
-  [Andras Iklody]</p>
-<p>Fix rhel7 diagnostics page
-- Merge pull request #4147 from iwitz/patch-3. [Andras Iklody]</p>
-<p>fix: working directory in update function
-- Merge pull request #4149 from iwitz/patch-4. [Andras Iklody]</p>
-<p>Update software versions in RHEL7 installation procedure
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge pull request #4139 from iwitz/patch-1. [Andras Iklody]</p>
-<p>Change test URL for proxy
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge pull request #4138 from obert01/warning-icon-fix. [Andras
-  Iklody]
-- Accessibility: added aria properties for the warning list icon, which
-  was not visible for screen readers. [Olivier BERT]
-- Merge pull request #4140 from iwitz/patch-2. [Andras Iklody]</p>
-<p>Add STIX2 installation to RHEL7 installation procedure
-- Merge pull request #4137 from MISP/bugfix/tag-rest-edit-incorrect-id.
-  [Andras Iklody]</p>
-<p>fix: Typo in tag ID query
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge pull request #4128 from iwitz/add-systemd-unit-rhel7. [Steve
-  Clement]</p>
-<p>chg: [RHEL7] Add systemd unit file in installation procedure
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Add: [diagnostic] Added check for STIX2 python library. [chrisr3d]
-- Merge pull request #4123 from czechnology/2.4. [Andras Iklody]</p>
-<p>Add LDAP network timeout
-- Add LDAP network timeout. [Martin Kulhavy]
-- Merge pull request #4121 from iwitz/remove-centos-install-step. [Steve
-  Clement]</p>
-<p>Remove CentOS step in RHEL7 installation procedure
-- Remove centos step. [iwitz]</p>
-<p>The instruction to enable the SCL repos is already provided in step 1.4,
+<li>Merge pull request #4152 from SteveClement/guides. [Steve Clement]
+  new: [installer] MISP has now an Install Script for Ubuntu 18.04 - 18.10 and Kali</li>
+<li>Merge branch '2.4' into guides. [Steve Clement]</li>
+<li>Merge pull request #4146 from hackunagi/2.4. [Alexandre Dulaunoy]
+  Fix on folder with misp.local.key</li>
+<li>Merge pull request #2 from hackunagi/hackunagi-patch-1. [Carlos Borges]</li>
+<li>Fixing folder with misp.local.key. [Carlos Borges]</li>
+<li>Merge pull request #1 from MISP/2.4. [Carlos Borges]
+  Merge to original MISP repository</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge pull request #4136 from iwitz/fix-rhel7-diagnostics-page.
+  [Andras Iklody]
+  Fix rhel7 diagnostics page</li>
+<li>Merge pull request #4147 from iwitz/patch-3. [Andras Iklody]
+  fix: working directory in update function</li>
+<li>Merge pull request #4149 from iwitz/patch-4. [Andras Iklody]
+  Update software versions in RHEL7 installation procedure</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge pull request #4139 from iwitz/patch-1. [Andras Iklody]
+  Change test URL for proxy</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge pull request #4138 from obert01/warning-icon-fix. [Andras
+  Iklody]</li>
+<li>Accessibility: added aria properties for the warning list icon, which
+  was not visible for screen readers. [Olivier BERT]</li>
+<li>Merge pull request #4140 from iwitz/patch-2. [Andras Iklody]
+  Add STIX2 installation to RHEL7 installation procedure</li>
+<li>Merge pull request #4137 from MISP/bugfix/tag-rest-edit-incorrect-id.
+  [Andras Iklody]
+  fix: Typo in tag ID query</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge pull request #4128 from iwitz/add-systemd-unit-rhel7. [Steve
+  Clement]
+  chg: [RHEL7] Add systemd unit file in installation procedure</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Add: [diagnostic] Added check for STIX2 python library. [chrisr3d]</li>
+<li>Merge pull request #4123 from czechnology/2.4. [Andras Iklody]
+  Add LDAP network timeout</li>
+<li>Add LDAP network timeout. [Martin Kulhavy]</li>
+<li>Merge pull request #4121 from iwitz/remove-centos-install-step. [Steve
+  Clement]
+  Remove CentOS step in RHEL7 installation procedure</li>
+<li>Remove centos step. [iwitz]
+  The instruction to enable the SCL repos is already provided in step 1.4,
   and the package centos-release-scl does not exist on RHEL7. The fact
   that step 1.4 may not work on a trial subscription is not relevant
   because assumptions 0.1 and 0.2 specifically state that a support
-  agreement is required to be able to complete the installation.
-- Merge pull request #4118 from iwitz/fix-rhel7-lief-installation.
-  [Steve Clement]</p>
-<p>Fix RHEL7 lief installation instructions
-- Merge pull request #4125 from iwitz/fix-scl-shell. [Andras Iklody]</p>
-<p>RHEL7 installation fix implicitly SCL-enabled commands
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge pull request #4117 from kara-1234/patch-2. [Andras Iklody]</p>
-<p>Allow HTTPD to send Emails
-- Allow HTTPD to send Emails. [kara-1234]</p>
-<p>Update to allow httpd to send emails.
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Raphaël Vinot]
-- [stix2] Bumped stix2 python library latest updates. [chrisr3d]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
-- Revert "fix: [UI] small fix" [iglocska]</p>
-<p>This reverts commit 1c8d725f8ddaeaab7384faf104c83db2fa7741be.
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</p>
+  agreement is required to be able to complete the installation.</li>
+<li>Merge pull request #4118 from iwitz/fix-rhel7-lief-installation.
+  [Steve Clement]
+  Fix RHEL7 lief installation instructions</li>
+<li>Merge pull request #4125 from iwitz/fix-scl-shell. [Andras Iklody]
+  RHEL7 installation fix implicitly SCL-enabled commands</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge pull request #4117 from kara-1234/patch-2. [Andras Iklody]</li>
+<li>Allow HTTPD to send Emails. [kara-1234]
+  Update to allow httpd to send emails.</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Raphaël Vinot]</li>
+<li>[stix2] Bumped stix2 python library latest updates. [chrisr3d]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Revert "fix: [UI] small fix" [iglocska]
+  This reverts commit 1c8d725f8ddaeaab7384faf104c83db2fa7741be.</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+</ul>
 <h2 id="v24102-2019-02-01">v2.4.102 (2019-02-01)<a class="headerlink" href="#v24102-2019-02-01" title="Permanent link">&para;</a></h2>
 <h2 id="new_1">New<a class="headerlink" href="#new_1" title="Permanent link">&para;</a></h2>
 <ul>
@@ -8117,70 +8074,66 @@
   have correlations disabled. [iglocska]</li>
 <li>[PyMISP] updated to the latest version. [Alexandre Dulaunoy]</li>
 <li>[type] zeek attribute added (Zeek is the new name of Bro) [Alexandre
-  Dulaunoy]</li>
-</ul>
-<p>Both attribute types, zeek and bro will coexist as exchange of NIDS
-  rules under the old names is common in various MISP sharing communities.
-- [sighting] Added generic hovering support for <code>openPopover</code> + added
-  support of this feature for sightings. [mokaddem]
-- [org view] show creation/modification times. [iglocska]
-- [rest] Bumped `sighting/add{values}`` documentation. [mokaddem]
-- Bump PyMISP. [Raphaël Vinot]
-- [generic_picker] Improved the way option templates/data are passed to
-  the view (now done by JS only) [mokaddem]
-- [generic_picker] Improved memory usage + use of sprintf. [mokaddem]
-- [galaxy clusters] selectCluster function opened up to the API for
-  reasons. [iglocska]
-- [doc] add standard MISP logo in SVG format. [Alexandre Dulaunoy]
-- [misp-objects] updated to the latest version. [Alexandre Dulaunoy]
-- [documentation] Added the description of URL parameters to the
-  automation page. [iglocska]
-- [misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]
-- Pump PyMISP, use pipenv in travis. [Raphaël Vinot]
-- [eventIndex] replaced tag HTML node from <span> to <a> [mokaddem]</p>
-<p>So that it indicates that cliking on the tag triggers an action (search
-  in this case), but also to be consistent UI-wise</p>
-<p>Part of the project: ~ Making Deborah happy! ~
-- [generic_picker] Prevent decoding if additionalData is not set.
-  [mokaddem]
-- Deleted useless commented line. [mokaddem]
-- [generic_picker] fixed icon path and added more resilience in case of
-  resizing. [mokaddem]
-- [layouts] Removed doT.js dependency (not needed anymore) [mokaddem]
-- [generic_picker] Improved UI. [mokaddem]
-- [ObjectReference] this was bugging me.. [mokaddem]
-- [generic_picker] Improved UI. [mokaddem]
-- [generic_picker] improved layout. [mokaddem]
-- [generic_picker] added support of infoExtra for pills. [mokaddem]
-- [generic_picker] moved sanitization to views. [mokaddem]
-- [generic_picker] all view using the generic_picker now use the
-  generic_picker view elements - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />. [mokaddem]
-- [generic_picker] use php generic_picker elements for constructing the
-  template server side. - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />. [mokaddem]</p>
-<p>Previously, it was done client side
-- [doc] Fix kali script, php7.2 was used by apache. Add reference to
-  mkdocs depency. [Steve Clement]
-- [doc] Added gengeric update section update Debian testing for new
-  stix2. [Steve Clement]
-- [i18n] Updated: Czech 4%, Danish 53%, German 21%, French 95%, Italian
+  Dulaunoy]
+  Both attribute types, zeek and bro will coexist as exchange of NIDS
+  rules under the old names is common in various MISP sharing communities.</li>
+<li>[sighting] Added generic hovering support for <code>openPopover</code> + added
+  support of this feature for sightings. [mokaddem]</li>
+<li>[org view] show creation/modification times. [iglocska]</li>
+<li>[rest] Bumped <code>sighting/add{values}</code> documentation. [mokaddem]</li>
+<li>Bump PyMISP. [Raphaël Vinot]</li>
+<li>[generic_picker] Improved the way option templates/data are passed to
+  the view (now done by JS only) [mokaddem]</li>
+<li>[generic_picker] Improved memory usage + use of sprintf. [mokaddem]</li>
+<li>[galaxy clusters] selectCluster function opened up to the API for
+  reasons. [iglocska]</li>
+<li>[doc] add standard MISP logo in SVG format. [Alexandre Dulaunoy]</li>
+<li>[misp-objects] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[documentation] Added the description of URL parameters to the
+  automation page. [iglocska]</li>
+<li>[misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>Pump PyMISP, use pipenv in travis. [Raphaël Vinot]</li>
+<li>[eventIndex] replaced tag HTML node from &lt;span> to &lt;a> [mokaddem]
+  So that it indicates that cliking on the tag triggers an action (search
+  in this case), but also to be consistent UI-wise
+  Part of the project: ~ Making Deborah happy! ~</li>
+<li>[generic_picker] Prevent decoding if additionalData is not set.
+  [mokaddem]</li>
+<li>Deleted useless commented line. [mokaddem]</li>
+<li>[generic_picker] fixed icon path and added more resilience in case of
+  resizing. [mokaddem]</li>
+<li>[layouts] Removed doT.js dependency (not needed anymore) [mokaddem]</li>
+<li>[generic_picker] Improved UI. [mokaddem]</li>
+<li>[ObjectReference] this was bugging me.. [mokaddem]</li>
+<li>[generic_picker] Improved UI. [mokaddem]</li>
+<li>[generic_picker] improved layout. [mokaddem]</li>
+<li>[generic_picker] added support of infoExtra for pills. [mokaddem]</li>
+<li>[generic_picker] moved sanitization to views. [mokaddem]</li>
+<li>[generic_picker] all view using the generic_picker now use the
+  generic_picker view elements - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />. [mokaddem]</li>
+<li>[generic_picker] use php generic_picker elements for constructing the
+  template server side. - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />. [mokaddem]
+  Previously, it was done client side</li>
+<li>[doc] Fix kali script, php7.2 was used by apache. Add reference to
+  mkdocs depency. [Steve Clement]</li>
+<li>[doc] Added gengeric update section update Debian testing for new
+  stix2. [Steve Clement]</li>
+<li>[i18n] Updated: Czech 4%, Danish 53%, German 21%, French 95%, Italian
   39%, Japanese 95%, Korean 3%, Brazilian Portuguese 6%, Spanish 3% new:
   [i18n] Hungarian, Russian, Ukrainian, Simplified Chinese. [Steve
-  Clement]
-- [composer] composer.json updated. [iglocska]
-- [query] Query string bump. [iglocska]</p>
+  Clement]</li>
+<li>[composer] composer.json updated. [iglocska]</li>
+<li>[query] Query string bump. [iglocska]</li>
+</ul>
 <h2 id="fix_1">Fix<a class="headerlink" href="#fix_1" title="Permanent link">&para;</a></h2>
 <ul>
 <li>[restsearch] CSV special parameters added to the URL parameters.
   [iglocska]</li>
-<li>
-<p>[stix 1&amp;2 export] Switched attachment parameter to make it work.
-  [chrisr3d]</p>
-</li>
-<li>
-<p>When using the url to query restSearch, withAttachements
+<li>[stix 1&amp;2 export] Switched attachment parameter to make it work.
+  [chrisr3d]</li>
+<li>When using the url to query restSearch, withAttachements
     is the correct parameter to use instead of includeAttachements
-    which works btw well with the rest Client anyway</p>
-</li>
+    which works btw well with the rest Client anyway</li>
 <li>[eventGraph] Adding relation via the graph correctly pick the correct
   element in the confirm modal. [mokaddem]</li>
 <li>[proposal] Repaired deletion proposal (db save) [mokaddem]</li>
@@ -8190,58 +8143,48 @@
 <li>[kali] updated composer chksum. [Steve Clement]</li>
 <li>[installer] Fixed a bug when run on kali. [Steve Clement]</li>
 <li>[stix export] Monkey typo. [chrisr3d]</li>
-<li>
-<p>[stix export] Fixed malware samples (within file objects) parsing.
-  [chrisr3d]</p>
-</li>
-<li>
-<p>Depending if there is the attachment or not</p>
-</li>
-<li>
-<p>[deprecated stix export] fixed, parameters weren't correctly taken
-  into account. [iglocska]</p>
-</li>
-<li>
-<p>affects /events/stix</p>
-</li>
+<li>[stix export] Fixed malware samples (within file objects) parsing.
+  [chrisr3d]</li>
+<li>Depending if there is the attachment or not</li>
+<li>[deprecated stix export] fixed, parameters weren't correctly taken
+  into account. [iglocska]</li>
+<li>affects /events/stix</li>
 <li>[API] Use restresponse to view an added event via /events/add.
   [iglocska]</li>
-<li>[Tagging] MITRE galaxies fixing function. [Christophe Vandeplas]</li>
-</ul>
-<p>This function still needs to be called from an upgrade script.
-- [redirect on login] Fixed an issue where ajax queries would store
-  their URL in the redirect URL field. [iglocska]
-- Check also event.org_id when validating event ownership in order to
-  fetch attributes. [Patrizio Tufarolo]</p>
-<p>Fixes #1918
-- [Tagging] Tagging an element with multiple tag collection works as
-  expected. [mokaddem]</p>
-<p>Previously, it would only add the latest tag collection
-- [sighting] Bug adding sightings on every attributes. [mokaddem]</p>
-<p>When trying to add a sighting to a value via the REST API,
+<li>[Tagging] MITRE galaxies fixing function. [Christophe Vandeplas]
+  This function still needs to be called from an upgrade script.</li>
+<li>[redirect on login] Fixed an issue where ajax queries would store
+  their URL in the redirect URL field. [iglocska]</li>
+<li>Check also event.org_id when validating event ownership in order to
+  fetch attributes. [Patrizio Tufarolo]
+  Fixes #1918</li>
+<li>[Tagging] Tagging an element with multiple tag collection works as
+  expected. [mokaddem]
+  Previously, it would only add the latest tag collection</li>
+<li>[sighting] Bug adding sightings on every attributes. [mokaddem]
+  When trying to add a sighting to a value via the REST API,
   if a value was given to the key <code>values</code> instead of an array,
   the Model function <code>addSighting</code> would <em>crash</em> and skip the condition on
-  the value, consequently adding a sighting on every attributes.
-- [UI] Popover gets closed correctly if button clicked twice. reuse
-  generated popover id instead of one-side generation. [mokaddem]
-- [tagging] attachTagToObject wasn't updating the timestamp of the
-  target object. [iglocska]
-- [description] setSetting CLI command description fixed. [iglocska]
-- [api] attirbutes/restSearch forced json format by mistake, fixes
-  #4064. [iglocska]
-- [redirect] Correctly redirect to the requested URL after a login,
-  fixes #4005, fixes #1301. [iglocska]
-- [events ui] fix to the event view pagination reseting sorting, fixes
-  #4058. [iglocska]
-- [sightings] Re-added advanced sightings to the search results.
-  [iglocska]
-- [Model] Fixed includeAttachments parameters for stix 1&amp;2 export.
-  [chrisr3d]
-- [internal] Fetching galaxies broken into atomic queries to avoid
-  massive parameter lists. [iglocska]
-- [automation] Clarification of the different timestamp parameters.
-  [iglocska]</p>
-<ul>
+  the value, consequently adding a sighting on every attributes.</li>
+<li>[UI] Popover gets closed correctly if button clicked twice. reuse
+  generated popover id instead of one-side generation. [mokaddem]</li>
+<li>[tagging] attachTagToObject wasn't updating the timestamp of the
+  target object. [iglocska]</li>
+<li>[description] setSetting CLI command description fixed. [iglocska]</li>
+<li>[api] attirbutes/restSearch forced json format by mistake, fixes
+  #4064. [iglocska]</li>
+<li>[redirect] Correctly redirect to the requested URL after a login,
+  fixes #4005, fixes #1301. [iglocska]</li>
+<li>[events ui] fix to the event view pagination reseting sorting, fixes
+  #4058. [iglocska]</li>
+<li>[sightings] Re-added advanced sightings to the search results.
+  [iglocska]</li>
+<li>[Model] Fixed includeAttachments parameters for stix 1&amp;2 export.
+  [chrisr3d]</li>
+<li>[internal] Fetching galaxies broken into atomic queries to avoid
+  massive parameter lists. [iglocska]</li>
+<li>[automation] Clarification of the different timestamp parameters.
+  [iglocska]</li>
 <li>we missed describing the input formats</li>
 <li>[API] removed invalid parameter lookup. [iglocska]</li>
 <li>[API] Fixed the handling of AND-ed and OR-ed URL parameters.
@@ -8257,52 +8200,34 @@
 <li>[stix import] Importing malware-sample attributes and their data
   fields within File objects. [chrisr3d]</li>
 <li>[stix import] Fixed syntax typo issue. [chrisr3d]</li>
-<li>
-<p>[stix export] Exporting malware-sample value within the corresponding
-  observable. [chrisr3d]</p>
-</li>
-<li>
-<p>In case the malware-sample values are not the
-    same as the filename &amp; md5 ones in the object</p>
-</li>
-<li>[attribute] Prevent undefined index on tag filtering. [mokaddem]</li>
-</ul>
-<p>As tags are popped from the attribute scope first, they will not be
-  available in the event scope.
-- [restsearch] Added returnformat to URL parameters. [iglocska]</p>
-<ul>
+<li>[stix export] Exporting malware-sample value within the corresponding
+  observable. [chrisr3d]</li>
+<li>In case the malware-sample values are not the
+    same as the filename &amp; md5 ones in the object</li>
+<li>[attribute] Prevent undefined index on tag filtering. [mokaddem]
+  As tags are popped from the attribute scope first, they will not be
+  available in the event scope.</li>
+<li>[restsearch] Added returnformat to URL parameters. [iglocska]</li>
 <li>attributes/restSearch was additionally missing the published filter</li>
 <li>[interna] deprecated text() function's tag filter fixed. [iglocska]</li>
-<li>
-<p>[filters] Negative tag filters ignored event tags on the attriute
-  search. [iglocska]</p>
-</li>
-<li>
-<p>as reported by @hel10wor1d</p>
-</li>
+<li>[filters] Negative tag filters ignored event tags on the attriute
+  search. [iglocska]</li>
+<li>as reported by @hel10wor1d</li>
 <li>[copy-pasta] Oops. [iglocska]</li>
 <li>[stix] Missing data fields added to object malware samples. [iglocska]</li>
 <li>[stix export] Syntax quick fix. [chrisr3d]</li>
 <li>[ObjectReference] Making everyone happier. [mokaddem]</li>
 <li>Mass edit and AttackMatrix work again on objectAttributes. [mokaddem]</li>
-<li>
-<p>[stix export] Avoid loss of filename and md5 values in File object.
-  [chrisr3d]</p>
-</li>
-<li>
-<p>We take them from malware-sample value if they do not exist</p>
-</li>
+<li>[stix export] Avoid loss of filename and md5 values in File object.
+  [chrisr3d]</li>
+<li>We take them from malware-sample value if they do not exist</li>
 <li>[stix export] Faster &amp; Shorter attributes dictionary creation
   function. [chrisr3d]</li>
 <li>[stix export] Removed not used additional param of the artifact object
   creation function. [chrisr3d]</li>
-<li>
-<p>[stix export] Exporting data from malware-sample attributes in file
-  objects. [chrisr3d]</p>
-</li>
-<li>
-<p>Observable composition for the file object</p>
-</li>
+<li>[stix export] Exporting data from malware-sample attributes in file
+  objects. [chrisr3d]</li>
+<li>Observable composition for the file object</li>
 <li>Data in malware-sample attribute is exported as Artifact Object</li>
 <li>The rest of the file rermains unchanged and exported as File</li>
 <li>[performance] query tweak to fool old crappy versions of mysql.
@@ -8324,37 +8249,21 @@
   element. [iglocska]</li>
 <li>[freetext import] Handle cases where a value can be both a hash and a
   btc address better. [iglocska]</li>
-<li>
-<p>[performance] Potential performance fix for older MySQL versions using
-  the wrong index as key during fetchAttributes() [iglocska]</p>
-</li>
-<li>
-<p>observer a server prioritising the deleted flag index when filtering attributes, leading to a massive performance loss</p>
-</li>
+<li>[performance] Potential performance fix for older MySQL versions using
+  the wrong index as key during fetchAttributes() [iglocska]</li>
+<li>observer a server prioritising the deleted flag index when filtering attributes, leading to a massive performance loss</li>
 <li>hacky solution to make deleted and object_id (during flattening) indeces unusable</li>
 <li>[stix2 export] Fixed event labels fecthing. [chrisr3d]</li>
-<li>
-<p>[stix2 import] Importing TLP Marking definition objects only.
-  [chrisr3d]</p>
-</li>
-<li>
-<p>Following the changes on export script</p>
-</li>
-<li>
-<p>[stix2 export] Faster tags handling function. [chrisr3d]</p>
-</li>
-<li>
-<p>Compressed the function, removing some useless
-    lines / variables</p>
-</li>
-<li>
-<p>[stix2 export] Exporting only TLP tags as MarkingDefinition.
-  [chrisr3d]</p>
-</li>
-<li>
-<p>The other tags are (as before a recent change)
-    exported as labels</p>
-</li>
+<li>[stix2 import] Importing TLP Marking definition objects only.
+  [chrisr3d]</li>
+<li>Following the changes on export script</li>
+<li>[stix2 export] Faster tags handling function. [chrisr3d]</li>
+<li>Compressed the function, removing some useless
+    lines / variables</li>
+<li>[stix2 export] Exporting only TLP tags as MarkingDefinition.
+  [chrisr3d]</li>
+<li>The other tags are (as before a recent change)
+    exported as labels</li>
 </ul>
 <h2 id="other_1">Other<a class="headerlink" href="#other_1" title="Permanent link">&para;</a></h2>
 <ul>
@@ -8368,65 +8277,64 @@
 <li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]</li>
 <li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
   Dulaunoy]</li>
-<li>Merge pull request #4073 from SteveClement/guides. [Steve Clement]</li>
+<li>Merge pull request #4073 from SteveClement/guides. [Steve Clement]
+  chg: [installer] Added more comments and implemented base parameter logic</li>
+<li>Add: [datamodel] anonymise type added. [Alexandre Dulaunoy]
+  Anonymised value - described with the anonymisation object via a relationship
+  Anonymisation object definition: <a href="https://www.misp-project.org/objects.html#_anonymisation">https://www.misp-project.org/objects.html#_anonymisation</a></li>
+<li>Merge pull request #4071 from SteveClement/guides. [Steve Clement]
+  chg: [kali] Major update to Kali Install script</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Revert "fix: [API] Use restresponse to view an added event via
+  /events/add" [iglocska]
+  This reverts commit 66037a36c55c66d4d2fe41f71619bc79e27dfdc5.</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge pull request #3995 from patriziotufarolo/2.4. [Andras Iklody]
+  fix: check also event.org_id when validating event ownership in order to fetch attributes. Fixes #1918</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Merge pull request #4053 from Rafiot/pipenv. [Raphaël Vinot]
+  chg: Pump PyMISP, use pipenv in travis</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge pull request #4049 from obert01/logs-accessibility-fix. [Andras
+  Iklody]
+  Accessibility fix in the Logs view</li>
+<li>Accessibility: Fixed the aria-label properties of the filter buttons
+  in the Logs view. [Olivier BERT]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Merge pull request #4041 from mokaddem/UIObjectReferences. [Sami
+  Mokaddem]
+  Improved generic_picker and object references</li>
+<li>Merge branch '2.4' into UIObjectReferences. [mokaddem]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge pull request #4046 from SteveClement/guides. [Steve Clement]
+  fix: [doc] Kali installer now working again</li>
+<li>Merge branch '2.4' into guides. [Steve Clement]</li>
+<li>Merge pull request #4037 from SteveClement/i18n. [Steve Clement]
+  chg: [i18n] Updated and added Localizations</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Add: [stix framing] Added Artifact Object in  the list. [chrisr3d]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Update INSTALL.ubuntu1804.md. [Andras Iklody]</li>
+<li>Update INSTALL.debian9.md. [Andras Iklody]</li>
+<li>Update INSTALL.rhel7.md. [Andras Iklody]</li>
+<li>Added crypt_gpg alternate installer. [Andras Iklody]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge pull request #4033 from andreybolonin/patch-1. [Alexandre
+  Dulaunoy]</li>
+<li>Add php 7.3 to travis. [Andrey Bolonin]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
 </ul>
-<p>chg: [installer] Added more comments and implemented base parameter logic
-- Add: [datamodel] anonymise type added. [Alexandre Dulaunoy]</p>
-<p>Anonymised value - described with the anonymisation object via a relationship</p>
-<p>Anonymisation object definition: <a href="https://www.misp-project.org/objects.html#_anonymisation">https://www.misp-project.org/objects.html#_anonymisation</a>
-- Merge pull request #4071 from SteveClement/guides. [Steve Clement]</p>
-<p>chg: [kali] Major update to Kali Install script
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
-- Revert "fix: [API] Use restresponse to view an added event via
-  /events/add" [iglocska]</p>
-<p>This reverts commit 66037a36c55c66d4d2fe41f71619bc79e27dfdc5.
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge pull request #3995 from patriziotufarolo/2.4. [Andras Iklody]</p>
-<p>fix: check also event.org_id when validating event ownership in order to fetch attributes. Fixes #1918
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
-  Dulaunoy]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
-- Merge pull request #4053 from Rafiot/pipenv. [Raphaël Vinot]</p>
-<p>chg: Pump PyMISP, use pipenv in travis
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge pull request #4049 from obert01/logs-accessibility-fix. [Andras
-  Iklody]</p>
-<p>Accessibility fix in the Logs view
-- Accessibility: Fixed the aria-label properties of the filter buttons
-  in the Logs view. [Olivier BERT]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
-- Merge pull request #4041 from mokaddem/UIObjectReferences. [Sami
-  Mokaddem]</p>
-<p>Improved generic_picker and object references
-- Merge branch '2.4' into UIObjectReferences. [mokaddem]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge pull request #4046 from SteveClement/guides. [Steve Clement]</p>
-<p>fix: [doc] Kali installer now working again
-- Merge branch '2.4' into guides. [Steve Clement]
-- Merge pull request #4037 from SteveClement/i18n. [Steve Clement]</p>
-<p>chg: [i18n] Updated and added Localizations
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Add: [stix framing] Added Artifact Object in  the list. [chrisr3d]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Update INSTALL.ubuntu1804.md. [Andras Iklody]
-- Update INSTALL.debian9.md. [Andras Iklody]
-- Update INSTALL.rhel7.md. [Andras Iklody]
-- Added crypt_gpg alternate installer. [Andras Iklody]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge pull request #4033 from andreybolonin/patch-1. [Alexandre
-  Dulaunoy]</p>
-<p>add php 7.3 to travis
-- Add php 7.3 to travis. [Andrey Bolonin]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</p>
 <h2 id="v24101-2019-01-20">v2.4.101 (2019-01-20)<a class="headerlink" href="#v24101-2019-01-20" title="Permanent link">&para;</a></h2>
 <h2 id="new_2">New<a class="headerlink" href="#new_2" title="Permanent link">&para;</a></h2>
 <ul>
@@ -8491,50 +8399,48 @@
 <li>Fixed LGTM JavaScript analysis alerts. [mokaddem]</li>
 <li>[refacto] removed useless code and views. [mokaddem]</li>
 <li>[css] indent. [mokaddem]</li>
-<li>[eventView] Replaced link by span. [mokaddem]</li>
-</ul>
-<p>So that the focus is not done when clicking on it
-- [attackMatrix] removed useless view. [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker improved title management of popover.
-  [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker remove popover on tag deletion. [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker popover is attached to body. [mokaddem]</p>
-<p>Needed to add reference to the original node that toggle the popover
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker slightly improved tag template. [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker replaced galaxy deletion alert by confirm
-  popover. [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker deleting tags uses popover. [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker add warning message if number of option is
-  to large. [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker filter galaxies by synonyms. [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker display expanded taxonomy info. [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker added tag styling and additional data in
-  option. [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker automatically switch to submit pills if
-  applicable. [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker added custom chosen event to support
-  redrawing after searches. [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker prevnet drawing empty option. [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker improved template (show more fields)
-  [mokaddem]
-- [UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker added templating system for select options.
-  [mokaddem]
-- [tagging] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - bulk galaxy tagging on attribute and event. [mokaddem]
-- [tagging] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - bulk tagging via generic picker on event and complete
-  support for TagCollection. [mokaddem]
-- [tagging] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - bulk tagging via generic picker on tag level.
-  [mokaddem]
-- [taxonomy choice] replace old popup view by the generic pre-picker.
-  [mokaddem]
-- [doc] Updated date of testing. [Steve Clement]
-- [doc] Updated Ubuntu 18.04 install and all generic generic
-  dependencies. [Steve Clement]
-- [Taxonomy] disable (hide) tags when disabling parent taxonomy.
-  [mokaddem]
-- [galaxy] updated to the latest version. [Alexandre Dulaunoy]
-- [internal] timestamp resolution for time ranges should reorder the
-  conditions. [iglocska]</p>
-<ul>
+<li>[eventView] Replaced link by span. [mokaddem]
+  So that the focus is not done when clicking on it</li>
+<li>[attackMatrix] removed useless view. [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker improved title management of popover.
+  [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker remove popover on tag deletion. [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker popover is attached to body. [mokaddem]
+  Needed to add reference to the original node that toggle the popover</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker slightly improved tag template. [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker replaced galaxy deletion alert by confirm
+  popover. [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker deleting tags uses popover. [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker add warning message if number of option is
+  to large. [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker filter galaxies by synonyms. [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker display expanded taxonomy info. [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker added tag styling and additional data in
+  option. [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker automatically switch to submit pills if
+  applicable. [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker added custom chosen event to support
+  redrawing after searches. [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker prevnet drawing empty option. [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker improved template (show more fields)
+  [mokaddem]</li>
+<li>[UI] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - generic_picker added templating system for select options.
+  [mokaddem]</li>
+<li>[tagging] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - bulk galaxy tagging on attribute and event. [mokaddem]</li>
+<li>[tagging] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - bulk tagging via generic picker on event and complete
+  support for TagCollection. [mokaddem]</li>
+<li>[tagging] <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> - bulk tagging via generic picker on tag level.
+  [mokaddem]</li>
+<li>[taxonomy choice] replace old popup view by the generic pre-picker.
+  [mokaddem]</li>
+<li>[doc] Updated date of testing. [Steve Clement]</li>
+<li>[doc] Updated Ubuntu 18.04 install and all generic generic
+  dependencies. [Steve Clement]</li>
+<li>[Taxonomy] disable (hide) tags when disabling parent taxonomy.
+  [mokaddem]</li>
+<li>[galaxy] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[internal] timestamp resolution for time ranges should reorder the
+  conditions. [iglocska]</li>
 <li>always take from (smaller timestamp) to (larger timestamp), no matter the order which they were entered in</li>
 <li>[taxonomies] updated to the latest version. [Alexandre Dulaunoy]</li>
 <li>[UI] Added publish timestamp to the event view. [iglocska]</li>
@@ -8544,20 +8450,22 @@
 <li>[PyMISP] updated to the latest version (hassh-md5 and hasshserver-md5)
   added. [Alexandre Dulaunoy]</li>
 <li>[datamodels] new types hassh-md5 and hasshserver-md5 added. [Alexandre
-  Dulaunoy]</li>
-</ul>
-<p>"HASSH" is a network fingerprinting standard which can be used
+  Dulaunoy]
+  "HASSH" is a network fingerprinting standard which can be used
   to identify specific Client and Server SSH implementations.
   The fingerprints can be easily stored, searched and shared
-  in the form of an MD5 fingerprint.</p>
-<p>Fix #4007
-- [feeds] mirai.security.gives feed added. Fix #4009. [Alexandre
-  Dulaunoy]
-- [MISP objects] Bumped latest version. [chrisr3d]
-- [stix2 import] Importing Marking Definition objects from STIX files
+  in the form of an MD5 fingerprint.
+  Fix #4007</li>
+<li>[feeds] mirai.security.gives feed added. Fix #4009. [Alexandre
+  Dulaunoy]</li>
+<li>[MISP objects] Bumped latest version. [chrisr3d]</li>
+<li>
+<p>[stix2 import] Importing Marking Definition objects from STIX files
   generated with MISP. [chrisr3d]</p>
-<ul>
-<li>Import of Marking Definition objects as tags</li>
+</li>
+<li>
+<p>Import of Marking Definition objects as tags</p>
+</li>
 <li>Import at attribute and event level</li>
 <li>Import of Marking Definition objects from external STIX files at event
     level only</li>
@@ -26021,8 +25929,8 @@ BODY:
 - Merge branch 'objects_wip' into 2.4. [iglocska]
 - Merge branch '2.4' into objects_wip. [iglocska]
 - Merge pull request #2483 from obert01/accessibility-fix. [Andras
-  Iklody]</p>
-<p>Accessibility improvement: ARIA properties for the "Add new cluster" button - events/view
+  Iklody]
+  Accessibility improvement: ARIA properties for the "Add new cluster" button - events/view
 - Accessibility improvement: Given the "button" role and appropriate
   aria-label to the "Add new cluster" button in the "galaxy quick
   preview" on an events/view page. [Olivier BERT]
