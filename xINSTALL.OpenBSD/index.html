@@ -278,18 +278,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
-      Debian stable
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -366,6 +354,18 @@
   <li class="md-nav__item">
     <a href="../xINSTALL.centos7/" title="Centos 7" class="md-nav__link">
       Centos 7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
+      Debian stable
     </a>
   </li>
 
@@ -626,8 +626,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#etcphp-70ini" title="/etc/php-7.0.ini" class="md-nav__link">
-    /etc/php-7.0.ini
+  <a href="#etcphp-72ini" title="/etc/php-7.2.ini" class="md-nav__link">
+    /etc/php-7.2.ini
   </a>
   
 </li>
@@ -1196,8 +1196,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#etcphp-70ini" title="/etc/php-7.0.ini" class="md-nav__link">
-    /etc/php-7.0.ini
+  <a href="#etcphp-72ini" title="/etc/php-7.2.ini" class="md-nav__link">
+    /etc/php-7.2.ini
   </a>
   
 </li>
@@ -1479,6 +1479,8 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 <h4 id="doas-pkg-as-root">doas &amp; pkg (as root)<a class="headerlink" href="#doas-pkg-as-root" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><span class="nb">echo</span> https://cdn.openbsd.org/pub/OpenBSD/ &gt; /etc/installurl
 <span class="nb">echo</span> <span class="s2">&quot;permit keepenv setenv { PKG_PATH ENV PS1 SSH_AUTH_SOCK } :wheel&quot;</span> &gt; /etc/doas.conf
+<span class="c1">## FIXME: this does NOT set the HOME env correctly, please fix to make pip happier</span>
+<span class="nb">echo</span> <span class="s2">&quot;permit nopass setenv { ENV PS1 HOME=/var/www } www&quot;</span> &gt;&gt; /etc/doas.conf
 </pre></div>
 
 <h5 id="in-case-you-forgot-to-fetch-ports-optional">In case you forgot to fetch ports (optional)<a class="headerlink" href="#in-case-you-forgot-to-fetch-ports-optional" title="Permanent link">&para;</a></h5>
@@ -1507,7 +1509,7 @@ doas tar -x -z -f /tmp/ports.tar.gz -C /usr
 autoconf wants to be version 2.69, option 16
 automake wants to be version 1.16, option 7</p>
 </div>
-<div class="codehilite"><pre><span></span>doas pkg_add -v curl git python redis libmagic autoconf automake libtool
+<div class="codehilite"><pre><span></span>doas pkg_add -v curl git python redis libmagic autoconf automake libtool unzip
 </pre></div>
 
 <div class="admonition notice">
@@ -1652,11 +1654,13 @@ doas virtualenv -ppython3 /usr/local/virtualenvs/MISP
 <div class="codehilite"><pre><span></span>doas mkdir /usr/local/src
 doas chown misp:misp /usr/local/src
 cd /usr/local/src
-git clone https://github.com/ssdeep-project/ssdeep.git
+doas -u misp git clone https://github.com/ssdeep-project/ssdeep.git
 cd ssdeep
-./bootstrap
-./configure --prefix=/usr
-make
+export AUTOMAKE_VERSION=1.16
+export AUTOCONF_VERSION=2.69
+doas -u misp ./bootstrap
+doas -u misp ./configure --prefix=/usr
+doas -u misp make
 doas make install
 </pre></div>
 
@@ -1671,25 +1675,26 @@ doas pkg_add -v fcgi-cgi fcgi
 Option 2.
 If on OpenBSD 6.3, upgrade to 6.4 to make your life much easier.</p>
 </div>
-<div class="codehilite"><pre><span></span>doas pkg_add -v php-mysqli php-pcntl php-pdo_mysql php-apache pecl70-redis
+<div class="codehilite"><pre><span></span>doas pkg_add -v php-mysqli php-pcntl php-pdo_mysql php-apache pecl72-redis
 </pre></div>
 
-<h4 id="etcphp-70ini">/etc/php-7.0.ini<a class="headerlink" href="#etcphp-70ini" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>allow_url_fopen = On
+<h4 id="etcphp-72ini">/etc/php-7.2.ini<a class="headerlink" href="#etcphp-72ini" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>## TODO: sed foo as .ini exists
+allow_url_fopen = On
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> /etc/php-7.0
-doas cp ../php-7.0.sample/* .
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> /etc/php-7.2
+doas cp ../php-7.2.sample/* .
 </pre></div>
 
 <h4 id="php-symlinks">php symlinks<a class="headerlink" href="#php-symlinks" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>doas ln -s /usr/local/bin/php-7.0 /usr/local/bin/php
-doas ln -s /usr/local/bin/phpize-7.0 /usr/local/bin/phpize
-doas ln -s /usr/local/bin/php-config-7.0 /usr/local/bin/php-config
+<div class="codehilite"><pre><span></span>doas ln -s /usr/local/bin/php-7.2 /usr/local/bin/php
+doas ln -s /usr/local/bin/phpize-7.2 /usr/local/bin/phpize
+doas ln -s /usr/local/bin/php-config-7.2 /usr/local/bin/php-config
 </pre></div>
 
 <h4 id="enable-php-fpm">Enable php fpm<a class="headerlink" href="#enable-php-fpm" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>doas rcctl <span class="nb">enable</span> php70_fpm
+<div class="codehilite"><pre><span></span>doas rcctl <span class="nb">enable</span> php72_fpm
 </pre></div>
 
 <h4 id="configure-fpm">Configure fpm<a class="headerlink" href="#configure-fpm" title="Permanent link">&para;</a></h4>
@@ -1697,9 +1702,28 @@ doas ln -s /usr/local/bin/php-config-7.0 /usr/local/bin/php-config
 
 # pid = /var/www/run/php-fpm.pid
 # error_log = /var/www/logs/php-fpm.log
-# listen = /var/www/run/php-fpm.sock
 
-doas /etc/rc.d/php70_fpm start 
+doas mkdir /etc/php-fpm.d
+doas vi /etc/php-fpm.d/default.conf
+echo &quot;;;;;;;;;;;;;;;;;;;;;
+; Pool Definitions ;
+;;;;;;;;;;;;;;;;;;;;
+
+[www]
+user = www
+group = www
+listen = /var/www/run/php-fpm.sock
+listen.owner = www
+listen.group = www
+listen.mode = 0660
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+chroot = /var/www&quot; | doas tee /etc/php-fpm.d/default.conf
+
+doas /etc/rc.d/php72_fpm start 
 </pre></div>
 
 <div class="admonition notice">
@@ -1738,16 +1762,21 @@ doas pkg_add py-pip py3-pip libxml libxslt py3-jsonschema
 doas /usr/local/virtualenvs/MISP/bin/pip install -U pip
 
 <span class="nb">cd</span> /var/www/htdocs/MISP/app/files/scripts
+doas -u www git clone https://github.com/CybOXProject/mixbox.git
 doas -u www git clone https://github.com/CybOXProject/python-cybox.git
 doas -u www git clone https://github.com/STIXProject/python-stix.git
+doas -u www git clone https://github.com/MAECProject/python-maec.git
+
 <span class="nb">cd</span> /var/www/htdocs/MISP/app/files/scripts/python-cybox
 doas /usr/local/virtualenvs/MISP/bin/python setup.py install
+
 <span class="nb">cd</span> /var/www/htdocs/MISP/app/files/scripts/python-stix
 doas /usr/local/virtualenvs/MISP/bin/python setup.py install
 
+<span class="nb">cd</span> /var/www/htdocs/MISP/app/files/scripts/python-maec
+doas /usr/local/virtualenvs/MISP/bin/python setup.py install
+
 <span class="c1"># install mixbox to accommodate the new STIX dependencies:</span>
-<span class="nb">cd</span> /var/www/htdocs/MISP/app/files/scripts/
-doas -u www git clone https://github.com/CybOXProject/mixbox.git
 <span class="nb">cd</span> /var/www/htdocs/MISP/app/files/scripts/mixbox
 doas /usr/local/virtualenvs/MISP/bin/python setup.py install
 
@@ -1759,10 +1788,9 @@ doas /usr/local/virtualenvs/MISP/bin/python setup.py install
 <span class="nb">cd</span> /var/www/htdocs/MISP/cti-python-stix2
 doas /usr/local/virtualenvs/MISP/bin/python setup.py install
 
-<span class="c1"># install python-magic, pydeep and maec</span>
+<span class="c1"># install python-magic and pydeep</span>
 doas /usr/local/virtualenvs/MISP/bin/pip install python-magic
 doas /usr/local/virtualenvs/MISP/bin/pip install git+https://github.com/kbandla/pydeep.git
-doas /usr/local/virtualenvs/MISP/bin/pip install maec
 </pre></div>
 
 <h3 id="3-cakephp">3/ CakePHP<a class="headerlink" href="#3-cakephp" title="Permanent link">&para;</a></h3>
@@ -1770,7 +1798,7 @@ doas /usr/local/virtualenvs/MISP/bin/pip install maec
 <div class="codehilite"><pre><span></span><span class="c1"># CakePHP is included as a submodule of MISP and has been fetched earlier.</span>
 <span class="c1"># Install CakeResque along with its dependencies if you intend to use the built in background jobs:</span>
 <span class="nb">cd</span> /var/www/htdocs/MISP/app
-mkdir /var/www/.composer <span class="p">;</span> chown www:www /var/www/.composer
+doas mkdir /var/www/.composer <span class="p">;</span> doas chown www:www /var/www/.composer
 doas -u www php composer.phar require kamisama/cake-resque:4.1.2
 doas -u www php composer.phar config vendor-dir Vendor
 doas -u www php composer.phar install
@@ -1885,7 +1913,7 @@ Listen 443
 DirectoryIndex index.php
 </pre></div>
 
-<div class="codehilite"><pre><span></span>doas ln -sf /var/www/conf/modules.sample/php-7.0.conf /var/www/conf/modules/php.conf
+<div class="codehilite"><pre><span></span>doas ln -sf /var/www/conf/modules.sample/php-7.2.conf /var/www/conf/modules/php.conf
 <span class="c1"># Restart apache</span>
 doas /etc/rc.d/apache2 restart
 </pre></div>
@@ -2029,7 +2057,7 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <h4 id="misp-modules">MISP Modules<a class="headerlink" href="#misp-modules" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>doas pkg_add -v jpeg yara
 cd /usr/local/src/
-git clone https://github.com/MISP/misp-modules.git
+doas -u misp git clone https://github.com/MISP/misp-modules.git
 cd misp-modules
 # pip3 install
 doas /usr/local/virtualenvs/MISP/bin/pip install -I -r REQUIREMENTS

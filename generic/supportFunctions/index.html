@@ -274,18 +274,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
-      Debian stable
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -360,6 +348,18 @@
   <li class="md-nav__item">
     <a href="../../xINSTALL.centos7/" title="Centos 7" class="md-nav__link">
       Centos 7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
+      Debian stable
     </a>
   </li>
 
@@ -745,9 +745,9 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
 
 <span class="c1"># Extract manufacturer</span>
 checkManufacturer <span class="o">()</span> <span class="o">{</span>
-  <span class="k">if</span> <span class="o">[</span> ! -f <span class="k">$(</span>which dmidecode<span class="k">)</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[</span> -z <span class="k">$(</span>which dmidecode<span class="k">)</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     checkAptLock
-    sudo apt install dmidecode -y
+    sudo apt install dmidecode -qy
   <span class="k">fi</span>
   <span class="nv">MANUFACTURER</span><span class="o">=</span><span class="k">$(</span>sudo dmidecode -s system-manufacturer<span class="k">)</span>
   <span class="nb">echo</span> <span class="nv">$MANUFACTURER</span>
@@ -864,12 +864,53 @@ checkID <span class="o">()</span> <span class="o">{</span>
 
 <span class="c1"># pre-install check to make sure what we will be installing on, is ready and not a half installed system</span>
 preInstall <span class="o">()</span> <span class="o">{</span>
+<span class="c1"># preInstall needs to be able to be called before ANY action. Install/Upgrade/AddTool</span>
+<span class="c1"># Pre install wants to be the place too where the following is checked and set via ENV_VAR:</span>
+<span class="c1"># Check if composer is installed and functioning</span>
+<span class="c1"># Check if misp db is installed (API call would confirm that the DB indeed works)</span>
+<span class="c1"># Check apache config (Maybe try to talk to the server via api, this would confirm quite a lot)</span>
+<span class="c1"># Check if workers are running/installed, maybe kick them if they are not</span>
+<span class="c1"># /var/www/MISP/app/Config/[bootstrap,databases,core,config].php exists</span>
+<span class="c1"># /var/www/MISP perms are correct (for $SUDO_WWW useage)</span>
+<span class="c1">#</span>
+
+  <span class="c1"># Check if $PATH_TO_MISP exists and is writable by $WWW_USER</span>
+  <span class="o">[[</span> -d <span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">PATH_TO_MISP_EXISTS</span><span class="o">=</span><span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2"> exists&quot;</span>
+
+  <span class="c1"># .git exists and git is working for $WWW_USER</span>
+  <span class="o">[[</span> -d <span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.git&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">PATH_TO_GIT_EXISTS</span><span class="o">=</span><span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.git exists&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_WWW</span> git status
+
+  <span class="c1"># .gnupg exists and working correctly</span>
+  <span class="o">[[</span> -d <span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.gnupg&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">PATH_TO_GNUPG_EXISTS</span><span class="o">=</span><span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.gnupg exists&quot;</span>
+
+
+  <span class="c1"># Extract username, password and dbname</span>
+  <span class="c1">##cat database.php |grep -v // |grep -e database -e login -e password |tr -d \&#39; |tr -d \ |tr -d , |tr -d \&gt;</span>
+  <span class="nv">DBPASSWORD_MISP</span><span class="o">=</span><span class="k">$(</span>cat database.php <span class="p">|</span>grep -v // <span class="p">|</span>grep -e password <span class="p">|</span>tr -d <span class="se">\&#39;</span> <span class="p">|</span>tr -d <span class="se">\ </span><span class="p">|</span>tr -d , <span class="p">|</span>tr -d <span class="se">\&gt;</span> <span class="p">|</span>cut -f <span class="m">2</span> -d<span class="o">=</span><span class="k">)</span>
+  <span class="nv">DBUSER_MISP</span><span class="o">=</span><span class="k">$(</span>cat database.php <span class="p">|</span>grep -v // <span class="p">|</span>grep -e login <span class="p">|</span>tr -d <span class="se">\&#39;</span> <span class="p">|</span>tr -d <span class="se">\ </span><span class="p">|</span>tr -d , <span class="p">|</span>tr -d <span class="se">\&gt;</span> <span class="p">|</span>cut -f <span class="m">2</span> -d<span class="o">=</span><span class="k">)</span>
+  <span class="nv">DBNAME</span><span class="o">=</span><span class="k">$(</span>cat database.php <span class="p">|</span>grep -v // <span class="p">|</span>grep -e database <span class="p">|</span>tr -d <span class="se">\&#39;</span> <span class="p">|</span>tr -d <span class="se">\ </span><span class="p">|</span>tr -d , <span class="p">|</span>tr -d <span class="se">\&gt;</span> <span class="p">|</span>cut -f <span class="m">2</span> -d<span class="o">=</span><span class="k">)</span>
+  <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql --disable-column-names -B  -u <span class="nv">$DBUSER_MISP</span> -p<span class="s2">&quot;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span> <span class="nv">$DBNAME</span> -e <span class="s1">&#39;SELECT authkey FROM users WHERE role_id=1 LIMIT 1&#39;</span><span class="k">)</span>
+
+  <span class="c1"># Check if db exists</span>
+  <span class="o">[[</span> -d <span class="s2">&quot;/var/lib/mysql/</span><span class="nv">$DBNAME</span><span class="s2">&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">MISP_DB_DIR_EXISTS</span><span class="o">=</span><span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;/var/lib/mysql/</span><span class="nv">$DBNAME</span><span class="s2"> exists&quot;</span>
+
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Place-holder, not implemented yet.</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="nb">exit</span>
 <span class="o">}</span>
 
 <span class="c1"># Upgrade function</span>
 upgrade <span class="o">()</span> <span class="o">{</span>
+  <span class="nv">headerJSON</span><span class="o">=</span><span class="s2">&quot;application/json&quot;</span>
+  <span class="nv">Acc</span><span class="o">=</span><span class="s2">&quot;Accept:&quot;</span>
+  <span class="nv">Autho</span><span class="o">=</span><span class="s2">&quot;Authorization:&quot;</span>
+  <span class="nv">CT</span><span class="o">=</span><span class="s2">&quot;Content-Type:&quot;</span>
+  <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s2">&quot;https://127.0.0.1&quot;</span>
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app <span class="p">;</span> <span class="nv">$SUDO_WWW</span> php composer.phar update <span class="nv">$SUDO_WWW</span> php composer.phar self-update
+
+  <span class="k">for</span> URN in <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;galaxies warninglists noticelists objectTemplates taxonomies&quot;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+    curl --header <span class="s2">&quot;</span><span class="nv">$Autho</span><span class="s2"> </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;</span><span class="nv">$Acc</span><span class="s2"> </span><span class="nv">$headerJSON</span><span class="s2">&quot;</span> --header <span class="s2">&quot;</span><span class="nv">$CT</span><span class="s2"> </span><span class="nv">$headerJSON</span><span class="s2">&quot;</span> -k -X POST <span class="nv">$MISP_BASEURL</span>/<span class="nv">$URN</span>/update
+  <span class="k">done</span>
+
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Place-holder, not implemented yet.</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="nb">exit</span>
 <span class="o">}</span>
@@ -1272,7 +1313,7 @@ theEnd <span class="o">()</span> <span class="o">{</span>
   space
   <span class="nb">echo</span> -e <span class="s2">&quot;Enjoy using </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">. For any issues see here: https://github.com/MISP/MISP/issues&quot;</span>
   space
-  <span class="k">if</span> <span class="o">[</span> <span class="nv">$UNATTENDED</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Unattended install!</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="nb">echo</span> -e <span class="s2">&quot;This means we guessed the Base URL, it might be wrong, please double check.&quot;</span>
     space

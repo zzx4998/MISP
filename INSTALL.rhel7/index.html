@@ -280,18 +280,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
-      Debian stable
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -438,6 +426,18 @@
   <li class="md-nav__item">
     <a href="../xINSTALL.centos7/" title="Centos 7" class="md-nav__link">
       Centos 7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
+      Debian stable
     </a>
   </li>
 
@@ -888,22 +888,22 @@ This guide installs PHP 7.2 from SCL</p>
 <div class="codehilite"><pre><span></span>systemctl <span class="nb">enable</span> --now rh-redis32-redis.service
 </pre></div>
 
-<h2 id="208-secure-the-mariadb-installation-run-the-following-command-and-follow-the-prompts">2.08/ Secure the MariaDB installation, run the following command and follow the prompts<a class="headerlink" href="#208-secure-the-mariadb-installation-run-the-following-command-and-follow-the-prompts" title="Permanent link">&para;</a></h2>
+<h2 id="208-secure-the-mariadb-installation">2.08/ Secure the MariaDB installation<a class="headerlink" href="#208-secure-the-mariadb-installation" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>scl <span class="nb">enable</span> rh-mariadb102 <span class="s1">&#39;mysql_secure_installation&#39;</span>
 </pre></div>
 
-<h2 id="210-update-the-php-extension-repository-and-install-required-package">2.10/ Update the PHP extension repository and install required package<a class="headerlink" href="#210-update-the-php-extension-repository-and-install-required-package" title="Permanent link">&para;</a></h2>
+<h2 id="209-update-the-php-extension-repository-and-install-required-package">2.09/ Update the PHP extension repository and install required package<a class="headerlink" href="#209-update-the-php-extension-repository-and-install-required-package" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>scl <span class="nb">enable</span> rh-php72 rh-redis32 bash
 pear channel-update pear.php.net
 pear install Crypt_GPG
 </pre></div>
 
-<h2 id="211-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg">2.11/ Install haveged and enable to start on boot to provide entropy for GPG<a class="headerlink" href="#211-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg" title="Permanent link">&para;</a></h2>
+<h2 id="210-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg">2.10/ Install haveged and enable to start on boot to provide entropy for GPG<a class="headerlink" href="#210-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>yum install haveged
 systemctl <span class="nb">enable</span> --now haveged
 </pre></div>
 
-<h2 id="212-install-python-36-from-scl">2.12/ Install Python 3.6 from SCL<a class="headerlink" href="#212-install-python-36-from-scl" title="Permanent link">&para;</a></h2>
+<h2 id="211-install-python-36-from-scl">2.11/ Install Python 3.6 from SCL<a class="headerlink" href="#211-install-python-36-from-scl" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>yum install rh-python36
 </pre></div>
 
@@ -960,10 +960,10 @@ systemctl restart rh-php72-php-fpm.service
 </pre></div>
 
 <h2 id="306-enable-dependencies-detection-in-the-diagnostics-page">3.06/ Enable dependencies detection in the diagnostics page<a class="headerlink" href="#306-enable-dependencies-detection-in-the-diagnostics-page" title="Permanent link">&para;</a></h2>
-<p>Add the following content to <code>/etc/opt/rh/rh-php71/php-fpm.d/www.conf</code> :
-<div class="codehilite"><pre><span></span>env[PATH] =/opt/rh/rh-redis32/root/usr/bin:/opt/rh/rh-python36/root/usr/bin:/opt/rh/rh-php71/root/usr/bin:/usr/local/bin:/usr/bin:/bin
+<p>Add the following content to <code>/etc/opt/rh/rh-php72/php-fpm.d/www.conf</code> :
+<div class="codehilite"><pre><span></span>env[PATH] =/opt/rh/rh-redis32/root/usr/bin:/opt/rh/rh-python36/root/usr/bin:/opt/rh/rh-php72/root/usr/bin:/usr/local/bin:/usr/bin:/bin
 </pre></div>
-Then run <code>systemctl restart rh-php71-php-fpm.service</code>.
+Then run <code>systemctl restart rh-php72-php-fpm.service</code>.
 This allows MISP to detect GnuPG, the Python modules' versions and to read the PHP settings.</p>
 <h1 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h1>
 <h2 id="401-install-cakeresque-along-with-its-dependencies-if-you-intend-to-use-the-built-in-background-jobs">4.01/ Install CakeResque along with its dependencies if you intend to use the built in background jobs<a class="headerlink" href="#401-install-cakeresque-along-with-its-dependencies-if-you-intend-to-use-the-built-in-background-jobs" title="Permanent link">&para;</a></h2>
@@ -990,17 +990,27 @@ ln -s /etc/opt/rh/rh-php72/php-fpm.d/timezone.ini /etc/opt/rh/rh-php72/php.d/99-
 </pre></div>
 
 <h2 id="405-install-crypt_gpg-and-console_commandline">4.05/ Install Crypt_GPG and Console_CommandLine<a class="headerlink" href="#405-install-crypt_gpg-and-console_commandline" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo -H -u www-data pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Console_CommandLine/package.xml
-sudo -H -u www-data pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Crypt_GPG/package.xml
+<div class="codehilite"><pre><span></span>sudo -H -u apache scl <span class="nb">enable</span> rh-php72 <span class="s1">&#39;pear install ${PATH_TO_MISP}/INSTALL/dependencies/Console_CommandLine/package.xml&#39;</span>
+sudo -H -u apache scl <span class="nb">enable</span> rh-php72 <span class="s1">&#39;pear install ${PATH_TO_MISP}/INSTALL/dependencies/Crypt_GPG/package.xml&#39;</span>
 </pre></div>
 
 <h1 id="5-set-file-permissions">5/ Set file permissions<a class="headerlink" href="#5-set-file-permissions" title="Permanent link">&para;</a></h1>
-<h2 id="501-make-sure-the-permissions-are-set-correctly-using-the-following-commands-as-root">5.01/ Make sure the permissions are set correctly using the following commands as root:<a class="headerlink" href="#501-make-sure-the-permissions-are-set-correctly-using-the-following-commands-as-root" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>chown -R apache:apache /var/www/MISP
+<p><div class="codehilite"><pre><span></span>chown -R apache:apache /var/www/MISP
 find /var/www/MISP -type d -exec chmod <span class="nv">g</span><span class="o">=</span>rx <span class="o">{}</span> <span class="se">\;</span>
 chmod -R g+r,o<span class="o">=</span> /var/www/MISP
 </pre></div>
-
+<strong>Note :</strong> For updates through the web interface to work, apache must own the /var/www/MISP folder and its subfolders as shown above, which can lead to security issues. If you do not require updates through the web interface to work, you can use the following more restrictive permissions :
+<div class="codehilite"><pre><span></span>chown -R root:apache /var/www/MISP
+find /var/www/MISP -type d -exec chmod <span class="nv">g</span><span class="o">=</span>rx <span class="o">{}</span> <span class="se">\;</span>
+chmod -R g+r,o<span class="o">=</span> /var/www/MISP
+chown apache:apache /var/www/MISP/app/files
+chown apache:apache /var/www/MISP/app/files/terms
+chown apache:apache /var/www/MISP/app/files/scripts/tmp
+chown apache:apache /var/www/MISP/app/Plugin/CakeResque/tmp
+chown -R apache:apache /var/www/MISP/app/tmp
+chown -R apache:apache /var/www/MISP/app/webroot/img/orgs
+chown -R apache:apache /var/www/MISP/app/webroot/img/custom
+</pre></div></p>
 <h1 id="6-create-database-and-user">6/ Create database and user<a class="headerlink" href="#6-create-database-and-user" title="Permanent link">&para;</a></h1>
 <h2 id="601-set-database-to-listen-on-localhost-only">6.01/ Set database to listen on localhost only<a class="headerlink" href="#601-set-database-to-listen-on-localhost-only" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="o">[</span>mysqld<span class="o">]</span> &gt; /etc/opt/rh/rh-mariadb102/my.cnf.d/bind-address.cnf
@@ -1038,15 +1048,15 @@ chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/webroot/img/orgs
 chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/webroot/img/custom
 </pre></div>
 
-<h2 id="702-allow-httpd-to-connect-to-the-redis-server-and-php-fpm-over-tcpip">7.02/ Allow httpd to connect to the redis server and php-fpm over tcp/ip<a class="headerlink" href="#702-allow-httpd-to-connect-to-the-redis-server-and-php-fpm-over-tcpip" title="Permanent link">&para;</a></h2>
+<h2 id="703-allow-httpd-to-connect-to-the-redis-server-and-php-fpm-over-tcpip">7.03/ Allow httpd to connect to the redis server and php-fpm over tcp/ip<a class="headerlink" href="#703-allow-httpd-to-connect-to-the-redis-server-and-php-fpm-over-tcpip" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>setsebool -P httpd_can_network_connect on
 </pre></div>
 
-<h2 id="703-enable-and-start-the-httpd-service">7.03/ Enable and start the httpd service<a class="headerlink" href="#703-enable-and-start-the-httpd-service" title="Permanent link">&para;</a></h2>
+<h2 id="704-enable-and-start-the-httpd-service">7.04/ Enable and start the httpd service<a class="headerlink" href="#704-enable-and-start-the-httpd-service" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>systemctl <span class="nb">enable</span> --now httpd.service
 </pre></div>
 
-<h2 id="704-open-a-hole-in-the-firewalld-service">7.04/ Open a hole in the firewalld service<a class="headerlink" href="#704-open-a-hole-in-the-firewalld-service" title="Permanent link">&para;</a></h2>
+<h2 id="705-open-a-hole-in-the-firewalld-service">7.05/ Open a hole in the firewalld service<a class="headerlink" href="#705-open-a-hole-in-the-firewalld-service" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">80</span>/tcp --permanent
 firewall-cmd --reload
 </pre></div>

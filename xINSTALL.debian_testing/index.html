@@ -278,18 +278,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
-      Debian stable
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -366,6 +354,18 @@
   <li class="md-nav__item">
     <a href="../xINSTALL.centos7/" title="Centos 7" class="md-nav__link">
       Centos 7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
+      Debian stable
     </a>
   </li>
 
@@ -1584,10 +1584,14 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
   <span class="nb">echo</span> <span class="s2">&quot;Checking for sudo and installing etckeeper&quot;</span>
   <span class="k">if</span> <span class="o">[[</span> ! -f <span class="k">$(</span>which sudo<span class="k">)</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to install etckeeper&quot;</span>
     su -c <span class="s2">&quot;apt install etckeeper -y&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to install sudo&quot;</span>
     su -c <span class="s2">&quot;apt install sudo -y&quot;</span>
-    <span class="c1"># TODO: Fix this, user misp might not exist</span>
-    su -c <span class="s2">&quot;adduser misp sudo&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to add </span><span class="nv">$MISP_USER</span><span class="s2"> to sudo group&quot;</span>
+    su -c <span class="s2">&quot;adduser </span><span class="nv">$MISP_USER</span><span class="s2"> sudo&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;We added </span><span class="nv">$MISP_USER</span><span class="s2"> to group sudo and now we need to log out and in again.&quot;</span>
+    <span class="nb">exit</span>
   <span class="k">else</span>
     sudo apt install etckeeper -y
   <span class="k">fi</span>
@@ -2416,7 +2420,7 @@ viper <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> /usr/local/src/
   sudo apt-get install <span class="se">\</span>
     libssl-dev swig python3-ssdeep p7zip-full unrar-free sqlite python3-pyclamd exiftool radare2 <span class="se">\</span>
-    python3-magic python3-sqlalchemy python3-prettytable libffi-dev -y
+    python3-magic python3-sqlalchemy python3-prettytable libffi-dev libfreetype6-dev libpng-dev -qy
   <span class="nb">echo</span> <span class="s2">&quot;Cloning Viper&quot;</span>
   <span class="nv">$SUDO_USER</span> git clone https://github.com/viper-framework/viper.git
   sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper
@@ -2667,7 +2671,7 @@ This is not the purpose of the MISP Project but the purpose and care of those in
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../xINSTALL.centos7/" title="Centos 7" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../xINSTALL.debian9/" title="Debian stable" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -2676,7 +2680,7 @@ This is not the purpose of the MISP Project but the purpose and care of those in
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Centos 7
+                Debian stable
               </span>
             </div>
           </a>

@@ -278,18 +278,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../../INSTALL.debian9/" title="Debian stable" class="md-nav__link">
-      Debian stable
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -364,6 +352,18 @@
   <li class="md-nav__item">
     <a href="../../xINSTALL.centos7/" title="Centos 7" class="md-nav__link">
       Centos 7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
+      Debian stable
     </a>
   </li>
 
@@ -690,7 +690,7 @@ viper <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> /usr/local/src/
   sudo apt-get install <span class="se">\</span>
     libssl-dev swig python3-ssdeep p7zip-full unrar-free sqlite python3-pyclamd exiftool radare2 <span class="se">\</span>
-    python3-magic python3-sqlalchemy python3-prettytable libffi-dev -y
+    python3-magic python3-sqlalchemy python3-prettytable libffi-dev libfreetype6-dev libpng-dev -qy
   <span class="nb">echo</span> <span class="s2">&quot;Cloning Viper&quot;</span>
   <span class="nv">$SUDO_USER</span> git clone https://github.com/viper-framework/viper.git
   sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper
