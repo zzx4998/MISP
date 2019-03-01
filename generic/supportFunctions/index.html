@@ -684,8 +684,7 @@ usage <span class="o">()</span> <span class="o">{</span>
   space
   <span class="nb">echo</span> -e <span class="s2">&quot;                -u | Do an unattanded Install, no questions asked&quot;</span>      <span class="c1"># UNATTENDED</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">       -U | Attempt and upgrade of selected item</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>         <span class="c1"># UPGRADE</span>
-  space
-  <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">Some parameters want to be hidden: </span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">       -N | Nuke this MISP Instance</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>                      <span class="c1"># NUKE</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">       -f | Force test install on current Ubuntu LTS schim, add -B for 18.04 -&gt; 18.10, or -BB 18.10 -&gt; 19.10)</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># FORCE</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;Options can be combined: </span><span class="si">${</span><span class="nv">SCRIPT_NAME</span><span class="si">}</span><span class="s2"> -c -V -D # Will install Core+Viper+Dashboard&quot;</span>
   space
@@ -720,6 +719,7 @@ setOpt <span class="o">()</span> <span class="o">{</span>
       <span class="o">(</span><span class="s2">&quot;-A&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;all&quot;</span><span class="p">;</span> <span class="nv">ALL</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
       <span class="o">(</span><span class="s2">&quot;-C&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;pre&quot;</span><span class="p">;</span> <span class="nv">PRE</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
       <span class="o">(</span><span class="s2">&quot;-U&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;upgrade&quot;</span><span class="p">;</span> <span class="nv">UPGRADE</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
+      <span class="o">(</span><span class="s2">&quot;-N&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;nuke&quot;</span><span class="p">;</span> <span class="nv">NUKE</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
       <span class="o">(</span><span class="s2">&quot;-u&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;unattended&quot;</span><span class="p">;</span> <span class="nv">UNATTENDED</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
       <span class="o">(</span><span class="s2">&quot;-f&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;force&quot;</span><span class="p">;</span> <span class="nv">FORCE</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
       <span class="o">(</span>*<span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$o</span><span class="s2"> is not a valid argument&quot;</span><span class="p">;</span> <span class="nb">exit</span> <span class="m">1</span> <span class="p">;;</span>
@@ -806,9 +806,10 @@ progress <span class="o">()</span> <span class="o">{</span>
 checkLocale <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Checking Locale&quot;</span>
   <span class="c1"># If locale is missing, generate and install a common UTF-8</span>
-  <span class="k">if</span> <span class="o">[</span> ! -f /etc/default/locale <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> ! -f /etc/default/locale <span class="o">||</span> <span class="k">$(</span>wc -l /etc/default/locale<span class="p">|</span> cut -f <span class="m">1</span> -d<span class="se">\ </span><span class="k">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     checkAptLock
-    sudo apt install locales -y
+    sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt install locales -qy
+    sudo sed -i -e <span class="s1">&#39;s/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g&#39;</span> /etc/locale.gen
     sudo locale-gen en_US.UTF-8
     sudo update-locale <span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8 <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
   <span class="k">fi</span>
@@ -831,7 +832,7 @@ checkID <span class="o">()</span> <span class="o">{</span>
     <span class="nb">exit</span> <span class="m">1</span>
   <span class="k">elif</span> <span class="o">[[</span> <span class="k">$(</span>id <span class="nv">$MISP_USER</span> &gt;/dev/null<span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
-      <span class="nb">echo</span> <span class="s2">&quot;There is NO user called &#39;</span><span class="nv">$MISP_USER</span><span class="s2">&#39; create a user &#39;</span><span class="nv">$MISP_USER</span><span class="s2">&#39; or continue as </span><span class="nv">$USER</span><span class="s2">? (y/n) &quot;</span>
+      <span class="nb">echo</span> <span class="s2">&quot;There is NO user called &#39;</span><span class="nv">$MISP_USER</span><span class="s2">&#39; create a user &#39;</span><span class="nv">$MISP_USER</span><span class="s2">&#39; (y) or continue as </span><span class="nv">$USER</span><span class="s2"> (n)? (y/n) &quot;</span>
       <span class="nb">read</span> ANSWER
       <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>tr <span class="o">[</span>A-Z<span class="o">]</span> <span class="o">[</span>a-z<span class="o">]</span><span class="k">)</span>
     <span class="k">else</span>
@@ -969,6 +970,9 @@ kaliOnRootR0ckz <span class="o">()</span> <span class="o">{</span>
 
 setBaseURL <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Setting Base URL&quot;</span>
+  <span class="nv">CONN</span><span class="o">=</span><span class="k">$(</span>ip -br -o -4 a <span class="p">|</span>grep UP <span class="p">|</span>head -1 <span class="p">|</span>tr -d <span class="s2">&quot;UP&quot;</span><span class="k">)</span>
+  <span class="nv">IFACE</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$CONN</span> <span class="p">|</span>awk <span class="o">{</span><span class="s1">&#39;print $1&#39;</span><span class="o">}</span><span class="sb">`</span>
+  <span class="nv">IP</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$CONN</span> <span class="p">|</span>awk <span class="o">{</span><span class="s1">&#39;print $2&#39;</span><span class="o">}</span><span class="p">|</span> cut -f1 -d/<span class="sb">`</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="k">$(</span>checkManufacturer<span class="k">)</span> !<span class="o">=</span> <span class="s2">&quot;innotek GmbH&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     debug <span class="s2">&quot;We guess that this is a physical machine and cannot possibly guess what the MISP_BASEURL might be.&quot;</span>
     <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
@@ -976,8 +980,13 @@ setBaseURL <span class="o">()</span> <span class="o">{</span>
       <span class="nb">echo</span> <span class="s2">&quot;Do you want to change it now? (y/n) &quot;</span>
       <span class="nb">read</span> ANSWER
       <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>tr <span class="o">[</span>A-Z<span class="o">]</span> <span class="o">[</span>a-z<span class="o">]</span><span class="k">)</span>
-      <span class="k">if</span> <span class="o">[[</span> <span class="nv">$ANSWER</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$ANSWER</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="k">if</span> <span class="o">[[</span> ! -z <span class="nv">$IP</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+          <span class="nb">echo</span> <span class="s2">&quot;It seems you have an interface called </span><span class="nv">$IFACE</span><span class="s2"> UP with the following IP: </span><span class="nv">$IP</span><span class="s2"> - FYI&quot;</span>
+          <span class="nb">echo</span> <span class="s2">&quot;Thus your Base URL could be: https://</span><span class="nv">$IP</span><span class="s2">&quot;</span>
+        <span class="k">fi</span>
         <span class="nb">echo</span> <span class="s2">&quot;Please enter the Base URL, e.g: &#39;https://example.org&#39;&quot;</span>
+        <span class="nb">echo</span> <span class="s2">&quot;&quot;</span>
         <span class="nb">echo</span> -n <span class="s2">&quot;Enter Base URL: &quot;</span>
         <span class="nb">read</span> MISP_BASEURL
       <span class="k">else</span>
@@ -1058,6 +1067,28 @@ checkAptLock <span class="o">()</span> <span class="o">{</span>
   <span class="nb">unset</span> DONE
 <span class="o">}</span>
 
+<span class="c1"># &lt;snippet-begin 0_installDepsPhp70.sh&gt;</span>
+<span class="c1"># Install Php 7.0 dependencies</span>
+installDepsPhp70 <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Installing PHP 7.0 dependencies&quot;</span>
+  <span class="nv">PHP_ETC_BASE</span><span class="o">=</span>/etc/php/7.0
+  <span class="nv">PHP_INI</span><span class="o">=</span><span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/apache2/php.ini
+  sudo apt update
+  sudo apt install -qy <span class="se">\</span>
+  libapache2-mod-php <span class="se">\</span>
+  php php-cli <span class="se">\</span>
+  php-dev <span class="se">\</span>
+  php-json php-xml php-mysql php-opcache php-readline php-mbstring <span class="se">\</span>
+  php-pear <span class="se">\</span>
+  php-redis php-gnupg
+
+  <span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
+  <span class="k">do</span>
+      sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
+  <span class="k">done</span>
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 0_installDepsPhp70.sh&gt;</span>
+
 <span class="c1"># &lt;snippet-begin 0_installDepsPhp73.sh&gt;</span>
 <span class="c1"># Install Php 7.3 deps</span>
 installDepsPhp73 <span class="o">()</span> <span class="o">{</span>
@@ -1096,7 +1127,7 @@ installDeps <span class="o">()</span> <span class="o">{</span>
   <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$UNATTENDED</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt install -qy postfix <span class="o">||</span> sudo apt install -qy postfix
 
   sudo apt install -qy <span class="se">\</span>
-  curl gcc git gnupg-agent make openssl redis-server neovim zip libyara-dev python3-yara python3-redis python3-zmq <span class="se">\</span>
+  curl gcc git gnupg-agent make openssl redis-server neovim unzip zip libyara-dev python3-yara python3-redis python3-zmq sqlite3 <span class="se">\</span>
   mariadb-client <span class="se">\</span>
   mariadb-server <span class="se">\</span>
   apache2 apache2-doc apache2-utils <span class="se">\</span>
@@ -1224,6 +1255,9 @@ gitPullAllRCLOCAL <span class="o">()</span> <span class="o">{</span>
   sed -i -e <span class="s1">&#39;$i \done\n&#39;</span> /etc/rc.local
 <span class="o">}</span>
 
+<span class="c1"># Composer on php 7.0 does not need any special treatment the provided phar works well</span>
+<span class="nb">alias</span> <span class="nv">composer70</span><span class="o">=</span><span class="s1">&#39;composer72&#39;</span>
+
 <span class="c1"># Composer on php 7.2 does not need any special treatment the provided phar works well</span>
 composer72 <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
@@ -1269,15 +1303,24 @@ genRCLOCAL <span class="o">()</span> <span class="o">{</span>
   sed -i -e <span class="s1">&#39;$i \echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled\n&#39;</span> /etc/rc.local
   sed -i -e <span class="s1">&#39;$i \echo 1024 &gt; /proc/sys/net/core/somaxconn\n&#39;</span> /etc/rc.local
   sed -i -e <span class="s1">&#39;$i \sysctl vm.overcommit_memory=1\n&#39;</span> /etc/rc.local
-  sed -i -e <span class="s1">&#39;$i \sudo -u www-data bash /var/www/MISP/app/Console/worker/start.sh\n&#39;</span> /etc/rc.local
+<span class="o">}</span>
+
+<span class="c1"># Nuke the install, meaning remove all MISP data but no packages, this makes testing the installer faster</span>
+nuke <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">YOU ARE ABOUT TO DELETE ALL MISP DATA! Sleeping 10, 9, 8...</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  sleep <span class="m">10</span>
+  sudo rm -rvf /usr/local/src/<span class="o">{</span>misp-modules,viper,mail_to_misp,LIEF,faup<span class="o">}</span>
+  sudo rm -rvf /var/www/MISP
+  sudo mysqladmin drop misp
+  sudo mysql -e <span class="s2">&quot;DROP USER misp@localhost&quot;</span>
 <span class="o">}</span>
 
 <span class="c1"># Final function to let the user know what happened</span>
 theEnd <span class="o">()</span> <span class="o">{</span>
   space
-  <span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span> &gt; /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/mysql.txt
-  <span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span> &gt;&gt; /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/mysql.txt
-  <span class="nb">echo</span> <span class="s2">&quot;Authkey: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> &gt; /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/MISP-authkey.txt
+  <span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span> <span class="p">|</span><span class="nv">$SUDO_USER</span> tee /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/mysql.txt
+  <span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>  <span class="p">|</span><span class="nv">$SUDO_USER</span> tee -a /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/mysql.txt
+  <span class="nb">echo</span> <span class="s2">&quot;Authkey: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> <span class="p">|</span><span class="nv">$SUDO_USER</span> tee -a /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/MISP-authkey.txt
 
   clear
   space

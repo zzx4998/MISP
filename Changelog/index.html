@@ -7711,6 +7711,32 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>Add tests after install. [Raphaël Vinot]</li>
+<li>[eventview] Shows number of object in the event. [mokaddem]</li>
+<li>[UI] Rework of the attribute index toolbar on the event view.
+  [iglocska]</li>
+<li>
+<p>[UI] Added quickfilter for the server settings. [iglocska]</p>
+</li>
+<li>
+<p>no more **** around trying to find the right settings!</p>
+</li>
+<li>
+<p>[UI] Further work on the server settings UI. [iglocska]</p>
+</li>
+<li>
+<p>overview reworked</p>
+</li>
+<li>some minor adjustements</li>
+<li>[UI] Reworked the sharing group add/edit tool. [iglocska]</li>
+<li>[UI] rework of the server settings. [iglocska]</li>
+<li>[UI] Updated the server preview index to follow the new tab UI
+  standards. [iglocska]</li>
+<li>[UI] Refactored the feed preview index UI to the new tab system.
+  [iglocska]</li>
+<li>[Feed preview UI] Added quick filter to the MISP feed preview.
+  [iglocska]</li>
+<li>[tools] Experimental tool to upgrade MISP via GitHub. [Steve Clement]</li>
 <li>[UI] Added javascript to support the index filtering. [iglocska]</li>
 <li>
 <p>[UI] Tied the index filter system into all indeces. [iglocska]</p>
@@ -7779,20 +7805,67 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[doc] Move Debian9 stable install instructions to xPerimental status
+<li>[doc] One more line to make SSL a little more secure. [Steve Clement]</li>
+<li>[doc] Some formatting for the apache conf files and some incentives to
+  be more secure by default. [Steve Clement]</li>
+<li>Bump PyMISP, new object templates, fix failing tests. [Raphaël Vinot]</li>
+<li>Bump PyMISP, again. [Raphaël Vinot]</li>
+<li>Bump PyMISP. [Raphaël Vinot]</li>
+<li>[UI] Event index icons switched to FA in preparation of the BS4 move.
+  [iglocska]</li>
+<li>[objects] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[tools] misp-workers.service need to be able to be installed on a
+  stick MISP install (Ubuntu) other flavours want to be marked as such.
+  (and in a seperate directory, ideally, etc/systemd/system) chg:
+  [tools] Backup script todo added chg: [tools] worker start script todo
+  and fix me added. [Steve Clement]</li>
+<li>[attribute row] to_ids flag edition is done with a checkbox + prompt.
+  [mokaddem]</li>
+</ul>
+<p>Previously, was a select.
+- [quickEdit UI] Does not resize a column anymore. [mokaddem]
+- [PyMISP] updated to the latest version. [Alexandre Dulaunoy]
+- [eventMatrix] Added description of the cluster title and set default
+  score to 0. [mokaddem]
+- [UI] Highlight scope toggle if scope is selected. [iglocska]
+- [taxonomies] updated to the latest version. [Alexandre Dulaunoy]
+- [PyMISP] updated to the latest version. [Alexandre Dulaunoy]
+- Added a dot and sanitization of the id. [mokaddem]
+- [eventIndex] When clicking on the correlation count in the event
+  index, filter the viewed event with <code>correlation only</code> [mokaddem]
+- [UI] added icon for background workers. [iglocska]
+- [misp-objects] updated to the latest version. [Alexandre Dulaunoy]
+- [querystring] bumped. [iglocska]
+- [cleanup] Junk removed. [iglocska]
+- [UI] nav tabs ontop of lists should be able to display custom titles
+  on hover. [iglocska]
+- [misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]
+- [PyMISP] updated to the latest version. [Alexandre Dulaunoy]
+- [internal] Allow the quickfilters to work on URLs that include more
+  than just the baseurl+controller+action. [iglocska]
+- [CS] indentation. [iglocska]
+- [tools] Made it a little more universal. [Steve Clement]
+- [doc] Added small apache hardening tip chg: [installer] regenerated
+  installer. [Steve Clement]
+- [installer] Do not try and initialize mysql if the user table exists
+  new: [installer] Nuke an instance. [Steve Clement]
+- [installer] Make php versions more flexible if not 7.2. [Steve
+  Clement]
+- [installer] Updated script to use systemd for workers and modules.
+  [Steve Clement]
+- [doc] Bumped Kali version, updated misp-modules startup way, CentOS
+  typo fix. [Steve Clement]
+- [doc] Move Debian9 stable install instructions to xPerimental status
   as only Python 3.5 is supported by default but PyMISP needs 3.6 (There
   are no easy clean ways to install &gt;3.5) chg: [installer] various
-  changes and cleanups in the installer. [Steve Clement]</li>
-<li>[installer] Parsed installer update. [Steve Clement]</li>
-<li>[doc] Minor OpenBSD 6.4 tweaks (works again now ;) [Steve Clement]</li>
-<li>[installer] Make installer more verbose again, some output is actually
-  needed. [Steve Clement]</li>
-<li>
-<p>Update hover UI. [wagena]</p>
-</li>
-<li>
-<p>add some logic to choose better hover placement</p>
-</li>
+  changes and cleanups in the installer. [Steve Clement]
+- [installer] Parsed installer update. [Steve Clement]
+- [doc] Minor OpenBSD 6.4 tweaks (works again now ;) [Steve Clement]
+- [installer] Make installer more verbose again, some output is actually
+  needed. [Steve Clement]
+- Update hover UI. [wagena]</p>
+<ul>
+<li>add some logic to choose better hover placement</li>
 <li>make hover hide on outside click, to allow using the scrollbar to view
   full hover</li>
 <li>add an icon in the hover tooltip to turn it into a popup</li>
@@ -7937,6 +8010,77 @@
 - [taxonomies] updated to the latest version. [Alexandre Dulaunoy]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>
+<p>[vulnerability] Fixes a vulnerability where a user can view sightings
+  that they should not be eligible for. [iglocska]</p>
+</li>
+<li>
+<p>requires access to the event that has received the sighting</p>
+</li>
+<li>
+<p>affects instances with restrictive sighting settings (event only / sighting reported only)</p>
+</li>
+<li>
+<p>as reported by Tyler McLellan of CanCyber.org</p>
+</li>
+<li>RunTests method was totally broken. [Raphaël Vinot]</li>
+<li>[UI] Contributors - file left off. [iglocska]</li>
+<li>[UI] Contributor list fixed. [iglocska]</li>
+<li>
+<p>[feed] Feed pulls don't update the timestamp of the event. [iglocska]</p>
+</li>
+<li>
+<p>affects freetext feeds</p>
+</li>
+<li>this blocks the further propagation of the modifications</li>
+<li>[ACL] added toggleToIDS. [iglocska]</li>
+<li>[generic_picker] fix #4219 (Adding ObjectReference) [mokaddem]</li>
+<li>[docs] added object template update CLI command to the automation
+  page. [iglocska]</li>
+<li>[API] Attribute edit error response fixes, #4221. [iglocska]</li>
+<li>[UI] show object UUID via the UI. [iglocska]</li>
+<li>[performance] Massive performance bug resolved for taxonomy tag
+  selector. [iglocska]</li>
+<li>[UI] Fixed exclamation point for critical alerts in server settings.
+  [chrisr3d]</li>
+<li>Typo parameter. [mokaddem]</li>
+<li>[UI] Fixed issues with the eventattribute tabs, fixes #4211.
+  [iglocska]</li>
+<li>[UI] Worker tab missing in diagnostic tool. [iglocska]</li>
+<li>[UI] Invalid requirements passed to scaffolding system in regards to
+  the show attribute context button. [iglocska]</li>
+<li>[UI] Another switch to FA. [iglocska]</li>
+<li>[UI] Switched to FA for the warning icons on the attribute values.
+  [iglocska]</li>
+<li>[correlation UI] Fixed an issue where the cache contained correlations
+  to a feed/server that is no longer in the DB. [iglocska]</li>
+<li>
+<p>[enrichment] UI errors fixed when no modules are enabled. [iglocska]</p>
+</li>
+<li>
+<p>also fixed the weird indentation</p>
+</li>
+<li>[UI] Don't show the filter bar in the server settings where it
+  wouldn't do any good. [iglocska]</li>
+<li>
+<p>[UI] Fix add object menu item. [iglocska]</p>
+</li>
+<li>
+<p>make the scaffolding system aware of the possibility that "this" might get passed along to javascript</p>
+</li>
+<li>[UI] Side menu missing the update warninglists button. [iglocska]</li>
+<li>[UI] Alignment issue resolved on the user view. [iglocska]</li>
+<li>[UI] Fixed a bug in the UI that caused the event filtering to break.
+  [iglocska]</li>
+<li>[UI] Pass the server ID to the view for the menu's consistency.
+  [iglocska]</li>
+<li>[DB] removed not null constraint of the kill chain order field, fixing</li>
+<li>[iglocska]</li>
+<li>Object could not be added with no full group by enabled, fixes #4195.
+  [iglocska]</li>
+<li>Fixed list regex menu option, fixes #4197. [iglocska]</li>
+<li>[installer] Minor install fix. [Steve Clement]</li>
+<li>[installer] Various fixes of missing dependencies. [Steve Clement]</li>
 <li>[installer] unary operator... chg: [installer] dirty notes in pre-
   flight check function. [Steve Clement]</li>
 <li>[installer] small fix to check if dmidecode is present. [Steve
@@ -8072,8 +8216,58 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #4185 from SteveClement/guides. [Steve Clement]</li>
+<li>Merge pull request #4248 from SteveClement/guides. [Steve Clement]</li>
 </ul>
+<p>chg: [installer] Various updates to the installer. Also tested towards latest Ubuntu 18.04.2
+- Merge branch '2.4' into guides. [Steve Clement]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4237 from Rafiot/install_tests. [Andras Iklody]</p>
+<p>new: Add tests after install
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4230 from SteveClement/guides. [Steve Clement]</p>
+<p>new: [installer] Update installer to make use of systemd service units
+- Merge pull request #4229 from SteveClement/tools. [Steve Clement]</p>
+<p>chg: [tools] Various updates to CLI tools
+- Merge branch '2.4' into tools. [Steve Clement]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4203 from eCrimeLabs/2.4. [Andras Iklody]</p>
+<p>Update defaults.json (Phishtank - Exclude through regex)
+- Updated defaults.json. [eCrimeLabs]</p>
+<p>Bugfixed Phishtank
+- Update defaults.json. [eCrimeLabs]</p>
+<p>Updated Phishtank feed with regex to exclude Phishtank url's
+  \/^http:\\/\\/<a href="http://www.phishtank.com">www.phishtank.com</a>\/i
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4202 from obert01/fix-tag-search. [Andras Iklody]</p>
+<p>Fixed search for cluster value in /tags/search
+- /tags/search was only looking for cluster synonyms, but not in cluster
+  values. [Olivier BERT]
+- Merge pull request #4201 from bartblaze/2.4. [Alexandre Dulaunoy]</p>
+<p>Update README.md
+- Update README.md. [Bart]</p>
+<ul>
+<li>Several small fixes</li>
+<li>Add Zeek (new Bro name)</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge pull request #4194 from gallypette/hotfixGlobalMenuSeparator.
+  [Andras Iklody]</li>
+</ul>
+<p>Fix #4193 GlobalMenuSeparator not checking Roles
+- Fix #4193 GlobalMenuSeparator not checking Roles. [Jean-Louis Huynen]
+- Merge pull request #4187 from RichieB2B/patch-5. [Alexandre Dulaunoy]</p>
+<p>Fix errors in TagCollections import
+- Fix errors in TagCollections import. [Richie B2B]
+- Merge pull request #4185 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [doc] Move Debian9-stable install instructions to xPerimental
 - Merge branch '2.4' into guides. [Steve Clement]
 - Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]

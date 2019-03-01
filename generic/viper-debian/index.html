@@ -711,16 +711,10 @@ viper <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_USER</span> ./venv/bin/pip install -r requirements.txt
   <span class="nv">$SUDO_USER</span> sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-cli
   <span class="nv">$SUDO_USER</span> sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-web
-  <span class="nb">echo</span> <span class="s2">&quot;pip uninstall yara&quot;</span>
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip uninstall yara -y
   <span class="nb">echo</span> <span class="s2">&quot;Launching viper-cli&quot;</span>
-  <span class="c1"># TODO: Perms</span>
-  <span class="c1">#$SUDO /usr/local/src/viper/viper-cli -h &gt; /dev/null</span>
-  /usr/local/src/viper/viper-cli -h &gt; /dev/null
+  <span class="nv">$SUDO_USER</span> /usr/local/src/viper/viper-cli -h &gt; /dev/null
   <span class="nb">echo</span> <span class="s2">&quot;Launching viper-web&quot;</span>
-  <span class="c1"># TODO: Perms</span>
-  /usr/local/src/viper/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
-  <span class="c1">#$SUDO /usr/local/src/viper/viper-web -p 8888 -H 0.0.0.0 &amp;</span>
+  <span class="nv">$SUDO_USER</span> /usr/local/src/viper/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
   <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/environment
   <span class="nb">echo</span> <span class="s2">&quot;. /etc/environment&quot;</span> &gt;&gt; /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/.profile
 
@@ -736,7 +730,7 @@ viper <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="nv">$AUTH_KEY</span><span class="s2">/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
   <span class="c1"># Reset admin password to: admin/Password1234</span>
   <span class="nb">echo</span> <span class="s2">&quot;Fixing admin.db with default password&quot;</span>
-  <span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="k">$(</span>sqlite3 <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/admin.db <span class="s1">&#39;UPDATE auth_user SET password=&quot;pbkdf2_sha256$100000$iXgEJh8hz7Cf$vfdDAwLX8tko1t0M1TLTtGlxERkNnltUnMhbv56wK/U=&quot;&#39;</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span><span class="s2">&quot;</span> -ne <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
+  <span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="k">$(</span>sudo sqlite3 <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/admin.db <span class="s1">&#39;UPDATE auth_user SET password=&quot;pbkdf2_sha256$100000$iXgEJh8hz7Cf$vfdDAwLX8tko1t0M1TLTtGlxERkNnltUnMhbv56wK/U=&quot;&#39;</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span><span class="s2">&quot;</span> -ne <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
     <span class="c1"># FIXME This might lead to a race condition, the while loop is sub-par</span>
     sudo chown <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/admin.db
     <span class="nb">echo</span> <span class="s2">&quot;Updating viper-web admin password, giving process time to start-up, sleeping 5, 4, 3,…&quot;</span>

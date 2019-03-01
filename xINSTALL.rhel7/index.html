@@ -1327,6 +1327,32 @@ This is not the purpose of the MISP Project but the purpose and care of those in
 <li>Do we care about physical access to the servers? (Disabling USB ports etc...)</li>
 <li>Is any fancy management engine à la <a href="https://en.wikipedia.org/wiki/Intel_Management_Engine">IME</a> in use?</li>
 </ul>
+<h2 id="apache">Apache<a class="headerlink" href="#apache" title="Permanent link">&para;</a></h2>
+<p>To make Apache less verbose in terms of sending banners, the belo might help.</p>
+<div class="codehilite"><pre><span></span>diff --git a/apache2/conf-available/security.conf b/apache2/conf-available/security.conf
+index f9f69d4..2e8fd78 100644
+--- a/apache2/conf-available/security.conf
++++ b/apache2/conf-available/security.conf
+@@ -22,7 +22,7 @@
+ # Set to one of:  Full | OS | Minimal | Minor | Major | Prod
+ # where Full conveys the most information, and Prod the least.
+ #ServerTokens Minimal
+-ServerTokens OS
++ServerTokens Prod
+ #ServerTokens Full
+
+ #
+@@ -33,7 +33,7 @@ ServerTokens OS
+ # Set to &quot;EMail&quot; to also include a mailto: link to the ServerAdmin.
+ # Set to one of:  On | Off | EMail
+ #ServerSignature Off
+-ServerSignature On
++ServerSignature Off
+
+ #
+ # Allow TRACE method
+</pre></div>
+
 <h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
 <p><a href="https://wiki.debian.org/Hardening">Debian Wiki Hardening</a></p>
 <p><a href="https://wiki.centos.org/HowTos/OS_Protection">CentOS Hardening</a></p>

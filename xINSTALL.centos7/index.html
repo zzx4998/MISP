@@ -1440,7 +1440,7 @@ sudo openssl dhparam -out /etc/pki/tls/certs/dhparam.pem <span class="m">4096</s
 sudo openssl genrsa -des3 -passout pass:x -out /tmp/misp.local.key <span class="m">4096</span>
 sudo openssl rsa -passin pass:x -in /tmp/misp.local.key -out /etc/pki/tls/private/misp.local.key
 sudo rm /tmp/misp.local.key
-sudo openssl req -new -subj <span class="s2">&quot;/C=</span><span class="si">${</span><span class="nv">OPENSSL_C</span><span class="si">}</span><span class="s2">/ST=</span><span class="si">${</span><span class="nv">OPENSSL_ST</span><span class="si">}</span><span class="s2">/L=</span><span class="si">${</span><span class="nv">OPENSSL_L</span><span class="si">}</span><span class="s2">/O=</span><span class="si">${</span><span class="nv">OPENSSL_O</span><span class="si">}</span><span class="s2">/OU=</span><span class="si">${</span><span class="nv">OPENSSL_OU</span><span class="si">}</span><span class="s2">/CN=</span><span class="si">${</span><span class="nv">OPENSSL_CN</span><span class="si">}</span><span class="s2">/emailAddress=</span><span class="si">${</span><span class="nv">OPENSSL_EMAILADDRESS</span><span class="si">}</span><span class="s2">&quot;</span> -key /etc/pki/tls/certs/misp.local.key -out /etc/pki/tls/certs/misp.local.csr
+sudo openssl req -new -subj <span class="s2">&quot;/C=</span><span class="si">${</span><span class="nv">OPENSSL_C</span><span class="si">}</span><span class="s2">/ST=</span><span class="si">${</span><span class="nv">OPENSSL_ST</span><span class="si">}</span><span class="s2">/L=</span><span class="si">${</span><span class="nv">OPENSSL_L</span><span class="si">}</span><span class="s2">/O=</span><span class="si">${</span><span class="nv">OPENSSL_O</span><span class="si">}</span><span class="s2">/OU=</span><span class="si">${</span><span class="nv">OPENSSL_OU</span><span class="si">}</span><span class="s2">/CN=</span><span class="si">${</span><span class="nv">OPENSSL_CN</span><span class="si">}</span><span class="s2">/emailAddress=</span><span class="si">${</span><span class="nv">OPENSSL_EMAILADDRESS</span><span class="si">}</span><span class="s2">&quot;</span> -key /etc/pki/tls/private/misp.local.key -out /etc/pki/tls/certs/misp.local.csr
 sudo openssl x509 -req -days <span class="m">365</span> -in /etc/pki/tls/certs/misp.local.csr -signkey /etc/pki/tls/private/misp.local.key -out /etc/pki/tls/certs/misp.local.crt
 sudo ln -s /etc/pki/tls/certs/misp.local.csr /etc/pki/tls/certs/misp-chain.crt
 cat /etc/pki/tls/certs/dhparam.pem <span class="p">|</span>sudo tee -a /etc/pki/tls/certs/misp.local.crt 
@@ -1945,6 +1945,32 @@ This is not the purpose of the MISP Project but the purpose and care of those in
 <li>Do we care about physical access to the servers? (Disabling USB ports etc...)</li>
 <li>Is any fancy management engine à la <a href="https://en.wikipedia.org/wiki/Intel_Management_Engine">IME</a> in use?</li>
 </ul>
+<h2 id="apache">Apache<a class="headerlink" href="#apache" title="Permanent link">&para;</a></h2>
+<p>To make Apache less verbose in terms of sending banners, the belo might help.</p>
+<div class="codehilite"><pre><span></span>diff --git a/apache2/conf-available/security.conf b/apache2/conf-available/security.conf
+index f9f69d4..2e8fd78 100644
+--- a/apache2/conf-available/security.conf
++++ b/apache2/conf-available/security.conf
+@@ -22,7 +22,7 @@
+ # Set to one of:  Full | OS | Minimal | Minor | Major | Prod
+ # where Full conveys the most information, and Prod the least.
+ #ServerTokens Minimal
+-ServerTokens OS
++ServerTokens Prod
+ #ServerTokens Full
+
+ #
+@@ -33,7 +33,7 @@ ServerTokens OS
+ # Set to &quot;EMail&quot; to also include a mailto: link to the ServerAdmin.
+ # Set to one of:  On | Off | EMail
+ #ServerSignature Off
+-ServerSignature On
++ServerSignature Off
+
+ #
+ # Allow TRACE method
+</pre></div>
+
 <h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
 <p><a href="https://wiki.debian.org/Hardening">Debian Wiki Hardening</a></p>
 <p><a href="https://wiki.centos.org/HowTos/OS_Protection">CentOS Hardening</a></p>

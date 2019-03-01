@@ -686,7 +686,7 @@
 <span class="c1"># Main MISP Modules install function</span>
 mispmodules <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># FIXME:  this is broken, ${PATH_TO_MISP} is litteral</span>
-  sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data /var/www/MISP/venv/bin/misp-modules -l 127.0.0.1 -s &gt; /tmp/misp-modules_rc.local.log &amp;\n&#39;</span> /etc/rc.local
+<span class="c1">##sudo sed -i -e &#39;$i \sudo -u www-data /var/www/MISP/venv/bin/misp-modules -l 127.0.0.1 -s &gt; /tmp/misp-modules_rc.local.log &amp;\n&#39; /etc/rc.local</span>
   <span class="nb">cd</span> /usr/local/src/
   <span class="c1">## TODO: checkUsrLocalSrc in main doc</span>
   <span class="nv">$SUDO_USER</span> git clone https://github.com/MISP/misp-modules.git
@@ -696,6 +696,7 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># If you build an egg, the user you build it as need write permissions in the CWD</span>
   sudo chgrp <span class="nv">$WWW_USER</span> .
   sudo chmod g+w .
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install ReportLab
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I -r REQUIREMENTS
   sudo chgrp staff .
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I .
@@ -704,8 +705,10 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># install additional dependencies for extended object generation and extraction</span>
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install wand yara pathlib
-  <span class="c1"># Start misp-modules</span>
-  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/misp-modules -l <span class="m">127</span>.0.0.1 -s <span class="p">&amp;</span>
+  <span class="c1"># Start misp-modules as a service</span>
+  sudo cp etc/systemd/system/misp-modules.service /etc/systemd/system/
+  sudo systemctl daemon-reload
+  sudo systemctl <span class="nb">enable</span> --now misp-modules
 
   <span class="c1"># Sleep 9 seconds to give misp-modules a chance to spawn</span>
   sleep <span class="m">9</span>

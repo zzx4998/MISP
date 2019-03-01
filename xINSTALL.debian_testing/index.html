@@ -2159,7 +2159,7 @@ sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><
 <span class="c1"># Main MISP Modules install function</span>
 mispmodules <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># FIXME:  this is broken, ${PATH_TO_MISP} is litteral</span>
-  sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data /var/www/MISP/venv/bin/misp-modules -l 127.0.0.1 -s &gt; /tmp/misp-modules_rc.local.log &amp;\n&#39;</span> /etc/rc.local
+<span class="c1">##sudo sed -i -e &#39;$i \sudo -u www-data /var/www/MISP/venv/bin/misp-modules -l 127.0.0.1 -s &gt; /tmp/misp-modules_rc.local.log &amp;\n&#39; /etc/rc.local</span>
   <span class="nb">cd</span> /usr/local/src/
   <span class="c1">## TODO: checkUsrLocalSrc in main doc</span>
   <span class="nv">$SUDO_USER</span> git clone https://github.com/MISP/misp-modules.git
@@ -2169,6 +2169,7 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># If you build an egg, the user you build it as need write permissions in the CWD</span>
   sudo chgrp <span class="nv">$WWW_USER</span> .
   sudo chmod g+w .
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install ReportLab
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I -r REQUIREMENTS
   sudo chgrp staff .
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I .
@@ -2177,8 +2178,10 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># install additional dependencies for extended object generation and extraction</span>
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install wand yara pathlib
-  <span class="c1"># Start misp-modules</span>
-  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/misp-modules -l <span class="m">127</span>.0.0.1 -s <span class="p">&amp;</span>
+  <span class="c1"># Start misp-modules as a service</span>
+  sudo cp etc/systemd/system/misp-modules.service /etc/systemd/system/
+  sudo systemctl daemon-reload
+  sudo systemctl <span class="nb">enable</span> --now misp-modules
 
   <span class="c1"># Sleep 9 seconds to give misp-modules a chance to spawn</span>
   sleep <span class="m">9</span>
@@ -2441,16 +2444,10 @@ viper <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_USER</span> ./venv/bin/pip install -r requirements.txt
   <span class="nv">$SUDO_USER</span> sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-cli
   <span class="nv">$SUDO_USER</span> sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-web
-  <span class="nb">echo</span> <span class="s2">&quot;pip uninstall yara&quot;</span>
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip uninstall yara -y
   <span class="nb">echo</span> <span class="s2">&quot;Launching viper-cli&quot;</span>
-  <span class="c1"># TODO: Perms</span>
-  <span class="c1">#$SUDO /usr/local/src/viper/viper-cli -h &gt; /dev/null</span>
-  /usr/local/src/viper/viper-cli -h &gt; /dev/null
+  <span class="nv">$SUDO_USER</span> /usr/local/src/viper/viper-cli -h &gt; /dev/null
   <span class="nb">echo</span> <span class="s2">&quot;Launching viper-web&quot;</span>
-  <span class="c1"># TODO: Perms</span>
-  /usr/local/src/viper/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
-  <span class="c1">#$SUDO /usr/local/src/viper/viper-web -p 8888 -H 0.0.0.0 &amp;</span>
+  <span class="nv">$SUDO_USER</span> /usr/local/src/viper/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
   <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/environment
   <span class="nb">echo</span> <span class="s2">&quot;. /etc/environment&quot;</span> &gt;&gt; /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/.profile
 
@@ -2466,7 +2463,7 @@ viper <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="nv">$AUTH_KEY</span><span class="s2">/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
   <span class="c1"># Reset admin password to: admin/Password1234</span>
   <span class="nb">echo</span> <span class="s2">&quot;Fixing admin.db with default password&quot;</span>
-  <span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="k">$(</span>sqlite3 <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/admin.db <span class="s1">&#39;UPDATE auth_user SET password=&quot;pbkdf2_sha256$100000$iXgEJh8hz7Cf$vfdDAwLX8tko1t0M1TLTtGlxERkNnltUnMhbv56wK/U=&quot;&#39;</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span><span class="s2">&quot;</span> -ne <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
+  <span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="k">$(</span>sudo sqlite3 <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/admin.db <span class="s1">&#39;UPDATE auth_user SET password=&quot;pbkdf2_sha256$100000$iXgEJh8hz7Cf$vfdDAwLX8tko1t0M1TLTtGlxERkNnltUnMhbv56wK/U=&quot;&#39;</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span><span class="s2">&quot;</span> -ne <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
     <span class="c1"># FIXME This might lead to a race condition, the while loop is sub-par</span>
     sudo chown <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/admin.db
     <span class="nb">echo</span> <span class="s2">&quot;Updating viper-web admin password, giving process time to start-up, sleeping 5, 4, 3,…&quot;</span>
@@ -2647,6 +2644,32 @@ This is not the purpose of the MISP Project but the purpose and care of those in
 <li>Do we care about physical access to the servers? (Disabling USB ports etc...)</li>
 <li>Is any fancy management engine à la <a href="https://en.wikipedia.org/wiki/Intel_Management_Engine">IME</a> in use?</li>
 </ul>
+<h2 id="apache">Apache<a class="headerlink" href="#apache" title="Permanent link">&para;</a></h2>
+<p>To make Apache less verbose in terms of sending banners, the belo might help.</p>
+<div class="codehilite"><pre><span></span>diff --git a/apache2/conf-available/security.conf b/apache2/conf-available/security.conf
+index f9f69d4..2e8fd78 100644
+--- a/apache2/conf-available/security.conf
++++ b/apache2/conf-available/security.conf
+@@ -22,7 +22,7 @@
+ # Set to one of:  Full | OS | Minimal | Minor | Major | Prod
+ # where Full conveys the most information, and Prod the least.
+ #ServerTokens Minimal
+-ServerTokens OS
++ServerTokens Prod
+ #ServerTokens Full
+
+ #
+@@ -33,7 +33,7 @@ ServerTokens OS
+ # Set to &quot;EMail&quot; to also include a mailto: link to the ServerAdmin.
+ # Set to one of:  On | Off | EMail
+ #ServerSignature Off
+-ServerSignature On
++ServerSignature Off
+
+ #
+ # Allow TRACE method
+</pre></div>
+
 <h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
 <p><a href="https://wiki.debian.org/Hardening">Debian Wiki Hardening</a></p>
 <p><a href="https://wiki.centos.org/HowTos/OS_Protection">CentOS Hardening</a></p>
