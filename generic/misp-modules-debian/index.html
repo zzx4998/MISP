@@ -689,6 +689,7 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
 <span class="c1">##sudo sed -i -e &#39;$i \sudo -u www-data /var/www/MISP/venv/bin/misp-modules -l 127.0.0.1 -s &gt; /tmp/misp-modules_rc.local.log &amp;\n&#39; /etc/rc.local</span>
   <span class="nb">cd</span> /usr/local/src/
   <span class="c1">## TODO: checkUsrLocalSrc in main doc</span>
+  debug <span class="s2">&quot;Cloning misp-modules&quot;</span>
   <span class="nv">$SUDO_USER</span> git clone https://github.com/MISP/misp-modules.git
   <span class="nb">cd</span> misp-modules
   <span class="c1"># some misp-modules dependencies</span>

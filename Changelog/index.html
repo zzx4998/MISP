@@ -7711,6 +7711,9 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[installer] Added tests. [Steve Clement]</li>
+<li>[cli] Added getWorkers to cake Admin Shell. It returns a JSON with the
+  status of the current workers. [Steve Clement]</li>
 <li>Add tests after install. [Raphaël Vinot]</li>
 <li>[eventview] Shows number of object in the event. [mokaddem]</li>
 <li>[UI] Rework of the attribute index toolbar on the event view.
@@ -7736,7 +7739,6 @@
   [iglocska]</li>
 <li>[Feed preview UI] Added quick filter to the MISP feed preview.
   [iglocska]</li>
-<li>[tools] Experimental tool to upgrade MISP via GitHub. [Steve Clement]</li>
 <li>[UI] Added javascript to support the index filtering. [iglocska]</li>
 <li>
 <p>[UI] Tied the index filter system into all indeces. [iglocska]</p>
@@ -7802,18 +7804,38 @@
 <li>[API] Log search API now allows for last style time ranges using the
   created field. [iglocska]</li>
 <li>[UI] Added change tracking sparkline to the event view. [iglocska]</li>
+<li>[tools] Experimental tool to upgrade MISP via GitHub. [Steve Clement]</li>
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[installer] Shortened usr-local-src checker. Added better curl install
+  example. [Steve Clement]</li>
+<li>Bump PyMISP to 2.4.103. [Raphaël Vinot]</li>
+<li>[ReST interface] fix typo in label. [Alexandre Dulaunoy]</li>
+<li>[galaxy_matrix] Added submit button again to please.. they will
+  recognize themselves. [mokaddem]</li>
+<li>[installer] Level installer. [Steve Clement]</li>
 <li>[doc] One more line to make SSL a little more secure. [Steve Clement]</li>
 <li>[doc] Some formatting for the apache conf files and some incentives to
   be more secure by default. [Steve Clement]</li>
+<li>[doc] Added small apache hardening tip chg: [installer] regenerated
+  installer. [Steve Clement]</li>
+<li>[installer] Do not try and initialize mysql if the user table exists
+  new: [installer] Nuke an instance. [Steve Clement]</li>
+<li>[installer] Make php versions more flexible if not 7.2. [Steve
+  Clement]</li>
+<li>[recommended versions] Added note on deprecating PHP 7.1 and Python
+  2.7. [iglocska]</li>
 <li>Bump PyMISP, new object templates, fix failing tests. [Raphaël Vinot]</li>
 <li>Bump PyMISP, again. [Raphaël Vinot]</li>
 <li>Bump PyMISP. [Raphaël Vinot]</li>
 <li>[UI] Event index icons switched to FA in preparation of the BS4 move.
   [iglocska]</li>
 <li>[objects] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[installer] Updated script to use systemd for workers and modules.
+  [Steve Clement]</li>
+<li>[doc] Bumped Kali version, updated misp-modules startup way, CentOS
+  typo fix. [Steve Clement]</li>
 <li>[tools] misp-workers.service need to be able to be installed on a
   stick MISP install (Ubuntu) other flavours want to be marked as such.
   (and in a seperate directory, ideally, etc/systemd/system) chg:
@@ -7844,17 +7866,6 @@
 - [internal] Allow the quickfilters to work on URLs that include more
   than just the baseurl+controller+action. [iglocska]
 - [CS] indentation. [iglocska]
-- [tools] Made it a little more universal. [Steve Clement]
-- [doc] Added small apache hardening tip chg: [installer] regenerated
-  installer. [Steve Clement]
-- [installer] Do not try and initialize mysql if the user table exists
-  new: [installer] Nuke an instance. [Steve Clement]
-- [installer] Make php versions more flexible if not 7.2. [Steve
-  Clement]
-- [installer] Updated script to use systemd for workers and modules.
-  [Steve Clement]
-- [doc] Bumped Kali version, updated misp-modules startup way, CentOS
-  typo fix. [Steve Clement]
 - [doc] Move Debian9 stable install instructions to xPerimental status
   as only Python 3.5 is supported by default but PyMISP needs 3.6 (There
   are no easy clean ways to install &gt;3.5) chg: [installer] various
@@ -8007,9 +8018,18 @@
 - [PyMISP] Bump version. [Raphaël Vinot]
 - [generic_picker] Prevents multiple useless redrawing. [mokaddem]
 - [misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]
-- [taxonomies] updated to the latest version. [Alexandre Dulaunoy]</p>
+- [taxonomies] updated to the latest version. [Alexandre Dulaunoy]
+- [tools] Made it a little more universal. [Steve Clement]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[installer] Tests should now run correctly chg: [m2m] Added more
+  functions to faup. [Steve Clement]</li>
+<li>[API] Allow adding objects without having the correct template via the
+  API fixed. [iglocska]</li>
+<li>[installer] Installer will never execute due to misplaced ; [Steve
+  Clement]</li>
+<li>[installer] Minor install fix. [Steve Clement]</li>
+<li>[installer] Various fixes of missing dependencies. [Steve Clement]</li>
 <li>
 <p>[vulnerability] Fixes a vulnerability where a user can view sightings
   that they should not be eligible for. [iglocska]</p>
@@ -8078,13 +8098,11 @@
 <li>[iglocska]</li>
 <li>Object could not be added with no full group by enabled, fixes #4195.
   [iglocska]</li>
-<li>Fixed list regex menu option, fixes #4197. [iglocska]</li>
-<li>[installer] Minor install fix. [Steve Clement]</li>
-<li>[installer] Various fixes of missing dependencies. [Steve Clement]</li>
 <li>[installer] unary operator... chg: [installer] dirty notes in pre-
   flight check function. [Steve Clement]</li>
 <li>[installer] small fix to check if dmidecode is present. [Steve
   Clement]</li>
+<li>Fixed list regex menu option, fixes #4197. [iglocska]</li>
 <li>[UI] New thread button fixed. [iglocska]</li>
 <li>[UI] Terms and conditions &amp; removed from button. [iglocska]</li>
 <li>[UI] Add sharing group button removed if no permissions present.
@@ -8216,8 +8234,20 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #4248 from SteveClement/guides. [Steve Clement]</li>
+<li>Merge pull request #4259 from SteveClement/guides. [Steve Clement]</li>
 </ul>
+<p>chg: [installer] Various updates including PyMISP tests
+- Merge pull request #4243 from raw-data/2.4. [Alexandre Dulaunoy]</p>
+<p>[add] MalSilo feeds tracking commodity malware
+- [add] MalSilo feeds tracking commodity malware. [raw-data]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4250 from SteveClement/tools. [Steve Clement]</p>
+<p>new: [cli] Added getWorkers to cake Admin Shell. It returns a JSON with the status of the current workers.
+- Merge remote-tracking branch 'upstream/2.4' into tools. [Steve
+  Clement]
+- Merge pull request #4249 from SteveClement/guides. [Steve Clement]</p>
+<p>chg: [installer] Added tests
+- Merge pull request #4248 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [installer] Various updates to the installer. Also tested towards latest Ubuntu 18.04.2
 - Merge branch '2.4' into guides. [Steve Clement]
 - Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]

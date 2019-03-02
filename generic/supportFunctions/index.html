@@ -926,25 +926,14 @@ checkUsrLocalSrc <span class="o">()</span> <span class="o">{</span>
     <span class="k">else</span>
       <span class="c1"># TODO: The below might be shorter, more elegant and more modern</span>
       <span class="c1">#[[ -n $KALI ]] || [[ -n $UNATTENDED ]] &amp;&amp; echo &quot;Just do it&quot; </span>
-      <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$KALI</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> -o <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nv">ANSWER</span><span class="o">=</span><span class="s2">&quot;y&quot;</span>
-      <span class="k">else</span>
-        space
-        <span class="nb">echo</span> <span class="s2">&quot;/usr/local/src need to be writeable by </span><span class="nv">$MISP_USER</span><span class="s2"> for misp-modules, viper etc.&quot;</span>
-        <span class="nb">echo</span> -n <span class="s2">&quot;Permission to fix? (y/n) &quot;</span>
-        <span class="nb">read</span> ANSWER
-        <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>tr <span class="o">[</span>A-Z<span class="o">]</span> <span class="o">[</span>a-z<span class="o">]</span><span class="k">)</span>
-        space
-      <span class="k">fi</span>
-      <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$ANSWER</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        sudo chmod <span class="m">2775</span> /usr/local/src
-        sudo chown root:staff /usr/local/src
-      <span class="k">fi</span>
+      sudo chmod <span class="m">2775</span> /usr/local/src
+      sudo chown root:staff /usr/local/src
     <span class="k">fi</span>
   <span class="k">else</span>
     <span class="nb">echo</span> <span class="s2">&quot;/usr/local/src does not exist, creating.&quot;</span>
-    mkdir /usr/local/src
+    mkdir -p /usr/local/src
     sudo chmod <span class="m">2775</span> /usr/local/src
+    <span class="c1"># FIXME: This might fail on distros with no staff user</span>
     sudo chown root:staff /usr/local/src
   <span class="k">fi</span>
 <span class="o">}</span>
@@ -1303,6 +1292,18 @@ genRCLOCAL <span class="o">()</span> <span class="o">{</span>
   sed -i -e <span class="s1">&#39;$i \echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled\n&#39;</span> /etc/rc.local
   sed -i -e <span class="s1">&#39;$i \echo 1024 &gt; /proc/sys/net/core/somaxconn\n&#39;</span> /etc/rc.local
   sed -i -e <span class="s1">&#39;$i \sysctl vm.overcommit_memory=1\n&#39;</span> /etc/rc.local
+<span class="o">}</span>
+
+<span class="c1"># Run PyMISP tests</span>
+runTests <span class="o">()</span> <span class="o">{</span>
+  sudo sed -i -E <span class="s2">&quot;s~url\ =\ (.*)~url\ =\ &#39;</span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">&#39;~g&quot;</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP/tests/testlive_comprehensive.py
+  sudo sed -i -E <span class="s2">&quot;s/key\ =\ (.*)/key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP/tests/testlive_comprehensive.py
+  sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP/
+
+  sudo -H -u <span class="nv">$WWW_USER</span> sh -c <span class="s2">&quot;cd </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/PyMISP &amp;&amp; git submodule foreach git pull origin master&quot;</span>
+  sudo -H -u <span class="nv">$WWW_USER</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -e <span class="nv">$PATH_TO_MISP</span>/PyMISP/.<span class="o">[</span>fileobjects,neo,openioc,virustotal,pdfexport<span class="o">]</span>
+  sudo -H -u <span class="nv">$WWW_USER</span> git clone https://github.com/viper-framework/viper-test-files.git <span class="nv">$PATH_TO_MISP</span>/PyMISP/tests/viper-test-files
+  sudo -H -u <span class="nv">$WWW_USER</span> sh -c <span class="s2">&quot;cd </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/PyMISP &amp;&amp; </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python tests/testlive_comprehensive.py&quot;</span>
 <span class="o">}</span>
 
 <span class="c1"># Nuke the install, meaning remove all MISP data but no packages, this makes testing the installer faster</span>

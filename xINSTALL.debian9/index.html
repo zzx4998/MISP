@@ -2273,17 +2273,20 @@ ssdeep <span class="o">()</span> <span class="o">{</span>
 mail2misp <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Installing Mail2</span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="nb">cd</span> /usr/local/src/
-  sudo apt-get install cmake libcaca-dev -y
+  sudo apt-get install cmake libcaca-dev liblua5.3-dev -y
   <span class="nv">$SUDO_USER</span> git clone https://github.com/MISP/mail_to_misp.git
   <span class="nv">$SUDO_USER</span> git clone git://github.com/stricaud/faup.git faup
-  sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup mail_to_misp
-  <span class="nb">cd</span> faup
-  <span class="c1"># TODO Check permissions</span>
-  <span class="c1">##$SUDO mkdir -p build</span>
+  <span class="nv">$SUDO_USER</span> git clone git://github.com/stricaud/gtcaca.git gtcaca
+  sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup mail_to_misp gtcaca
+  <span class="nb">cd</span> gtcaca
   <span class="nv">$SUDO_USER</span> mkdir -p build
   <span class="nb">cd</span> build
   <span class="nv">$SUDO_USER</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_USER</span> make
-  <span class="c1">##$SUDO cmake .. &amp;&amp; $SUDO make</span>
+  sudo make install
+  <span class="nb">cd</span> ../../faup
+  <span class="nv">$SUDO_USER</span> mkdir -p build
+  <span class="nb">cd</span> build
+  <span class="nv">$SUDO_USER</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_USER</span> make
   sudo make install
   sudo ldconfig
   <span class="nb">cd</span> ../../mail_to_misp
