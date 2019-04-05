@@ -502,6 +502,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands" class="md-nav__link">
+    MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#misp-dashboard" title="MISP Dashboard" class="md-nav__link">
     MISP Dashboard
   </a>
@@ -1156,6 +1163,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands" class="md-nav__link">
+    MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#misp-dashboard" title="MISP Dashboard" class="md-nav__link">
     MISP Dashboard
   </a>
@@ -1287,6 +1301,7 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
     <span class="nb">echo</span> <span class="s2">&quot;We added </span><span class="nv">$MISP_USER</span><span class="s2"> to group sudo and now we need to log out and in again.&quot;</span>
     <span class="nb">exit</span>
   <span class="k">else</span>
+    sudo apt update
     sudo apt install etckeeper -y
   <span class="k">fi</span>
 <span class="o">}</span>
@@ -1464,7 +1479,8 @@ installDepsPhp72 <span class="o">()</span> <span class="o">{</span>
   php-dev <span class="se">\</span>
   php-json php-xml php-mysql php-opcache php-readline php-mbstring <span class="se">\</span>
   php-pear <span class="se">\</span>
-  php-redis php-gnupg
+  php-redis php-gnupg <span class="se">\</span>
+  php-gd
 
   <span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
   <span class="k">do</span>
@@ -1982,7 +1998,6 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># If you build an egg, the user you build it as need write permissions in the CWD</span>
   sudo chgrp <span class="nv">$WWW_USER</span> .
   sudo chmod g+w .
-  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install ReportLab
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I -r REQUIREMENTS
   sudo chgrp staff .
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I .
@@ -2087,6 +2102,12 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <hr />
 <h4 id="misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-command">MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following command<a class="headerlink" href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-command" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyzmq
+</pre></div>
+
+<h4 id="misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands">MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>apt-get install librdkafka-dev php-dev
+pecl install rdkafka
+find /etc -name php.ini <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> f<span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s1">&#39;extension=rdkafka.so&#39;</span> <span class="p">|</span> tee -a <span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="p">;</span> <span class="k">done</span>
 </pre></div>
 
 <h4 id="misp-dashboard">MISP Dashboard<a class="headerlink" href="#misp-dashboard" title="Permanent link">&para;</a></h4>
@@ -2788,7 +2809,8 @@ installDepsPhp70 <span class="o">()</span> <span class="o">{</span>
   php-dev <span class="se">\</span>
   php-json php-xml php-mysql php-opcache php-readline php-mbstring <span class="se">\</span>
   php-pear <span class="se">\</span>
-  php-redis php-gnupg
+  php-redis php-gnupg <span class="se">\</span>
+  php-gd
 
   <span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
   <span class="k">do</span>
@@ -2811,7 +2833,8 @@ installDepsPhp73 <span class="o">()</span> <span class="o">{</span>
   php7.3-dev <span class="se">\</span>
   php7.3-json php7.3-xml php7.3-mysql php7.3-opcache php7.3-readline php7.3-mbstring <span class="se">\</span>
   php-pear <span class="se">\</span>
-  php-redis php-gnupg
+  php-redis php-gnupg <span class="se">\</span>
+  php-gd
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_installDepsPhp73.sh&gt;</span>
 

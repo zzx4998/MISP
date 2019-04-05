@@ -709,6 +709,7 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
     <span class="nb">echo</span> <span class="s2">&quot;We added </span><span class="nv">$MISP_USER</span><span class="s2"> to group sudo and now we need to log out and in again.&quot;</span>
     <span class="nb">exit</span>
   <span class="k">else</span>
+    sudo apt update
     sudo apt install etckeeper -y
   <span class="k">fi</span>
 <span class="o">}</span>

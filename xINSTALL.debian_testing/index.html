@@ -663,6 +663,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands" class="md-nav__link">
+    MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#misp-dashboard" title="MISP Dashboard" class="md-nav__link">
     MISP Dashboard
   </a>
@@ -1337,6 +1344,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands" class="md-nav__link">
+    MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#misp-dashboard" title="MISP Dashboard" class="md-nav__link">
     MISP Dashboard
   </a>
@@ -1487,7 +1501,7 @@
 <p class="admonition-title">Notice</p>
 <p>This is mostly the install <a href="https://twitter.com/SteveClement">@SteveClement</a>
 uses for testing, qc and random development.
-Maintained and tested by @SteveClement on 20181023</p>
+Maintained and tested by @SteveClement on 20190405</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1593,6 +1607,7 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
     <span class="nb">echo</span> <span class="s2">&quot;We added </span><span class="nv">$MISP_USER</span><span class="s2"> to group sudo and now we need to log out and in again.&quot;</span>
     <span class="nb">exit</span>
   <span class="k">else</span>
+    sudo apt update
     sudo apt install etckeeper -y
   <span class="k">fi</span>
 <span class="o">}</span>
@@ -1671,14 +1686,14 @@ python3-setuptools python3-dev python3-pip python3-redis python3-zmq virtualenv 
 mariadb-client <span class="se">\</span>
 mariadb-server <span class="se">\</span>
 apache2 apache2-doc apache2-utils <span class="se">\</span>
-libapache2-mod-php7.3 php7.3 php7.3-cli php7.3-mbstring php7.3-dev php7.3-json php7.3-xml php7.3-mysql php7.3-opcache php7.3-readline php-redis php-gnupg <span class="se">\</span>
+libapache2-mod-php7.3 php7.3 php7.3-cli php7.3-mbstring php7.3-dev php7.3-json php7.3-xml php7.3-mysql php7.3-opcache php7.3-readline php-redis php-gnupg php-gd <span class="se">\</span>
 libpq5 libjpeg-dev libfuzzy-dev ruby asciidoctor <span class="se">\</span>
 jq ntp ntpdate jupyter-notebook imagemagick tesseract-ocr <span class="se">\</span>
 libxml2-dev libxslt1-dev zlib1g-dev
 
 <span class="c1"># Start haveged to get more entropy (optional)</span>
 sudo apt install haveged -y
-sudo service havegd start
+sudo service haveged start
 
 sudo apt install expect -y
 
@@ -1713,7 +1728,7 @@ sudo apt-get purge -y expect <span class="p">;</span> sudo apt autoremove -y
 
 <span class="c1"># Enable modules, settings, and default of SSL in Apache</span>
 sudo a2dismod status
-sudo a2enmod ssl rewrite
+sudo a2enmod ssl rewrite headers
 sudo a2dissite <span class="m">000</span>-default
 sudo a2ensite default-ssl
 </pre></div>
@@ -1765,6 +1780,10 @@ sudo -u www-data git submodule foreach --recursive git config core.filemode <spa
 <span class="c1"># install PyMISP</span>
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP
 sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+
+<span class="c1"># Install Crypt_GPG and Console_CommandLine</span>
+sudo pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Console_CommandLine/package.xml
+sudo pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Crypt_GPG/package.xml
 </pre></div>
 
 <h3 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h3>
@@ -1782,7 +1801,7 @@ Follow the guide and manually install a new composer.phar and keep using PHP-7.3
 sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown www-data:www-data /var/www/.composer
 <span class="c1"># Update composer.phar</span>
 sudo -H -u www-data php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-sudo -H -u www-data php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;93b54496392c062774670ac18b134c3b3a95e5a5e5c8f1a9f115f203b75bf9a129d5daa8ba6a13e2cc8a1da0806388a8&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
+sudo -H -u www-data php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
 sudo -H -u www-data php composer-setup.php
 sudo -H -u www-data php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
 sudo -H -u www-data php composer.phar require kamisama/cake-resque:4.1.2
@@ -2123,35 +2142,9 @@ sudo sed -i -e <span class="s1">&#39;$i \echo never &gt; /sys/kernel/mm/transpar
 sudo sed -i -e <span class="s1">&#39;$i \echo 1024 &gt; /proc/sys/net/core/somaxconn\n&#39;</span> /etc/rc.local
 sudo sed -i -e <span class="s1">&#39;$i \sysctl vm.overcommit_memory=1\n&#39;</span> /etc/rc.local
 sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data bash /var/www/MISP/app/Console/worker/start.sh &gt; /tmp/worker_start_rc.local.log\n&#39;</span> /etc/rc.local
-sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data /var/www/MISP/venv/bin/misp-modules -l 127.0.0.1 -s &gt; /tmp/misp-modules_rc.local.log &amp;\n&#39;</span> /etc/rc.local
 
 <span class="c1"># Start the workers</span>
 sudo -u www-data bash <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
-
-<span class="c1"># some misp-modules dependencies</span>
-sudo apt-get install -y libpq5 libjpeg-dev libfuzzy-dev
-
-sudo chmod <span class="m">2775</span> /usr/local/src
-sudo chown root:staff /usr/local/src
-<span class="nb">cd</span> /usr/local/src/
-git clone https://github.com/MISP/misp-modules.git
-<span class="nb">cd</span> misp-modules
-<span class="c1"># pip install</span>
-sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I -r REQUIREMENTS
-sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
-sudo apt install ruby-pygments.rb -y
-sudo gem install asciidoctor-pdf --pre
-
-<span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
-<span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/cti-python-stix2
-sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I .
-
-<span class="c1"># install additional dependencies for extended object generation and extraction</span>
-sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install maec lief python-magic pathlib
-sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
-
-<span class="c1"># Start misp-modules</span>
-sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/misp-modules -l <span class="m">0</span>.0.0.0 -s <span class="p">&amp;</span>
 </pre></div>
 
 <h4 id="install-misp-modules-optional">Install misp-modules (optional)<a class="headerlink" href="#install-misp-modules-optional" title="Permanent link">&para;</a></h4>
@@ -2170,7 +2163,6 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># If you build an egg, the user you build it as need write permissions in the CWD</span>
   sudo chgrp <span class="nv">$WWW_USER</span> .
   sudo chmod g+w .
-  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install ReportLab
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I -r REQUIREMENTS
   sudo chgrp staff .
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I .
@@ -2319,6 +2311,14 @@ sudo apt install python3-zmq -y
 <p>In case you are using a virtualenv make sure pyzmq is installed therein.
 <div class="codehilite"><pre><span></span>sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyzmq
 </pre></div></p>
+<h4 id="misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands">MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo apt-get install librdkafka-dev php-dev
+sudo pecl install rdkafka
+<span class="nb">echo</span> <span class="s2">&quot;extension=rdkafka.so&quot;</span> <span class="p">|</span> sudo tee <span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/mods-available/rdkafka.ini
+sudo phpenmod rdkafka
+sudo service apache2 restart
+</pre></div>
+
 <h4 id="misp-dashboard">MISP Dashboard<a class="headerlink" href="#misp-dashboard" title="Permanent link">&para;</a></h4>
 <hr />
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 4_misp-dashboard.sh&gt;</span>

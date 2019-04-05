@@ -1123,6 +1123,7 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
     <span class="nb">echo</span> <span class="s2">&quot;We added </span><span class="nv">$MISP_USER</span><span class="s2"> to group sudo and now we need to log out and in again.&quot;</span>
     <span class="nb">exit</span>
   <span class="k">else</span>
+    sudo apt update
     sudo apt install etckeeper -y
   <span class="k">fi</span>
 <span class="o">}</span>
@@ -1270,7 +1271,7 @@ sudo apt-get purge -y expect <span class="p">;</span> sudo apt autoremove -y
 Add the 'misp' user to the sudo group</p>
 <p>Also make sure the variable ${VIRT_USER} is set to the user you created when you created the virtual server. This might NOT be 'misp' but something completely different, like: 'misp.misp-vm.local' or 'misp.example.com' or 'misp-virtual'.</p>
 <h4 id="install-php-and-dependencies">Install PHP and dependencies<a class="headerlink" href="#install-php-and-dependencies" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>sudo apt-get install libapache2-mod-php php php-cli php-gnupg php-dev php-json php-mysql php-opcache php-readline php-redis php-xml php-mbstring -y
+<div class="codehilite"><pre><span></span>sudo apt-get install libapache2-mod-php php php-cli php-gnupg php-dev php-json php-mysql php-opcache php-readline php-redis php-xml php-mbstring php-gd -y
 </pre></div>
 
 <h1 id="apply-all-changes">Apply all changes<a class="headerlink" href="#apply-all-changes" title="Permanent link">&para;</a></h1>
@@ -1656,6 +1657,12 @@ index f9f69d4..2e8fd78 100644
 <div class="codehilite"><pre><span></span>sudo pip3 install pyzmq
 <span class="c1"># ZeroMQ depends on the Python client for Redis</span>
 sudo pip3 install redis
+</pre></div>
+
+<h4 id="misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands">MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>apt-get install librdkafka-dev php-dev
+pecl install rdkafka
+find /etc -name php.ini <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> f<span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s1">&#39;extension=rdkafka.so&#39;</span> <span class="p">|</span> tee -a <span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="p">;</span> <span class="k">done</span>
 </pre></div>
 
 <h4 id="experimental-ssdeep-correlations">Experimental ssdeep correlations<a class="headerlink" href="#experimental-ssdeep-correlations" title="Permanent link">&para;</a></h4>
