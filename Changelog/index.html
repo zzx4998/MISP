@@ -7921,6 +7921,25 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[refanging] Attributes automatically refanged in beforeValidate, fixes
+  #4442. [iglocska]</li>
+<li>
+<p>[CLI] Worker management added. [iglocska]</p>
+</li>
+<li>
+<p>Added a more exhaustive worker management CLI script package</p>
+<ul>
+<li>list workers</li>
+<li>start a worker</li>
+<li>restart a worker</li>
+<li>kill a worker</li>
+</ul>
+</li>
+<li>[CLI] reset / set a user's API key via the CLI. [iglocska]</li>
+<li>[CLI] Change password with the --override_password_change (or -o) flag
+  to avoid forcing a password reset. [iglocska]</li>
+<li>[diagnostic:submodule] Added output message after update - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />.
+  [mokaddem]</li>
 <li>[CLI] Set default role via the CLI. [iglocska]</li>
 <li><img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> LinOTP authentication. [Andreas Rammhold]</li>
 <li>[UI] refactor of the asset loading. [iglocska]</li>
@@ -7947,6 +7966,32 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[misp.js] Moved all listeners inside $.ready() [mokaddem]</li>
+<li>[user] Usage of the assetLoader instead of echo. [mokaddem]</li>
+<li>[diag] Added grep -v ^- to make sure we always only get the submodules
+  that are available. [Steve Clement]</li>
+<li>[taxonomies] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[diag] Considered the case if submodules are not checked out and added
+  a local check for the submodule hash. [Steve Clement]</li>
+<li>[documentation] Added setDefaultRole CLI command to the list of
+  described CLI tasks on the automation page. [iglocska]</li>
+<li>[misp-objects] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[diagnostic:submodule] Better control of the glue merging command
+  outputs. [mokaddem]</li>
+<li>[diagnostic:submodules] Added support and feedbacks if workers not
+  available. [mokaddem]</li>
+<li>[diagnostic:submodule] continued sync DB after pull done - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />.
+  [mokaddem]</li>
+<li>[diagnostic:submodule] Started integration of update DB after pull
+  with workers. [mokaddem]</li>
+<li>
+<p>[diagnostic:submodule] General improvements (see below) [mokaddem]</p>
+</li>
+<li>
+<p>Allow update button reuse (avoiding blackhole)</p>
+</li>
+<li>Improved feedback when errors</li>
+<li>Check if submodules are readable</li>
 <li>[doc] Debian testing is working. [Steve Clement]</li>
 <li>[doc] Tried to update the debian install guide. [Steve Clement]</li>
 <li>[diagnostic] Renamed variable names. [mokaddem]</li>
@@ -7983,9 +8028,22 @@
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[refanging] Removed invalid pattern. [iglocska]</li>
+<li>[bug] Typo causing "\" to be stripped from attributes where it
+  shouldn't be stripped. [iglocska]</li>
+<li>[advanced extraction] Fixed invalid double encryption of the malware
+  samples. [iglocska]</li>
+<li>[User] Fixed missing files for distribution_network (events index)
+  [mokaddem]</li>
+<li>[bug] Fixed broken multi-attribute tagger. [iglocska]</li>
+<li>[acl] added route. [mokaddem]</li>
+<li>[diagnostic] Fixed required stix2 version to the latest one.
+  [chrisr3d]</li>
 <li>[acl] added missing entry. [Andras Iklody]</li>
 </ul>
 <p>This message was sent from my Blackberry.
+- [feeds] Stop the reset of the attribute count after a feed pull is
+  completed, fixes #4414. [iglocska]
 - [distributionGraph] Fix fa icon. [mokaddem]
 - [UI] First recorded change fixed to not be copy pasta of the last
   change's timestamp. [iglocska]
@@ -8048,8 +8106,35 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #4430 from SteveClement/guides. [Steve Clement]</li>
+<li>Merge pull request #4435 from MISP/submoduleUpdatev4. [Steve Clement]</li>
 </ul>
+<p>Diagnostic - Submodule update v4
+- Merge branch '2.4' into submoduleUpdatev4. [Steve Clement]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4438 from liedekef/patch-1. [Alexandre Dulaunoy]</p>
+<p>Install doc fixes
+- LD_LIBRARY_PATH setting needed for rh-git218. [Franky Van Liedekerke]
+- Update INSTALL.rhel7.md. [Franky Van Liedekerke]
+- Redhat install doc updates. [Franky Van Liedekerke]</p>
+<p>Selinux simplications (otherwise web-based update won't work anyway)
+  haveged is optional
+  Crypt_GPG was being installed 2 times
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4434 from SteveClement/tools. [Steve Clement]</p>
+<p>chg: [diag] Considered the case if submodules are not checked out
+- Merge branch '2.4' into tools. [Steve Clement]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]
+- Merge pull request #4427 from mokaddem/submoduleUpdatev3. [Steve
+  Clement]</p>
+<p>Submodule updateV3
+- Update Server.php. [Steve Clement]</p>
+<p>Small typo
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4430 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [doc] Updated debian guides
 - Merge pull request #4399 from GOVCERT-LU/chg_add_pipenv. [Raphaël
   Vinot]</p>

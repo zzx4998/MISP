@@ -892,19 +892,17 @@ This guide installs PHP 7.2 from SCL</p>
 <div class="codehilite"><pre><span></span>scl <span class="nb">enable</span> rh-mariadb102 <span class="s1">&#39;mysql_secure_installation&#39;</span>
 </pre></div>
 
-<h2 id="209-update-the-php-extension-repository-and-install-required-package">2.09/ Update the PHP extension repository and install required package<a class="headerlink" href="#209-update-the-php-extension-repository-and-install-required-package" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>scl <span class="nb">enable</span> rh-php72 rh-redis32 bash
-pear channel-update pear.php.net
-pear install Crypt_GPG
-</pre></div>
-
-<h2 id="210-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg">2.10/ Install haveged and enable to start on boot to provide entropy for GPG<a class="headerlink" href="#210-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install haveged
+<h2 id="209-optional-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg">2.09/ Optional: install haveged and enable to start on boot to provide entropy for GPG<a class="headerlink" href="#209-optional-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg" title="Permanent link">&para;</a></h2>
+<p><div class="codehilite"><pre><span></span>yum install haveged
 systemctl <span class="nb">enable</span> --now haveged
 </pre></div>
-
-<h2 id="211-install-python-36-from-scl">2.11/ Install Python 3.6 from SCL<a class="headerlink" href="#211-install-python-36-from-scl" title="Permanent link">&para;</a></h2>
+Only do this if you're not running rngd to provide randomness and your kernel randomness is not sufficient.</p>
+<h2 id="210-install-python-36-from-scl">2.10/ Install Python 3.6 from SCL<a class="headerlink" href="#210-install-python-36-from-scl" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>yum install rh-python36
+</pre></div>
+
+<h2 id="211-install-git-218-from-scl">2.11/ Install Git 2.18 from SCL<a class="headerlink" href="#211-install-git-218-from-scl" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span>yum install rh-git218
 </pre></div>
 
 <h1 id="3-misp-download">3/ MISP Download<a class="headerlink" href="#3-misp-download" title="Permanent link">&para;</a></h1>
@@ -961,10 +959,11 @@ systemctl restart rh-php72-php-fpm.service
 
 <h2 id="306-enable-dependencies-detection-in-the-diagnostics-page">3.06/ Enable dependencies detection in the diagnostics page<a class="headerlink" href="#306-enable-dependencies-detection-in-the-diagnostics-page" title="Permanent link">&para;</a></h2>
 <p>Add the following content to <code>/etc/opt/rh/rh-php72/php-fpm.d/www.conf</code> :
-<div class="codehilite"><pre><span></span>env[PATH] =/opt/rh/rh-redis32/root/usr/bin:/opt/rh/rh-python36/root/usr/bin:/opt/rh/rh-php72/root/usr/bin:/usr/local/bin:/usr/bin:/bin
+<div class="codehilite"><pre><span></span>env[PATH]=/opt/rh/rh-git218/root/usr/bin:/opt/rh/rh-redis32/root/usr/bin:/opt/rh/rh-python36/root/usr/bin:/opt/rh/rh-php72/root/usr/bin:/usr/local/bin:/usr/bin:/bin
+env[LD_LIBRARY_PATH]=/opt/rh/httpd24/root/usr/lib64/
 </pre></div>
 Then run <code>systemctl restart rh-php72-php-fpm.service</code>.
-This allows MISP to detect GnuPG, the Python modules' versions and to read the PHP settings.</p>
+This allows MISP to detect GnuPG, the Python modules' versions and to read the PHP settings. The LD_LIBRARY_PATH setting is needed for rh-git218 to work, one might think to install httpd24 and not just httpd ...</p>
 <h1 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h1>
 <h2 id="401-install-cakeresque-along-with-its-dependencies-if-you-intend-to-use-the-built-in-background-jobs">4.01/ Install CakeResque along with its dependencies if you intend to use the built in background jobs<a class="headerlink" href="#401-install-cakeresque-along-with-its-dependencies-if-you-intend-to-use-the-built-in-background-jobs" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www/MISP/app
@@ -1039,15 +1038,10 @@ mysql -u misp -p misp &lt; INSTALL/MYSQL.sql
 </pre></div>
 
 <h2 id="702-since-selinux-is-enabled-we-need-to-allow-httpd-to-write-to-certain-directories">7.02/ Since SELinux is enabled, we need to allow httpd to write to certain directories<a class="headerlink" href="#702-since-selinux-is-enabled-we-need-to-allow-httpd-to-write-to-certain-directories" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>chcon -t httpd_sys_rw_content_t /var/www/MISP/app/files
-chcon -t httpd_sys_rw_content_t /var/www/MISP/app/files/terms
-chcon -t httpd_sys_rw_content_t /var/www/MISP/app/files/scripts/tmp
-chcon -t httpd_sys_rw_content_t /var/www/MISP/app/Plugin/CakeResque/tmp
-chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/tmp
-chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/webroot/img/orgs
-chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/webroot/img/custom
+<p><div class="codehilite"><pre><span></span>semanage fcontext -a -t httpd_sys_rw_content_t <span class="s2">&quot;/var/www/MISP(/.*)?&quot;</span>
+restorecon -R /var/www/MISP/
 </pre></div>
-
+We're providing write access to the whole MISP tree, otherwise updates via the web interface won't work.</p>
 <h2 id="703-allow-httpd-to-connect-to-the-redis-server-and-php-fpm-over-tcpip">7.03/ Allow httpd to connect to the redis server and php-fpm over tcp/ip<a class="headerlink" href="#703-allow-httpd-to-connect-to-the-redis-server-and-php-fpm-over-tcpip" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>setsebool -P httpd_can_network_connect on
 </pre></div>
@@ -1074,12 +1068,7 @@ To rotate these logs install the supplied logrotate script:
 <div class="codehilite"><pre><span></span>cp INSTALL/misp.logrotate /etc/logrotate.d/misp
 chmod 0640 /etc/logrotate.d/misp
 </pre></div></p>
-<h2 id="802-allow-logrotate-to-work-under-selinux-and-modify-the-log-files">8.02/ Allow logrotate to work under SELinux and modify the log files<a class="headerlink" href="#802-allow-logrotate-to-work-under-selinux-and-modify-the-log-files" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>semanage fcontext -a -t httpd_log_t <span class="s2">&quot;/var/www/MISP/app/tmp/logs(/.*)?&quot;</span>
-chcon -R -t httpd_log_t /var/www/MISP/app/tmp/logs
-</pre></div>
-
-<h2 id="803-allow-logrotate-to-read-varwww">8.03/ Allow logrotate to read /var/www<a class="headerlink" href="#803-allow-logrotate-to-read-varwww" title="Permanent link">&para;</a></h2>
+<h2 id="802-allow-logrotate-to-read-varwww">8.02/ Allow logrotate to read /var/www<a class="headerlink" href="#802-allow-logrotate-to-read-varwww" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>checkmodule -M -m -o /tmp/misplogrotate.mod INSTALL/misplogrotate.te
 semodule_package -o /tmp/misplogrotate.pp -m /tmp/misplogrotate.mod
 semodule -i /tmp/misplogrotate.pp
@@ -1122,15 +1111,11 @@ cp -a config.default.php config.php
 </pre></div>
 
 <h2 id="903-if-you-want-to-be-able-to-change-configuration-parameters-from-the-webinterface">9.03/ If you want to be able to change configuration parameters from the webinterface:<a class="headerlink" href="#903-if-you-want-to-be-able-to-change-configuration-parameters-from-the-webinterface" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>chown apache:apache /var/www/MISP/app/Config/config.php
-chcon -t httpd_sys_rw_content_t /var/www/MISP/app/Config/config.php
-</pre></div>
-
+<p>Handled by 7.02</p>
 <h2 id="904-generate-an-encryption-key">9.04/ Generate an encryption key<a class="headerlink" href="#904-generate-an-encryption-key" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>gpg --gen-key
 mv ~/.gnupg /var/www/MISP/
-chown -R apache:apache /var/www/MISP/.gnupg
-chcon -R -t httpd_sys_rw_content_t /var/www/MISP/.gnupg
+restorecon -R /var/www/MISP
 </pre></div>
 
 <div class="admonition note">
@@ -1229,15 +1214,7 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <li>Log and audit</li>
 </ul>
 <h1 id="10-post-install">10/ Post Install<a class="headerlink" href="#10-post-install" title="Permanent link">&para;</a></h1>
-<h2 id="1001-allow-apache-to-write-to-varwwwmispapptmplogs">10.01/ Allow apache to write to /var/www/MISP/app/tmp/logs<a class="headerlink" href="#1001-allow-apache-to-write-to-varwwwmispapptmplogs" title="Permanent link">&para;</a></h2>
-<p>If the result from the diagnostic page is that the directory is not writable, try the following.
-<div class="codehilite"><pre><span></span>chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/tmp/logs/
-</pre></div></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This may mean that logrotate cannot access the logs directory, will require further investigation</p>
-</div>
-<h2 id="1002-change-phpini-settings-to-suggested-limits-from-diagnostic-page">10.02/ Change php.ini settings to suggested limits from diagnostic page.<a class="headerlink" href="#1002-change-phpini-settings-to-suggested-limits-from-diagnostic-page" title="Permanent link">&para;</a></h2>
+<h2 id="1001-change-phpini-settings-to-suggested-limits-from-diagnostic-page">10.01/ Change php.ini settings to suggested limits from diagnostic page.<a class="headerlink" href="#1001-change-phpini-settings-to-suggested-limits-from-diagnostic-page" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><span class="c1"># Edit /etc/opt/rh/rh-php72/php.ini and set the following settings</span>
 <span class="nv">max_execution_time</span> <span class="o">=</span> <span class="m">300</span>
 <span class="nv">memory_limit</span> <span class="o">=</span> 512M
@@ -1245,11 +1222,11 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <span class="nv">post_max_size</span> <span class="o">=</span> 50M
 </pre></div>
 
-<h2 id="1003-restart-rh-php72-for-settings-to-take-effect">10.03/ Restart rh-php72 for settings to take effect<a class="headerlink" href="#1003-restart-rh-php72-for-settings-to-take-effect" title="Permanent link">&para;</a></h2>
+<h2 id="1002-restart-rh-php72-for-settings-to-take-effect">10.02/ Restart rh-php72 for settings to take effect<a class="headerlink" href="#1002-restart-rh-php72-for-settings-to-take-effect" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>systemctl restart rh-php72-php-fpm
 </pre></div>
 
-<h2 id="1004-install-pydeep-and-pymisp">10.04/ Install pydeep and pymisp<a class="headerlink" href="#1004-install-pydeep-and-pymisp" title="Permanent link">&para;</a></h2>
+<h2 id="1003-install-pydeep-and-pymisp">10.03/ Install pydeep and pymisp<a class="headerlink" href="#1003-install-pydeep-and-pymisp" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 -m pip install pymisp git+https://github.com/kbandla/pydeep.git&#39;</span>
 </pre></div>
 
