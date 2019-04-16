@@ -683,10 +683,14 @@
                 
                 <h4 id="misp-dashboard-on-centos">MISP Dashboard on CentOS<a class="headerlink" href="#misp-dashboard-on-centos" title="Permanent link">&para;</a></h4>
 <hr />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Currently defunct.</p>
+</div>
 <div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www
 sudo mkdir misp-dashboard
-sudo chown www-data:www-data misp-dashboard
-sudo -u www-data git clone https://github.com/MISP/misp-dashboard.git
+sudo chown apache:apache misp-dashboard
+sudo -u apache git clone https://github.com/MISP/misp-dashboard.git
 <span class="nb">cd</span> misp-dashboard
 sudo -H /var/www/misp-dashboard/install_dependencies.sh
 sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
@@ -735,25 +739,25 @@ sudo a2ensite misp-dashboard
 sudo systemctl reload apache2
 
 <span class="c1"># Add misp-dashboard to rc.local to start on boot.</span>
-sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data bash /var/www/misp-dashboard/start_all.sh &gt; /tmp/misp-dashboard_rc.local.log\n&#39;</span> /etc/rc.local
+sudo sed -i -e <span class="s1">&#39;$i \sudo -u apache bash /var/www/misp-dashboard/start_all.sh &gt; /tmp/misp-dashboard_rc.local.log\n&#39;</span> /etc/rc.local
 
 <span class="c1"># Enable ZeroMQ for misp-dashboard</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_enable<span class="s2">&quot; true&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_event_notifications_enable<span class="s2">&quot; true&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_object_notifications_enable<span class="s2">&quot; true&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_object_reference_notifications_enable<span class="s2">&quot; true&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_attribute_notifications_enable<span class="s2">&quot; true&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_sighting_notifications_enable<span class="s2">&quot; true&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_user_notifications_enable<span class="s2">&quot; true&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_organisation_notifications_enable<span class="s2">&quot; true&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_port<span class="s2">&quot; 50000&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_host<span class="s2">&quot; &quot;</span>localhost<span class="s2">&quot;&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_port<span class="s2">&quot; 6379&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_database<span class="s2">&quot; 1&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_namespace<span class="s2">&quot; &quot;</span>mispq<span class="s2">&quot;&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_include_attachments<span class="s2">&quot; false&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_tag_notifications_enable<span class="s2">&quot; false&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_audit_notifications_enable<span class="s2">&quot; false&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_event_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_object_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_object_reference_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_attribute_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_sighting_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_user_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_organisation_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_port<span class="s2">&quot; 50000&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_host<span class="s2">&quot; &quot;</span>localhost<span class="s2">&quot;&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_port<span class="s2">&quot; 6379&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_database<span class="s2">&quot; 1&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_namespace<span class="s2">&quot; &quot;</span>mispq<span class="s2">&quot;&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_include_attachments<span class="s2">&quot; false&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_tag_notifications_enable<span class="s2">&quot; false&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_audit_notifications_enable<span class="s2">&quot; false&quot;</span>
 </pre></div>
                 
                   
