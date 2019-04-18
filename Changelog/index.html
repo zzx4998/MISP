@@ -7973,6 +7973,10 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[tools] Changes to reflect the rename of the installer and generated
+  latest installer. [Steve Clement]</li>
+<li>[tools] Renamed installer to be more Generic. [Steve Clement]</li>
+<li>[doc] Reflected INSTALL.sh rename. [Steve Clement]</li>
 <li>[doc] Brought CentOS6 more in-line with CentOS7 (still needs more
   testing). Minor changes in CentOS7. [Steve Clement]</li>
 <li>[doc] Redirect debug error output. [Steve Clement]</li>
@@ -8049,7 +8053,6 @@
 <li>[restClient:querybuilder] bit of cleanup. [mokaddem]</li>
 <li>[restClient:querybuilder] Prefil the QB when picking a saved query -
   <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />. [mokaddem]</li>
-<li>[warning-lists] updated to the latest version. [Alexandre Dulaunoy]</li>
 <li>[INSTALL] Do not touch the auto-generated installation file anymore.
   [mokaddem]</li>
 <li>[viewPicture] Echo base64decoded data with GIF image type as php-gd
@@ -8068,7 +8071,9 @@
   Clement]</li>
 <li>[matrixPopup] UI improvement to better support small screens.
   [mokaddem]</li>
+<li>[warning-lists] updated to the latest version. [Alexandre Dulaunoy]</li>
 <li>Removed duplicate. [mokaddem]</li>
+<li>[i18n] Fix filename typo. [Steve Clement]</li>
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
@@ -8158,11 +8163,11 @@
   fixes MISP/misp-book#149. [iglocska]
 - [UI] Colours for feed index buttons fixed. [iglocska]
 - [ACL] Added ACL for the new cache searches. [iglocska]
+- [UI] Missing sync / feed pull/push buttons re-added. [iglocska]
 - [restClient:querybuilder] Fixed a bug where multiple rules where not
   added correctly and show API info box. [mokaddem]
 - [RestClient:queryBuilder] Distribution level in the query builder. Fix
   #4280. [mokaddem]
-- [UI] Missing sync / feed pull/push buttons re-added. [iglocska]
 - [Accessibility] Added titles to the role index icons, affects #4258.
   [iglocska]
 - [thumbnail] picture preview was not showing up all the time.
@@ -8181,9 +8186,16 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #4493 from obert01/fix-accessibility. [Steve
-  Clement]</li>
+<li>Merge pull request #4498 from SteveClement/tools. [Steve Clement]</li>
 </ul>
+<p>chg: [tools] Renamed installer to be more Generic
+- Merge pull request #4500 from SteveClement/guides. [Steve Clement]</p>
+<p>chg: [doc] Reflected INSTALL.sh rename
+- Merge pull request #4499 from SteveClement/i18n. [Steve Clement]</p>
+<p>chg: [i18n] Polish Translation typo fixed
+- Merge branch '2.4' into i18n. [Steve Clement]
+- Merge pull request #4493 from obert01/fix-accessibility. [Steve
+  Clement]</p>
 <p>New bunch of accessibility fixes.
 - New bunch of accessibility fixes. [Olivier BERT]</p>
 <p>This affects EventBlacklists, Feeds, GalaxyClusters, News (index), OrgBlacklists (index), Organisations (index), SharingGroups (index), Taxonomies (view), Event Discussions, Event attribute table, Event proposal table.
@@ -8356,6 +8368,7 @@
 <li><img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> [enrichment view] Displaying Object References information.
   [chrisr3d]</li>
 <li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
+<li>Merge branch '2.4' into i18n. [Steve Clement]</li>
 <li>Merge pull request #4387 from mokaddem/prefillQB. [Andras Iklody]</li>
 </ul>
 <p>Prefill the restclient querybuilder when picking a saved query
@@ -8373,7 +8386,8 @@
   Clement]</p>
 <p>Sighting filtering
 - Merge branch '2.4' of github.com:MISP/MISP into sightingFiltering.
-  [mokaddem]</p>
+  [mokaddem]
+- Merge branch '2.4' into i18n. [Steve Clement]</p>
 <h2 id="v24105-2019-03-28">v2.4.105 (2019-03-28)<a class="headerlink" href="#v24105-2019-03-28" title="Permanent link">&para;</a></h2>
 <h2 id="new_1">New<a class="headerlink" href="#new_1" title="Permanent link">&para;</a></h2>
 <ul>
