@@ -290,8 +290,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.rhel7/" title="Redhat Enterprise Linux 7" class="md-nav__link">
-      Redhat Enterprise Linux 7
+    <a href="../INSTALL.rhel7/" title="RHEL7/CentOS7" class="md-nav__link">
+      RHEL7/CentOS7
     </a>
   </li>
 
@@ -637,8 +637,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.rhel7/" title="Redhat Enterprise Linux 7.6 (BETA)" class="md-nav__link">
-      Redhat Enterprise Linux 7.6 (BETA)
+    <a href="../xINSTALL.rhel8.md" title="RHEL8 (Beta)" class="md-nav__link">
+      RHEL8 (Beta)
     </a>
   </li>
 
@@ -1076,7 +1076,7 @@ It is still considered experimental as not everything works seemlessly.</p>
 <span class="c1"># $ eval &quot;$(curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md | grep -v \`\`\`)&quot;</span>
 <span class="c1"># $ MISPvars</span>
 MISPvars <span class="o">()</span> <span class="o">{</span>
-  debug <span class="s2">&quot;Setting generic </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> variables shared by all flavours&quot;</span>
+  debug <span class="s2">&quot;Setting generic </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> variables shared by all flavours&quot;</span> <span class="m">2</span>&gt; /dev/null
   <span class="c1"># Local non-root MISP user</span>
   <span class="nv">MISP_USER</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
   <span class="nv">MISP_PASSWORD</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
@@ -1179,7 +1179,7 @@ sudo yum install epel-release -y
 <span class="c1"># Software Collections is a way do to this, see https://wiki.centos.org/AdditionalResources/Repositories/SCL</span>
 sudo yum install centos-release-scl -y
 
-<span class="c1"># Install vim (optional)</span>
+<span class="c1"># Because vim is just so practical</span>
 sudo yum install vim -y
 
 <span class="c1"># Install the dependencies:</span>
@@ -1237,6 +1237,7 @@ sudo chown apache:apache <span class="nv">$PATH_TO_MISP</span>
 <span class="nv">$SUDO_WWW</span> git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
 
 <span class="c1"># Install packaged pears</span>
+sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear channel-update pear.php.net&quot;</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/INSTALL/dependencies/Console_CommandLine/package.xml&quot;</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/INSTALL/dependencies/Crypt_GPG/package.xml&quot;</span>
 
@@ -1338,12 +1339,7 @@ sudo chown apache:apache /usr/share/httpd/.composer
 <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;php composer.phar config vendor-dir Vendor&quot;</span>
 <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;php composer.phar install&quot;</span>
 
-<span class="c1"># CakeResque normally uses phpredis to connect to redis, but it has a (buggy) </span>
-<span class="c1"># fallback connector through Redisent.</span>
-<span class="c1"># It is highly advised to install phpredis using &quot;yum install php-redis&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pecl install redis&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> <span class="p">|</span>sudo tee /etc/opt/rh/rh-php72/php-fpm.d/redis.ini
-sudo ln -s ../php-fpm.d/redis.ini /etc/opt/rh/rh-php72/php.d/99-redis.ini
+sudo yum install php-redis -y
 sudo systemctl restart rh-php72-php-fpm.service
 
 <span class="c1"># If you have not yet set a timezone in php.ini</span>
@@ -1463,10 +1459,6 @@ SELinux status:                 disabled
 </pre></div>
 If it is disabled, you can ignore the <strong>chcon/setsebool/semanage/checkmodule/semodule*</strong> commands.</p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This guide only copies a stock <strong>NON-SSL</strong> configuration file.</p>
-</div>
 <div class="codehilite"><pre><span></span><span class="c1"># Now configure your apache server with the DocumentRoot $PATH_TO_MISP/app/webroot/</span>
 <span class="c1"># A sample vhost can be found in $PATH_TO_MISP/INSTALL/apache.misp.centos7</span>
 
@@ -1540,7 +1532,7 @@ sudo firewall-cmd --reload
 
 <h3 id="8-log-rotation">8/ Log rotation<a class="headerlink" href="#8-log-rotation" title="Permanent link">&para;</a></h3>
 <hr />
-<div class="codehilite"><pre><span></span><span class="c1"># MISP saves the stdout and stderr of it&#39;s workers in $PATH_TO_MISP/app/tmp/logs</span>
+<div class="codehilite"><pre><span></span><span class="c1"># MISP saves the stdout and stderr of its workers in $PATH_TO_MISP/app/tmp/logs</span>
 <span class="c1"># To rotate these logs install the supplied logrotate script:</span>
 
 sudo cp <span class="nv">$PATH_TO_MISP</span>/INSTALL/misp.logrotate /etc/logrotate.d/misp

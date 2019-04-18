@@ -42,7 +42,7 @@
     
     
       
-        <title>Redhat Enterprise Linux 7 - MISP Install Documentation</title>
+        <title>RHEL7/CentOS7 - MISP Install Documentation</title>
       
     
     
@@ -125,7 +125,7 @@
               MISP Install Documentation
             </span>
             <span class="md-header-nav__topic">
-              Redhat Enterprise Linux 7
+              RHEL7/CentOS7
             </span>
           
         </div>
@@ -301,11 +301,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Redhat Enterprise Linux 7
+        RHEL7/CentOS7
       </label>
     
-    <a href="./" title="Redhat Enterprise Linux 7" class="md-nav__link md-nav__link--active">
-      Redhat Enterprise Linux 7
+    <a href="./" title="RHEL7/CentOS7" class="md-nav__link md-nav__link--active">
+      RHEL7/CentOS7
     </a>
     
       
@@ -351,6 +351,19 @@
   <a href="#04-this-document-is-to-get-a-misp-instance-up-and-running-over-http-i-havent-done-a-full-test-of-all-features" title="0.4/ This document is to get a MISP instance up and running over HTTP. I haven't done a full test of all features" class="md-nav__link">
     0.4/ This document is to get a MISP instance up and running over HTTP. I haven't done a full test of all features
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#misp-configuration-variables" title="MISP configuration variables" class="md-nav__link">
+    MISP configuration variables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -508,8 +521,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.rhel7/" title="Redhat Enterprise Linux 7.6 (BETA)" class="md-nav__link">
-      Redhat Enterprise Linux 7.6 (BETA)
+    <a href="../xINSTALL.rhel8.md" title="RHEL8 (Beta)" class="md-nav__link">
+      RHEL8 (Beta)
     </a>
   </li>
 
@@ -765,6 +778,19 @@
     0.4/ This document is to get a MISP instance up and running over HTTP. I haven't done a full test of all features
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#misp-configuration-variables" title="MISP configuration variables" class="md-nav__link">
+    MISP configuration variables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -802,17 +828,99 @@ For more information on what might differ, <a href="https://unix.stackexchange.c
 <p>The core MISP team cannot verify if this guide is working or not. Please help us in keeping it up to date and accurate.
 Thus we also have difficulties in supporting RHEL issues but will do a best effort on a similar yet slightly different setup.</p>
 </div>
-<p>This document details the steps to install MISP on Red Hat Enterprise Linux 7.x (RHEL 7.x). At time of this writing it
-was tested on version 7.6.</p>
+<p>This document details the steps to install MISP on Red Hat Enterprise Linux 7.x (RHEL 7.x). At time of this writing it was tested on version 7.6.</p>
 <p>The following assumptions with regard to this installation have been made.</p>
 <h3 id="01-a-valid-support-agreement-allowing-the-system-to-register-to-the-red-hat-customer-portal-and-receive-updates">0.1/ A valid support agreement allowing the system to register to the Red Hat Customer Portal and receive updates<a class="headerlink" href="#01-a-valid-support-agreement-allowing-the-system-to-register-to-the-red-hat-customer-portal-and-receive-updates" title="Permanent link">&para;</a></h3>
 <h3 id="02-the-ability-to-enable-additional-rpm-repositories-specifically-the-epel-and-software-collections-scl-repos">0.2/ The ability to enable additional RPM repositories, specifically the EPEL and Software Collections (SCL) repos<a class="headerlink" href="#02-the-ability-to-enable-additional-rpm-repositories-specifically-the-epel-and-software-collections-scl-repos" title="Permanent link">&para;</a></h3>
 <h3 id="03-this-system-will-have-direct-or-proxy-access-to-the-internet-for-updates-or-connected-to-a-red-hat-satellite-server">0.3/ This system will have direct or proxy access to the Internet for updates. Or connected to a Red Hat Satellite Server<a class="headerlink" href="#03-this-system-will-have-direct-or-proxy-access-to-the-internet-for-updates-or-connected-to-a-red-hat-satellite-server" title="Permanent link">&para;</a></h3>
 <h3 id="04-this-document-is-to-get-a-misp-instance-up-and-running-over-http-i-havent-done-a-full-test-of-all-features">0.4/ This document is to get a MISP instance up and running over HTTP. I haven't done a full test of all features<a class="headerlink" href="#04-this-document-is-to-get-a-misp-instance-up-and-running-over-http-i-havent-done-a-full-test-of-all-features" title="Permanent link">&para;</a></h3>
+<h4 id="misp-configuration-variables">MISP configuration variables<a class="headerlink" href="#misp-configuration-variables" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_global-vars.sh&gt;</span>
+<span class="c1"># $ eval &quot;$(curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md | grep -v \`\`\`)&quot;</span>
+<span class="c1"># $ MISPvars</span>
+MISPvars <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Setting generic </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> variables shared by all flavours&quot;</span> <span class="m">2</span>&gt; /dev/null
+  <span class="c1"># Local non-root MISP user</span>
+  <span class="nv">MISP_USER</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+  <span class="nv">MISP_PASSWORD</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
+
+  <span class="c1"># The web server user</span>
+  <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+
+  <span class="c1"># MISP configuration variables</span>
+  <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s1">&#39;/var/www/MISP&#39;</span>
+
+  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$FQDN</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">FQDN</span><span class="o">=</span><span class="s2">&quot;misp.local&quot;</span>
+  <span class="k">fi</span>
+
+  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$MISP_BASEURL</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;&quot;&quot;&#39;</span>
+  <span class="k">fi</span>
+
+  <span class="nv">MISP_LIVE</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+
+  <span class="c1"># Database configuration</span>
+  <span class="nv">DBHOST</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span>
+  <span class="nv">DBNAME</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+  <span class="nv">DBUSER_ADMIN</span><span class="o">=</span><span class="s1">&#39;root&#39;</span>
+  <span class="nv">DBPASSWORD_ADMIN</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
+  <span class="nv">DBUSER_MISP</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+  <span class="nv">DBPASSWORD_MISP</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
+
+  <span class="c1"># OpenSSL configuration</span>
+  <span class="nv">OPENSSL_CN</span><span class="o">=</span><span class="nv">$FQDN</span>
+  <span class="nv">OPENSSL_C</span><span class="o">=</span><span class="s1">&#39;LU&#39;</span>
+  <span class="nv">OPENSSL_ST</span><span class="o">=</span><span class="s1">&#39;State&#39;</span>
+  <span class="nv">OPENSSL_L</span><span class="o">=</span><span class="s1">&#39;Location&#39;</span>
+  <span class="nv">OPENSSL_O</span><span class="o">=</span><span class="s1">&#39;Organization&#39;</span>
+  <span class="nv">OPENSSL_OU</span><span class="o">=</span><span class="s1">&#39;Organizational Unit&#39;</span>
+  <span class="nv">OPENSSL_EMAILADDRESS</span><span class="o">=</span><span class="s2">&quot;info@</span><span class="nv">$FQDN</span><span class="s2">&quot;</span>
+
+  <span class="c1"># GPG configuration</span>
+  <span class="nv">GPG_REAL_NAME</span><span class="o">=</span><span class="s1">&#39;Autogenerated Key&#39;</span>
+  <span class="nv">GPG_COMMENT</span><span class="o">=</span><span class="s1">&#39;WARNING: MISP AutoGenerated Key consider this Key VOID!&#39;</span>
+  <span class="nv">GPG_EMAIL_ADDRESS</span><span class="o">=</span><span class="s1">&#39;admin@admin.test&#39;</span>
+  <span class="nv">GPG_KEY_LENGTH</span><span class="o">=</span><span class="s1">&#39;2048&#39;</span>
+  <span class="nv">GPG_PASSPHRASE</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
+
+  <span class="c1"># debug alias to make sure people are not confused when blindly copy pasting blobs of code</span>
+  <span class="nb">alias</span> <span class="nv">debug</span><span class="o">=</span><span class="s2">&quot;echo -e&quot;</span>
+
+  <span class="c1"># checkAptLock alias to make sure people are not confused when blindly copy pasting blobs of code</span>
+  <span class="nb">alias</span> <span class="nv">checkAptLock</span><span class="o">=</span><span class="s2">&quot;echo &#39;Function used in Installer to make sure apt is not locked&#39;&quot;</span>
+
+  <span class="c1"># php.ini configuration</span>
+  <span class="nv">upload_max_filesize</span><span class="o">=</span>50M
+  <span class="nv">post_max_size</span><span class="o">=</span>50M
+  <span class="nv">max_execution_time</span><span class="o">=</span><span class="m">300</span>
+  <span class="nv">memory_limit</span><span class="o">=</span>512M
+
+  <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
+
+  <span class="c1"># sudo config to run $LUSER commands</span>
+  <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
+  <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
+
+  <span class="nb">echo</span> <span class="s2">&quot;The following DB Passwords were generated...&quot;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Admin (</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">) DB Password: </span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;User  (</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">) DB Password: </span><span class="si">${</span><span class="nv">DBPASSWORD_MISP</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 0_global-vars.sh&gt;</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="c1"># RHEL/CentOS Specific</span>
+<span class="nv">RUN_PHP</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-php72&#39;</span>
+<span class="nv">RUN_PYTHON</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-python36&#39;</span>
+<span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s1">&#39;sudo -H -u apache&#39;</span>
+
+<span class="nv">PHP_INI</span><span class="o">=</span>/etc/opt/rh/rh-php72/php.ini
+</pre></div>
+
 <h1 id="1-os-install-and-additional-repositories">1/ OS Install and additional repositories<a class="headerlink" href="#1-os-install-and-additional-repositories" title="Permanent link">&para;</a></h1>
 <h2 id="11-complete-a-minimal-rhel-installation-configure-ip-address-to-connect-automatically">1.1/ Complete a minimal RHEL installation, configure IP address to connect automatically.<a class="headerlink" href="#11-complete-a-minimal-rhel-installation-configure-ip-address-to-connect-automatically" title="Permanent link">&para;</a></h2>
 <h2 id="12-configure-system-hostname">1.2/ Configure system hostname<a class="headerlink" href="#12-configure-system-hostname" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo hostnamectl set-hostname misp <span class="c1"># Your choice, in a production environment, it&#39;s best to use a FQDN</span>
+<div class="codehilite"><pre><span></span>sudo hostnamectl set-hostname misp.local <span class="c1"># Your choice, in a production environment, it&#39;s best to use a FQDN</span>
 </pre></div>
 
 <h2 id="13-register-the-system-for-updates-with-red-hat-subscription-manager">1.3/ Register the system for updates with Red Hat Subscription Manager<a class="headerlink" href="#13-register-the-system-for-updates-with-red-hat-subscription-manager" title="Permanent link">&para;</a></h2>
@@ -831,45 +939,37 @@ sudo subscription-manager repos --enable rhel-server-rhscl-7-rpms
 </pre></div>
 
 <h2 id="15-update-the-system-and-reboot">1.5/ Update the system and reboot<a class="headerlink" href="#15-update-the-system-and-reboot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum update -y
+<div class="codehilite"><pre><span></span>sudo yum update -y
 </pre></div>
 
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>As time of writing performing a yum update results in the rhel-7-server-rt-beta-rpms being forbidden.<br />
-The repo can be disabled using the following command
-<div class="codehilite"><pre><span></span>subscription-manager repos --disable rhel-7-server-rt-beta-rpms
-</pre></div></p>
-</div>
 <h2 id="16-install-the-epel-repo">1.6/ Install the EPEL repo<a class="headerlink" href="#16-install-the-epel-repo" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
+<div class="codehilite"><pre><span></span>sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
 </pre></div>
 
 <h1 id="2-install-dependencies">2/ Install Dependencies<a class="headerlink" href="#2-install-dependencies" title="Permanent link">&para;</a></h1>
 <p>Once the system is installed and updated, the following steps can be performed as root</p>
 <h2 id="201-install-some-base-system-dependencies">2.01/ Install some base system dependencies<a class="headerlink" href="#201-install-some-base-system-dependencies" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install gcc git httpd zip python-devel libxslt-devel zlib-devel python-pip ssdeep-devel
+<div class="codehilite"><pre><span></span>sudo yum install gcc git httpd zip python-devel libxslt-devel zlib-devel python-pip ssdeep-devel
 </pre></div>
 
 <h2 id="202-install-mariadb-102-from-scl">2.02/ Install MariaDB 10.2 from SCL<a class="headerlink" href="#202-install-mariadb-102-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install rh-mariadb102
+<div class="codehilite"><pre><span></span>sudo yum install rh-mariadb102
 </pre></div>
 
 <h2 id="203-start-the-mariadb-service-and-enable-it-to-start-on-boot">2.03/ Start the MariaDB service and enable it to start on boot<a class="headerlink" href="#203-start-the-mariadb-service-and-enable-it-to-start-on-boot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>systemctl <span class="nb">enable</span> --now rh-mariadb102-mariadb.service
+<div class="codehilite"><pre><span></span>sudo systemctl <span class="nb">enable</span> --now rh-mariadb102-mariadb.service
 </pre></div>
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>MISP 2.4 requires PHP 5.6 as a minimum, so we need a higher version than base RHEL provides.<br />
-This guide installs PHP 7.2 from SCL</p>
+<p>This guide installs PHP 7.2 from SCL</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p><a href="https://secure.php.net/supported-versions.php">PHP 5.6 and 7.0 aren't supported since December 2018</a>. Please update accordingly. In the future only PHP7 will be supported.</p>
 </div>
 <h2 id="204-install-php-72-from-scl">2.04/ Install PHP 7.2 from SCL<a class="headerlink" href="#204-install-php-72-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install rh-php72 rh-php72-php-fpm rh-php72-php-devel rh-php72-php-mysqlnd rh-php72-php-mbstring rh-php72-php-xml rh-php72-php-bcmath rh-php72-php-opcache rh-php72-php-gd
+<div class="codehilite"><pre><span></span>sudo yum install rh-php72 rh-php72-php-fpm rh-php72-php-devel rh-php72-php-mysqlnd rh-php72-php-mbstring rh-php72-php-xml rh-php72-php-bcmath rh-php72-php-opcache rh-php72-php-gd
 </pre></div>
 
 <div class="admonition note">
@@ -877,69 +977,75 @@ This guide installs PHP 7.2 from SCL</p>
 <p>If we want to use httpd from RHEL base we can use the rh-php72-php-fpm service instead</p>
 </div>
 <h2 id="205-start-the-php-fpm-service-and-enable-to-start-on-boot">2.05/ Start the PHP FPM service and enable to start on boot<a class="headerlink" href="#205-start-the-php-fpm-service-and-enable-to-start-on-boot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>systemctl <span class="nb">enable</span> --now rh-php72-php-fpm.service
+<div class="codehilite"><pre><span></span>sudo systemctl <span class="nb">enable</span> --now rh-php72-php-fpm.service
 </pre></div>
 
 <h2 id="206-install-redis-32-from-scl">2.06/ Install redis 3.2 from SCL<a class="headerlink" href="#206-install-redis-32-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install rh-redis32
+<div class="codehilite"><pre><span></span>sudo yum install rh-redis32
 </pre></div>
 
 <h2 id="207-start-redis-service-and-enable-to-start-on-boot">2.07/ Start redis service and enable to start on boot<a class="headerlink" href="#207-start-redis-service-and-enable-to-start-on-boot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>systemctl <span class="nb">enable</span> --now rh-redis32-redis.service
+<div class="codehilite"><pre><span></span>sudo systemctl <span class="nb">enable</span> --now rh-redis32-redis.service
 </pre></div>
 
 <h2 id="208-secure-the-mariadb-installation">2.08/ Secure the MariaDB installation<a class="headerlink" href="#208-secure-the-mariadb-installation" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>scl <span class="nb">enable</span> rh-mariadb102 <span class="s1">&#39;mysql_secure_installation&#39;</span>
+<div class="codehilite"><pre><span></span>sudo scl <span class="nb">enable</span> rh-mariadb102 <span class="s1">&#39;mysql_secure_installation&#39;</span>
 </pre></div>
 
-<h2 id="209-optional-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg">2.09/ Optional: install haveged and enable to start on boot to provide entropy for GPG<a class="headerlink" href="#209-optional-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg" title="Permanent link">&para;</a></h2>
-<p><div class="codehilite"><pre><span></span>yum install haveged
-systemctl <span class="nb">enable</span> --now haveged
+<h2 id="209-update-the-php-extension-repository-and-install-required-package">2.09/ Update the PHP extension repository and install required package<a class="headerlink" href="#209-update-the-php-extension-repository-and-install-required-package" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span>sudo scl <span class="nb">enable</span> rh-php72 rh-redis32 bash
+sudo pear channel-update pear.php.net
+sudo pear install Crypt_GPG
+<span class="nb">exit</span>
+</pre></div>
+
+<h2 id="210-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg">2.10/ Install haveged and enable to start on boot to provide entropy for GPG<a class="headerlink" href="#210-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg" title="Permanent link">&para;</a></h2>
+<p><div class="codehilite"><pre><span></span>sudo yum install haveged
+sudo systemctl <span class="nb">enable</span> --now haveged
 </pre></div>
 Only do this if you're not running rngd to provide randomness and your kernel randomness is not sufficient.</p>
 <h2 id="210-install-python-36-from-scl">2.10/ Install Python 3.6 from SCL<a class="headerlink" href="#210-install-python-36-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install rh-python36
+<div class="codehilite"><pre><span></span>sudo yum install rh-python36
 </pre></div>
 
 <h2 id="211-install-git-218-from-scl">2.11/ Install Git 2.18 from SCL<a class="headerlink" href="#211-install-git-218-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install rh-git218
+<div class="codehilite"><pre><span></span>sudo yum install rh-git218
 </pre></div>
 
 <h1 id="3-misp-download">3/ MISP Download<a class="headerlink" href="#3-misp-download" title="Permanent link">&para;</a></h1>
 <h2 id="301-download-misp-code-using-git-in-varwww-directory">3.01/ Download MISP code using git in /var/www/ directory<a class="headerlink" href="#301-download-misp-code-using-git-in-varwww-directory" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www
-git clone https://github.com/MISP/MISP.git
-<span class="nb">cd</span> MISP
-git checkout tags/<span class="k">$(</span>git describe --tags <span class="sb">`</span>git rev-list --tags --max-count<span class="o">=</span><span class="m">1</span><span class="sb">`</span><span class="k">)</span>
+<div class="codehilite"><pre><span></span>sudo mkdir <span class="nv">$PATH_TO_MISP</span>
+sudo chown apache:apache <span class="nv">$PATH_TO_MISP</span>
+sudo -u apache git clone https://github.com/MISP/MISP.git <span class="nv">$PATH_TO_MISP</span>
+sudo -u apache git checkout tags/<span class="k">$(</span>git describe --tags <span class="sb">`</span>git rev-list --tags --max-count<span class="o">=</span><span class="m">1</span><span class="sb">`</span><span class="k">)</span>
 <span class="c1"># if the last shortcut doesn&#39;t work, specify the latest version manually</span>
 <span class="c1"># example: git checkout tags/v2.4.XY</span>
 <span class="c1"># the message regarding a &quot;detached HEAD state&quot; is expected behaviour</span>
 <span class="c1"># (you only have to create a new branch, if you want to change stuff and do a pull request for example)</span>
-git submodule update --init --recursive
+sudo -u apache git submodule update --init --recursive
 <span class="c1"># Make git ignore filesystem permission differences for submodules</span>
-git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
+sudo -u apache git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
 </pre></div>
 
 <h2 id="302-make-git-ignore-filesystem-permission-differences">3.02/ Make git ignore filesystem permission differences<a class="headerlink" href="#302-make-git-ignore-filesystem-permission-differences" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>git config core.filemode <span class="nb">false</span>
+<div class="codehilite"><pre><span></span>sudo -u apache git config core.filemode <span class="nb">false</span>
 </pre></div>
 
 <h2 id="303-install-mitres-stix-stix2-and-their-dependencies-by-running-the-following-commands">3.03/ Install Mitre's STIX, STIX2 and their dependencies by running the following commands<a class="headerlink" href="#303-install-mitres-stix-stix2-and-their-dependencies-by-running-the-following-commands" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install python-six
-<span class="nb">cd</span> /var/www/MISP/app/files/scripts
-git clone https://github.com/CybOXProject/python-cybox.git
-git clone https://github.com/STIXProject/python-stix.git
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www/MISP/app/files/scripts
+sudo -u apache git clone https://github.com/CybOXProject/python-cybox.git
+sudo -u apache git clone https://github.com/STIXProject/python-stix.git
 <span class="nb">cd</span> /var/www/MISP/app/files/scripts/python-cybox
-git config core.filemode <span class="nb">false</span>
+sudo -u apache git config core.filemode <span class="nb">false</span>
 <span class="c1"># If your umask has been changed from the default, it is a good idea to reset it to 0022 before installing python modules</span>
 <span class="nv">UMASK</span><span class="o">=</span><span class="k">$(</span><span class="nb">umask</span><span class="k">)</span>
 <span class="nb">umask</span> <span class="m">0022</span>
-scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 setup.py install&#39;</span>
+sudo scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 setup.py install&#39;</span>
 <span class="nb">cd</span> /var/www/MISP/app/files/scripts/python-stix
-git config core.filemode <span class="nb">false</span>
-scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 setup.py install&#39;</span>
+sudo -u www-data git config core.filemode <span class="nb">false</span>
+sudo scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 setup.py install&#39;</span>
 <span class="nb">cd</span> /var/www/MISP/cti-python-stix2
-scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 setup.py install&#39;</span>
+sudo scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 setup.py install&#39;</span>
 </pre></div>
 
 <h2 id="304-install-mixbox-to-accommodate-the-new-stix-dependencies">3.04/ Install mixbox to accommodate the new STIX dependencies<a class="headerlink" href="#304-install-mixbox-to-accommodate-the-new-stix-dependencies" title="Permanent link">&para;</a></h2>
@@ -953,8 +1059,8 @@ scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 set
 
 <h2 id="305-enable-python3-for-php-fpm">3.05/ Enable python3 for php-fpm<a class="headerlink" href="#305-enable-python3-for-php-fpm" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s1">&#39;source scl_source enable rh-python36&#39;</span> &gt;&gt; /etc/opt/rh/rh-php72/sysconfig/php-fpm
-sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> /etc/opt/rh/rh-php72/php-fpm.d/www.conf
-systemctl restart rh-php72-php-fpm.service
+sudo sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> /etc/opt/rh/rh-php72/php-fpm.d/www.conf
+sudo systemctl restart rh-php72-php-fpm.service
 </pre></div>
 
 <h2 id="306-enable-dependencies-detection-in-the-diagnostics-page">3.06/ Enable dependencies detection in the diagnostics page<a class="headerlink" href="#306-enable-dependencies-detection-in-the-diagnostics-page" title="Permanent link">&para;</a></h2>

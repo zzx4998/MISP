@@ -290,8 +290,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.rhel7/" title="Redhat Enterprise Linux 7" class="md-nav__link">
-      Redhat Enterprise Linux 7
+    <a href="../INSTALL.rhel7/" title="RHEL7/CentOS7" class="md-nav__link">
+      RHEL7/CentOS7
     </a>
   </li>
 
@@ -434,8 +434,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.rhel7/" title="Redhat Enterprise Linux 7.6 (BETA)" class="md-nav__link">
-      Redhat Enterprise Linux 7.6 (BETA)
+    <a href="../xINSTALL.rhel8.md" title="RHEL8 (Beta)" class="md-nav__link">
+      RHEL8 (Beta)
     </a>
   </li>
 
@@ -7921,6 +7921,9 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[row_attribute] Added <code>title</code> containing the <code>event.info</code> data for the
+  attribute. [mokaddem]</li>
+<li>[tools] A developer tool to test Pull Requests. [Steve Clement]</li>
 <li>[thumbnail] Thumbnail are now saved on the disk, greatly improving
   performance when viewing an event. [mokaddem]</li>
 <li>[API] Update JSON exposed to the API. [iglocska]</li>
@@ -7970,6 +7973,13 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[doc] Brought CentOS6 more in-line with CentOS7 (still needs more
+  testing). Minor changes in CentOS7. [Steve Clement]</li>
+<li>[doc] Redirect debug error output. [Steve Clement]</li>
+<li>[UI] Show event info on attribute search results page (via hover),
+  fixes #4490. [iglocska]</li>
+<li>[tools] Renamed the script, added a few more tweaks. [Steve Clement]</li>
+<li>[doc] RHEL Install doc updates. [Steve Clement]</li>
 <li>[doc] CentOS lief how-to added fix: [doc] Fixed the MISP Dashboard
   Cake commands (if you run as root, config.php permissions will be
   b0rked) [Steve Clement]</li>
@@ -7979,14 +7989,14 @@
   things correctly under a standard CentOS minimal install. [Steve
   Clement]</li>
 <li>[queryversion] bumped queryversion. [mokaddem]</li>
+<li>[popovers] Added dedicated popover container for expansions and
+  sightings (instead of a shared one with the screenshots) [mokaddem]</li>
 <li>[misp-objects] object templates updated + relationships. [Alexandre
   Dulaunoy]</li>
 <li>[download as] updated - now works on non published events in all cases
   and uses restsearch whenever possible. Fixes #4468. [iglocska]</li>
 <li>[UI] server settings double clicking on setting name brings up the
   value text box. [iglocska]</li>
-<li>[popovers] Added dedicated popover container for expansions and
-  sightings (instead of a shared one with the screenshots) [mokaddem]</li>
 <li>[viewPicture] Added comments. [mokaddem]</li>
 <li>[eventGraph] Added support of picture. Fix #4433. [mokaddem]</li>
 <li>[eventGraph] initial work before implementing thumbnails support.
@@ -8062,6 +8072,8 @@
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[UI] Minor font-awesome switch related issues fixed. [iglocska]</li>
+<li>[UI] Modifying push/pull rules fails via the server edit. [iglocska]</li>
 <li>[export] Fixed broken bro export, fixes #4050. [iglocska]</li>
 <li>[stix2 export] Fixed labels duplication while exporting multiple
   events from MISP. [chrisr3d]</li>
@@ -8169,8 +8181,27 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #4486 from SteveClement/guides. [Steve Clement]</li>
+<li>Merge pull request #4493 from obert01/fix-accessibility. [Steve
+  Clement]</li>
 </ul>
+<p>New bunch of accessibility fixes.
+- New bunch of accessibility fixes. [Olivier BERT]</p>
+<p>This affects EventBlacklists, Feeds, GalaxyClusters, News (index), OrgBlacklists (index), Organisations (index), SharingGroups (index), Taxonomies (view), Event Discussions, Event attribute table, Event proposal table.
+- Merge pull request #4496 from SteveClement/guides. [Steve Clement]</p>
+<p>chg: [doc] Brought CentOS6 more in-line with CentOS7
+- Merge branch '2.4' into guides. [Steve Clement]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4488 from SteveClement/tools. [Steve Clement]</p>
+<p>new: [tools] A developer tool to test Pull Requests
+- Merge branch '2.4' into tools. [Steve Clement]
+- Merge pull request #4478 from RichieB2B/ncsc-nl/centos6. [Steve
+  Clement]</p>
+<p>Make xINSTALL.centos6.md work again
+- Make xINSTALL.centos6.md work again. [Richard van den Berg]
+- Merge pull request #4487 from SteveClement/guides. [Steve Clement]</p>
+<p>chg: [doc] RHEL Install doc updates
+- Merge pull request #4486 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [doc] CentOS lief how-to added
 - Merge pull request #4480 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [doc] Updated CentOS 7.x Install guide
