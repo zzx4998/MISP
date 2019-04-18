@@ -295,8 +295,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-ubuntu-18041-server" title="for Ubuntu 18.04.1-server" class="md-nav__link">
-    for Ubuntu 18.04.1-server
+  <a href="#for-ubuntu-18042-server" title="for Ubuntu 18.04.2-server" class="md-nav__link">
+    for Ubuntu 18.04.2-server
   </a>
   
     <nav class="md-nav">
@@ -956,8 +956,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-ubuntu-18041-server" title="for Ubuntu 18.04.1-server" class="md-nav__link">
-    for Ubuntu 18.04.1-server
+  <a href="#for-ubuntu-18042-server" title="for Ubuntu 18.04.2-server" class="md-nav__link">
+    for Ubuntu 18.04.2-server
   </a>
   
     <nav class="md-nav">
@@ -1238,7 +1238,7 @@
                 
                 
                 <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h1>
-<h2 id="for-ubuntu-18041-server">for Ubuntu 18.04.1-server<a class="headerlink" href="#for-ubuntu-18041-server" title="Permanent link">&para;</a></h2>
+<h2 id="for-ubuntu-18042-server">for Ubuntu 18.04.2-server<a class="headerlink" href="#for-ubuntu-18042-server" title="Permanent link">&para;</a></h2>
 <h3 id="-1-installer-and-manual-install-instructions">-1/ Installer and Manual install instructions<a class="headerlink" href="#-1-installer-and-manual-install-instructions" title="Permanent link">&para;</a></h3>
 <p>Make sure you are reading the parsed version of this Document. When in doubt <a href="https://misp.github.io/MISP/INSTALL.ubuntu1804/">click here</a>.</p>
 <p>To install MISP on a fresh Ubuntu install all you need to do is:</p>
@@ -1251,7 +1251,7 @@ curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh <s
 
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>Installer tested working by <a href="https://twitter.com/SteveClement">@SteveClement</a> on 20190212 (works with <strong>Ubuntu 18.10</strong> too)</p>
+<p>Installer tested working by <a href="https://twitter.com/SteveClement">@SteveClement</a> on 20190418 (works with <strong>Ubuntu 18.10</strong> too)</p>
 </div>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
@@ -1890,10 +1890,6 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_port&quot;</span> <span class="m">9000</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_timeout&quot;</span> <span class="m">120</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_authkey&quot;</span> <span class="s2">&quot;&quot;</span>
-  <span class="c1"># Mysteriously removed?</span>
-  <span class="c1">#$SUDO_WWW $CAKE Admin setSetting &quot;Plugin.Cortex_services_timeout&quot; 120</span>
-  <span class="c1"># Mysteriously removed?</span>
-  <span class="c1">#$SUDO_WWW $CAKE Admin setSetting &quot;Plugin.Cortex_services_authkey&quot; &quot;&quot;</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_verify_peer&quot;</span> <span class="nb">false</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_verify_host&quot;</span> <span class="nb">false</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_allow_self_signed&quot;</span> <span class="nb">true</span>
@@ -1966,18 +1962,15 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># Update the galaxies…</span>
   <span class="c1"># TODO: Fix updateGalaxies</span>
-  <span class="c1">##$SUDO_WWW $CAKE Admin updateGalaxies</span>
-  curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/galaxies/update
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateGalaxies
   <span class="c1"># Updating the taxonomies…</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateTaxonomies
   <span class="c1"># Updating the warning lists…</span>
-  <span class="c1"># TODO: Fix updateWarningLists</span>
-  <span class="c1">##$SUDO_WWW $CAKE Admin updateWarningLists</span>
-  curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/warninglists/update
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateWarningLists
   <span class="c1"># Updating the notice lists…</span>
-  <span class="c1">## $SUDO_WWW $CAKE Admin updateNoticeLists</span>
-  curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/noticelists/update
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateNoticeLists
   <span class="c1"># Updating the object templates…</span>
+  <span class="c1"># TODO: FIXME: updateObjectTemplates (currently throws: usage udpateNoticeLists)</span>
   <span class="c1">##$SUDO_WWW $CAKE Admin updateObjectTemplates</span>
   curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/objectTemplates/update
 <span class="o">}</span>
@@ -2107,9 +2100,12 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 </pre></div>
 
 <h4 id="misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands">MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>apt-get install librdkafka-dev php-dev
-pecl install rdkafka
-find /etc -name php.ini <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> f<span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s1">&#39;extension=rdkafka.so&#39;</span> <span class="p">|</span> tee -a <span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="p">;</span> <span class="k">done</span>
+<div class="codehilite"><pre><span></span>sudo apt-get install librdkafka-dev php-dev -y
+sudo pecl channel-update pecl.php.net
+sudo pecl install rdkafka
+<span class="nb">echo</span> <span class="s2">&quot;extension=rdkafka.so&quot;</span> <span class="p">|</span> sudo tee <span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/mods-available/rdkafka.ini
+sudo phpenmod rdkafka
+sudo service apache2 restart
 </pre></div>
 
 <h4 id="misp-dashboard">MISP Dashboard<a class="headerlink" href="#misp-dashboard" title="Permanent link">&para;</a></h4>
@@ -2188,22 +2184,22 @@ mispDashboard <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># &lt;snippet-begin 4_misp-dashboard-cake.sh&gt;</span>
 dashboardCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Enable ZeroMQ for misp-dashboard</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_enable&quot;</span> <span class="nb">true</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_event_notifications_enable&quot;</span> <span class="nb">true</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_notifications_enable&quot;</span> <span class="nb">true</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_reference_notifications_enable&quot;</span> <span class="nb">true</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_attribute_notifications_enable&quot;</span> <span class="nb">true</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_sighting_notifications_enable&quot;</span> <span class="nb">true</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_user_notifications_enable&quot;</span> <span class="nb">true</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_organisation_notifications_enable&quot;</span> <span class="nb">true</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_port&quot;</span> <span class="m">50000</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_host&quot;</span> <span class="s2">&quot;localhost&quot;</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_port&quot;</span> <span class="m">6379</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_database&quot;</span> <span class="m">1</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_namespace&quot;</span> <span class="s2">&quot;mispq&quot;</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_include_attachments&quot;</span> <span class="nb">false</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_tag_notifications_enable&quot;</span> <span class="nb">false</span>
-  sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_audit_notifications_enable&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_event_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_reference_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_attribute_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_sighting_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_user_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_organisation_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_port&quot;</span> <span class="m">50000</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_host&quot;</span> <span class="s2">&quot;localhost&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_port&quot;</span> <span class="m">6379</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_database&quot;</span> <span class="m">1</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_namespace&quot;</span> <span class="s2">&quot;mispq&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_include_attachments&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_tag_notifications_enable&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_audit_notifications_enable&quot;</span> <span class="nb">false</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 4_misp-dashboard-cake.sh&gt;</span>
 </pre></div>
@@ -2284,6 +2280,7 @@ ssdeep <span class="o">()</span> <span class="o">{</span>
   sudo make install
 
   <span class="c1">#installing ssdeep_php</span>
+  sudo pecl channel-update pecl.php.net
   sudo pecl install ssdeep
 
   <span class="c1"># You should add &quot;extension=ssdeep.so&quot; to mods-available - Check /etc/php for your current version</span>

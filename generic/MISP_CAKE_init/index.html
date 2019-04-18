@@ -727,10 +727,6 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_port&quot;</span> <span class="m">9000</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_timeout&quot;</span> <span class="m">120</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_authkey&quot;</span> <span class="s2">&quot;&quot;</span>
-  <span class="c1"># Mysteriously removed?</span>
-  <span class="c1">#$SUDO_WWW $CAKE Admin setSetting &quot;Plugin.Cortex_services_timeout&quot; 120</span>
-  <span class="c1"># Mysteriously removed?</span>
-  <span class="c1">#$SUDO_WWW $CAKE Admin setSetting &quot;Plugin.Cortex_services_authkey&quot; &quot;&quot;</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_verify_peer&quot;</span> <span class="nb">false</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_verify_host&quot;</span> <span class="nb">false</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_allow_self_signed&quot;</span> <span class="nb">true</span>
@@ -803,18 +799,15 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># Update the galaxies…</span>
   <span class="c1"># TODO: Fix updateGalaxies</span>
-  <span class="c1">##$SUDO_WWW $CAKE Admin updateGalaxies</span>
-  curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/galaxies/update
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateGalaxies
   <span class="c1"># Updating the taxonomies…</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateTaxonomies
   <span class="c1"># Updating the warning lists…</span>
-  <span class="c1"># TODO: Fix updateWarningLists</span>
-  <span class="c1">##$SUDO_WWW $CAKE Admin updateWarningLists</span>
-  curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/warninglists/update
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateWarningLists
   <span class="c1"># Updating the notice lists…</span>
-  <span class="c1">## $SUDO_WWW $CAKE Admin updateNoticeLists</span>
-  curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/noticelists/update
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateNoticeLists
   <span class="c1"># Updating the object templates…</span>
+  <span class="c1"># TODO: FIXME: updateObjectTemplates (currently throws: usage udpateNoticeLists)</span>
   <span class="c1">##$SUDO_WWW $CAKE Admin updateObjectTemplates</span>
   curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/objectTemplates/update
 <span class="o">}</span>

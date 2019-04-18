@@ -319,6 +319,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#-1-installer-and-manual-install-instructions" title="-1/ Installer and Manual install instructions" class="md-nav__link">
+    -1/ Installer and Manual install instructions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#0-overview-and-assumptions" title="0/ Overview and Assumptions" class="md-nav__link">
     0/ Overview and Assumptions
   </a>
@@ -745,6 +752,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#-1-installer-and-manual-install-instructions" title="-1/ Installer and Manual install instructions" class="md-nav__link">
+    -1/ Installer and Manual install instructions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#0-overview-and-assumptions" title="0/ Overview and Assumptions" class="md-nav__link">
     0/ Overview and Assumptions
   </a>
@@ -817,6 +831,19 @@
                 
                 <h1 id="installation-instructions-for-rhel-7x">INSTALLATION INSTRUCTIONS for RHEL 7.x<a class="headerlink" href="#installation-instructions-for-rhel-7x" title="Permanent link">&para;</a></h1>
 <hr />
+<h3 id="-1-installer-and-manual-install-instructions">-1/ Installer and Manual install instructions<a class="headerlink" href="#-1-installer-and-manual-install-instructions" title="Permanent link">&para;</a></h3>
+<p>Make sure you are reading the parsed version of this Document. When in doubt <a href="https://misp.github.io/MISP/INSTALL.rhel7/">click here</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In the <strong>future</strong>, to install MISP on a fresh RHEL 7 install all you need to do is:</p>
+<p><div class="codehilite"><pre><span></span><span class="c1"># Please check the installer options first to make the best choice for your install</span>
+curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.debian.sh <span class="p">|</span> bash -s
+
+<span class="c1"># This will install MISP Core and misp-modules (recommended)</span>
+curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.debian.sh <span class="p">|</span> bash -s -- -c -M
+</pre></div>
+<strong>The above does NOT work yet</strong></p>
+</div>
 <h2 id="0-overview-and-assumptions">0/ Overview and Assumptions<a class="headerlink" href="#0-overview-and-assumptions" title="Permanent link">&para;</a></h2>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
@@ -919,7 +946,7 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 
 <h1 id="1-os-install-and-additional-repositories">1/ OS Install and additional repositories<a class="headerlink" href="#1-os-install-and-additional-repositories" title="Permanent link">&para;</a></h1>
 <h2 id="11-complete-a-minimal-rhel-installation-configure-ip-address-to-connect-automatically">1.1/ Complete a minimal RHEL installation, configure IP address to connect automatically.<a class="headerlink" href="#11-complete-a-minimal-rhel-installation-configure-ip-address-to-connect-automatically" title="Permanent link">&para;</a></h2>
-<h2 id="12-configure-system-hostname">1.2/ Configure system hostname<a class="headerlink" href="#12-configure-system-hostname" title="Permanent link">&para;</a></h2>
+<h2 id="12-configure-system-hostname-if-not-done-during-install">1.2/ Configure system hostname (if not done during install)<a class="headerlink" href="#12-configure-system-hostname-if-not-done-during-install" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>sudo hostnamectl set-hostname misp.local <span class="c1"># Your choice, in a production environment, it&#39;s best to use a FQDN</span>
 </pre></div>
 
