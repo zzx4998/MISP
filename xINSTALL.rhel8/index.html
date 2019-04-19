@@ -13,7 +13,7 @@
         <meta name="description" content="MISP Project - Install Guides">
       
       
-        <link rel="canonical" href="https://www.misp-project.org/xINSTALL.rhel7/">
+        <link rel="canonical" href="https://www.misp-project.org/xINSTALL.rhel8/">
       
       
         <meta name="author" content="MISP Project">
@@ -42,7 +42,7 @@
     
     
       
-        <title>INSTALLATION INSTRUCTIONS for RHEL 7.x - MISP Install Documentation</title>
+        <title>RHEL8 (Beta) - MISP Install Documentation</title>
       
     
     
@@ -100,7 +100,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#installation-instructions-for-rhel-7x" tabindex="1" class="md-skip">
+      <a href="#installation-instructions-for-rhel-8x-beta" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -125,7 +125,7 @@
               MISP Install Documentation
             </span>
             <span class="md-header-nav__topic">
-              INSTALLATION INSTRUCTIONS for RHEL 7.x
+              RHEL8 (Beta)
             </span>
           
         </div>
@@ -305,10 +305,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
     
     <label class="md-nav__link" for="nav-3">
       xInstall Guides
@@ -432,11 +434,83 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../xINSTALL.rhel8.md" title="RHEL8 (Beta)" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        RHEL8 (Beta)
+      </label>
+    
+    <a href="./" title="RHEL8 (Beta)" class="md-nav__link md-nav__link--active">
       RHEL8 (Beta)
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0-overview-and-assumptions" title="0/ Overview and Assumptions" class="md-nav__link">
+    0/ Overview and Assumptions
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-a-valid-support-agreement-allowing-the-system-to-register-to-the-red-hat-customer-portal-and-receive-updates" title="0.1/ A valid support agreement allowing the system to register to the Red Hat Customer Portal and receive updates" class="md-nav__link">
+    0.1/ A valid support agreement allowing the system to register to the Red Hat Customer Portal and receive updates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-the-ability-to-enable-additional-rpm-repositories-specifically-the-epel-and-software-collections-scl-repos" title="0.2/ The ability to enable additional RPM repositories, specifically the EPEL and Software Collections (SCL) repos" class="md-nav__link">
+    0.2/ The ability to enable additional RPM repositories, specifically the EPEL and Software Collections (SCL) repos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-this-system-will-have-direct-or-proxy-access-to-the-internet-for-updates-or-connected-to-a-red-hat-satellite-server" title="0.3/ This system will have direct or proxy access to the Internet for updates. Or connected to a Red Hat Satellite Server" class="md-nav__link">
+    0.3/ This system will have direct or proxy access to the Internet for updates. Or connected to a Red Hat Satellite Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-this-document-is-to-get-a-misp-instance-up-and-running-over-http-i-havent-done-a-full-test-of-all-features" title="0.4/ This document is to get a MISP instance up and running over HTTP. I haven't done a full test of all features" class="md-nav__link">
+    0.4/ This document is to get a MISP instance up and running over HTTP. I haven't done a full test of all features
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -715,7 +789,7 @@
               
                 
                 
-                <h1 id="installation-instructions-for-rhel-7x">INSTALLATION INSTRUCTIONS for RHEL 7.x<a class="headerlink" href="#installation-instructions-for-rhel-7x" title="Permanent link">&para;</a></h1>
+                <h1 id="installation-instructions-for-rhel-8x-beta">INSTALLATION INSTRUCTIONS for RHEL 8.x (beta)<a class="headerlink" href="#installation-instructions-for-rhel-8x-beta" title="Permanent link">&para;</a></h1>
 <hr />
 <h2 id="0-overview-and-assumptions">0/ Overview and Assumptions<a class="headerlink" href="#0-overview-and-assumptions" title="Permanent link">&para;</a></h2>
 <div class="admonition notice">
@@ -735,9 +809,9 @@ Thus we also have difficulties in supporting RHEL issues but will do a best effo
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This is a carbon copy of the 7.5 document. Please try to adapt it to the 7.6 BETA release so we can seamlessly switch versions once it is not BETA anymore.</p>
+<p>This is a carbon copy of the 7.5 document. This will change once we get around updating this document.</p>
 </div>
-<p>This document details the steps to install MISP on Red Hat Enterprise Linux 7.x BETA (RHEL 7.x). At time of this writing it could be tested on version 7.6 BETA.</p>
+<p>This document details the steps to install MISP on Red Hat Enterprise Linux 8.x BETA (RHEL 8.x). At time of this writing it could be tested on version 8.0 BETA.</p>
 <p>The following assumptions with regard to this installation have been made.</p>
 <h3 id="01-a-valid-support-agreement-allowing-the-system-to-register-to-the-red-hat-customer-portal-and-receive-updates">0.1/ A valid support agreement allowing the system to register to the Red Hat Customer Portal and receive updates<a class="headerlink" href="#01-a-valid-support-agreement-allowing-the-system-to-register-to-the-red-hat-customer-portal-and-receive-updates" title="Permanent link">&para;</a></h3>
 <h3 id="02-the-ability-to-enable-additional-rpm-repositories-specifically-the-epel-and-software-collections-scl-repos">0.2/ The ability to enable additional RPM repositories, specifically the EPEL and Software Collections (SCL) repos<a class="headerlink" href="#02-the-ability-to-enable-additional-rpm-repositories-specifically-the-epel-and-software-collections-scl-repos" title="Permanent link">&para;</a></h3>
@@ -767,9 +841,9 @@ sudo subscription-manager attach   <span class="c1"># attach your system to a cu
 </pre></div>
 
 <h2 id="14-enable-the-optional-extras-and-software-collections-scl-repos">1.4/ Enable the optional, extras and Software Collections (SCL) repos<a class="headerlink" href="#14-enable-the-optional-extras-and-software-collections-scl-repos" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo subscription-manager repos --enable rhel-7-server-optional-rpms
-sudo subscription-manager repos --enable rhel-7-server-extras-rpms
-sudo subscription-manager repos --enable rhel-server-rhscl-7-rpms
+<div class="codehilite"><pre><span></span>sudo subscription-manager repos --enable rhel-8-server-optional-rpms
+sudo subscription-manager repos --enable rhel-8-server-extras-rpms
+sudo subscription-manager repos --enable rhel-server-rhscl-8-rpms
 </pre></div>
 
 <h3 id="15a-optional-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates">1.5a/ OPTIONAL: Install the deltarpm package to help reduce download size when installing updates<a class="headerlink" href="#15a-optional-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates" title="Permanent link">&para;</a></h3>
@@ -782,13 +856,13 @@ sudo subscription-manager repos --enable rhel-server-rhscl-7-rpms
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>At the time of writing performing a yum update results in the rhel-7-server-rt-beta-rpms being forbidden.<br />
+<p>At the time of writing performing a yum update results in the rhel-8-server-rt-beta-rpms being forbidden.<br />
 The repo can be disabled using the following command
-<div class="codehilite"><pre><span></span>sudo subscription-manager repos --disable rhel-7-server-rt-beta-rpms
+<div class="codehilite"><pre><span></span>sudo subscription-manager repos --disable rhel-8-server-rt-beta-rpms
 </pre></div></p>
 </div>
 <h2 id="16-install-the-epel-repo">1.6/ Install the EPEL repo<a class="headerlink" href="#16-install-the-epel-repo" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
+<div class="codehilite"><pre><span></span>sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
 </pre></div>
 
 <h2 id="17-install-the-scl-repo">1.7/ Install the SCL repo<a class="headerlink" href="#17-install-the-scl-repo" title="Permanent link">&para;</a></h2>
@@ -813,23 +887,23 @@ sudo systemctl <span class="nb">enable</span> rh-mariadb102-mariadb.service
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>MISP 2.4 requires PHP 5.6 as a minimum, we need a higher version than base RHEL provides.<br />
-This guide installs PHP 7.1 from SCL</p>
+This guide installs PHP 7.2 from SCL</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p><a href="https://secure.php.net/supported-versions.php">PHP 5.6 will be EOL in December 2018</a>. Please update accordingly. In future only PHP7 will be supported.</p>
 </div>
-<h2 id="204-install-php-71-from-scl">2.04/ Install PHP 7.1 from SCL<a class="headerlink" href="#204-install-php-71-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo yum install rh-php71 rh-php71-php-fpm rh-php71-php-devel rh-php71-php-mysqlnd rh-php71-php-mbstring rh-php71-php-xml rh-php71-php-bcmath rh-php71-php-opcache -y
+<h2 id="204-install-php-72-from-scl">2.04/ Install PHP 7.2 from SCL<a class="headerlink" href="#204-install-php-72-from-scl" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span>sudo yum install rh-php72 rh-php72-php-fpm rh-php72-php-devel rh-php72-php-mysqlnd rh-php72-php-mbstring rh-php72-php-xml rh-php72-php-bcmath rh-php72-php-opcache -y
 </pre></div>
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If we want to use httpd from RHEL base we can use the rh-php71-php-fpm service instead</p>
+<p>If we want to use httpd from RHEL base we can use the rh-php72-php-fpm service instead</p>
 </div>
 <h2 id="205-start-the-php-fpm-service-and-enable-to-start-on-boot">2.05/ Start the PHP FPM service and enable to start on boot<a class="headerlink" href="#205-start-the-php-fpm-service-and-enable-to-start-on-boot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>systemctl start rh-php71-php-fpm.service
-systemctl <span class="nb">enable</span> rh-php71-php-fpm.service
+<div class="codehilite"><pre><span></span>systemctl start rh-php72-php-fpm.service
+systemctl <span class="nb">enable</span> rh-php72-php-fpm.service
 </pre></div>
 
 <h2 id="206-install-redis-32-from-scl">2.06/ Install redis 3.2 from SCL<a class="headerlink" href="#206-install-redis-32-from-scl" title="Permanent link">&para;</a></h2>
@@ -841,8 +915,8 @@ systemctl <span class="nb">enable</span> rh-php71-php-fpm.service
 systemctl <span class="nb">enable</span> rh-redis32-redis.service
 </pre></div>
 
-<h2 id="208-start-a-scl-shell-with-rh-mariadb102-rh-php71-and-rh-redis32-enabled">2.08/ Start a SCL shell with rh-mariadb102 rh-php71 and rh-redis32 enabled<a class="headerlink" href="#208-start-a-scl-shell-with-rh-mariadb102-rh-php71-and-rh-redis32-enabled" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>scl <span class="nb">enable</span> rh-mariadb102 rh-php71 rh-redis32 bash
+<h2 id="208-start-a-scl-shell-with-rh-mariadb102-rh-php72-and-rh-redis32-enabled">2.08/ Start a SCL shell with rh-mariadb102 rh-php72 and rh-redis32 enabled<a class="headerlink" href="#208-start-a-scl-shell-with-rh-mariadb102-rh-php72-and-rh-redis32-enabled" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span>scl <span class="nb">enable</span> rh-mariadb102 rh-php72 rh-redis32 bash
 </pre></div>
 
 <h2 id="208-secure-the-mariadb-installation-run-the-following-command-and-follow-the-prompts">2.08/ Secure the MariaDB installation, run the following command and follow the prompts<a class="headerlink" href="#208-secure-the-mariadb-installation-run-the-following-command-and-follow-the-prompts" title="Permanent link">&para;</a></h2>
@@ -907,9 +981,9 @@ scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 set
 </pre></div>
 
 <h2 id="305-enable-python3-for-php-fpm">3.05/ Enable python3 for php-fpm<a class="headerlink" href="#305-enable-python3-for-php-fpm" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s1">&#39;source scl_source enable rh-python36&#39;</span> &gt;&gt; /etc/opt/rh/rh-php71/sysconfig/php-fpm
-sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> /etc/opt/rh/rh-php71/php-fpm.d/www.conf
-systemctl restart rh-php71-php-fpm.service
+<div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s1">&#39;source scl_source enable rh-python36&#39;</span> &gt;&gt; /etc/opt/rh/rh-php72/sysconfig/php-fpm
+sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> /etc/opt/rh/rh-php72/php-fpm.d/www.conf
+systemctl restart rh-php72-php-fpm.service
 </pre></div>
 
 <h1 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h1>
@@ -935,14 +1009,14 @@ php composer.phar install
 
 <h2 id="403-install-and-configure-php-redis-connector-through-pecl">4.03/ Install and configure php redis connector through pecl<a class="headerlink" href="#403-install-and-configure-php-redis-connector-through-pecl" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>pecl install redis
-<span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> &gt; /etc/opt/rh/rh-php71/php-fpm.d/redis.ini
-ln -s ../php-fpm.d/redis.ini /etc/opt/rh/rh-php71/php.d/99-redis.ini
-systemctl restart rh-php71-php-fpm.service
+<span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> &gt; /etc/opt/rh/rh-php72/php-fpm.d/redis.ini
+ln -s ../php-fpm.d/redis.ini /etc/opt/rh/rh-php72/php.d/99-redis.ini
+systemctl restart rh-php72-php-fpm.service
 </pre></div>
 
 <h2 id="404-set-a-timezone-in-phpini">4.04/ Set a timezone in php.ini<a class="headerlink" href="#404-set-a-timezone-in-phpini" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s1">&#39;date.timezone = &quot;Australia/Sydney&quot;&#39;</span> &gt; /etc/opt/rh/rh-php71/php-fpm.d/timezone.ini
-ln -s ../php-fpm.d/timezone.ini /etc/opt/rh/rh-php71/php.d/99-timezone.ini
+<div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s1">&#39;date.timezone = &quot;Australia/Sydney&quot;&#39;</span> &gt; /etc/opt/rh/rh-php72/php-fpm.d/timezone.ini
+ln -s ../php-fpm.d/timezone.ini /etc/opt/rh/rh-php72/php.d/99-timezone.ini
 </pre></div>
 
 <h2 id="405-to-use-the-scheduler-worker-for-scheduled-tasks-do-the-following">4.05/ To use the scheduler worker for scheduled tasks, do the following:<a class="headerlink" href="#405-to-use-the-scheduler-worker-for-scheduled-tasks-do-the-following" title="Permanent link">&para;</a></h2>
@@ -1101,7 +1175,7 @@ Make sure that you use the same settings in the MISP Server Settings tool</p>
 
 <h2 id="906-start-the-workers-to-enable-background-jobs">9.06/ Start the workers to enable background jobs<a class="headerlink" href="#906-start-the-workers-to-enable-background-jobs" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>chmod +x /var/www/MISP/app/Console/worker/start.sh
-su -s /bin/bash apache -c <span class="s1">&#39;scl enable rh-php71 rh-redis32 rh-mariadb102 /var/www/MISP/app/Console/worker/start.sh&#39;</span>
+su -s /bin/bash apache -c <span class="s1">&#39;scl enable rh-php72 rh-redis32 rh-mariadb102 /var/www/MISP/app/Console/worker/start.sh&#39;</span>
 </pre></div>
 
 <h2 id="907a-to-make-the-background-workers-start-on-boot">9.07a/ To make the background workers start on boot<a class="headerlink" href="#907a-to-make-the-background-workers-start-on-boot" title="Permanent link">&para;</a></h2>
@@ -1109,7 +1183,7 @@ su -s /bin/bash apache -c <span class="s1">&#39;scl enable rh-php71 rh-redis32 r
 </pre></div>
 
 <h2 id="907b-add-the-following-line-at-the-end">9.07b/ Add the following line at the end<a class="headerlink" href="#907b-add-the-following-line-at-the-end" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>su -s /bin/bash apache -c <span class="s1">&#39;scl enable rh-php71 rh-redis32 rh-mariadb102 /var/www/MISP/app/Console/worker/start.sh&#39;</span>
+<div class="codehilite"><pre><span></span>su -s /bin/bash apache -c <span class="s1">&#39;scl enable rh-php72 rh-redis32 rh-mariadb102 /var/www/MISP/app/Console/worker/start.sh&#39;</span>
 </pre></div>
 
 <h2 id="907c-and-make-sure-it-will-execute">9.07c/ and make sure it will execute<a class="headerlink" href="#907c-and-make-sure-it-will-execute" title="Permanent link">&para;</a></h2>
@@ -1156,15 +1230,15 @@ chown -R apache:apache /var/www/MISP/&lt;directory path with an indicated issue&
 <p>This may mean that logrotate cannot access the logs directory, will require further investigation</p>
 </div>
 <h2 id="1002-change-phpini-settings-to-suggested-limits-from-diagnostic-page">10.02/ Change php.ini settings to suggested limits from diagnostic page.<a class="headerlink" href="#1002-change-phpini-settings-to-suggested-limits-from-diagnostic-page" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="c1"># Edit /etc/opt/rh/rh-php71/php.ini and set the following settings</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Edit /etc/opt/rh/rh-php72/php.ini and set the following settings</span>
 <span class="nv">max_execution_time</span> <span class="o">=</span> <span class="m">300</span>
 <span class="nv">memory_limit</span> <span class="o">=</span> 512M
 <span class="nv">upload_max_filesize</span> <span class="o">=</span> 50M
 <span class="nv">post_max_size</span> <span class="o">=</span> 50M
 </pre></div>
 
-<h2 id="1003-restart-rh-php71-for-settings-to-take-effect">10.03/ Restart rh-php71 for settings to take effect<a class="headerlink" href="#1003-restart-rh-php71-for-settings-to-take-effect" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>systemctl restart rh-php71-php-fpm
+<h2 id="1003-restart-rh-php72-for-settings-to-take-effect">10.03/ Restart rh-php72 for settings to take effect<a class="headerlink" href="#1003-restart-rh-php72-for-settings-to-take-effect" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span>systemctl restart rh-php72-php-fpm
 </pre></div>
 
 <h2 id="1004-install-pymisp-and-pydeep-for-advanced-attachment-handler">10.04/ Install pymisp and pydeep for Advanced Attachment handler<a class="headerlink" href="#1004-install-pymisp-and-pydeep-for-advanced-attachment-handler" title="Permanent link">&para;</a></h2>
@@ -1227,7 +1301,7 @@ make package
 <h2 id="1202-workers-cannot-be-started-or-restarted-from-the-web-page">12.02/ Workers cannot be started or restarted from the web page<a class="headerlink" href="#1202-workers-cannot-be-started-or-restarted-from-the-web-page" title="Permanent link">&para;</a></h2>
 <p>Possible also due to package being installed via SCL, attempting to start workers through the web page will result in
 error. Worker's can be restarted via the CLI using the following command.
-<div class="codehilite"><pre><span></span>su -s /bin/bash apache -c <span class="s1">&#39;scl enable rh-php71 rh-redis32 rh-mariadb102 /var/www/MISP/app/Console/worker/start.sh&#39;</span>
+<div class="codehilite"><pre><span></span>su -s /bin/bash apache -c <span class="s1">&#39;scl enable rh-php72 rh-redis32 rh-mariadb102 /var/www/MISP/app/Console/worker/start.sh&#39;</span>
 </pre></div></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1299,6 +1373,41 @@ index f9f69d4..2e8fd78 100644
       
         
 <footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.4" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                OpenBSD 6.4
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../CONFIG.elasticsearch-logging/" title="Elastic Search Logging" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Elastic Search Logging
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
