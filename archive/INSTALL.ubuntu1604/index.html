@@ -2003,7 +2003,7 @@ mispDashboard <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyzmq
   <span class="nb">cd</span> /var/www
   sudo mkdir misp-dashboard
-  sudo chown www-data:www-data misp-dashboard
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> misp-dashboard
 
   <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git
   <span class="nb">cd</span> misp-dashboard

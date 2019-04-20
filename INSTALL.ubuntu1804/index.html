@@ -1251,7 +1251,7 @@ curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh <s
 
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>Installer tested working by <a href="https://twitter.com/SteveClement">@SteveClement</a> on 20190418 (works with <strong>Ubuntu 18.10</strong> too)</p>
+<p>Installer tested working by <a href="https://twitter.com/SteveClement">@SteveClement</a> on 20190420 (works with <strong>Ubuntu 18.10/19.04</strong> too)</p>
 </div>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
@@ -1502,45 +1502,45 @@ installCore <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Installing </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> core&quot;</span>
   <span class="c1"># Download MISP using git in the /var/www/ directory.</span>
   sudo mkdir <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
-  sudo chown www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
   <span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
-  sudo -u www-data git clone https://github.com/MISP/MISP.git <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
-  sudo -u www-data git submodule update --init --recursive
+  <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/MISP.git <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
+  <span class="nv">$SUDO_WWW</span> git submodule update --init --recursive
   <span class="c1"># Make git ignore filesystem permission differences for submodules</span>
-  sudo -u www-data git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
 
   <span class="c1"># Make git ignore filesystem permission differences</span>
-  sudo -u www-data git config core.filemode <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> git config core.filemode <span class="nb">false</span>
 
   <span class="c1"># Create a python3 virtualenv</span>
-  sudo -u www-data virtualenv -p python3 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
+  <span class="nv">$SUDO_WWW</span> virtualenv -p python3 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
 
   <span class="c1"># make pip happy</span>
   sudo mkdir /var/www/.cache/
-  sudo chown www-data:www-data /var/www/.cache
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.cache
 
   <span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts
-  sudo -H -u www-data git clone https://github.com/CybOXProject/python-cybox.git
-  sudo -H -u www-data git clone https://github.com/STIXProject/python-stix.git
-  sudo -H -u www-data git clone https://github.com/MAECProject/python-maec.git
+  <span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/python-cybox.git
+  <span class="nv">$SUDO_WWW</span> git clone https://github.com/STIXProject/python-stix.git
+  <span class="nv">$SUDO_WWW</span> git clone https://github.com/MAECProject/python-maec.git
 
   <span class="c1"># install mixbox to accommodate the new STIX dependencies:</span>
-  sudo -H -u www-data git clone https://github.com/CybOXProject/mixbox.git
+  <span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/mixbox.git
   <span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts/mixbox
-  sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
   <span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts/python-cybox
-  sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
   <span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts/python-stix
-  sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-maec
-  sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
   <span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
   <span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/cti-python-stix2
-  sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
 
   <span class="c1"># install PyMISP</span>
   <span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/PyMISP
-  sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
 
   <span class="c1"># install pydeep</span>
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
@@ -1568,17 +1568,17 @@ installCake <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app
   <span class="c1"># Make composer cache happy</span>
   <span class="c1"># /!\ composer on Ubuntu when invoked with sudo -u doesn&#39;t set $HOME to /var/www but keeps it /home/misp \!/</span>
-  sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown www-data:www-data /var/www/.composer
-  sudo -H -u www-data php composer.phar require kamisama/cake-resque:4.1.2
-  sudo -H -u www-data php composer.phar config vendor-dir Vendor
-  sudo -H -u www-data php composer.phar install
+  sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.composer
+  <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
+  <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
+  <span class="nv">$SUDO_WWW</span> php composer.phar install
 
   <span class="c1"># Enable CakeResque with php-redis</span>
   sudo phpenmod redis
   sudo phpenmod gnupg
 
   <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
-  sudo -u www-data cp -fa <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/setup/config.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Plugin/CakeResque/Config/config.php
+  <span class="nv">$SUDO_WWW</span> cp -fa <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/setup/config.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Plugin/CakeResque/Config/config.php
 
   <span class="c1"># If you have multiple MISP instances on the same system, don&#39;t forget to have a different Redis per MISP instance for the CakeResque workers</span>
   <span class="c1"># The default Redis port can be updated in Plugin/CakeResque/Config/config.php</span>
@@ -1643,7 +1643,7 @@ prepareDB <span class="o">()</span> <span class="o">{</span>
   sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant all privileges on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
   sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;flush privileges;&quot;</span>
   <span class="c1"># Import the empty MISP database from MYSQL.sql</span>
-  sudo -u www-data cat <span class="nv">$PATH_TO_MISP</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
+  <span class="nv">$SUDO_WWW</span> cat <span class="nv">$PATH_TO_MISP</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 1_prepareDB.sh&gt;</span>
 </pre></div>
@@ -1750,10 +1750,10 @@ logRotation <span class="o">()</span> <span class="o">{</span>
 configMISP <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Generating </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> config files&quot;</span>
   <span class="c1"># There are 4 sample configuration files in ${PATH_TO_MISP}/app/Config that need to be copied</span>
-  sudo -u www-data cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/bootstrap.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/bootstrap.php
-  sudo -u www-data cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/database.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/database.php
-  sudo -u www-data cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/core.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/core.php
-  sudo -u www-data cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/config.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/config.php
+  <span class="nv">$SUDO_WWW</span> cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/bootstrap.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/bootstrap.php
+  <span class="nv">$SUDO_WWW</span> cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/database.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/database.php
+  <span class="nv">$SUDO_WWW</span> cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/core.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/core.php
+  <span class="nv">$SUDO_WWW</span> cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/config.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/config.php
 
   <span class="nb">echo</span> <span class="s2">&quot;&lt;?php</span>
 <span class="s2">  class DATABASE_CONFIG {</span>
@@ -1770,7 +1770,7 @@ configMISP <span class="o">()</span> <span class="o">{</span>
 <span class="s2">                  &#39;prefix&#39; =&gt; &#39;&#39;,</span>
 <span class="s2">                  &#39;encoding&#39; =&gt; &#39;utf8&#39;,</span>
 <span class="s2">          );</span>
-<span class="s2">  }&quot;</span> <span class="p">|</span> sudo -u www-data tee <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
+<span class="s2">  }&quot;</span> <span class="p">|</span> <span class="nv">$SUDO_WWW</span> tee <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
 
   <span class="c1"># Important! Change the salt key in ${PATH_TO_MISP}/app/Config/config.php</span>
   <span class="c1"># The salt key must be a string at least 32 bytes long.</span>
@@ -1779,7 +1779,7 @@ configMISP <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># delete the user from mysql and log in again using the default admin credentials (admin@admin.test / admin)</span>
 
   <span class="c1"># and make sure the file permissions are still OK</span>
-  sudo chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config
+  sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config
   sudo chmod -R <span class="m">750</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 2_configMISP.sh&gt;</span>
@@ -2100,7 +2100,7 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <h3 id="optional-features">Optional features<a class="headerlink" href="#optional-features" title="Permanent link">&para;</a></h3>
 <hr />
 <h4 id="misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-command">MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following command<a class="headerlink" href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-command" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyzmq
+<div class="codehilite"><pre><span></span><span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyzmq
 </pre></div>
 
 <h4 id="misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands">MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
@@ -2123,7 +2123,7 @@ mispDashboard <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyzmq
   <span class="nb">cd</span> /var/www
   sudo mkdir misp-dashboard
-  sudo chown www-data:www-data misp-dashboard
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> misp-dashboard
 
   <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git
   <span class="nb">cd</span> misp-dashboard
@@ -2588,21 +2588,21 @@ checkID <span class="o">()</span> <span class="o">{</span>
       <span class="nb">echo</span> <span class="s2">&quot;User </span><span class="nv">$MISP_USER</span><span class="s2"> added, password is: </span><span class="nv">$MISP_PASSWORD</span><span class="s2">&quot;</span>
     <span class="k">elif</span> <span class="o">[[</span> <span class="nv">$ANSWER</span> <span class="o">==</span> <span class="s2">&quot;n&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
       <span class="nb">echo</span> <span class="s2">&quot;Using </span><span class="nv">$USER</span><span class="s2"> as install user, hope that is what you want.&quot;</span>
-      <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Adding </span><span class="nv">$USER</span><span class="s2"> to groups www-data and staff</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Adding </span><span class="nv">$USER</span><span class="s2"> to groups </span><span class="nv">$WWW_USER</span><span class="s2"> and staff</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
       <span class="nv">MISP_USER</span><span class="o">=</span><span class="nv">$USER</span>
       sudo adduser <span class="nv">$MISP_USER</span> staff
-      sudo adduser <span class="nv">$MISP_USER</span> www-data
+      sudo adduser <span class="nv">$MISP_USER</span> <span class="nv">$WWW_USER</span>
     <span class="k">else</span>
       <span class="nb">echo</span> <span class="s2">&quot;yes or no was asked, try again.&quot;</span>
       sudo adduser <span class="nv">$MISP_USER</span> staff
-      sudo adduser <span class="nv">$MISP_USER</span> www-data
+      sudo adduser <span class="nv">$MISP_USER</span> <span class="nv">$WWW_USER</span>
       <span class="nb">exit</span> <span class="m">1</span>
     <span class="k">fi</span>
   <span class="k">else</span>
     <span class="nb">echo</span> <span class="s2">&quot;User </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> exists, skipping creation&quot;</span>
-    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Adding </span><span class="nv">$MISP_USER</span><span class="s2"> to groups www-data and staff</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Adding </span><span class="nv">$MISP_USER</span><span class="s2"> to groups </span><span class="nv">$WWW_USER</span><span class="s2"> and staff</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
     sudo adduser <span class="nv">$MISP_USER</span> staff
-    sudo adduser <span class="nv">$MISP_USER</span> www-data
+    sudo adduser <span class="nv">$MISP_USER</span> <span class="nv">$WWW_USER</span>
   <span class="k">fi</span>
 <span class="o">}</span>
 
@@ -2997,7 +2997,7 @@ gitPullAllRCLOCAL <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># Composer on php 7.2 does not need any special treatment the provided phar works well</span>
 composer72 <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
-  mkdir /var/www/.composer <span class="p">;</span> chown www-data:www-data /var/www/.composer
+  mkdir /var/www/.composer <span class="p">;</span> chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.composer
   <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
   <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
   <span class="nv">$SUDO_WWW</span> php composer.phar install
@@ -3006,16 +3006,16 @@ composer72 <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># Composer on php 7.3 needs a recent version of composer.phar</span>
 composer73 <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
-  mkdir /var/www/.composer <span class="p">;</span> chown www-data:www-data /var/www/.composer
+  mkdir /var/www/.composer <span class="p">;</span> chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.composer
   <span class="c1"># Update composer.phar</span>
   <span class="c1"># If hash changes, check here: https://getcomposer.org/download/ and replace with the correct one</span>
   <span class="c1"># Current Sum for: v1.8.3</span>
   <span class="nv">SHA384_SUM</span><span class="o">=</span><span class="s1">&#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;</span>
-  sudo -H -u www-data php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-  sudo -H -u www-data php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;</span><span class="nv">$SHA384_SUM</span><span class="s2">&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); exit(137); } echo PHP_EOL;&quot;</span>
+  <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
+  <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;</span><span class="nv">$SHA384_SUM</span><span class="s2">&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); exit(137); } echo PHP_EOL;&quot;</span>
   checkFail <span class="s2">&quot;composer.phar checksum failed, please investigate manually. &quot;</span> <span class="nv">$?</span>
-  sudo -H -u www-data php composer-setup.php
-  sudo -H -u www-data php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
+  <span class="nv">$SUDO_WWW</span> php composer-setup.php
+  <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
   <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
   <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
   <span class="nv">$SUDO_WWW</span> php composer.phar install

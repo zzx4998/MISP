@@ -845,21 +845,21 @@ checkID <span class="o">()</span> <span class="o">{</span>
       <span class="nb">echo</span> <span class="s2">&quot;User </span><span class="nv">$MISP_USER</span><span class="s2"> added, password is: </span><span class="nv">$MISP_PASSWORD</span><span class="s2">&quot;</span>
     <span class="k">elif</span> <span class="o">[[</span> <span class="nv">$ANSWER</span> <span class="o">==</span> <span class="s2">&quot;n&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
       <span class="nb">echo</span> <span class="s2">&quot;Using </span><span class="nv">$USER</span><span class="s2"> as install user, hope that is what you want.&quot;</span>
-      <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Adding </span><span class="nv">$USER</span><span class="s2"> to groups www-data and staff</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Adding </span><span class="nv">$USER</span><span class="s2"> to groups </span><span class="nv">$WWW_USER</span><span class="s2"> and staff</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
       <span class="nv">MISP_USER</span><span class="o">=</span><span class="nv">$USER</span>
       sudo adduser <span class="nv">$MISP_USER</span> staff
-      sudo adduser <span class="nv">$MISP_USER</span> www-data
+      sudo adduser <span class="nv">$MISP_USER</span> <span class="nv">$WWW_USER</span>
     <span class="k">else</span>
       <span class="nb">echo</span> <span class="s2">&quot;yes or no was asked, try again.&quot;</span>
       sudo adduser <span class="nv">$MISP_USER</span> staff
-      sudo adduser <span class="nv">$MISP_USER</span> www-data
+      sudo adduser <span class="nv">$MISP_USER</span> <span class="nv">$WWW_USER</span>
       <span class="nb">exit</span> <span class="m">1</span>
     <span class="k">fi</span>
   <span class="k">else</span>
     <span class="nb">echo</span> <span class="s2">&quot;User </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> exists, skipping creation&quot;</span>
-    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Adding </span><span class="nv">$MISP_USER</span><span class="s2"> to groups www-data and staff</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Adding </span><span class="nv">$MISP_USER</span><span class="s2"> to groups </span><span class="nv">$WWW_USER</span><span class="s2"> and staff</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
     sudo adduser <span class="nv">$MISP_USER</span> staff
-    sudo adduser <span class="nv">$MISP_USER</span> www-data
+    sudo adduser <span class="nv">$MISP_USER</span> <span class="nv">$WWW_USER</span>
   <span class="k">fi</span>
 <span class="o">}</span>
 
@@ -1254,7 +1254,7 @@ gitPullAllRCLOCAL <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># Composer on php 7.2 does not need any special treatment the provided phar works well</span>
 composer72 <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
-  mkdir /var/www/.composer <span class="p">;</span> chown www-data:www-data /var/www/.composer
+  mkdir /var/www/.composer <span class="p">;</span> chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.composer
   <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
   <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
   <span class="nv">$SUDO_WWW</span> php composer.phar install
@@ -1263,16 +1263,16 @@ composer72 <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># Composer on php 7.3 needs a recent version of composer.phar</span>
 composer73 <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
-  mkdir /var/www/.composer <span class="p">;</span> chown www-data:www-data /var/www/.composer
+  mkdir /var/www/.composer <span class="p">;</span> chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.composer
   <span class="c1"># Update composer.phar</span>
   <span class="c1"># If hash changes, check here: https://getcomposer.org/download/ and replace with the correct one</span>
   <span class="c1"># Current Sum for: v1.8.3</span>
   <span class="nv">SHA384_SUM</span><span class="o">=</span><span class="s1">&#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;</span>
-  sudo -H -u www-data php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-  sudo -H -u www-data php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;</span><span class="nv">$SHA384_SUM</span><span class="s2">&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); exit(137); } echo PHP_EOL;&quot;</span>
+  <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
+  <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;</span><span class="nv">$SHA384_SUM</span><span class="s2">&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); exit(137); } echo PHP_EOL;&quot;</span>
   checkFail <span class="s2">&quot;composer.phar checksum failed, please investigate manually. &quot;</span> <span class="nv">$?</span>
-  sudo -H -u www-data php composer-setup.php
-  sudo -H -u www-data php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
+  <span class="nv">$SUDO_WWW</span> php composer-setup.php
+  <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
   <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
   <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
   <span class="nv">$SUDO_WWW</span> php composer.phar install
