@@ -993,7 +993,7 @@ setBaseURL <span class="o">()</span> <span class="o">{</span>
   <span class="k">else</span>
     <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;https://localhost:8443&#39;</span>
     <span class="nv">IP</span><span class="o">=</span><span class="k">$(</span>ip addr show <span class="p">|</span> awk <span class="s1">&#39;$1 == &quot;inet&quot; {gsub(/\/.*$/, &quot;&quot;, $2); print $2}&#39;</span> <span class="p">|</span>grep -v <span class="s2">&quot;127.0.0.1&quot;</span> <span class="p">|</span>tail -1<span class="k">)</span>
-    sudo iptables -t nat -I PREROUTING --src <span class="m">0</span>/0 --dst <span class="si">${</span><span class="nv">IP</span><span class="si">}</span> tcp --dport <span class="m">8443</span> -j REDIRECT --to-ports <span class="m">443</span>
+    sudo iptables -t nat -A OUTPUT -p tcp --dport <span class="m">8443</span> -j DNAT --to <span class="si">${</span><span class="nv">IP</span><span class="si">}</span>:443
     <span class="c1"># Webserver configuration</span>
     <span class="nv">FQDN</span><span class="o">=</span><span class="s1">&#39;localhost.localdomain&#39;</span>
   <span class="k">fi</span>
