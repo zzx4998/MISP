@@ -7975,6 +7975,23 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[doc] CentOS/RHEL udpates. Merge towards unity. (#4527) [Steve
+  Clement]</li>
+</ul>
+<p>chg: [doc] CentOS/RHEL udpates. Merge towards unity.
+- [doc] CentOS/RHEL udpates. Merge towards unity. [Steve Clement]
+- [performance] Reworked the pre-fetching of event IDs for the
+  events/restSearch endpoint. [iglocska]</p>
+<ul>
+<li>no need to count all existing hits in a non paginated situation. Simply use the result count</li>
+<li>[misp-warninglists] updated with the latest version. [Alexandre
+  Dulaunoy]</li>
+<li>[misp-objects] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[i18n] Updated language files new: [i18n] Added: Portuguese and
+  Arabic. [Steve Clement]</li>
+<li>[i18n] Updated default.pot fix: [i18n] Fixed parser error. [Steve
+  Clement]</li>
+<li>More russian translation. [4ekin]</li>
 <li>[doc] Added note about 19.04. [Steve Clement]</li>
 <li>[tools] Updated installer. [Steve Clement]</li>
 <li>[doc] More variable updates. [Steve Clement]</li>
@@ -8096,6 +8113,16 @@
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>
+<p>[performance] Manually inject index hints for the value lookup.
+  [iglocska]</p>
+</li>
+<li>
+<p>Disgusting fix for old versions of MySQL</p>
+</li>
+<li>I need a shower after this</li>
+<li>[API] Invalid negative lookup fixed. [iglocska]</li>
+<li>[debug] Removed breakpoint. [iglocska]</li>
 <li>[tools] Correct iptables command. [Steve Clement]</li>
 <li>[tools] fix iptables typo. [Steve Clement]</li>
 <li>Fixed wrong link to feed event from event attribute hit. [4ekin]</li>
@@ -8103,6 +8130,8 @@
 <li>[tools] Somehow there are issues with groups and sudo  :( [Steve
   Clement]</li>
 <li>[doc] Fixed broken RHEL8 BETA link. [Steve Clement]</li>
+<li>[stats:galaxyMatrix] No longer trim the end of the cluster name.
+  [mokaddem]</li>
 <li>[UI] Minor font-awesome switch related issues fixed. [iglocska]</li>
 <li>[UI] Modifying push/pull rules fails via the server edit. [iglocska]</li>
 <li>[export] Fixed broken bro export, fixes #4050. [iglocska]</li>
@@ -8212,9 +8241,15 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #4516 from SteveClement/INSTALL_19.04. [Steve
-  Clement]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]</li>
+<li>Merge pull request #4517 from SteveClement/i18n. [Steve Clement]</li>
 </ul>
+<p>chg: [i18n] Updated language files
+- Merge pull request #4512 from 4ekin/russian_translation. [Steve
+  Clement]</p>
+<p>chg: More russian translation
+- Merge pull request #4516 from SteveClement/INSTALL_19.04. [Steve
+  Clement]</p>
 <p>chg: [tools] Tested and adapted the installer to work with latest Ubuntu Server 19.04
 - Merge pull request #4515 from SteveClement/tools. [Steve Clement]</p>
 <p>chg: [tools] Updated installer

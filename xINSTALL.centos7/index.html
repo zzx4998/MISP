@@ -100,7 +100,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#installation-instructions" tabindex="1" class="md-skip">
+      <a href="#deprecated-installation-instructions" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -1061,10 +1061,11 @@
               
                 
                 
-                <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h1>
+                <h1 id="deprecated-installation-instructions"><strong>deprecated</strong> INSTALLATION INSTRUCTIONS<a class="headerlink" href="#deprecated-installation-instructions" title="Permanent link">&para;</a></h1>
 <h2 id="for-centos-7x">for CentOS 7.x<a class="headerlink" href="#for-centos-7x" title="Permanent link">&para;</a></h2>
+<p>Please use the Red Hat Enterprise Linux 7 Instructions for a CentOS 7 install. <a href="https://misp.github.io/MISP/INSTALL.rhel7/">click here</a>.</p>
 <h3 id="-1-installer-and-manual-install-instructions">-1/ Installer and Manual install instructions<a class="headerlink" href="#-1-installer-and-manual-install-instructions" title="Permanent link">&para;</a></h3>
-<p>Make sure you are reading the parsed version of this Document. When in doubt <a href="https://misp.github.io/MISP/xINSTALL.centos7/">click here</a>.</p>
+<p>Make sure you are reading the parsed version of this Document. When in doubt <a href="https://misp.github.io/MISP/INSTALL.rhel7/">click here</a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>In the <strong>future</strong>, to install MISP on a fresh CentOS 7 install all you need to do is:</p>
@@ -1095,9 +1096,9 @@ It is still considered experimental as not everything works seemlessly.</p>
 </div>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>Maintenance will end on: June 30<sup>th</sup>, 2024 <a href="https://wiki.centos.org/About/Product">Source[0]</a> <a href="https://linuxlifecycle.com/">Source[1]</a></p>
+<p>Maintenance for CentOS 7 will end on: June 30<sup>th</sup>, 2024 <a href="https://wiki.centos.org/About/Product">Source[0]</a> <a href="https://linuxlifecycle.com/">Source[1]</a>
+CentOS 7.6-1810 <a href="http://mirror.centos.org/centos/7.6.1810/os/x86_64/">NetInstallURL</a></p>
 </div>
-<p>CentOS 7.6-1810 <a href="http://mirror.centos.org/centos/7.6.1810/os/x86_64/">NetInstallURL</a></p>
 <h4 id="misp-configuration-variables">MISP configuration variables<a class="headerlink" href="#misp-configuration-variables" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_global-vars.sh&gt;</span>
 <span class="c1"># $ eval &quot;$(curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md | grep -v \`\`\`)&quot;</span>
@@ -1679,29 +1680,29 @@ sudo chmod +x /etc/rc.local
 <span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span># some misp-modules dependencies
-sudo yum install -y openjpeg-devel
+<div class="codehilite"><pre><span></span><span class="c1"># some misp-modules dependencies</span>
+sudo yum install openjpeg-devel -y
 
-sudo chmod 2777 /usr/local/src
+sudo chmod <span class="m">2777</span> /usr/local/src
 sudo chown root:users /usr/local/src
-cd /usr/local/src/
-$SUDO_WWW git clone https://github.com/MISP/misp-modules.git
-cd misp-modules
-# pip install
-$SUDO_WWW $PATH_TO_MISP/venv/bin/pip install -I -r REQUIREMENTS
-$SUDO_WWW $PATH_TO_MISP/venv/bin/pip install .
+<span class="nb">cd</span> /usr/local/src/
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-modules.git
+<span class="nb">cd</span> misp-modules
+<span class="c1"># pip install</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -I -r REQUIREMENTS
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
 sudo yum install rubygem-rouge rubygem-asciidoctor -y
-##sudo gem install asciidoctor-pdf --pre
+<span class="c1">##sudo gem install asciidoctor-pdf --pre</span>
 
-# install additional dependencies for extended object generation and extraction
-$SUDO_WWW ${PATH_TO_MISP}/venv/bin/pip install maec python-magic pathlib
-$SUDO_WWW ${PATH_TO_MISP}/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
+<span class="c1"># install additional dependencies for extended object generation and extraction</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install maec python-magic pathlib
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
 
-# Start misp-modules
-$SUDO_WWW ${PATH_TO_MISP}/venv/bin/misp-modules -l 0.0.0.0 -s &amp;
+<span class="c1"># Start misp-modules</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/misp-modules -l <span class="m">0</span>.0.0.0 -s <span class="p">&amp;</span>
 
-# TODO: Fix static path with PATH_TO_MISP
-sudo sed -i -e &#39;$i \sudo -u apache /var/www/MISP/venv/bin/misp-modules -l 127.0.0.1 -s &amp;\n&#39; /etc/rc.local
+<span class="c1"># TODO: Fix static path with PATH_TO_MISP</span>
+sudo sed -i -e <span class="s1">&#39;$i \sudo -u apache /var/www/MISP/venv/bin/misp-modules -l 127.0.0.1 -s &amp;\n&#39;</span> /etc/rc.local
 </pre></div>
 
 <h4 id="misp-dashboard-on-centos">MISP Dashboard on CentOS<a class="headerlink" href="#misp-dashboard-on-centos" title="Permanent link">&para;</a></h4>
@@ -1786,7 +1787,7 @@ sudo sed -i -e <span class="s1">&#39;$i \sudo -u apache bash /var/www/misp-dashb
 <h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><span class="c1"># Initialize user and fetch Auth Key</span>
 <span class="nv">$SUDO_WWW</span> -E <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> userInit -q&quot;</span>
-<span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1<span class="k">)</span>
+<span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>scl <span class="nb">enable</span> rh-mariadb102 <span class="s2">&quot;mysql -u </span><span class="nv">$DBUSER_MISP</span><span class="s2"> -p</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2"> misp -e &#39;SELECT authkey FROM users;&#39; | tail -1&quot;</span><span class="k">)</span>
 
 <span class="c1"># This makes sure all Database upgrades are done, without logging in.</span>
 <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin updateDatabase&quot;</span>

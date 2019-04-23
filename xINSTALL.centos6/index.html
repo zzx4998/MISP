@@ -1756,7 +1756,7 @@ sudo sed -i -e <span class="s1">&#39;$i \sudo -u apache bash /var/www/misp-dashb
 <h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><span class="c1"># Initialize user and fetch Auth Key</span>
 <span class="nv">$SUDO_WWW</span> -E <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> userInit -q&quot;</span>
-<span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1<span class="k">)</span>
+<span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>scl <span class="nb">enable</span> rh-mariadb102 <span class="s2">&quot;mysql -u </span><span class="nv">$DBUSER_MISP</span><span class="s2"> -p</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2"> misp -e &#39;SELECT authkey FROM users;&#39; | tail -1&quot;</span><span class="k">)</span>
 
 <span class="c1"># This makes sure all Database upgrades are done, without logging in.</span>
 <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin updateDatabase&quot;</span>
