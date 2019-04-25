@@ -636,26 +636,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#experimental-ssdeep-correlations" title="Experimental ssdeep correlations¶" class="md-nav__link">
-    Experimental ssdeep correlations¶
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#installing-ssdeep" title="installing ssdeep" class="md-nav__link">
-    installing ssdeep
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-commands" title="MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands" class="md-nav__link">
     MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands
   </a>
@@ -684,7 +664,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#experimental-ssdeep-correlations_1" title="Experimental ssdeep correlations" class="md-nav__link">
+  <a href="#experimental-ssdeep-correlations" title="Experimental ssdeep correlations" class="md-nav__link">
     Experimental ssdeep correlations
   </a>
   
@@ -692,7 +672,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#installing-ssdeep_1" title="installing ssdeep" class="md-nav__link">
+  <a href="#installing-ssdeep" title="installing ssdeep" class="md-nav__link">
     installing ssdeep
   </a>
   
@@ -1317,26 +1297,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#experimental-ssdeep-correlations" title="Experimental ssdeep correlations¶" class="md-nav__link">
-    Experimental ssdeep correlations¶
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#installing-ssdeep" title="installing ssdeep" class="md-nav__link">
-    installing ssdeep
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-commands" title="MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands" class="md-nav__link">
     MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands
   </a>
@@ -1365,7 +1325,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#experimental-ssdeep-correlations_1" title="Experimental ssdeep correlations" class="md-nav__link">
+  <a href="#experimental-ssdeep-correlations" title="Experimental ssdeep correlations" class="md-nav__link">
     Experimental ssdeep correlations
   </a>
   
@@ -1373,7 +1333,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#installing-ssdeep_1" title="installing ssdeep" class="md-nav__link">
+  <a href="#installing-ssdeep" title="installing ssdeep" class="md-nav__link">
     installing ssdeep
   </a>
   
@@ -1622,13 +1582,29 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
 
 <h5 id="add-the-misp-user-to-staff-and-www-data-mandatory">add the misp user to staff and www-data (mandatory)<a class="headerlink" href="#add-the-misp-user-to-staff-and-www-data-mandatory" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin add-user.sh&gt;</span>
-<span class="c1"># Add the user to the staff group to be able to write to /usr/local/src</span>
-<span class="c1"># TODO: Fix this, user misp might not exist</span>
-sudo adduser misp staff
-sudo adduser misp www-data
+<span class="c1">## FIXME: This function is a duplicate included in: # &lt;snippet-begin 0_support-functions.sh&gt;</span>
+<span class="c1"># check is /usr/local/src is RW by misp user</span>
+checkUsrLocalSrc <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s2">&quot;&quot;</span>
+  <span class="k">if</span> <span class="o">[[</span> -e /usr/local/src <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WRITEABLE</span><span class="o">=</span><span class="k">$(</span>sudo -H -u <span class="nv">$MISP_USER</span> touch /usr/local/src <span class="m">2</span>&gt; /dev/null <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$WRITEABLE</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="nb">echo</span> <span class="s2">&quot;Good, /usr/local/src exists and is writeable as </span><span class="nv">$MISP_USER</span><span class="s2">&quot;</span>
+    <span class="k">else</span>
+      <span class="c1"># TODO: The below might be shorter, more elegant and more modern</span>
+      <span class="c1">#[[ -n $KALI ]] || [[ -n $UNATTENDED ]] &amp;&amp; echo &quot;Just do it&quot; </span>
+      sudo chmod <span class="m">2775</span> /usr/local/src
+      sudo chown root:staff /usr/local/src
+    <span class="k">fi</span>
+  <span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&quot;/usr/local/src does not exist, creating.&quot;</span>
+    mkdir -p /usr/local/src
+    sudo chmod <span class="m">2775</span> /usr/local/src
+    <span class="c1"># FIXME: This might fail on distros with no staff user</span>
+    sudo chown root:staff /usr/local/src
+  <span class="k">fi</span>
+<span class="o">}</span>
 <span class="c1"># &lt;snippet-end add-user.sh&gt;</span>
-<span class="c1"># Logout and back in to make the group changes take effect.</span>
-<span class="nb">logout</span>
 </pre></div>
 
 <h4 id="network-interface-name-salvage-optional">Network Interface Name salvage (optional)<a class="headerlink" href="#network-interface-name-salvage-optional" title="Permanent link">&para;</a></h4>
@@ -1695,7 +1671,7 @@ apache2 apache2-doc apache2-utils <span class="se">\</span>
 libapache2-mod-php7.3 php7.3 php7.3-cli php7.3-mbstring php7.3-dev php7.3-json php7.3-xml php7.3-mysql php7.3-opcache php7.3-readline php-redis php-gnupg php-gd <span class="se">\</span>
 libpq5 libjpeg-dev libfuzzy-dev ruby asciidoctor <span class="se">\</span>
 jq ntp ntpdate jupyter-notebook imagemagick tesseract-ocr <span class="se">\</span>
-libxml2-dev libxslt1-dev zlib1g-dev
+libxml2-dev libxslt1-dev zlib1g-dev -y
 
 <span class="c1"># Start haveged to get more entropy (optional)</span>
 sudo apt install haveged -y
@@ -1747,45 +1723,41 @@ sudo a2ensite default-ssl
 <hr />
 <div class="codehilite"><pre><span></span><span class="c1"># Download MISP using git in the /var/www/ directory.</span>
 sudo mkdir <span class="nv">$PATH_TO_MISP</span>
-sudo chown www-data:www-data <span class="nv">$PATH_TO_MISP</span>
+sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>
-sudo -u www-data git clone https://github.com/MISP/MISP.git <span class="nv">$PATH_TO_MISP</span>
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/MISP.git <span class="nv">$PATH_TO_MISP</span>
+<span class="nv">$SUDO_WWW</span> git submodule update --init --recursive
+<span class="c1"># Make git ignore filesystem permission differences for submodules</span>
+<span class="nv">$SUDO_WWW</span> git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
 
 <span class="c1"># Make git ignore filesystem permission differences</span>
-sudo -u www-data git config core.filemode <span class="nb">false</span>
+<span class="nv">$SUDO_WWW</span> git config core.filemode <span class="nb">false</span>
 
 <span class="c1"># Create a python3 virtualenv</span>
-sudo -u www-data virtualenv -p python3 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
+<span class="nv">$SUDO_WWW</span> virtualenv -p python3 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
 
 <span class="c1"># make pip happy</span>
 sudo mkdir /var/www/.cache/
-sudo chown www-data:www-data /var/www/.cache
+sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.cache
 
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts
-sudo -u www-data git clone https://github.com/CybOXProject/python-cybox.git
-sudo -u www-data git clone https://github.com/STIXProject/python-stix.git
-sudo -u www-data git clone https://github.com/MAECProject/python-maec.git
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-cybox
-sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-stix
-sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-maec
-sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
-
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/python-cybox.git
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/STIXProject/python-stix.git
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/MAECProject/python-maec.git
 <span class="c1"># install mixbox to accommodate the new STIX dependencies:</span>
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/
-sudo -u www-data git clone https://github.com/CybOXProject/mixbox.git
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/mixbox.git
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mixbox
-sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
-
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>
-sudo -u www-data git submodule update --init --recursive
-<span class="c1"># Make git ignore filesystem permission differences for submodules</span>
-sudo -u www-data git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-cybox
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-stix
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-maec
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
 
 <span class="c1"># install PyMISP</span>
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP
-sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
 
 <span class="c1"># Install Crypt_GPG and Console_CommandLine</span>
 sudo pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Console_CommandLine/package.xml
@@ -1804,28 +1776,28 @@ Follow the guide and manually install a new composer.phar and keep using PHP-7.3
 <div class="codehilite"><pre><span></span><span class="c1"># Install CakeResque along with its dependencies if you intend to use the built in background jobs:</span>
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
 <span class="c1"># Make composer cache happy</span>
-sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown www-data:www-data /var/www/.composer
+sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.composer
 <span class="c1"># Update composer.phar</span>
-sudo -H -u www-data php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-sudo -H -u www-data php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
-sudo -H -u www-data php composer-setup.php
-sudo -H -u www-data php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
-sudo -H -u www-data php composer.phar require kamisama/cake-resque:4.1.2
-sudo -H -u www-data php composer.phar config vendor-dir Vendor
-sudo -H -u www-data php composer.phar install
+<span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
+<span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
+<span class="nv">$SUDO_WWW</span> php composer-setup.php
+<span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
+<span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
+<span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
+<span class="nv">$SUDO_WWW</span> php composer.phar install
 
 <span class="c1"># Enable CakeResque with php-redis</span>
 sudo phpenmod redis
 sudo phpenmod gnupg
 
 <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
-sudo -u www-data cp -fa <span class="nv">$PATH_TO_MISP</span>/INSTALL/setup/config.php <span class="nv">$PATH_TO_MISP</span>/app/Plugin/CakeResque/Config/config.php
+<span class="nv">$SUDO_WWW</span> cp -fa <span class="nv">$PATH_TO_MISP</span>/INSTALL/setup/config.php <span class="nv">$PATH_TO_MISP</span>/app/Plugin/CakeResque/Config/config.php
 </pre></div>
 
 <h3 id="5-set-the-permissions">5/ Set the permissions<a class="headerlink" href="#5-set-the-permissions" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="codehilite"><pre><span></span><span class="c1"># Check if the permissions are set correctly using the following commands:</span>
-sudo chown -R www-data:www-data <span class="nv">$PATH_TO_MISP</span>
+sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>
 sudo chmod -R <span class="m">750</span> <span class="nv">$PATH_TO_MISP</span>
 sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/tmp
 sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/files
@@ -1853,7 +1825,7 @@ sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWO
 </pre></div>
 
 <h4 id="import-the-empty-misp-database-from-mysqlsql">Import the empty MISP database from MYSQL.sql<a class="headerlink" href="#import-the-empty-misp-database-from-mysqlsql" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>sudo -u www-data cat <span class="nv">$PATH_TO_MISP</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
+<div class="codehilite"><pre><span></span><span class="nv">$SUDO_WWW</span> cat <span class="nv">$PATH_TO_MISP</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
 </pre></div>
 
 <h3 id="7-apache-configuration">7/ Apache configuration<a class="headerlink" href="#7-apache-configuration" title="Permanent link">&para;</a></h3>
@@ -1943,10 +1915,10 @@ sudo chmod <span class="m">0640</span> /etc/logrotate.d/misp
 <h3 id="9-misp-configuration">9/ MISP configuration<a class="headerlink" href="#9-misp-configuration" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="codehilite"><pre><span></span><span class="c1"># There are 4 sample configuration files in $PATH_TO_MISP/app/Config that need to be copied</span>
-sudo -u www-data cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/bootstrap.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/bootstrap.php
-sudo -u www-data cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/database.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
-sudo -u www-data cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/core.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/core.php
-sudo -u www-data cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/config.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/config.php
+<span class="nv">$SUDO_WWW</span> cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/bootstrap.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/bootstrap.php
+<span class="nv">$SUDO_WWW</span> cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/database.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
+<span class="nv">$SUDO_WWW</span> cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/core.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/core.php
+<span class="nv">$SUDO_WWW</span> cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/config.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/config.php
 
 
 <span class="nb">echo</span> <span class="s2">&quot;&lt;?php</span>
@@ -1964,10 +1936,10 @@ sudo -u www-data cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/config.d
 <span class="s2">                &#39;prefix&#39; =&gt; &#39;&#39;,</span>
 <span class="s2">                &#39;encoding&#39; =&gt; &#39;utf8&#39;,</span>
 <span class="s2">        );</span>
-<span class="s2">}&quot;</span> <span class="p">|</span> sudo -u www-data tee <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
+<span class="s2">}&quot;</span> <span class="p">|</span> <span class="nv">$SUDO_WWW</span> tee <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
 
 <span class="c1"># and make sure the file permissions are still OK</span>
-sudo chown -R www-data:www-data <span class="nv">$PATH_TO_MISP</span>/app/Config
+sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/Config
 sudo chmod -R <span class="m">750</span> <span class="nv">$PATH_TO_MISP</span>/app/Config
 
 <span class="c1"># Generate a GPG encryption key.</span>
@@ -1987,14 +1959,32 @@ cat &gt;/tmp/gen-key-script <span class="s">&lt;&lt;EOF</span>
 <span class="s">    %echo done</span>
 <span class="s">EOF</span>
 
-sudo -u www-data gpg --homedir <span class="nv">$PATH_TO_MISP</span>/.gnupg --batch --gen-key /tmp/gen-key-script
+<span class="nv">$SUDO_WWW</span> gpg --homedir <span class="nv">$PATH_TO_MISP</span>/.gnupg --batch --gen-key /tmp/gen-key-script
 <span class="c1"># The email address should match the one set in the config.php / set in the configuration menu in the administration menu configuration file</span>
 
 <span class="c1"># And export the public key to the webroot</span>
-sudo -u www-data sh -c <span class="s2">&quot;gpg --homedir </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.gnupg --export --armor </span><span class="nv">$GPG_EMAIL_ADDRESS</span><span class="s2">&quot;</span> <span class="p">|</span> sudo -u www-data tee <span class="nv">$PATH_TO_MISP</span>/app/webroot/gpg.asc
+<span class="nv">$SUDO_WWW</span> sh -c <span class="s2">&quot;gpg --homedir </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.gnupg --export --armor </span><span class="nv">$GPG_EMAIL_ADDRESS</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="nv">$SUDO_WWW</span> tee <span class="nv">$PATH_TO_MISP</span>/app/webroot/gpg.asc
 
 <span class="c1"># To make the background workers start on boot</span>
 sudo chmod +x <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
+
+<span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
+<span class="s2">Description=MISP&#39;s background workers</span>
+<span class="s2">After=rh-mariadb102-mariadb.service rh-redis32-redis.service rh-php72-php-fpm.service</span>
+
+<span class="s2">[Service]</span>
+<span class="s2">Type=forking</span>
+<span class="s2">User=</span><span class="nv">$WWW_USER</span><span class="s2"></span>
+<span class="s2">Group=</span><span class="nv">$WWW_USER</span><span class="s2"></span>
+<span class="s2">ExecStart=</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/worker/start.sh</span>
+<span class="s2">Restart=always</span>
+<span class="s2">RestartSec=10</span>
+
+<span class="s2">[Install]</span>
+<span class="s2">WantedBy=multi-user.target&quot;</span> <span class="p">|</span>sudo tee /etc/systemd/system/misp-workers.service
+sudo systemctl daemon-reload
+sudo systemctl <span class="nb">enable</span> --now misp-workers.service
+
 <span class="k">if</span> <span class="o">[</span> ! -e /etc/rc.local <span class="o">]</span>
 <span class="k">then</span>
     <span class="nb">echo</span> <span class="s1">&#39;#!/bin/sh -e&#39;</span> <span class="p">|</span> sudo tee -a /etc/rc.local
@@ -2136,14 +2126,10 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># &lt;snippet-end 2_core-cake.sh&gt;</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="c1"># Add the following lines before the last line (exit 0). Make sure that you replace www-data with your apache user:</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Add the following lines before the last line (exit 0). Make sure that you replace $WWW_USER with your apache user:</span>
 sudo sed -i -e <span class="s1">&#39;$i \echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled\n&#39;</span> /etc/rc.local
 sudo sed -i -e <span class="s1">&#39;$i \echo 1024 &gt; /proc/sys/net/core/somaxconn\n&#39;</span> /etc/rc.local
 sudo sed -i -e <span class="s1">&#39;$i \sysctl vm.overcommit_memory=1\n&#39;</span> /etc/rc.local
-sudo sed -i -e <span class="s1">&#39;$i \sudo -u www-data bash /var/www/MISP/app/Console/worker/start.sh &gt; /tmp/worker_start_rc.local.log\n&#39;</span> /etc/rc.local
-
-<span class="c1"># Start the workers</span>
-sudo -u www-data bash <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
 </pre></div>
 
 <h4 id="install-misp-modules-optional">Install misp-modules (optional)<a class="headerlink" href="#install-misp-modules-optional" title="Permanent link">&para;</a></h4>
@@ -2165,11 +2151,9 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I -r REQUIREMENTS
   sudo chgrp staff .
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I .
-  sudo apt install ruby-pygments.rb -y
+  sudo apt install ruby-pygments.rb libopencv-dev zbar-tools -y
   sudo gem install asciidoctor-pdf --pre
 
-  <span class="c1"># install additional dependencies for extended object generation and extraction</span>
-  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install wand yara pathlib
   <span class="c1"># Start misp-modules as a service</span>
   sudo cp etc/systemd/system/misp-modules.service /etc/systemd/system/
   sudo systemctl daemon-reload
@@ -2280,36 +2264,10 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <span class="k">fi</span>
 </pre></div></p>
 </div>
-<h4 id="experimental-ssdeep-correlations">Experimental ssdeep correlations¶<a class="headerlink" href="#experimental-ssdeep-correlations" title="Permanent link">&para;</a></h4>
-<h5 id="installing-ssdeep">installing ssdeep<a class="headerlink" href="#installing-ssdeep" title="Permanent link">&para;</a></h5>
-<div class="codehilite"><pre><span></span>cd /usr/local/src
-wget https://github.com/ssdeep-project/ssdeep/releases/download/release-2.14.1/ssdeep-2.14.1.tar.gz
-tar zxvf ssdeep-2.14.1.tar.gz
-cd ssdeep-2.14.1
-./configure
-make
-sudo make install
-
-#installing ssdeep_php
-sudo pecl install ssdeep
-
-# You should add &quot;extension=ssdeep.so&quot; to mods-available - Check /etc/php for your current version
-echo &quot;extension=ssdeep.so&quot; | sudo tee ${PHP_ETC_BASE}/mods-available/ssdeep.ini
-sudo phpenmod ssdeep
-sudo service apache2 restart
-</pre></div>
-
 <h4 id="misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-commands">MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><span class="c1"># ZeroMQ depends on the Python client for Redis</span>
-sudo apt install python3-redis -y
-
-<span class="c1"># install pyzmq</span>
-sudo apt install python3-zmq -y
+<div class="codehilite"><pre><span></span><span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyzmq
 </pre></div>
 
-<p>In case you are using a virtualenv make sure pyzmq is installed therein.
-<div class="codehilite"><pre><span></span>sudo -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyzmq
-</pre></div></p>
 <h4 id="misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands">MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>sudo apt-get install librdkafka-dev php-dev
 sudo pecl install rdkafka
@@ -2476,8 +2434,8 @@ viper <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># &lt;snippet-end 6_viper.sh&gt;</span>
 </pre></div>
 
-<h4 id="experimental-ssdeep-correlations_1">Experimental ssdeep correlations<a class="headerlink" href="#experimental-ssdeep-correlations_1" title="Permanent link">&para;</a></h4>
-<h5 id="installing-ssdeep_1">installing ssdeep<a class="headerlink" href="#installing-ssdeep_1" title="Permanent link">&para;</a></h5>
+<h4 id="experimental-ssdeep-correlations">Experimental ssdeep correlations<a class="headerlink" href="#experimental-ssdeep-correlations" title="Permanent link">&para;</a></h4>
+<h5 id="installing-ssdeep">installing ssdeep<a class="headerlink" href="#installing-ssdeep" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 6_ssdeep.sh&gt;</span>
 ssdeep <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Install ssdeep 2.14.1&quot;</span>

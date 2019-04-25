@@ -1138,13 +1138,29 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
 
 <h5 id="add-the-misp-user-to-staff-and-www-data-mandatory">add the misp user to staff and www-data (mandatory)<a class="headerlink" href="#add-the-misp-user-to-staff-and-www-data-mandatory" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin add-user.sh&gt;</span>
-<span class="c1"># Add the user to the staff group to be able to write to /usr/local/src</span>
-<span class="c1"># TODO: Fix this, user misp might not exist</span>
-sudo adduser misp staff
-sudo adduser misp www-data
+<span class="c1">## FIXME: This function is a duplicate included in: # &lt;snippet-begin 0_support-functions.sh&gt;</span>
+<span class="c1"># check is /usr/local/src is RW by misp user</span>
+checkUsrLocalSrc <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s2">&quot;&quot;</span>
+  <span class="k">if</span> <span class="o">[[</span> -e /usr/local/src <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WRITEABLE</span><span class="o">=</span><span class="k">$(</span>sudo -H -u <span class="nv">$MISP_USER</span> touch /usr/local/src <span class="m">2</span>&gt; /dev/null <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$WRITEABLE</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="nb">echo</span> <span class="s2">&quot;Good, /usr/local/src exists and is writeable as </span><span class="nv">$MISP_USER</span><span class="s2">&quot;</span>
+    <span class="k">else</span>
+      <span class="c1"># TODO: The below might be shorter, more elegant and more modern</span>
+      <span class="c1">#[[ -n $KALI ]] || [[ -n $UNATTENDED ]] &amp;&amp; echo &quot;Just do it&quot; </span>
+      sudo chmod <span class="m">2775</span> /usr/local/src
+      sudo chown root:staff /usr/local/src
+    <span class="k">fi</span>
+  <span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&quot;/usr/local/src does not exist, creating.&quot;</span>
+    mkdir -p /usr/local/src
+    sudo chmod <span class="m">2775</span> /usr/local/src
+    <span class="c1"># FIXME: This might fail on distros with no staff user</span>
+    sudo chown root:staff /usr/local/src
+  <span class="k">fi</span>
+<span class="o">}</span>
 <span class="c1"># &lt;snippet-end add-user.sh&gt;</span>
-<span class="c1"># Logout and back in to make the group changes take effect.</span>
-<span class="nb">logout</span>
 </pre></div>
 
 <h4 id="network-interface-name-salvage-optional">Network Interface Name salvage (optional)<a class="headerlink" href="#network-interface-name-salvage-optional" title="Permanent link">&para;</a></h4>
