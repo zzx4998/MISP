@@ -463,6 +463,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#-1-installer-and-manual-install-instructions" title="-1/ Installer and Manual install instructions" class="md-nav__link">
+    -1/ Installer and Manual install instructions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#0-overview-and-assumptions" title="0/ Overview and Assumptions" class="md-nav__link">
     0/ Overview and Assumptions
   </a>
@@ -492,9 +499,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#04-this-document-is-to-get-a-misp-instance-up-and-running-over-http-i-havent-done-a-full-test-of-all-features" title="0.4/ This document is to get a MISP instance up and running over HTTP. I haven't done a full test of all features" class="md-nav__link">
-    0.4/ This document is to get a MISP instance up and running over HTTP. I haven't done a full test of all features
+  <a href="#04-this-document-will-bootstrap-a-misp-instance-running-over-https-a-full-test-of-all-features-have-yet-to-be-done-the-following-github-issue-details-some-shortcomings" title="0.4/ This document will bootstrap a MISP instance running over HTTPS. A full test of all features have yet to be done. The following GitHub issue details some shortcomings." class="md-nav__link">
+    0.4/ This document will bootstrap a MISP instance running over HTTPS. A full test of all features have yet to be done. The following GitHub issue details some shortcomings.
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#misp-configuration-variables" title="MISP configuration variables" class="md-nav__link">
+    MISP configuration variables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -732,6 +752,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#-1-installer-and-manual-install-instructions" title="-1/ Installer and Manual install instructions" class="md-nav__link">
+    -1/ Installer and Manual install instructions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#0-overview-and-assumptions" title="0/ Overview and Assumptions" class="md-nav__link">
     0/ Overview and Assumptions
   </a>
@@ -761,9 +788,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#04-this-document-is-to-get-a-misp-instance-up-and-running-over-http-i-havent-done-a-full-test-of-all-features" title="0.4/ This document is to get a MISP instance up and running over HTTP. I haven't done a full test of all features" class="md-nav__link">
-    0.4/ This document is to get a MISP instance up and running over HTTP. I haven't done a full test of all features
+  <a href="#04-this-document-will-bootstrap-a-misp-instance-running-over-https-a-full-test-of-all-features-have-yet-to-be-done-the-following-github-issue-details-some-shortcomings" title="0.4/ This document will bootstrap a MISP instance running over HTTPS. A full test of all features have yet to be done. The following GitHub issue details some shortcomings." class="md-nav__link">
+    0.4/ This document will bootstrap a MISP instance running over HTTPS. A full test of all features have yet to be done. The following GitHub issue details some shortcomings.
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#misp-configuration-variables" title="MISP configuration variables" class="md-nav__link">
+    MISP configuration variables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -791,6 +831,19 @@
                 
                 <h1 id="installation-instructions-for-rhel-8x-beta">INSTALLATION INSTRUCTIONS for RHEL 8.x (beta)<a class="headerlink" href="#installation-instructions-for-rhel-8x-beta" title="Permanent link">&para;</a></h1>
 <hr />
+<h3 id="-1-installer-and-manual-install-instructions">-1/ Installer and Manual install instructions<a class="headerlink" href="#-1-installer-and-manual-install-instructions" title="Permanent link">&para;</a></h3>
+<p>Make sure you are reading the parsed version of this Document. When in doubt <a href="https://misp.github.io/MISP/xINSTALL.rhel8/">click here</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In the <strong>future</strong>, to install MISP on a fresh RHEL 8 install all you need to do is:</p>
+<p><div class="codehilite"><pre><span></span><span class="c1"># Please check the installer options first to make the best choice for your install</span>
+curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.debian.sh <span class="p">|</span> bash -s
+
+<span class="c1"># This will install MISP Core and misp-modules (recommended)</span>
+curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.debian.sh <span class="p">|</span> bash -s -- -c -M
+</pre></div>
+<strong>The above does NOT work yet</strong></p>
+</div>
 <h2 id="0-overview-and-assumptions">0/ Overview and Assumptions<a class="headerlink" href="#0-overview-and-assumptions" title="Permanent link">&para;</a></h2>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
@@ -807,16 +860,100 @@ For more information on what might differ, <a href="https://unix.stackexchange.c
 <p>The core MISP team cannot verify if this guide is working or not. Please help us in keeping it up to date and accurate.
 Thus we also have difficulties in supporting RHEL issues but will do a best effort on a similar yet slightly different setup.</p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This is a carbon copy of the 7.5 document. This will change once we get around updating this document.</p>
-</div>
 <p>This document details the steps to install MISP on Red Hat Enterprise Linux 8.x BETA (RHEL 8.x). At time of this writing it could be tested on version 8.0 BETA.</p>
 <p>The following assumptions with regard to this installation have been made.</p>
 <h3 id="01-a-valid-support-agreement-allowing-the-system-to-register-to-the-red-hat-customer-portal-and-receive-updates">0.1/ A valid support agreement allowing the system to register to the Red Hat Customer Portal and receive updates<a class="headerlink" href="#01-a-valid-support-agreement-allowing-the-system-to-register-to-the-red-hat-customer-portal-and-receive-updates" title="Permanent link">&para;</a></h3>
 <h3 id="02-the-ability-to-enable-additional-rpm-repositories-specifically-the-epel-and-software-collections-scl-repos">0.2/ The ability to enable additional RPM repositories, specifically the EPEL and Software Collections (SCL) repos<a class="headerlink" href="#02-the-ability-to-enable-additional-rpm-repositories-specifically-the-epel-and-software-collections-scl-repos" title="Permanent link">&para;</a></h3>
 <h3 id="03-this-system-will-have-direct-or-proxy-access-to-the-internet-for-updates-or-connected-to-a-red-hat-satellite-server">0.3/ This system will have direct or proxy access to the Internet for updates. Or connected to a Red Hat Satellite Server<a class="headerlink" href="#03-this-system-will-have-direct-or-proxy-access-to-the-internet-for-updates-or-connected-to-a-red-hat-satellite-server" title="Permanent link">&para;</a></h3>
-<h3 id="04-this-document-is-to-get-a-misp-instance-up-and-running-over-http-i-havent-done-a-full-test-of-all-features">0.4/ This document is to get a MISP instance up and running over HTTP. I haven't done a full test of all features<a class="headerlink" href="#04-this-document-is-to-get-a-misp-instance-up-and-running-over-http-i-havent-done-a-full-test-of-all-features" title="Permanent link">&para;</a></h3>
+<h3 id="04-this-document-will-bootstrap-a-misp-instance-running-over-https-a-full-test-of-all-features-have-yet-to-be-done-the-following-github-issue-details-some-shortcomings">0.4/ This document will bootstrap a MISP instance running over HTTPS. A full test of all features have yet to be done. <a href="https://github.com/MISP/MISP/issues/4084">The following GitHub issue</a> details some shortcomings.<a class="headerlink" href="#04-this-document-will-bootstrap-a-misp-instance-running-over-https-a-full-test-of-all-features-have-yet-to-be-done-the-following-github-issue-details-some-shortcomings" title="Permanent link">&para;</a></h3>
+<h4 id="misp-configuration-variables">MISP configuration variables<a class="headerlink" href="#misp-configuration-variables" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_global-vars.sh&gt;</span>
+<span class="c1"># $ eval &quot;$(curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md | grep -v \`\`\`)&quot;</span>
+<span class="c1"># $ MISPvars</span>
+MISPvars <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Setting generic </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> variables shared by all flavours&quot;</span> <span class="m">2</span>&gt; /dev/null
+  <span class="c1"># Local non-root MISP user</span>
+  <span class="nv">MISP_USER</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+  <span class="nv">MISP_PASSWORD</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
+
+  <span class="c1"># The web server user</span>
+  <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+
+  <span class="c1"># MISP configuration variables</span>
+  <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s1">&#39;/var/www/MISP&#39;</span>
+
+  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$FQDN</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">FQDN</span><span class="o">=</span><span class="s2">&quot;misp.local&quot;</span>
+  <span class="k">fi</span>
+
+  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$MISP_BASEURL</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;&quot;&quot;&#39;</span>
+  <span class="k">fi</span>
+
+  <span class="nv">MISP_LIVE</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+
+  <span class="c1"># Database configuration</span>
+  <span class="nv">DBHOST</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span>
+  <span class="nv">DBNAME</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+  <span class="nv">DBUSER_ADMIN</span><span class="o">=</span><span class="s1">&#39;root&#39;</span>
+  <span class="nv">DBPASSWORD_ADMIN</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
+  <span class="nv">DBUSER_MISP</span><span class="o">=</span><span class="s1">&#39;misp&#39;</span>
+  <span class="nv">DBPASSWORD_MISP</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
+
+  <span class="c1"># OpenSSL configuration</span>
+  <span class="nv">OPENSSL_CN</span><span class="o">=</span><span class="nv">$FQDN</span>
+  <span class="nv">OPENSSL_C</span><span class="o">=</span><span class="s1">&#39;LU&#39;</span>
+  <span class="nv">OPENSSL_ST</span><span class="o">=</span><span class="s1">&#39;State&#39;</span>
+  <span class="nv">OPENSSL_L</span><span class="o">=</span><span class="s1">&#39;Location&#39;</span>
+  <span class="nv">OPENSSL_O</span><span class="o">=</span><span class="s1">&#39;Organization&#39;</span>
+  <span class="nv">OPENSSL_OU</span><span class="o">=</span><span class="s1">&#39;Organizational Unit&#39;</span>
+  <span class="nv">OPENSSL_EMAILADDRESS</span><span class="o">=</span><span class="s2">&quot;info@</span><span class="nv">$FQDN</span><span class="s2">&quot;</span>
+
+  <span class="c1"># GPG configuration</span>
+  <span class="nv">GPG_REAL_NAME</span><span class="o">=</span><span class="s1">&#39;Autogenerated Key&#39;</span>
+  <span class="nv">GPG_COMMENT</span><span class="o">=</span><span class="s1">&#39;WARNING: MISP AutoGenerated Key consider this Key VOID!&#39;</span>
+  <span class="nv">GPG_EMAIL_ADDRESS</span><span class="o">=</span><span class="s1">&#39;admin@admin.test&#39;</span>
+  <span class="nv">GPG_KEY_LENGTH</span><span class="o">=</span><span class="s1">&#39;2048&#39;</span>
+  <span class="nv">GPG_PASSPHRASE</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
+
+  <span class="c1"># debug alias to make sure people are not confused when blindly copy pasting blobs of code</span>
+  <span class="nb">alias</span> <span class="nv">debug</span><span class="o">=</span><span class="s2">&quot;echo -e&quot;</span>
+
+  <span class="c1"># checkAptLock alias to make sure people are not confused when blindly copy pasting blobs of code</span>
+  <span class="nb">alias</span> <span class="nv">checkAptLock</span><span class="o">=</span><span class="s2">&quot;echo &#39;Function used in Installer to make sure apt is not locked&#39;&quot;</span>
+
+  <span class="c1"># php.ini configuration</span>
+  <span class="nv">upload_max_filesize</span><span class="o">=</span>50M
+  <span class="nv">post_max_size</span><span class="o">=</span>50M
+  <span class="nv">max_execution_time</span><span class="o">=</span><span class="m">300</span>
+  <span class="nv">memory_limit</span><span class="o">=</span>512M
+
+  <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
+
+  <span class="c1"># sudo config to run $LUSER commands</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>groups <span class="p">|</span>grep -o <span class="s1">&#39;staff&#39;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;staff&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
+  <span class="k">else</span>
+    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">fi</span>
+  <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
+
+  <span class="nb">echo</span> <span class="s2">&quot;The following DB Passwords were generated...&quot;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;Admin (</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">) DB Password: </span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;User  (</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">) DB Password: </span><span class="si">${</span><span class="nv">DBPASSWORD_MISP</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 0_global-vars.sh&gt;</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_RHEL_PHP_INI.sh&gt;</span>
+<span class="c1"># RHEL/CentOS Specific</span>
+<span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s1">&#39;sudo -H -u apache&#39;</span>
+<span class="nv">WWW_USER</span><span class="o">=</span><span class="s1">&#39;apache&#39;</span>
+
+<span class="nv">PHP_INI</span><span class="o">=</span>/etc/php.ini
+<span class="c1"># &lt;snippet-end 0_RHEL_PHP_INI.sh&gt;</span>
+</pre></div>
+
 <div class="admonition note">
 <p class="admonition-title">Note<p>For fresh installs the following tips might be handy.<br />
 Allow ssh to pass the firewall on the CLI
@@ -831,332 +968,534 @@ To quickly make sure if NetworkManager handles your network interface on boot, c
 </div>
 <h1 id="1-os-install-and-additional-repositories">1/ OS Install and additional repositories<a class="headerlink" href="#1-os-install-and-additional-repositories" title="Permanent link">&para;</a></h1>
 <h2 id="11-complete-a-minimal-rhel-installation-configure-ip-address-to-connect-automatically">1.1/ Complete a minimal RHEL installation, configure IP address to connect automatically.<a class="headerlink" href="#11-complete-a-minimal-rhel-installation-configure-ip-address-to-connect-automatically" title="Permanent link">&para;</a></h2>
-<h2 id="12-configure-system-hostname">1.2/ Configure system hostname<a class="headerlink" href="#12-configure-system-hostname" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo hostnamectl set-hostname misp <span class="c1"># Your choice, in a production environment, it&#39;s best to use a FQDN</span>
+<h2 id="12-configure-system-hostname-if-not-done-during-install">1.2/ Configure system hostname (if not done during install)<a class="headerlink" href="#12-configure-system-hostname-if-not-done-during-install" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span>sudo hostnamectl set-hostname misp.local <span class="c1"># Your choice, in a production environment, it&#39;s best to use a FQDN</span>
 </pre></div>
 
-<h2 id="13-register-the-system-for-updates-with-red-hat-subscription-manager">1.3/ Register the system for updates with Red Hat Subscription Manager<a class="headerlink" href="#13-register-the-system-for-updates-with-red-hat-subscription-manager" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo subscription-manager register <span class="c1"># register your system to an account</span>
-sudo subscription-manager attach   <span class="c1"># attach your system to a current subscription</span>
+<h2 id="13-rhel-register-the-system-for-updates-with-red-hat-subscription-manager">1.3/ <strong>[RHEL]</strong> Register the system for updates with Red Hat Subscription Manager<a class="headerlink" href="#13-rhel-register-the-system-for-updates-with-red-hat-subscription-manager" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_RHEL_register.sh&gt;</span>
+sudo subscription-manager register --auto-attach <span class="c1"># register your system to an account and attach to a current subscription</span>
+<span class="c1"># &lt;snippet-end 0_RHEL_register.sh&gt;</span>
 </pre></div>
 
-<h2 id="14-enable-the-optional-extras-and-software-collections-scl-repos">1.4/ Enable the optional, extras and Software Collections (SCL) repos<a class="headerlink" href="#14-enable-the-optional-extras-and-software-collections-scl-repos" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo subscription-manager repos --enable rhel-8-server-optional-rpms
+<h2 id="14-rhel-enable-the-optional-extras-and-software-collections-scl-repos">1.4/ <strong>[RHEL]</strong> Enable the optional, extras and Software Collections (SCL) repos<a class="headerlink" href="#14-rhel-enable-the-optional-extras-and-software-collections-scl-repos" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><span class="c1"># To be confirmed, no access to RHSCL</span>
+sudo subscription-manager repos --enable rhel-8-server-optional-rpms
 sudo subscription-manager repos --enable rhel-8-server-extras-rpms
 sudo subscription-manager repos --enable rhel-server-rhscl-8-rpms
 </pre></div>
 
-<h3 id="15a-optional-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates">1.5a/ OPTIONAL: Install the deltarpm package to help reduce download size when installing updates<a class="headerlink" href="#15a-optional-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span>sudo yum install deltarpm -y
+<h3 id="15a-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates-optional">1.5a/ Install the deltarpm package to help reduce download size when installing updates (optional)<a class="headerlink" href="#15a-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates-optional" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span>sudo yum install drpm -y
+</pre></div>
+
+<h3 id="15b-install-vim-optional">1.5.b/ Install vim (optional)<a class="headerlink" href="#15b-install-vim-optional" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><span class="c1"># Because vim is just so practical</span>
+sudo yum install vim -y
 </pre></div>
 
 <h2 id="15-update-the-system-and-reboot">1.5/ Update the system and reboot<a class="headerlink" href="#15-update-the-system-and-reboot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo yum update -y
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_yum-update.sh&gt;</span>
+sudo yum update -y
+<span class="c1"># &lt;snippet-end 0_yum-update.sh&gt;</span>
 </pre></div>
 
+<h2 id="16-rhel-install-the-epel-repo">1.6/ <strong>[RHEL]</strong> Install the EPEL repo<a class="headerlink" href="#16-rhel-install-the-epel-repo" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>At the time of writing performing a yum update results in the rhel-8-server-rt-beta-rpms being forbidden.<br />
-The repo can be disabled using the following command
-<div class="codehilite"><pre><span></span>sudo subscription-manager repos --disable rhel-8-server-rt-beta-rpms
-</pre></div></p>
+<p>There is no epel-releas-latest-8 yet, but the RHEL 7 seems to work for testing.</p>
 </div>
-<h2 id="16-install-the-epel-repo">1.6/ Install the EPEL repo<a class="headerlink" href="#16-install-the-epel-repo" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_RHEL_EPEL.sh&gt;</span>
+sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
+<span class="c1"># &lt;snippet-end 0_RHEL_EPEL.sh&gt;</span>
 </pre></div>
 
-<h2 id="17-install-the-scl-repo">1.7/ Install the SCL repo<a class="headerlink" href="#17-install-the-scl-repo" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo yum install centos-release-scl -y
-</pre></div>
-
-<h1 id="2-install-dependencies">2/ Install Dependencies<a class="headerlink" href="#2-install-dependencies" title="Permanent link">&para;</a></h1>
-<p>Once the system is installed and updated, the following steps can be performed as root</p>
+<h1 id="2-dependencies">2/ Dependencies<a class="headerlink" href="#2-dependencies" title="Permanent link">&para;</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><a href="https://secure.php.net/supported-versions.php">PHP 5.6 will be EOL in December 2018</a>. Please update accordingly. In future only PHP7 will be supported.</p>
+</div>
 <h2 id="201-install-some-base-system-dependencies">2.01/ Install some base system dependencies<a class="headerlink" href="#201-install-some-base-system-dependencies" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo yum install gcc git httpd zip python-devel libxslt-devel zlib-devel python-pip ssdeep-devel -y
-</pre></div>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_yumInstallCoreDeps.sh&gt;</span>
+<span class="c1"># Install the dependencies:</span>
+sudo yum install @httpd -y
+sudo yum install gcc git zip <span class="se">\</span>
+       httpd <span class="se">\</span>
+       mod_ssl <span class="se">\</span>
+       redis <span class="se">\</span>
+       mariadb <span class="se">\</span>
+       python3-devel python3-pip python3-virtualenv <span class="se">\</span>
+       libxslt-devel zlib-devel ssdeep-devel -y
+sudo alternatives --set python /usr/bin/python3
 
-<h2 id="202-install-mariadb-102-from-scl">2.02/ Install MariaDB 10.2 from SCL<a class="headerlink" href="#202-install-mariadb-102-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo yum install rh-mariadb102 -y
-</pre></div>
+<span class="c1"># Enable and start redis</span>
+sudo systemctl <span class="nb">enable</span> --now redis.service
 
-<h2 id="203-start-the-mariadb-service-and-enable-it-to-start-on-boot">2.03/ Start the MariaDB service and enable it to start on boot<a class="headerlink" href="#203-start-the-mariadb-service-and-enable-it-to-start-on-boot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo systemctl start rh-mariadb102-mariadb.service
-sudo systemctl <span class="nb">enable</span> rh-mariadb102-mariadb.service
+sudo yum install php php-fpm php-devel php-pear <span class="se">\</span>
+       php-mysqlnd <span class="se">\</span>
+       php-mbstring <span class="se">\</span>
+       php-xml <span class="se">\</span>
+       php-bcmath <span class="se">\</span>
+       php-opcache <span class="se">\</span>
+       php-json <span class="se">\</span>
+       php-gd -y
+<span class="c1"># &lt;snippet-end 0_yumInstallCoreDeps.sh&gt;</span>
 </pre></div>
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>MISP 2.4 requires PHP 5.6 as a minimum, we need a higher version than base RHEL provides.<br />
-This guide installs PHP 7.2 from SCL</p>
+This guide installs PHP 7.2</p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p><a href="https://secure.php.net/supported-versions.php">PHP 5.6 will be EOL in December 2018</a>. Please update accordingly. In future only PHP7 will be supported.</p>
-</div>
-<h2 id="204-install-php-72-from-scl">2.04/ Install PHP 7.2 from SCL<a class="headerlink" href="#204-install-php-72-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo yum install rh-php72 rh-php72-php-fpm rh-php72-php-devel rh-php72-php-mysqlnd rh-php72-php-mbstring rh-php72-php-xml rh-php72-php-bcmath rh-php72-php-opcache -y
-</pre></div>
-
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If we want to use httpd from RHEL base we can use the rh-php72-php-fpm service instead</p>
 </div>
 <h2 id="205-start-the-php-fpm-service-and-enable-to-start-on-boot">2.05/ Start the PHP FPM service and enable to start on boot<a class="headerlink" href="#205-start-the-php-fpm-service-and-enable-to-start-on-boot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>systemctl start rh-php72-php-fpm.service
-systemctl <span class="nb">enable</span> rh-php72-php-fpm.service
-</pre></div>
-
-<h2 id="206-install-redis-32-from-scl">2.06/ Install redis 3.2 from SCL<a class="headerlink" href="#206-install-redis-32-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install rh-redis32
+<div class="codehilite"><pre><span></span>sudo systemctl <span class="nb">enable</span> --now php-fpm.service
 </pre></div>
 
 <h2 id="207-start-redis-service-and-enable-to-start-on-boot">2.07/ Start redis service and enable to start on boot<a class="headerlink" href="#207-start-redis-service-and-enable-to-start-on-boot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>systemctl start rh-redis32-redis.service
-systemctl <span class="nb">enable</span> rh-redis32-redis.service
+<div class="codehilite"><pre><span></span>sudo systemctl <span class="nb">enable</span> --now redis.service
 </pre></div>
 
-<h2 id="208-start-a-scl-shell-with-rh-mariadb102-rh-php72-and-rh-redis32-enabled">2.08/ Start a SCL shell with rh-mariadb102 rh-php72 and rh-redis32 enabled<a class="headerlink" href="#208-start-a-scl-shell-with-rh-mariadb102-rh-php72-and-rh-redis32-enabled" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>scl <span class="nb">enable</span> rh-mariadb102 rh-php72 rh-redis32 bash
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_yumInstallHaveged.sh&gt;</span>
+<span class="c1"># GPG needs lots of entropy, haveged provides entropy</span>
+<span class="c1"># /!\ Only do this if you&#39;re not running rngd to provide randomness and your kernel randomness is not sufficient.</span>
+sudo yum install haveged -y
+sudo systemctl <span class="nb">enable</span> --now haveged.service
+<span class="c1"># &lt;snippet-end 0_yumInstallHaveged.sh&gt;</span>
 </pre></div>
 
-<h2 id="208-secure-the-mariadb-installation-run-the-following-command-and-follow-the-prompts">2.08/ Secure the MariaDB installation, run the following command and follow the prompts<a class="headerlink" href="#208-secure-the-mariadb-installation-run-the-following-command-and-follow-the-prompts" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>mysql_secure_installation
-</pre></div>
-
-<h2 id="210-update-the-php-extension-repository-and-install-required-package">2.10/ Update the PHP extension repository and install required package<a class="headerlink" href="#210-update-the-php-extension-repository-and-install-required-package" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>pear channel-update pear.php.net
-pear install Crypt_GPG
-</pre></div>
-
-<h2 id="211-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg">2.11/ Install haveged and enable to start on boot to provide entropy for GPG<a class="headerlink" href="#211-install-haveged-and-enable-to-start-on-boot-to-provide-entropy-for-gpg" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install haveged
-systemctl start haveged
-systemctl <span class="nb">enable</span> haveged
-</pre></div>
-
-<h2 id="212-install-python-36-from-scl">2.12/ Install Python 3.6 from SCL<a class="headerlink" href="#212-install-python-36-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install rh-python36
-</pre></div>
-
-<h1 id="3-misp-download">3/ MISP Download<a class="headerlink" href="#3-misp-download" title="Permanent link">&para;</a></h1>
+<h1 id="3-misp-code">3/ MISP code<a class="headerlink" href="#3-misp-code" title="Permanent link">&para;</a></h1>
 <h2 id="301-download-misp-code-using-git-in-varwww-directory">3.01/ Download MISP code using git in /var/www/ directory<a class="headerlink" href="#301-download-misp-code-using-git-in-varwww-directory" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www
-git clone https://github.com/MISP/MISP.git
-<span class="nb">cd</span> MISP
-git checkout tags/<span class="k">$(</span>git describe --tags <span class="sb">`</span>git rev-list --tags --max-count<span class="o">=</span><span class="m">1</span><span class="sb">`</span><span class="k">)</span>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 1_mispCoreInstall_RHEL.sh&gt;</span>
+<span class="c1"># Download MISP using git in the /var/www/ directory.</span>
+sudo mkdir <span class="nv">$PATH_TO_MISP</span>
+sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>
+<span class="nb">cd</span> /var/www
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/MISP.git
+<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>
+<span class="c1">##$SUDO_WWW git checkout tags/$(git describe --tags `git rev-list --tags --max-count=1`)</span>
 <span class="c1"># if the last shortcut doesn&#39;t work, specify the latest version manually</span>
 <span class="c1"># example: git checkout tags/v2.4.XY</span>
 <span class="c1"># the message regarding a &quot;detached HEAD state&quot; is expected behaviour</span>
 <span class="c1"># (you only have to create a new branch, if you want to change stuff and do a pull request for example)</span>
-</pre></div>
 
-<h2 id="302-make-git-ignore-filesystem-permission-differences">3.02/ Make git ignore filesystem permission differences<a class="headerlink" href="#302-make-git-ignore-filesystem-permission-differences" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>git config core.filemode <span class="nb">false</span>
-</pre></div>
+<span class="c1"># Fetch submodules</span>
+<span class="nv">$SUDO_WWW</span> git submodule update --init --recursive
+<span class="c1"># Make git ignore filesystem permission differences for submodules</span>
+<span class="nv">$SUDO_WWW</span> git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
 
-<h2 id="303-install-mitres-stix-and-its-dependencies-by-running-the-following-commands">3.03/ Install Mitre's STIX and its dependencies by running the following commands<a class="headerlink" href="#303-install-mitres-stix-and-its-dependencies-by-running-the-following-commands" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>pip install importlib
-yum install python-six
-<span class="nb">cd</span> /var/www/MISP/app/files/scripts
-git clone https://github.com/CybOXProject/python-cybox.git
-git clone https://github.com/STIXProject/python-stix.git
-<span class="nb">cd</span> /var/www/MISP/app/files/scripts/python-cybox
-git config core.filemode <span class="nb">false</span>
-<span class="c1"># If your umask has been changed from the default, it is a good idea to reset it to 0022 before installing python modules</span>
+<span class="c1"># Install packaged pears</span>
+sudo pear channel-update pear.php.net
+sudo pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Console_CommandLine/package.xml
+sudo pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Crypt_GPG/package.xml
+
+<span class="c1"># Create a python3 virtualenv</span>
+<span class="nv">$SUDO_WWW</span> virtualenv-3 -p python3 <span class="nv">$PATH_TO_MISP</span>/venv
+sudo mkdir /usr/share/httpd/.cache
+sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /usr/share/httpd/.cache
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U pip setuptools
+
+<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/python-cybox.git
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/STIXProject/python-stix.git
+<span class="nv">$SUDO_WWW</span> git clone --branch master --single-branch https://github.com/lief-project/LIEF.git lief
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/mixbox.git
+
+<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-cybox
+<span class="c1"># If you umask is has been changed from the default, it is a good idea to reset it to 0022 before installing python modules</span>
 <span class="nv">UMASK</span><span class="o">=</span><span class="k">$(</span><span class="nb">umask</span><span class="k">)</span>
 <span class="nb">umask</span> <span class="m">0022</span>
-scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 setup.py install&#39;</span>
-<span class="nb">cd</span> /var/www/MISP/app/files/scripts/python-stix
-git config core.filemode <span class="nb">false</span>
-scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 setup.py install&#39;</span>
-</pre></div>
+<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-stix
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
 
-<h2 id="304-install-mixbox-to-accommodate-the-new-stix-dependencies">3.04/ Install mixbox to accommodate the new STIX dependencies<a class="headerlink" href="#304-install-mixbox-to-accommodate-the-new-stix-dependencies" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www/MISP/app/files/scripts/
-git clone https://github.com/CybOXProject/mixbox.git
-<span class="nb">cd</span> /var/www/MISP/app/files/scripts/mixbox
-git config core.filemode <span class="nb">false</span>
-scl <span class="nb">enable</span> rh-python36 <span class="s1">&#39;python3 setup.py install&#39;</span>
+<span class="c1"># install mixbox to accommodate the new STIX dependencies:</span>
+<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mixbox
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
+
+<span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
+<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/cti-python-stix2
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
+
+<span class="c1"># install maec</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U maec
+
+<span class="c1"># install zmq</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U zmq
+
+<span class="c1"># install redis</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U redis
+
+<span class="c1"># lief needs manual compilation</span>
+sudo yum install devtoolset-8 cmake3 cppcheck -y
+
+<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief
+<span class="nv">$SUDO_WWW</span> mkdir build
+<span class="nb">cd</span> build
+<span class="nv">$SUDO_WWW</span> cmake3 <span class="se">\</span>
+-DLIEF_PYTHON_API<span class="o">=</span>on <span class="se">\</span>
+-DPYTHON_VERSION<span class="o">=</span><span class="m">3</span>.6 <span class="se">\</span>
+-DPYTHON_EXECUTABLE<span class="o">=</span><span class="nv">$PATH_TO_MISP</span>/venv/bin/python <span class="se">\</span>
+-DLIEF_DOC<span class="o">=</span>off <span class="se">\</span>
+-DCMAKE_BUILD_TYPE<span class="o">=</span>Release <span class="se">\</span>
+..
+<span class="nv">$SUDO_WWW</span> make -j3 pyLIEF
+
+<span class="c1"># The following adds a PYTHONPATH to where the pyLIEF module has been compiled</span>
+<span class="nb">echo</span> /var/www/MISP/app/files/scripts/lief/build/api/python <span class="p">|</span><span class="nv">$SUDO_WWW</span> tee /var/www/MISP/venv/lib/python3.6/site-packages/lief.pth
+
+<span class="c1"># install magic, pydeep</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U python-magic git+https://github.com/kbandla/pydeep.git
+
+<span class="c1"># install PyMISP</span>
+<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U .
+
+<span class="c1"># Enable python3 for php-fpm</span>
+sudo sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> /etc/php-fpm.d/www.conf
+sudo systemctl restart php-fpm.service
+
 <span class="nb">umask</span> <span class="nv">$UMASK</span>
-</pre></div>
 
-<h2 id="305-enable-python3-for-php-fpm">3.05/ Enable python3 for php-fpm<a class="headerlink" href="#305-enable-python3-for-php-fpm" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s1">&#39;source scl_source enable rh-python36&#39;</span> &gt;&gt; /etc/opt/rh/rh-php72/sysconfig/php-fpm
-sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> /etc/opt/rh/rh-php72/php-fpm.d/www.conf
-systemctl restart rh-php72-php-fpm.service
+<span class="c1"># Enable dependencies detection in the diagnostics page</span>
+<span class="c1"># This allows MISP to detect GnuPG, the Python modules&#39; versions and to read the PHP settings.</span>
+<span class="nb">echo</span> <span class="s2">&quot;env[PATH] = /usr/local/bin:/usr/bin:/bin&quot;</span> <span class="p">|</span>sudo tee -a /etc/php-fpm.d/www.conf
+sudo systemctl restart php-fpm.service
+<span class="c1"># &lt;snippet-end 1_mispCoreInstall_RHEL.sh&gt;</span>
 </pre></div>
 
 <h1 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h1>
-<h2 id="401-cakephp-is-now-included-as-a-submodule-of-misp">4.01/ CakePHP is now included as a submodule of MISP<a class="headerlink" href="#401-cakephp-is-now-included-as-a-submodule-of-misp" title="Permanent link">&para;</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Execute the following commands to let git fetch it ignore this
-<div class="codehilite"><pre><span></span>message: No submodule mapping found in .gitmodules for path &#39;app/Plugin/CakeResque&#39;
-</pre></div></p>
+<h2 id="401-install-cakeresque-along-with-its-dependencies-if-you-intend-to-use-the-built-in-background-jobs">4.01/ Install CakeResque along with its dependencies if you intend to use the built in background jobs<a class="headerlink" href="#401-install-cakeresque-along-with-its-dependencies-if-you-intend-to-use-the-built-in-background-jobs" title="Permanent link">&para;</a></h2>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>CakePHP is now included as a submodule of MISP and has been fetch by a previous step.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www/MISP
-git submodule update --init --recursive
-<span class="c1"># Make git ignore filesystem permission differences for submodules</span>
-git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
-</pre></div>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 1_installCake_RHEL.sh&gt;</span>
+installCake_RHEL <span class="o">()</span>
+<span class="o">{</span>
+  sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>
+  sudo mkdir /usr/share/httpd/.composer
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /usr/share/httpd/.composer
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
+  <span class="c1"># Update composer.phar (optional)</span>
+  <span class="c1">#$SUDO_WWW php -r &quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
+  <span class="c1">#$SUDO_WWW php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
+  <span class="c1">#$SUDO_WWW php composer-setup.php</span>
+  <span class="c1">#$SUDO_WWW php -r &quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
+  <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
+  <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
+  <span class="nv">$SUDO_WWW</span> php composer.phar install
 
-<h2 id="402-install-cakeresque-along-with-its-dependencies-if-you-intend-to-use-the-built-in-background-jobs">4.02/ Install CakeResque along with its dependencies if you intend to use the built in background jobs<a class="headerlink" href="#402-install-cakeresque-along-with-its-dependencies-if-you-intend-to-use-the-built-in-background-jobs" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www/MISP/app
-php composer.phar require kamisama/cake-resque:4.1.2
-php composer.phar config vendor-dir Vendor
-php composer.phar install
-</pre></div>
+  <span class="c1">## sudo yum install php-redis -y</span>
+  sudo pecl channel-update pecl.php.net
+  sudo pecl install redis
+  <span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> <span class="p">|</span>sudo tee /etc/php-fpm.d/redis.ini
+  sudo ln -s /etc/php-fpm.d/redis.ini /etc/php.d/99-redis.ini
+  sudo systemctl restart php-fpm.service
 
-<h2 id="403-install-and-configure-php-redis-connector-through-pecl">4.03/ Install and configure php redis connector through pecl<a class="headerlink" href="#403-install-and-configure-php-redis-connector-through-pecl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>pecl install redis
-<span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> &gt; /etc/opt/rh/rh-php72/php-fpm.d/redis.ini
-ln -s ../php-fpm.d/redis.ini /etc/opt/rh/rh-php72/php.d/99-redis.ini
-systemctl restart rh-php72-php-fpm.service
-</pre></div>
+  <span class="c1"># If you have not yet set a timezone in php.ini</span>
+  <span class="nb">echo</span> <span class="s1">&#39;date.timezone = &quot;Asia/Tokyo&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/php-fpm.d/timezone.ini
+  sudo ln -s ../php-fpm.d/timezone.ini /etc/php.d/99-timezone.ini
 
-<h2 id="404-set-a-timezone-in-phpini">4.04/ Set a timezone in php.ini<a class="headerlink" href="#404-set-a-timezone-in-phpini" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s1">&#39;date.timezone = &quot;Australia/Sydney&quot;&#39;</span> &gt; /etc/opt/rh/rh-php72/php-fpm.d/timezone.ini
-ln -s ../php-fpm.d/timezone.ini /etc/opt/rh/rh-php72/php.d/99-timezone.ini
-</pre></div>
+  <span class="c1"># Recommended: Change some PHP settings in /etc/opt/rh/rh-php72/php.ini</span>
+  <span class="c1"># max_execution_time = 300</span>
+  <span class="c1"># memory_limit = 512M</span>
+  <span class="c1"># upload_max_filesize = 50M</span>
+  <span class="c1"># post_max_size = 50M</span>
+  <span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
+  <span class="k">do</span>
+      sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
+  <span class="k">done</span>
+  sudo systemctl restart php-fpm.service
 
-<h2 id="405-to-use-the-scheduler-worker-for-scheduled-tasks-do-the-following">4.05/ To use the scheduler worker for scheduled tasks, do the following:<a class="headerlink" href="#405-to-use-the-scheduler-worker-for-scheduled-tasks-do-the-following" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>cp -fa /var/www/MISP/INSTALL/setup/config.php /var/www/MISP/app/Plugin/CakeResque/Config/config.php
+  <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
+  sudo cp -fa <span class="nv">$PATH_TO_MISP</span>/INSTALL/setup/config.php <span class="nv">$PATH_TO_MISP</span>/app/Plugin/CakeResque/Config/config.php
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-begin 1_installCake_RHEL.sh&gt;</span>
 </pre></div>
 
 <h1 id="5-set-file-permissions">5/ Set file permissions<a class="headerlink" href="#5-set-file-permissions" title="Permanent link">&para;</a></h1>
-<h2 id="501-make-sure-the-permissions-are-set-correctly-using-the-following-commands-as-root">5.01/ Make sure the permissions are set correctly using the following commands as root:<a class="headerlink" href="#501-make-sure-the-permissions-are-set-correctly-using-the-following-commands-as-root" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>chown -R root:apache /var/www/MISP
-find /var/www/MISP -type d -exec chmod <span class="nv">g</span><span class="o">=</span>rx <span class="o">{}</span> <span class="se">\;</span>
-chmod -R g+r,o<span class="o">=</span> /var/www/MISP
-chown apache:apache /var/www/MISP/app/files
-chown apache:apache /var/www/MISP/app/files/terms
-chown apache:apache /var/www/MISP/app/files/scripts/tmp
-chown apache:apache /var/www/MISP/app/Plugin/CakeResque/tmp
-chown -R apache:apache /var/www/MISP/app/tmp
-chown -R apache:apache /var/www/MISP/app/webroot/img/orgs
-chown -R apache:apache /var/www/MISP/app/webroot/img/custom
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 2_permissions_RHEL.sh&gt;</span>
+<span class="c1"># Main function to fix permissions to something sane</span>
+permissions_RHEL <span class="o">()</span> <span class="o">{</span>
+  sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>
+  <span class="c1">## ? chown -R root:apache /var/www/MISP</span>
+  sudo find <span class="nv">$PATH_TO_MISP</span> -type d -exec chmod <span class="nv">g</span><span class="o">=</span>rx <span class="o">{}</span> <span class="se">\;</span>
+  sudo chmod -R g+r,o<span class="o">=</span> <span class="nv">$PATH_TO_MISP</span>
+  <span class="c1">## **Note :** For updates through the web interface to work, apache must own the /var/www/MISP folder and its subfolders as shown above, which can lead to security issues. If you do not require updates through the web interface to work, you can use the following more restrictive permissions :</span>
+  sudo chmod -R <span class="m">750</span> <span class="nv">$PATH_TO_MISP</span>
+  sudo chmod -R g+xws <span class="nv">$PATH_TO_MISP</span>/app/tmp
+  sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/files
+  sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/tmp
+  sudo chmod -R g+rw <span class="nv">$PATH_TO_MISP</span>/venv
+  sudo chmod -R g+rw <span class="nv">$PATH_TO_MISP</span>/.git
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/files
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/files/terms
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/tmp
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/Plugin/CakeResque/tmp
+  sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/Config
+  sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/tmp
+  sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/orgs
+  sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/custom
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 2_permissions_RHEL.sh&gt;</span>
 </pre></div>
 
 <h1 id="6-create-database-and-user">6/ Create database and user<a class="headerlink" href="#6-create-database-and-user" title="Permanent link">&para;</a></h1>
 <h2 id="601-set-database-to-listen-on-localhost-only">6.01/ Set database to listen on localhost only<a class="headerlink" href="#601-set-database-to-listen-on-localhost-only" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="o">[</span>mysqld<span class="o">]</span> &gt; /etc/opt/rh/rh-mariadb102/my.cnf.d/bind-address.cnf
-<span class="nb">echo</span> bind-address<span class="o">=</span><span class="m">127</span>.0.0.1 &gt;&gt; /etc/opt/rh/rh-mariadb102/my.cnf.d/bind-address.cnf
-systemctl restart rh-mariadb102-mariadb
-</pre></div>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 1_prepareDB_RHEL.sh&gt;</span>
+prepareDB_RHEL <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># Enable, start and secure your mysql database server</span>
+  sudo systemctl <span class="nb">enable</span> --now mariadb.service
+  <span class="nb">echo</span> <span class="o">[</span>mysqld<span class="o">]</span> <span class="p">|</span>sudo tee /etc/my.cnf.d/bind-address.cnf
+  <span class="nb">echo</span> bind-address<span class="o">=</span><span class="m">127</span>.0.0.1 <span class="p">|</span>sudo tee -a /etc/my.cnf.d/bind-address.cnf
+  sudo systemctl restart mariadb
 
-<h2 id="602-start-mariadb-shell-and-create-database">6.02/ Start MariaDB shell and create database<a class="headerlink" href="#602-start-mariadb-shell-and-create-database" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>mysql -u root -p
-</pre></div>
+  sudo yum install expect -y
 
-<div class="codehilite"><pre><span></span>MariaDB [(none)]&gt; create database misp;
-MariaDB [(none)]&gt; grant usage on *.* to misp@localhost identified by &#39;XXXXXXXXX&#39;;
-MariaDB [(none)]&gt; grant all privileges on misp.* to misp@localhost ;
-MariaDB [(none)]&gt; exit
-</pre></div>
+  <span class="c1">## The following needs some thoughts about scl enable foo</span>
+  <span class="c1">#if [[ ! -e /var/opt/rh/rh-mariadb102/lib/mysql/misp/users.ibd ]]; then</span>
 
-<h2 id="603-import-the-empty-mysql-database-from-mysqlsql">6.03/ Import the empty MySQL database from MYSQL.sql<a class="headerlink" href="#603-import-the-empty-mysql-database-from-mysqlsql" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www/MISP
-mysql -u misp -p misp &lt; INSTALL/MYSQL.sql
+  <span class="c1"># Add your credentials if needed, if sudo has NOPASS, comment out the relevant lines</span>
+  <span class="nv">pw</span><span class="o">=</span><span class="s2">&quot;Password1234&quot;</span>
+
+  expect -f - <span class="s">&lt;&lt;-EOF</span>
+<span class="s">    set timeout 10</span>
+
+<span class="s">    spawn sudo mysql_secure_installation</span>
+<span class="s">    expect &quot;*?assword*&quot;</span>
+<span class="s">    send -- &quot;$pw\r&quot;</span>
+<span class="s">    expect &quot;Enter current password for root (enter for none):&quot;</span>
+<span class="s">    send -- &quot;\r&quot;</span>
+<span class="s">    expect &quot;Set root password?&quot;</span>
+<span class="s">    send -- &quot;y\r&quot;</span>
+<span class="s">    expect &quot;New password:&quot;</span>
+<span class="s">    send -- &quot;${DBPASSWORD_ADMIN}\r&quot;</span>
+<span class="s">    expect &quot;Re-enter new password:&quot;</span>
+<span class="s">    send -- &quot;${DBPASSWORD_ADMIN}\r&quot;</span>
+<span class="s">    expect &quot;Remove anonymous users?&quot;</span>
+<span class="s">    send -- &quot;y\r&quot;</span>
+<span class="s">    expect &quot;Disallow root login remotely?&quot;</span>
+<span class="s">    send -- &quot;y\r&quot;</span>
+<span class="s">    expect &quot;Remove test database and access to it?&quot;</span>
+<span class="s">    send -- &quot;y\r&quot;</span>
+<span class="s">    expect &quot;Reload privilege tables now?&quot;</span>
+<span class="s">    send -- &quot;y\r&quot;</span>
+<span class="s">    expect eof</span>
+<span class="s">EOF</span>
+
+  sudo yum remove tcl expect -y
+
+  sudo systemctl restart mariadb
+
+  mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;CREATE DATABASE </span><span class="nv">$DBNAME</span><span class="s2">;&quot;</span>
+  mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT USAGE on *.* to </span><span class="nv">$DBNAME</span><span class="s2">@localhost IDENTIFIED by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
+  mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT ALL PRIVILEGES on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
+  mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s1">&#39;FLUSH PRIVILEGES;&#39;</span>
+
+  <span class="nv">$SUDO_WWW</span> cat <span class="nv">$PATH_TO_MISP</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 1_prepareDB_RHEL.sh&gt;</span>
 </pre></div>
 
 <h1 id="7-apache-configuration">7/ Apache Configuration<a class="headerlink" href="#7-apache-configuration" title="Permanent link">&para;</a></h1>
-<h2 id="701-copy-a-sample-vhost-config-to-apache-configuration-directory">7.01/ Copy a sample vhost config to Apache configuration directory<a class="headerlink" href="#701-copy-a-sample-vhost-config-to-apache-configuration-directory" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>cp /var/www/MISP/INSTALL/apache.misp.centos7 /etc/httpd/conf.d/misp.conf
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>SELinux note, to check if it is running:
+<div class="codehilite"><pre><span></span>$ sestatus
+SELinux status:                 disabled
 </pre></div>
+If it is disabled, you can ignore the <strong>chcon/setsebool/semanage/checkmodule/semodule*</strong> commands.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 1_apacheConfig_RHEL.sh&gt;</span>
+apacheConfig_RHEL <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># Now configure your apache server with the DocumentRoot $PATH_TO_MISP/app/webroot/</span>
+  <span class="c1"># A sample vhost can be found in $PATH_TO_MISP/INSTALL/apache.misp.centos7</span>
 
-<h2 id="702-since-selinux-is-enabled-we-need-to-allow-httpd-to-write-to-certain-directories">7.02/ Since SELinux is enabled, we need to allow httpd to write to certain directories<a class="headerlink" href="#702-since-selinux-is-enabled-we-need-to-allow-httpd-to-write-to-certain-directories" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>chcon -t httpd_sys_rw_content_t /var/www/MISP/app/files
-chcon -t httpd_sys_rw_content_t /var/www/MISP/app/files/terms
-chcon -t httpd_sys_rw_content_t /var/www/MISP/app/files/scripts/tmp
-chcon -t httpd_sys_rw_content_t /var/www/MISP/app/Plugin/CakeResque/tmp
-chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/tmp
-chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/webroot/img/orgs
-chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/webroot/img/custom
-</pre></div>
+  sudo cp <span class="nv">$PATH_TO_MISP</span>/INSTALL/apache.misp.centos7.ssl /etc/httpd/conf.d/misp.ssl.conf
+  sudo sed -i <span class="s2">&quot;s/SetHandler/\#SetHandler/g&quot;</span> /etc/httpd/conf.d/misp.ssl.conf
+  sudo rm /etc/httpd/conf.d/ssl.conf
+  sudo chmod <span class="m">644</span> /etc/httpd/conf.d/misp.ssl.conf
+  sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 443&#39;</span> /etc/httpd/conf/httpd.conf
 
-<h2 id="702-allow-httpd-to-connect-to-the-redis-server-and-php-fpm-over-tcpip">7.02/ Allow httpd to connect to the redis server and php-fpm over tcp/ip<a class="headerlink" href="#702-allow-httpd-to-connect-to-the-redis-server-and-php-fpm-over-tcpip" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>setsebool -P httpd_can_network_connect on
-</pre></div>
+  <span class="c1"># If a valid SSL certificate is not already created for the server, create a self-signed certificate:</span>
+  <span class="nb">echo</span> <span class="s2">&quot;The Common Name used below will be: </span><span class="si">${</span><span class="nv">OPENSSL_CN</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="c1"># This will take a rather long time, be ready. (13min on a VM, 8GB Ram, 1 core)</span>
+  sudo openssl dhparam -out /etc/pki/tls/certs/dhparam.pem <span class="m">4096</span>
+  sudo openssl genrsa -des3 -passout pass:xxxx -out /tmp/misp.local.key <span class="m">4096</span>
+  sudo openssl rsa -passin pass:xxxx -in /tmp/misp.local.key -out /etc/pki/tls/private/misp.local.key
+  sudo rm /tmp/misp.local.key
+  sudo openssl req -new -subj <span class="s2">&quot;/C=</span><span class="si">${</span><span class="nv">OPENSSL_C</span><span class="si">}</span><span class="s2">/ST=</span><span class="si">${</span><span class="nv">OPENSSL_ST</span><span class="si">}</span><span class="s2">/L=</span><span class="si">${</span><span class="nv">OPENSSL_L</span><span class="si">}</span><span class="s2">/O=</span><span class="si">${</span><span class="nv">OPENSSL_O</span><span class="si">}</span><span class="s2">/OU=</span><span class="si">${</span><span class="nv">OPENSSL_OU</span><span class="si">}</span><span class="s2">/CN=</span><span class="si">${</span><span class="nv">OPENSSL_CN</span><span class="si">}</span><span class="s2">/emailAddress=</span><span class="si">${</span><span class="nv">OPENSSL_EMAILADDRESS</span><span class="si">}</span><span class="s2">&quot;</span> -key /etc/pki/tls/private/misp.local.key -out /etc/pki/tls/certs/misp.local.csr
+  sudo openssl x509 -req -days <span class="m">365</span> -in /etc/pki/tls/certs/misp.local.csr -signkey /etc/pki/tls/private/misp.local.key -out /etc/pki/tls/certs/misp.local.crt
+  sudo ln -s /etc/pki/tls/certs/misp.local.csr /etc/pki/tls/certs/misp-chain.crt
+  cat /etc/pki/tls/certs/dhparam.pem <span class="p">|</span>sudo tee -a /etc/pki/tls/certs/misp.local.crt 
 
-<h2 id="703-enable-and-start-the-httpd-service">7.03/ Enable and start the httpd service<a class="headerlink" href="#703-enable-and-start-the-httpd-service" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>systemctl <span class="nb">enable</span> httpd.service
-systemctl start httpd.service
-</pre></div>
+  sudo systemctl restart httpd.service
 
-<h2 id="704-open-a-hole-in-the-firewalld-service">7.04/ Open a hole in the firewalld service<a class="headerlink" href="#704-open-a-hole-in-the-firewalld-service" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">80</span>/tcp --permanent
-firewall-cmd --reload
+  <span class="c1"># Since SELinux is enabled, we need to allow httpd to write to certain directories</span>
+  sudo chcon -t usr_t <span class="nv">$PATH_TO_MISP</span>/venv
+  sudo chcon -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/files
+  sudo chcon -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/files/terms
+  sudo chcon -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/tmp
+  sudo chcon -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/Plugin/CakeResque/tmp
+  sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/Console/cake
+  sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
+  sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mispzmq/mispzmq.py
+  sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mispzmq/mispzmqtest.py
+  sudo chcon -t httpd_sys_script_exec_t /usr/bin/ps
+  sudo chcon -t httpd_sys_script_exec_t /usr/bin/grep
+  sudo chcon -t httpd_sys_script_exec_t /usr/bin/awk
+  sudo chcon -t httpd_sys_script_exec_t /usr/bin/gpg
+  sudo chcon -R -t usr_t <span class="nv">$PATH_TO_MISP</span>/venv
+  sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/.git
+  sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/tmp
+  sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/Lib
+  sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/Config
+  sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/tmp
+  sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/orgs
+  sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/custom
+  sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mispzmq
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 1_apacheConfig_RHEL.sh&gt;</span>
 </pre></div>
 
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>We seriously recommend using only HTTPS / SSL !
-Add SSL support by running: yum install mod_ssl
-Check out the apache.misp.ssl file for an example</p>
+<p>Todo: Revise all permissions so update in Web UI works.</p>
 </div>
-<h1 id="8-log-rotation">8/ Log Rotation<a class="headerlink" href="#8-log-rotation" title="Permanent link">&para;</a></h1>
-<p>MISP saves the stdout and stderr of it's workers in /var/www/MISP/app/tmp/logs
-To rotate these logs install the supplied logrotate script:
-<div class="codehilite"><pre><span></span>cp INSTALL/misp.logrotate /etc/logrotate.d/misp
-chmod 0640 /etc/logrotate.d/misp
-</pre></div></p>
-<h2 id="801-allow-logrotate-to-work-under-selinux-and-modify-the-log-files">8.01/ Allow logrotate to work under SELinux and modify the log files<a class="headerlink" href="#801-allow-logrotate-to-work-under-selinux-and-modify-the-log-files" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>semanage fcontext -a -t httpd_log_t <span class="s2">&quot;/var/www/MISP/app/tmp/logs(/.*)?&quot;</span>
-chcon -R -t httpd_log_t /var/www/MISP/app/tmp/logs
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 1_firewall_RHEL.sh&gt;</span>
+firewall_RHEL <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># Allow httpd to connect to the redis server and php-fpm over tcp/ip</span>
+  sudo setsebool -P httpd_can_network_connect on
+
+  <span class="c1"># Allow httpd to send emails from php</span>
+  sudo setsebool -P httpd_can_sendmail on
+
+  <span class="c1"># Enable and start the httpd service</span>
+  sudo systemctl <span class="nb">enable</span> --now httpd.service
+
+  <span class="c1"># Open a hole in the iptables firewall</span>
+  sudo firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">80</span>/tcp --permanent
+  sudo firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">443</span>/tcp --permanent
+  sudo firewall-cmd --reload
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 1_firewall_RHEL.sh&gt;</span>
 </pre></div>
 
-<h2 id="802-allow-logrotate-to-read-varwww">8.02/ Allow logrotate to read /var/www<a class="headerlink" href="#802-allow-logrotate-to-read-varwww" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>checkmodule -M -m -o /tmp/misplogrotate.mod INSTALL/misplogrotate.te
-semodule_package -o /tmp/misplogrotate.pp -m /tmp/misplogrotate.mod
-semodule -i /tmp/misplogrotate.pp
+<h1 id="8-log-rotation">8/ Log Rotation<a class="headerlink" href="#8-log-rotation" title="Permanent link">&para;</a></h1>
+<h2 id="801-enable-log-rotation">8.01/ Enable log rotation<a class="headerlink" href="#801-enable-log-rotation" title="Permanent link">&para;</a></h2>
+<p>MISP saves the stdout and stderr of it's workers in /var/www/MISP/app/tmp/logs
+To rotate these logs install the supplied logrotate script:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 2_logRotation_RHEL.sh&gt;</span>
+logRotation_RHEL <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># MISP saves the stdout and stderr of its workers in $PATH_TO_MISP/app/tmp/logs</span>
+  <span class="c1"># To rotate these logs install the supplied logrotate script:</span>
+
+  sudo cp <span class="nv">$PATH_TO_MISP</span>/INSTALL/misp.logrotate /etc/logrotate.d/misp
+  sudo chmod <span class="m">0640</span> /etc/logrotate.d/misp
+
+  <span class="c1"># Now make logrotate work under SELinux as well</span>
+  <span class="c1"># Allow logrotate to modify the log files</span>
+  sudo semanage fcontext -a -t httpd_sys_rw_content_t <span class="s2">&quot;/var/www/MISP(/.*)?&quot;</span>
+  sudo semanage fcontext -a -t httpd_log_t <span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/tmp/logs(/.*)?&quot;</span>
+  sudo chcon -R -t httpd_log_t <span class="nv">$PATH_TO_MISP</span>/app/tmp/logs
+  sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/tmp/logs
+  <span class="c1"># Impact of the following: ?!?!?!!?111</span>
+  <span class="c1">##sudo restorecon -R /var/www/MISP/</span>
+
+  <span class="c1"># Allow logrotate to read /var/www</span>
+  sudo checkmodule -M -m -o /tmp/misplogrotate.mod <span class="nv">$PATH_TO_MISP</span>/INSTALL/misplogrotate.te
+  sudo semodule_package -o /tmp/misplogrotate.pp -m /tmp/misplogrotate.mod
+  sudo semodule -i /tmp/misplogrotate.pp
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 2_logRotation_RHEL.sh&gt;</span>
 </pre></div>
 
 <h1 id="9-misp-configuration">9/ MISP Configuration<a class="headerlink" href="#9-misp-configuration" title="Permanent link">&para;</a></h1>
-<h2 id="901-there-are-4-sample-configuration-files-in-varwwwmispappconfig-that-need-to-be-copied">9.01/ There are 4 sample configuration files in /var/www/MISP/app/Config that need to be copied<a class="headerlink" href="#901-there-are-4-sample-configuration-files-in-varwwwmispappconfig-that-need-to-be-copied" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www/MISP/app/Config
-cp -a bootstrap.default.php bootstrap.php
-cp -a database.default.php database.php
-cp -a core.default.php core.php
-cp -a config.default.php config.php
-</pre></div>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 2_configMISP_RHEL.sh&gt;</span>
+configMISP_RHEL <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># There are 4 sample configuration files in $PATH_TO_MISP/app/Config that need to be copied</span>
+  <span class="nv">$SUDO_WWW</span> cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/bootstrap.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/bootstrap.php
+  <span class="nv">$SUDO_WWW</span> cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/database.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
+  <span class="nv">$SUDO_WWW</span> cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/core.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/core.php
+  <span class="nv">$SUDO_WWW</span> cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/config.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/config.php
 
-<h2 id="902-configure-the-fields-in-the-newly-created-files">9.02/ Configure the fields in the newly created files<a class="headerlink" href="#902-configure-the-fields-in-the-newly-created-files" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="c1"># Configure the fields in the newly created files:</span>
-<span class="c1"># config.php   : baseurl (example: &#39;baseurl&#39; =&gt; &#39;http://misp&#39;,) - don&#39;t use &quot;localhost&quot; it causes issues when browsing externally</span>
-<span class="c1"># core.php   : Uncomment and set the timezone: `// date_default_timezone_set(&#39;UTC&#39;);`</span>
-<span class="c1"># database.php : login, port, password, database</span>
-<span class="c1"># DATABASE_CONFIG has to be filled</span>
-<span class="c1"># With the default values provided in section 6, this would look like:</span>
-<span class="c1"># class DATABASE_CONFIG {</span>
-<span class="c1">#   public $default = array(</span>
-<span class="c1">#       &#39;datasource&#39; =&gt; &#39;Database/Mysql&#39;,</span>
-<span class="c1">#       &#39;persistent&#39; =&gt; false,</span>
-<span class="c1">#       &#39;host&#39; =&gt; &#39;localhost&#39;,</span>
-<span class="c1">#       &#39;login&#39; =&gt; &#39;misp&#39;, // grant usage on *.* to misp@localhost</span>
-<span class="c1">#       &#39;port&#39; =&gt; 3306,</span>
-<span class="c1">#       &#39;password&#39; =&gt; &#39;XXXXdbpasswordhereXXXXX&#39;, // identified by &#39;XXXXdbpasswordhereXXXXX&#39;;</span>
-<span class="c1">#       &#39;database&#39; =&gt; &#39;misp&#39;, // create database misp;</span>
-<span class="c1">#       &#39;prefix&#39; =&gt; &#39;&#39;,</span>
-<span class="c1">#       &#39;encoding&#39; =&gt; &#39;utf8&#39;,</span>
-<span class="c1">#   );</span>
-<span class="c1">#}</span>
+  <span class="nb">echo</span> <span class="s2">&quot;&lt;?php</span>
+<span class="s2">  class DATABASE_CONFIG {</span>
+<span class="s2">          public \$default = array(</span>
+<span class="s2">                  &#39;datasource&#39; =&gt; &#39;Database/Mysql&#39;,</span>
+<span class="s2">                  //&#39;datasource&#39; =&gt; &#39;Database/Postgres&#39;,</span>
+<span class="s2">                  &#39;persistent&#39; =&gt; false,</span>
+<span class="s2">                  &#39;host&#39; =&gt; &#39;</span><span class="nv">$DBHOST</span><span class="s2">&#39;,</span>
+<span class="s2">                  &#39;login&#39; =&gt; &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;,</span>
+<span class="s2">                  &#39;port&#39; =&gt; 3306, // MySQL &amp; MariaDB</span>
+<span class="s2">                  //&#39;port&#39; =&gt; 5432, // PostgreSQL</span>
+<span class="s2">                  &#39;password&#39; =&gt; &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;,</span>
+<span class="s2">                  &#39;database&#39; =&gt; &#39;</span><span class="nv">$DBNAME</span><span class="s2">&#39;,</span>
+<span class="s2">                  &#39;prefix&#39; =&gt; &#39;&#39;,</span>
+<span class="s2">                  &#39;encoding&#39; =&gt; &#39;utf8&#39;,</span>
+<span class="s2">          );</span>
+<span class="s2">  }&quot;</span> <span class="p">|</span> <span class="nv">$SUDO_WWW</span> tee <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
 
-<span class="c1"># Important! Change the salt key in /var/www/MISP/app/Config/config.php</span>
-<span class="c1"># The admin user account will be generated on the first login, make sure that the salt is changed before you create that user</span>
-<span class="c1"># If you forget to do this step, and you are still dealing with a fresh installation, just alter the salt,</span>
-<span class="c1"># delete the user from mysql and log in again using the default admin credentials (admin@admin.test / admin)</span>
-</pre></div>
+  <span class="c1"># Configure the fields in the newly created files:</span>
+  <span class="c1"># config.php   : baseurl (example: &#39;baseurl&#39; =&gt; &#39;http://misp&#39;,) - don&#39;t use &quot;localhost&quot; it causes issues when browsing externally</span>
+  <span class="c1"># core.php   : Uncomment and set the timezone: `// date_default_timezone_set(&#39;UTC&#39;);`</span>
+  <span class="c1"># database.php : login, port, password, database</span>
+  <span class="c1"># DATABASE_CONFIG has to be filled</span>
+  <span class="c1"># With the default values provided in section 6, this would look like:</span>
+  <span class="c1"># class DATABASE_CONFIG {</span>
+  <span class="c1">#   public $default = array(</span>
+  <span class="c1">#       &#39;datasource&#39; =&gt; &#39;Database/Mysql&#39;,</span>
+  <span class="c1">#       &#39;persistent&#39; =&gt; false,</span>
+  <span class="c1">#       &#39;host&#39; =&gt; &#39;localhost&#39;,</span>
+  <span class="c1">#       &#39;login&#39; =&gt; &#39;misp&#39;, // grant usage on *.* to misp@localhost</span>
+  <span class="c1">#       &#39;port&#39; =&gt; 3306,</span>
+  <span class="c1">#       &#39;password&#39; =&gt; &#39;XXXXdbpasswordhereXXXXX&#39;, // identified by &#39;XXXXdbpasswordhereXXXXX&#39;;</span>
+  <span class="c1">#       &#39;database&#39; =&gt; &#39;misp&#39;, // create database misp;</span>
+  <span class="c1">#       &#39;prefix&#39; =&gt; &#39;&#39;,</span>
+  <span class="c1">#       &#39;encoding&#39; =&gt; &#39;utf8&#39;,</span>
+  <span class="c1">#   );</span>
+  <span class="c1">#}</span>
 
-<h2 id="903-if-you-want-to-be-able-to-change-configuration-parameters-from-the-webinterface">9.03/ If you want to be able to change configuration parameters from the webinterface:<a class="headerlink" href="#903-if-you-want-to-be-able-to-change-configuration-parameters-from-the-webinterface" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>chown apache:apache /var/www/MISP/app/Config/config.php
-chcon -t httpd_sys_rw_content_t /var/www/MISP/app/Config/config.php
-</pre></div>
+  <span class="c1"># Important! Change the salt key in $PATH_TO_MISP/app/Config/config.php</span>
+  <span class="c1"># The admin user account will be generated on the first login, make sure that the salt is changed before you create that user</span>
+  <span class="c1"># If you forget to do this step, and you are still dealing with a fresh installation, just alter the salt,</span>
+  <span class="c1"># delete the user from mysql and log in again using the default admin credentials (admin@admin.test / admin)</span>
 
-<h2 id="904-generate-an-encryption-key">9.04/ Generate an encryption key<a class="headerlink" href="#904-generate-an-encryption-key" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>gpg --gen-key
-mv ~/.gnupg /var/www/MISP/
-chown -R apache:apache /var/www/MISP/.gnupg
-chcon -R -t httpd_sys_rw_content_t /var/www/MISP/.gnupg
+  <span class="c1"># If you want to be able to change configuration parameters from the webinterface:</span>
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/Config/config.php
+  sudo chcon -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/Config/config.php
+
+  <span class="c1"># Generate a GPG encryption key.</span>
+  cat &gt;/tmp/gen-key-script <span class="s">&lt;&lt;EOF</span>
+<span class="s">      %echo Generating a default key</span>
+<span class="s">      Key-Type: default</span>
+<span class="s">      Key-Length: $GPG_KEY_LENGTH</span>
+<span class="s">      Subkey-Type: default</span>
+<span class="s">      Name-Real: $GPG_REAL_NAME</span>
+<span class="s">      Name-Comment: $GPG_COMMENT</span>
+<span class="s">      Name-Email: $GPG_EMAIL_ADDRESS</span>
+<span class="s">      Expire-Date: 0</span>
+<span class="s">      Passphrase: $GPG_PASSPHRASE</span>
+<span class="s">      # Do a commit here, so that we can later print &quot;done&quot;</span>
+<span class="s">      %commit</span>
+<span class="s">      %echo done</span>
+<span class="s">EOF</span>
+
+  sudo gpg --homedir <span class="nv">$PATH_TO_MISP</span>/.gnupg --batch --gen-key /tmp/gen-key-script
+  sudo rm -f /tmp/gen-key-script
+  sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/.gnupg
+
+  <span class="c1"># And export the public key to the webroot</span>
+  sudo gpg --homedir <span class="nv">$PATH_TO_MISP</span>/.gnupg --export --armor <span class="nv">$GPG_EMAIL_ADDRESS</span> <span class="p">|</span>sudo tee <span class="nv">$PATH_TO_MISP</span>/app/webroot/gpg.asc
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/webroot/gpg.asc
+
+  <span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 2_configMISP_RHEL.sh&gt;</span>
 </pre></div>
 
 <div class="admonition note">
@@ -1169,139 +1508,343 @@ chcon -R -t httpd_sys_rw_content_t /var/www/MISP/.gnupg
 <p>The email address should match the one set in the config.php configuration file
 Make sure that you use the same settings in the MISP Server Settings tool</p>
 </div>
-<h2 id="905-export-the-public-key-to-the-webroot">9.05/ export the public key to the webroot<a class="headerlink" href="#905-export-the-public-key-to-the-webroot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo -u apache gpg --homedir /var/www/MISP/.gnupg --export --armor YOUR-EMAIL &gt; /var/www/MISP/app/webroot/gpg.asc
+<h2 id="906-use-misps-background-workers">9.06/ Use MISP's background workers<a class="headerlink" href="#906-use-misps-background-workers" title="Permanent link">&para;</a></h2>
+<h3 id="906a-create-a-systemd-unit-for-the-workers">9.06a/ Create a systemd unit for the workers<a class="headerlink" href="#906a-create-a-systemd-unit-for-the-workers" title="Permanent link">&para;</a></h3>
+<p><div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
+<span class="s2">Description=MISP&#39;s background workers</span>
+<span class="s2">After=mariadb.service redis.service fpm.service</span>
+
+<span class="s2">[Service]</span>
+<span class="s2">Type=forking</span>
+<span class="s2">User=apache</span>
+<span class="s2">Group=apache</span>
+<span class="s2">ExecStart=/var/www/MISP/app/Console/worker/start.sh</span>
+<span class="s2">Restart=always</span>
+<span class="s2">RestartSec=10</span>
+
+<span class="s2">[Install]</span>
+<span class="s2">WantedBy=multi-user.target&quot;</span> <span class="p">|</span>sudo tee /etc/systemd/system/misp-workers.service
+</pre></div>
+sudo checkmodule -M -m -o /tmp/misplogrotate.mod $PATH_TO_MISP/INSTALL/misplogrotate.te
+  sudo semodule_package -o /tmp/misplogrotate.pp -m /tmp/misplogrotate.mod
+  sudo semodule -i /tmp/misplogrotate.pp</p>
+<p>Make the workers' script executable and reload the systemd units :
+<div class="codehilite"><pre><span></span>sudo chmod +x /var/www/MISP/app/Console/worker/start.sh
+sudo systemctl daemon-reload
+sudo checkmodule -M -m -o /tmp/workerstartsh.mod <span class="nv">$PATH_TO_MISP</span>/INSTALL/workerstartsh.te
+sudo semodule_package -o /tmp/workerstartsh.pp -m /tmp/workerstartsh.mod
+sudo semodule -i /tmp/workerstartsh.pp
+</pre></div></p>
+<h3 id="906b-start-the-workers-and-enable-them-on-boot">9.06b/ Start the workers and enable them on boot<a class="headerlink" href="#906b-start-the-workers-and-enable-them-on-boot" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span>sudo systemctl <span class="nb">enable</span> --now misp-workers.service
 </pre></div>
 
-<h2 id="906-start-the-workers-to-enable-background-jobs">9.06/ Start the workers to enable background jobs<a class="headerlink" href="#906-start-the-workers-to-enable-background-jobs" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>chmod +x /var/www/MISP/app/Console/worker/start.sh
-su -s /bin/bash apache -c <span class="s1">&#39;scl enable rh-php72 rh-redis32 rh-mariadb102 /var/www/MISP/app/Console/worker/start.sh&#39;</span>
+<h3 id="907-misp-modules-broken-on-rhel8">9.07/ misp-modules (Broken on RHEL8)<a class="headerlink" href="#907-misp-modules-broken-on-rhel8" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><span class="c1"># some misp-modules dependencies</span>
+sudo yum install openjpeg2-devel -y
+
+sudo chmod <span class="m">2777</span> /usr/local/src
+sudo chown root:users /usr/local/src
+<span class="nb">cd</span> /usr/local/src/
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-modules.git
+<span class="nb">cd</span> misp-modules
+<span class="c1"># pip install</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U -I -r REQUIREMENTS
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U .
+sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-core -y
+
+<span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
+<span class="s2">Description=MISP&#39;s modules</span>
+<span class="s2">After=misp-workers.service</span>
+
+<span class="s2">[Service]</span>
+<span class="s2">Type=simple</span>
+<span class="s2">User=apache</span>
+<span class="s2">Group=apache</span>
+<span class="s2">ExecStart=\&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/misp-modules –l 127.0.0.1 –s\&quot;</span>
+<span class="s2">Restart=always</span>
+<span class="s2">RestartSec=10</span>
+
+<span class="s2">[Install]</span>
+<span class="s2">WantedBy=multi-user.target&quot;</span> <span class="p">|</span>sudo tee /etc/systemd/system/misp-modules.service
+
+sudo systemctl daemon-reload
+sudo systemctl <span class="nb">enable</span> --now misp-modules
 </pre></div>
 
-<h2 id="907a-to-make-the-background-workers-start-on-boot">9.07a/ To make the background workers start on boot<a class="headerlink" href="#907a-to-make-the-background-workers-start-on-boot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>vi /etc/rc.local
-</pre></div>
-
-<h2 id="907b-add-the-following-line-at-the-end">9.07b/ Add the following line at the end<a class="headerlink" href="#907b-add-the-following-line-at-the-end" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>su -s /bin/bash apache -c <span class="s1">&#39;scl enable rh-php72 rh-redis32 rh-mariadb102 /var/www/MISP/app/Console/worker/start.sh&#39;</span>
-</pre></div>
-
-<h2 id="907c-and-make-sure-it-will-execute">9.07c/ and make sure it will execute<a class="headerlink" href="#907c-and-make-sure-it-will-execute" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>chmod +x /etc/rc.local
-</pre></div>
-
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Now log in using the webinterface: http://misp/users/login<br />
-The default user/pass = <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#97;&#100;&#109;&#105;&#110;&#46;&#116;&#101;&#115;&#116;">&#97;&#100;&#109;&#105;&#110;&#64;&#97;&#100;&#109;&#105;&#110;&#46;&#116;&#101;&#115;&#116;</a>/admin<br />
-Using the server settings tool in the admin interface (Administration -&gt; Server Settings), set MISP up to your preference<br />
-It is especially vital that no critical issues remain!<br />
-Don't forget to change the email, password and authentication key after installation.</p>
+<h4 id="misp-dashboard-on-centos">MISP Dashboard on CentOS<a class="headerlink" href="#misp-dashboard-on-centos" title="Permanent link">&para;</a></h4>
+<hr />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Currently defunct.</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Once done, have a look at the diagnostics<br />
-If any of the directories that MISP uses to store files is not writeable to the apache user, change the permissions<br />
-you can do this by running the following commands:<br />
-<div class="codehilite"><pre><span></span>chmod -R 750 /var/www/MISP/&lt;directory path with an indicated issue&gt;
-chown -R apache:apache /var/www/MISP/&lt;directory path with an indicated issue&gt;
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www
+sudo mkdir misp-dashboard
+sudo chown apache:apache misp-dashboard
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git
+<span class="nb">cd</span> misp-dashboard
+sudo -H /var/www/misp-dashboard/install_dependencies.sh
+sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
+sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 0.0.0.0:8001&#39;</span> /etc/apache2/ports.conf
+sudo apt install libapache2-mod-wsgi-py3 -y
+
+<span class="nb">echo</span> <span class="s2">&quot;&lt;VirtualHost *:8001&gt;</span>
+<span class="s2">    ServerAdmin admin@misp.local</span>
+<span class="s2">    ServerName misp.local</span>
+<span class="s2">    DocumentRoot /var/www/misp-dashboard</span>
+
+<span class="s2">    WSGIDaemonProcess misp-dashboard \</span>
+<span class="s2">       user=misp group=misp \</span>
+<span class="s2">       python-home=/var/www/misp-dashboard/DASHENV \</span>
+<span class="s2">       processes=1 \</span>
+<span class="s2">       threads=15 \</span>
+<span class="s2">       maximum-requests=5000 \</span>
+<span class="s2">       listen-backlog=100 \</span>
+<span class="s2">       queue-timeout=45 \</span>
+<span class="s2">       socket-timeout=60 \</span>
+<span class="s2">       connect-timeout=15 \</span>
+<span class="s2">       request-timeout=60 \</span>
+<span class="s2">       inactivity-timeout=0 \</span>
+<span class="s2">       deadlock-timeout=60 \</span>
+<span class="s2">       graceful-timeout=15 \</span>
+<span class="s2">       eviction-timeout=0 \</span>
+<span class="s2">       shutdown-timeout=5 \</span>
+<span class="s2">       send-buffer-size=0 \</span>
+<span class="s2">       receive-buffer-size=0 \</span>
+<span class="s2">       header-buffer-size=0 \</span>
+<span class="s2">       response-buffer-size=0 \</span>
+<span class="s2">       server-metrics=Off</span>
+<span class="s2">    WSGIScriptAlias / /var/www/misp-dashboard/misp-dashboard.wsgi</span>
+<span class="s2">    &lt;Directory /var/www/misp-dashboard&gt;</span>
+<span class="s2">        WSGIProcessGroup misp-dashboard</span>
+<span class="s2">        WSGIApplicationGroup %{GLOBAL}</span>
+<span class="s2">        Require all granted</span>
+<span class="s2">    &lt;/Directory&gt;</span>
+<span class="s2">    LogLevel info</span>
+<span class="s2">    ErrorLog /var/log/apache2/misp-dashboard.local_error.log</span>
+<span class="s2">    CustomLog /var/log/apache2/misp-dashboard.local_access.log combined</span>
+<span class="s2">    ServerSignature Off</span>
+<span class="s2">&lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> sudo tee /etc/apache2/sites-available/misp-dashboard.conf
+
+sudo a2ensite misp-dashboard
+sudo systemctl reload apache2
+
+<span class="c1"># Add misp-dashboard to rc.local to start on boot.</span>
+sudo sed -i -e <span class="s1">&#39;$i \sudo -u apache bash /var/www/misp-dashboard/start_all.sh &gt; /tmp/misp-dashboard_rc.local.log\n&#39;</span> /etc/rc.local
+
+<span class="c1"># Enable ZeroMQ for misp-dashboard</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_event_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_object_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_object_reference_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_attribute_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_sighting_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_user_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_organisation_notifications_enable<span class="s2">&quot; true&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_port<span class="s2">&quot; 50000&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_host<span class="s2">&quot; &quot;</span>localhost<span class="s2">&quot;&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_port<span class="s2">&quot; 6379&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_database<span class="s2">&quot; 1&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_redis_namespace<span class="s2">&quot; &quot;</span>mispq<span class="s2">&quot;&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_include_attachments<span class="s2">&quot; false&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_tag_notifications_enable<span class="s2">&quot; false&quot;</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>Plugin.ZeroMQ_audit_notifications_enable<span class="s2">&quot; false&quot;</span>
+</pre></div>
+
+<h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 2_core-cake.sh&gt;</span>
+<span class="c1"># Core cake commands</span>
+coreCAKE <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Running core Cake commands to set sane defaults for </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="nv">$SUDO_WWW</span> -E <span class="nv">$CAKE</span> userInit -q
+
+  <span class="c1"># This makes sure all Database upgrades are done, without logging in.</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateDatabase
+
+  <span class="c1"># Setup some more MISP default via cake CLI</span>
+
+  <span class="c1"># The default install is Python in a virtualenv, setting accordingly</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
+
+  <span class="c1"># Tune global time outs</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.autoRegenerate&quot;</span> <span class="m">0</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.timeout&quot;</span> <span class="m">600</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.cookieTimeout&quot;</span> <span class="m">3600</span>
+
+  <span class="c1"># Change base url, either with this CLI command or in the UI</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Baseurl <span class="nv">$MISP_BASEURL</span>
+  <span class="c1"># example: &#39;baseurl&#39; =&gt; &#39;https://&lt;your.FQDN.here&gt;&#39;,</span>
+  <span class="c1"># alternatively, you can leave this field empty if you would like to use relative pathing in MISP</span>
+  <span class="c1"># &#39;baseurl&#39; =&gt; &#39;&#39;,</span>
+
+  <span class="c1"># Enable GnuPG</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.email&quot;</span> <span class="s2">&quot;</span><span class="nv">$GPG_EMAIL_ADDRESS</span><span class="s2">&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.homedir&quot;</span> <span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.gnupg&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.password&quot;</span> <span class="s2">&quot;</span><span class="nv">$GPG_PASSPHRASE</span><span class="s2">&quot;</span>
+
+  <span class="c1"># Enable installer org and tune some configurables</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.host_org_id&quot;</span> <span class="m">1</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.email&quot;</span> <span class="s2">&quot;info@admin.test&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.disable_emailing&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.contact&quot;</span> <span class="s2">&quot;info@admin.test&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.disablerestalert&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.showCorrelationsOnIndex&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.default_event_tag_collection&quot;</span> <span class="m">0</span>
+
+  <span class="c1"># Provisional Cortex tunes</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_enable&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_port&quot;</span> <span class="m">9000</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_timeout&quot;</span> <span class="m">120</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_authkey&quot;</span> <span class="s2">&quot;&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_verify_peer&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_verify_host&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_allow_self_signed&quot;</span> <span class="nb">true</span>
+
+  <span class="c1"># Various plugin sightings settings</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_policy&quot;</span> <span class="m">0</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_anonymise&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_range&quot;</span> <span class="m">365</span>
+
+  <span class="c1"># Plugin CustomAuth tuneable</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.CustomAuth_disable_logout&quot;</span> <span class="nb">false</span>
+
+  <span class="c1"># RPZ Plugin settings</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_policy&quot;</span> <span class="s2">&quot;DROP&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_walled_garden&quot;</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_serial&quot;</span> <span class="s2">&quot;\$date00&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_refresh&quot;</span> <span class="s2">&quot;2h&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_retry&quot;</span> <span class="s2">&quot;30m&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_expiry&quot;</span> <span class="s2">&quot;30d&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_minimum_ttl&quot;</span> <span class="s2">&quot;1h&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_ttl&quot;</span> <span class="s2">&quot;1w&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_ns&quot;</span> <span class="s2">&quot;localhost.&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_ns_alt&quot;</span> <span class="s2">&quot;&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_email&quot;</span> <span class="s2">&quot;root.localhost&quot;</span>
+
+  <span class="c1"># Force defaults to make MISP Server Settings less RED</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.language&quot;</span> <span class="s2">&quot;eng&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.proposals_block_attributes&quot;</span> <span class="nb">false</span>
+
+  <span class="c1"># Redis block</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.redis_host&quot;</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.redis_port&quot;</span> <span class="m">6379</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.redis_database&quot;</span> <span class="m">13</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.redis_password&quot;</span> <span class="s2">&quot;&quot;</span>
+
+  <span class="c1"># Force defaults to make MISP Server Settings less YELLOW</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.ssdeep_correlation_threshold&quot;</span> <span class="m">40</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.extended_alert_subject&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.default_event_threat_level&quot;</span> <span class="m">4</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.newUserText&quot;</span> <span class="s2">&quot;Dear new MISP user,\\n\\nWe would hereby like to welcome you to the \$org MISP community.\\n\\n Use the credentials below to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nPassword: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.passwordResetText&quot;</span> <span class="s2">&quot;Dear MISP user,\\n\\nA password reset has been triggered for your account. Use the below provided temporary password to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nYour temporary password: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.enableEventBlacklisting&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.enableOrgBlacklisting&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.log_client_ip&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.log_auth&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.disableUserSelfManagement&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_event_alert&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_event_alert_tag&quot;</span> <span class="s2">&quot;no-alerts=\&quot;true\&quot;&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert_age&quot;</span> <span class="s2">&quot;&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.incoming_tags_disabled_by_default&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.footermidleft&quot;</span> <span class="s2">&quot;This is an initial install&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.footermidright&quot;</span> <span class="s2">&quot;Please configure and harden accordingly&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.welcome_text_top&quot;</span> <span class="s2">&quot;Initial Install, please configure&quot;</span>
+  <span class="c1"># TODO: Make sure $FLAVOUR is correct</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.welcome_text_bottom&quot;</span> <span class="s2">&quot;Welcome to MISP on </span><span class="nv">$FLAVOUR</span><span class="s2">, change this message in MISP Settings&quot;</span>
+
+  <span class="c1"># Force defaults to make MISP Server Settings less GREEN</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.password_policy_length&quot;</span> <span class="m">12</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.password_policy_complexity&quot;</span> <span class="s1">&#39;/^((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$|.{16,}/&#39;</span>
+
+  <span class="c1"># Set MISP Live</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Live <span class="nv">$MISP_LIVE</span>
+<span class="o">}</span>
+
+<span class="c1"># This updates Galaxies, ObjectTemplates, Warninglists, Noticelists, Templates</span>
+updateGOWNT <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Updating Galaxies, ObjectTemplates, Warninglists, Noticelists and Templates&quot;</span>
+  <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1<span class="k">)</span>
+
+  <span class="c1"># Update the galaxies…</span>
+  <span class="c1"># TODO: Fix updateGalaxies</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateGalaxies
+  <span class="c1"># Updating the taxonomies…</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateTaxonomies
+  <span class="c1"># Updating the warning lists…</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateWarningLists
+  <span class="c1"># Updating the notice lists…</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateNoticeLists
+  <span class="c1"># Updating the object templates…</span>
+  <span class="c1"># TODO: FIXME: updateObjectTemplates (currently throws: usage udpateNoticeLists)</span>
+  <span class="c1">##$SUDO_WWW $CAKE Admin updateObjectTemplates</span>
+  curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/objectTemplates/update
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 2_core-cake.sh&gt;</span>
+</pre></div>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you have installed the recommended Python 3 virtualenv to the recommended place of <strong>${PATH_TO_MISP}/venv</strong> set the following MISP configurable
+<div class="codehilite"><pre><span></span>sudo -H -u www-data <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
+</pre></div>
+or on CentOS
+<div class="codehilite"><pre><span></span>sudo -u apache <span class="nv">$RUN_PHP</span> <span class="s2">&quot;</span><span class="nv">$CAKE</span><span class="s2"> Admin setSetting &quot;</span>MISP.python_bin<span class="s2">&quot; &quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/python<span class="s2">&quot;&quot;</span>
 </pre></div></p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Make sure that the STIX libraries and GnuPG work as intended, if not, refer to INSTALL.txt's paragraphs dealing with these two items</p>
+<p>Make sure that the STIX libraries and GnuPG work as intended, if not, refer to the relevant sections in the install guide you are currently reading.</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Now log in using the webinterface: http://misp/users/login<br />
+The default user/pass = <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#97;&#100;&#109;&#105;&#110;&#46;&#116;&#101;&#115;&#116;">&#97;&#100;&#109;&#105;&#110;&#64;&#97;&#100;&#109;&#105;&#110;&#46;&#116;&#101;&#115;&#116;</a>/admin<br />
+Using the server settings tool in the admin interface (Administration -&gt; Server Settings), set MISP up to your preference.<br />
+It is especially vital that no critical issues remain!<br />
+Don't forget to change the email, password and authentication key after installation.<br />
+Once done, have a look at the diagnostics.</p>
+</div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>If any of the directories that MISP uses to store files is not writeable to the apache user, change the permissions<br />
+you can do this by running the following commands:
+<div class="codehilite"><pre><span></span>chmod -R <span class="m">750</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/&lt;directory path with an indicated issue&gt;
+<span class="c1"># /!\ Depending on your OS replace www-data with apache or www or whatever user is the web server user.</span>
+chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/&lt;directory path with an indicated issue&gt;
+</pre></div></p>
+</div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
 <p>If anything goes wrong, make sure that you check MISP's logs for errors:
-<div class="codehilite"><pre><span></span># /var/www/MISP/app/tmp/logs/error.log
-# /var/www/MISP/app/tmp/logs/resque-worker-error.log
-# /var/www/MISP/app/tmp/logs/resque-scheduler-error.log
-# /var/www/MISP/app/tmp/logs/resque-2015-01-01.log //where the actual date is the current date
+<div class="codehilite"><pre><span></span># ${PATH_TO_MISP}/app/tmp/logs/error.log
+# ${PATH_TO_MISP}/app/tmp/logs/resque-worker-error.log
+# ${PATH_TO_MISP}/app/tmp/logs/resque-scheduler-error.log
+# ${PATH_TO_MISP}/app/tmp/logs/resque-2018-10-25.log //where the actual date is the current date
 </pre></div></p>
 </div>
-<h1 id="10-post-install">10/ Post Install<a class="headerlink" href="#10-post-install" title="Permanent link">&para;</a></h1>
-<h2 id="1001-allow-apache-to-write-to-varwwwmispapptmplogs">10.01/ Allow apache to write to /var/www/MISP/app/tmp/logs<a class="headerlink" href="#1001-allow-apache-to-write-to-varwwwmispapptmplogs" title="Permanent link">&para;</a></h2>
-<p>If the result from the diagnostic page is that the directory is not writable, try the following.
-<div class="codehilite"><pre><span></span>chcon -R -t httpd_sys_rw_content_t /var/www/MISP/app/tmp/logs/
-</pre></div></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This may mean that logrotate cannot access the logs directory, will require further investigation</p>
-</div>
-<h2 id="1002-change-phpini-settings-to-suggested-limits-from-diagnostic-page">10.02/ Change php.ini settings to suggested limits from diagnostic page.<a class="headerlink" href="#1002-change-phpini-settings-to-suggested-limits-from-diagnostic-page" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="c1"># Edit /etc/opt/rh/rh-php72/php.ini and set the following settings</span>
-<span class="nv">max_execution_time</span> <span class="o">=</span> <span class="m">300</span>
-<span class="nv">memory_limit</span> <span class="o">=</span> 512M
-<span class="nv">upload_max_filesize</span> <span class="o">=</span> 50M
-<span class="nv">post_max_size</span> <span class="o">=</span> 50M
-</pre></div>
-
-<h2 id="1003-restart-rh-php72-for-settings-to-take-effect">10.03/ Restart rh-php72 for settings to take effect<a class="headerlink" href="#1003-restart-rh-php72-for-settings-to-take-effect" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>systemctl restart rh-php72-php-fpm
-</pre></div>
-
-<h2 id="1004-install-pymisp-and-pydeep-for-advanced-attachment-handler">10.04/ Install pymisp and pydeep for Advanced Attachment handler<a class="headerlink" href="#1004-install-pymisp-and-pydeep-for-advanced-attachment-handler" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>pip install pymisp
-pip install git+https://github.com/kbandla/pydeep.git
-</pre></div>
-
-<h2 id="1005-install-pymisp-also-in-python-3">10.05/ Install pymisp also in Python 3<a class="headerlink" href="#1005-install-pymisp-also-in-python-3" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>scl <span class="nb">enable</span> rh-python36 pip3 install pymisp
-</pre></div>
-
+<h3 id="recommended-actions">Recommended actions<a class="headerlink" href="#recommended-actions" title="Permanent link">&para;</a></h3>
+<hr />
+<ul>
+<li>
+<p>By default CakePHP exposes its name and version in email headers. Apply a patch to remove this behavior.</p>
+</li>
+<li>
+<p>You should really harden your OS</p>
+</li>
+<li>You should really harden the configuration of Apache</li>
+<li>You should really harden the configuration of MySQL</li>
+<li>Keep your software up2date (MISP, CakePHP and everything else)</li>
+<li>Log and audit</li>
+</ul>
 <h1 id="11-lief-installation">11/ LIEF Installation<a class="headerlink" href="#11-lief-installation" title="Permanent link">&para;</a></h1>
 <p><em>lief</em> is required for the Advanced Attachment Handler and requires manual compilation</p>
-<h2 id="1101-install-cmake3-devtoolset-7-from-scl">11.01/ Install cmake3 devtoolset-7 from SCL<a class="headerlink" href="#1101-install-cmake3-devtoolset-7-from-scl" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>yum install devtoolset-7 cmake3
-</pre></div>
-
-<h2 id="1102-enable-devtoolset-7">11.02/ Enable devtoolset-7<a class="headerlink" href="#1102-enable-devtoolset-7" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>scl <span class="nb">enable</span> devtoolset-7 bash
-</pre></div>
-
-<h2 id="1103-set-env-variable-create-directories-and-download-source-code">11.03/ Set env variable, create directories and download source code<a class="headerlink" href="#1103-set-env-variable-create-directories-and-download-source-code" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>mkdir -p /tmp/LIEF
-mkdir -p /tmp/LIEF_INSTALL
-<span class="nb">export</span> <span class="nv">LIEF_TMP</span><span class="o">=</span>/tmp/LIEF
-<span class="nb">export</span> <span class="nv">LIEF_INSTALL</span><span class="o">=</span>/tmp/LIEF_INSTALL
-<span class="nb">export</span> <span class="nv">LIEF_BRANCH</span><span class="o">=</span>master
-<span class="nb">cd</span> <span class="nv">$LIEF_TMP</span>
-git clone --branch <span class="nv">$LIEF_BRANCH</span> --single-branch https://github.com/lief-project/LIEF.git LIEF
-</pre></div>
-
-<h2 id="1104-compile-lief-and-install">11.04/ Compile lief and install<a class="headerlink" href="#1104-compile-lief-and-install" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> <span class="nv">$LIEF_TMP</span>/LIEF
-mkdir -p build
-<span class="nb">cd</span> build
-scl <span class="nb">enable</span> devtoolset-7 <span class="s1">&#39;bash -c &quot;cmake3 \</span>
-<span class="s1">-DLIEF_PYTHON_API=on \</span>
-<span class="s1">-DLIEF_DOC=off \</span>
-<span class="s1">-DCMAKE_INSTALL_PREFIX=$LIEF_INSTALL \</span>
-<span class="s1">-DCMAKE_BUILD_TYPE=Release \</span>
-<span class="s1">-DPYTHON_VERSION=2.7 \</span>
-<span class="s1">..&quot;&#39;</span>
-make -j3
-<span class="nb">cd</span> api/python
-scl <span class="nb">enable</span> rh-python36 python3 setup.py install <span class="o">||</span> :
-<span class="c1"># you can ignore the error about finding suitable distribution</span>
-<span class="nb">cd</span> <span class="nv">$LIEF_TMP</span>/LIEF/build
-make install
-make package
-</pre></div>
-
-<h2 id="1105-test-lief-installation-if-no-error-package-installed">11.05/ Test lief installation, if no error, package installed<a class="headerlink" href="#1105-test-lief-installation-if-no-error-package-installed" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>python
-&gt;&gt; import lief
-</pre></div>
-
+<p>The installation is explained in section <strong><a href="https://misp.github.io/MISP/xINSTALL.rhel8/#301-download-misp-code-using-git-in-varwww-directory">3.01</a></strong></p>
 <h1 id="12-known-issues">12/ Known Issues<a class="headerlink" href="#12-known-issues" title="Permanent link">&para;</a></h1>
-<h2 id="1201-php-cli-cannot-determine-version">12.01/ PHP CLI cannot determine version<a class="headerlink" href="#1201-php-cli-cannot-determine-version" title="Permanent link">&para;</a></h2>
-<p>PHP CLI Version cannot be determined. Possibly due to PHP being installed through SCL</p>
-<h2 id="1202-workers-cannot-be-started-or-restarted-from-the-web-page">12.02/ Workers cannot be started or restarted from the web page<a class="headerlink" href="#1202-workers-cannot-be-started-or-restarted-from-the-web-page" title="Permanent link">&para;</a></h2>
-<p>Possible also due to package being installed via SCL, attempting to start workers through the web page will result in
-error. Worker's can be restarted via the CLI using the following command.
-<div class="codehilite"><pre><span></span>su -s /bin/bash apache -c <span class="s1">&#39;scl enable rh-php72 rh-redis32 rh-mariadb102 /var/www/MISP/app/Console/worker/start.sh&#39;</span>
+<h2 id="1201-workers-cannot-be-started-or-restarted-from-the-web-page">12.01/ Workers cannot be started or restarted from the web page<a class="headerlink" href="#1201-workers-cannot-be-started-or-restarted-from-the-web-page" title="Permanent link">&para;</a></h2>
+<p>Possible also due to package being installed via SCL, attempting to start workers through the web page will result in error. Worker's can be restarted via the CLI using the following command.
+<div class="codehilite"><pre><span></span>systemctl restart misp-workers.service
 </pre></div></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

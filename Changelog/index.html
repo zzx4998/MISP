@@ -7975,9 +7975,36 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[doc] CentOS/RHEL udpates. Merge towards unity. (#4527) [Steve
-  Clement]</li>
+<li>[doc] Updated RHEL8(BETA) doc, core works, misp-modules do not, LIEF
+  does not. (#4529) [Steve Clement]</li>
 </ul>
+<p>chg: [doc] Updated RHEL8(BETA) doc, core works, misp-modules do not, LIEF does not.
+- [doc] Updated RHEL8(BETA) doc, core works, misp-modules do not, LIEF
+  does not. chg: [doc] Some notes for rhel7. [Steve Clement]
+- [doc] Added more changes to the RHEL/CentOS install doc. [Steve
+  Clement]
+- Bump PyMISP. [Raphaël Vinot]
+- [PyMISP] updated to the latest version. [Alexandre Dulaunoy]
+- [warning-lists] updated to the latest version. [Alexandre Dulaunoy]
+- [galaxy/taxonomies/warninglists] updated to the latest version.
+  [Alexandre Dulaunoy]
+- [eventTag] Improved perfs of extraction. [mokaddem]
+- [event:EventFilteringTool] Forced maximum height. [mokaddem]
+- [event:EventFilteringTool] Added comments and deleted useless
+  <code>htmlspecialchars</code> [mokaddem]
+- [event:eventFilteringTool] Improved UI and changted sanitization to
+  allow tag/galaxy pre-filling. [mokaddem]
+- [event:view] Increase tag colleciton efficiency. [mokaddem]
+- [event:EventFilteringTool] Display active filtering rules
+  (tags/galaxies) even if not available. [mokaddem]</p>
+<p>Due to a recent performance fix, only tags and galaxies of the event are
+  shown, the rule is still displayed event if not matching attributes are
+  found
+- [event:view] Major performance improvement for large event. [mokaddem]</p>
+<p>Due to the introduction of the event filtering widget, attributes were
+  fetched 2 additional times.
+- [doc] CentOS/RHEL udpates. Merge towards unity. (#4527) [Steve
+  Clement]</p>
 <p>chg: [doc] CentOS/RHEL udpates. Merge towards unity.
 - [doc] CentOS/RHEL udpates. Merge towards unity. [Steve Clement]
 - [performance] Reworked the pre-fetching of event IDs for the
@@ -8113,6 +8140,15 @@
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[object:edit] attachment field when empty. [mokaddem]</li>
+<li>[event:querybuilder] Force QB wrapper to fit the rules. [mokaddem]</li>
+<li>[event:EventFilteringTool] Using <code>toggleBoolFilter</code> button does not
+  reset the rules. Fix #4418. [mokaddem]</li>
+<li>[JS] Correctly handle event locks. [iglocska]</li>
+<li>[sightings] Users with sighting permissions should be able to add
+  sightings even if they don't have event write access. [iglocska]</li>
+<li>[cleanup] Fixed indentation. [chrisr3d]</li>
+<li>[UI] Event lock warnings missing due to missing ctp file. [iglocska]</li>
 <li>
 <p>[performance] Manually inject index hints for the value lookup.
   [iglocska]</p>
@@ -8241,9 +8277,25 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]</li>
-<li>Merge pull request #4517 from SteveClement/i18n. [Steve Clement]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]</li>
+<li>Merge pull request #4484 from obert01/fix-tag-search. [Andras Iklody]</li>
 </ul>
+<p>Fixed case sensitivity in the tag search API (/tags/search).
+- Fixed case sensitivity in the tag search API (/tags/search). [Olivier
+  BERT]</p>
+<p>There was still a problem for matching the search on a cluster name. I have also slightly simplified the construction of the SQL request for better code readability.
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4492 from mokaddem/eventViewPerfImprov. [Andras
+  Iklody]</p>
+<p>[event:view] Major performance improvement for large event
+- Merge branch '2.4' of github.com:MISP/MISP into eventViewPerfImprov.
+  [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into eventViewPerfImprov.
+  [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge pull request #4517 from SteveClement/i18n. [Steve Clement]</p>
 <p>chg: [i18n] Updated language files
 - Merge pull request #4512 from 4ekin/russian_translation. [Steve
   Clement]</p>
