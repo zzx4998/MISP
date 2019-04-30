@@ -22,9 +22,9 @@ if (isset($updateProgress['preTestSuccess']) && $updateProgress['preTestSuccess'
                 <h5 style='display: inline-block'>Pre update test status:</h5>
                 <?php
                     $icon = isset($updateProgress['preTestSuccess']) ? ($updateProgress['preTestSuccess'] ? 'fa-check' : 'fa-times') : 'fa-question-circle ';
-                    $spanClass = isset($updateProgress['preTestSuccess']) ? ($updateProgress['preTestSuccess'] ? 'fa-check' : 'fa-times') : 'success';
+                    $spanClass = isset($updateProgress['preTestSuccess']) ? ($updateProgress['preTestSuccess'] ? 'success' : 'error') : 'success';
                 ?>
-                <span class="alert alert-<?php echo $spanClass; ?>" style="display: inline-block; padding: 3px;">
+                <span class="alert alert-<?php echo $spanClass; ?>" style="display: inline-block; padding: 3px 5px;">
                     <i class='fa <?php echo($icon); ?>' style="font-size: x-large"></i>
                 </span>
             </div>
