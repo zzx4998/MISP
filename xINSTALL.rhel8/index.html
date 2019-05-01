@@ -100,7 +100,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#installation-instructions-for-rhel-8x-beta" tabindex="1" class="md-skip">
+      <a href="#installation-instructions-for-rhel-8x-beta-and-partially-fedora-server-30" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -829,7 +829,7 @@
               
                 
                 
-                <h1 id="installation-instructions-for-rhel-8x-beta">INSTALLATION INSTRUCTIONS for RHEL 8.x (beta)<a class="headerlink" href="#installation-instructions-for-rhel-8x-beta" title="Permanent link">&para;</a></h1>
+                <h1 id="installation-instructions-for-rhel-8x-beta-and-partially-fedora-server-30">INSTALLATION INSTRUCTIONS for RHEL 8.x (beta) and partially Fedora Server 30<a class="headerlink" href="#installation-instructions-for-rhel-8x-beta-and-partially-fedora-server-30" title="Permanent link">&para;</a></h1>
 <hr />
 <h3 id="-1-installer-and-manual-install-instructions">-1/ Installer and Manual install instructions<a class="headerlink" href="#-1-installer-and-manual-install-instructions" title="Permanent link">&para;</a></h3>
 <p>Make sure you are reading the parsed version of this Document. When in doubt <a href="https://misp.github.io/MISP/xINSTALL.rhel8/">click here</a>.</p>
@@ -1024,6 +1024,7 @@ sudo yum install gcc git zip <span class="se">\</span>
        mod_ssl <span class="se">\</span>
        redis <span class="se">\</span>
        mariadb <span class="se">\</span>
+       mariadb-server <span class="se">\</span>
        python3-devel python3-pip python3-virtualenv <span class="se">\</span>
        libxslt-devel zlib-devel ssdeep-devel -y
 sudo alternatives --set python /usr/bin/python3
@@ -1053,10 +1054,6 @@ This guide installs PHP 7.2</p>
 </div>
 <h2 id="205-start-the-php-fpm-service-and-enable-to-start-on-boot">2.05/ Start the PHP FPM service and enable to start on boot<a class="headerlink" href="#205-start-the-php-fpm-service-and-enable-to-start-on-boot" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span>sudo systemctl <span class="nb">enable</span> --now php-fpm.service
-</pre></div>
-
-<h2 id="207-start-redis-service-and-enable-to-start-on-boot">2.07/ Start redis service and enable to start on boot<a class="headerlink" href="#207-start-redis-service-and-enable-to-start-on-boot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo systemctl <span class="nb">enable</span> --now redis.service
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_yumInstallHaveged.sh&gt;</span>
@@ -1129,7 +1126,8 @@ sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /
 <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U redis
 
 <span class="c1"># lief needs manual compilation</span>
-sudo yum install devtoolset-8 cmake3 cppcheck -y
+sudo yum groupinstall <span class="s2">&quot;Development Tools&quot;</span> -y
+sudo yum install cmake3 cppcheck -y
 
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief
 <span class="nv">$SUDO_WWW</span> mkdir build
@@ -1180,10 +1178,10 @@ installCake_RHEL <span class="o">()</span>
   sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /usr/share/httpd/.composer
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
   <span class="c1"># Update composer.phar (optional)</span>
-  <span class="c1">#$SUDO_WWW php -r &quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-  <span class="c1">#$SUDO_WWW php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
-  <span class="c1">#$SUDO_WWW php composer-setup.php</span>
-  <span class="c1">#$SUDO_WWW php -r &quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
+  <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
+  <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
+  <span class="nv">$SUDO_WWW</span> php composer-setup.php
+  <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
   <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
   <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
   <span class="nv">$SUDO_WWW</span> php composer.phar install
@@ -1531,7 +1529,7 @@ sudo checkmodule -M -m -o /tmp/misplogrotate.mod $PATH_TO_MISP/INSTALL/misplogro
 <p>Make the workers' script executable and reload the systemd units :
 <div class="codehilite"><pre><span></span>sudo chmod +x /var/www/MISP/app/Console/worker/start.sh
 sudo systemctl daemon-reload
-sudo checkmodule -M -m -o /tmp/workerstartsh.mod <span class="nv">$PATH_TO_MISP</span>/INSTALL/workerstartsh.te
+sudo checkmodule -M -m -o /tmp/workerstartsh.mod <span class="nv">$PATH_TO_MISP</span>/INSTALL/worker/startsh.te
 sudo semodule_package -o /tmp/workerstartsh.pp -m /tmp/workerstartsh.mod
 sudo semodule -i /tmp/workerstartsh.pp
 </pre></div></p>
@@ -1548,10 +1546,10 @@ sudo chown root:users /usr/local/src
 <span class="nb">cd</span> /usr/local/src/
 <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-modules.git
 <span class="nb">cd</span> misp-modules
+sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-core poppler-cpp-devel -y
 <span class="c1"># pip install</span>
 <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U -I -r REQUIREMENTS
 <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U .
-sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-core -y
 
 <span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
 <span class="s2">Description=MISP&#39;s modules</span>

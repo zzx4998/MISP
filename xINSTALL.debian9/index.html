@@ -1461,14 +1461,14 @@
 <hr />
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>Maintained and tested by @SteveClement on 20190405</p>
+<p>Maintained and tested by @SteveClement on 20190425</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This install document is NOT working as expected. There are Python issues as we "only" have python 3.5 but need at least python 3.6
+<p>This install document is <strong>NOT</strong> working as expected. There are Python issues as we "only" have python 3.5 but need at least python 3.6
 This guide effectively converts your "stretch" install into a partial "testing" install.
 Thus following the "testing" install guide is a better choice, but not for production.
-One manual work-around is to install Python &gt;3.5 from source.</p>
+One manual work-around is to install Python &gt;3.5 from source and leaving apt untouched.</p>
 </div>
 <h3 id="1-minimal-debian-install">1/ Minimal Debian install<a class="headerlink" href="#1-minimal-debian-install" title="Permanent link">&para;</a></h3>
 <hr />
@@ -1686,10 +1686,11 @@ sudo apt -t testing install -y <span class="se">\</span>
 mariadb-client <span class="se">\</span>
 mariadb-server
 
+<span class="c1"># /!\</span>
 <span class="c1"># This is maybe needed. If mysql does not start and you find a solution, please contribute.</span>
 <span class="c1"># What did work for me was running mysqld interactively: sudo mysqld</span>
-mkdir -p /var/run/mysqld
-chown mysql /var/run/mysqld
+sudo mkdir -p /var/run/mysqld
+sudo chown mysql /var/run/mysqld
 sudo /etc/init.d/mysql restart
 
 sudo apt -t testing install -y jupyter-notebook
@@ -2223,7 +2224,7 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_USER</span> git clone https://github.com/MISP/misp-modules.git
   <span class="nb">cd</span> misp-modules
   <span class="c1"># some misp-modules dependencies</span>
-  sudo apt-get install libpq5 libjpeg-dev libfuzzy-dev -y
+  sudo apt-get install python3-dev python3-pip libpq5 libjpeg-dev tesseract-ocr libpoppler-cpp-dev imagemagick virtualenv libopencv-dev zbar-tools libzbar0 libzbar-dev libfuzzy-dev -y
   <span class="c1"># If you build an egg, the user you build it as need write permissions in the CWD</span>
   sudo chgrp <span class="nv">$WWW_USER</span> .
   sudo chmod g+w .
