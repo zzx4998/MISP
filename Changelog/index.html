@@ -7991,12 +7991,27 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[update] Injected update-related files/changes from zoidberg.
+  [mokaddem]</li>
 <li>[yara] Added diagnostics. [iglocska]</li>
 <li>[object:add] UI to propose to merge into similar objects - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />.
   [mokaddem]</li>
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[update] Avoid executing pre-update test multiple times. [mokaddem]</li>
+<li>[updates] Implented changes requested by the PR's review #4534.
+  [mokaddem]</li>
+<li>[updateProgress] bit of cleanup. [mokaddem]</li>
+<li>[updateProgress] Moved CSS in its own file and usage of the
+  assetLoader. [mokaddem]</li>
+<li>[onDemandAction] Redirect on updateProgress page is no longueur de
+  default behavior. [mokaddem]</li>
+<li>[update] repaired badly merged file. [mokaddem]</li>
+<li>[AdminShell] Adde PHP_EOLs where it made sense. (QoL enhancement)
+  [Steve Clement]</li>
+<li>[AdminShell] return the name of the setting change and what we changed
+  it to. [Steve Clement]</li>
 <li>[doc] Added plyara (#4554) [Steve Clement]</li>
 </ul>
 <p>chg: [doc] Added plyara
@@ -8060,16 +8075,32 @@
 - [doc] Updates to Debian install document. [Steve Clement]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[required taxonomies] not firing via regular publishing only via
-  publish (no email), fixes #4546. [iglocska]</li>
-<li>[UI] Sightings could not be added by read only users, even if they had
-  sighting rights. [iglocska]</li>
-<li>[updateSubmodule] Simplified calculation of time difference.
-  [mokaddem]</li>
-<li>[object:edit] Removed faulty line. [mokaddem]</li>
-<li>[object:revise] Reverted correct <code>endif</code> position - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />. [mokaddem]</li>
-<li>[diagnostic:submodules] [Sami Mokaddem]</li>
+<li>[installer] Fixed installer misp-modules permissions. (#4558) [Steve
+  Clement]</li>
 </ul>
+<p>fix: [installer] Fixed installer misp-modules permissions.
+- [doc] misp-modules failed to install because of a Permission issue.
+  (#4557) [Steve Clement]</p>
+<p>fix: [doc] misp-modules failed to install because of a Permission issue.
+- [install] Fixed the endless loop in viper db update (#4555) [Steve
+  Clement]</p>
+<p>fix: [install] Fixed the endless loop in viper db update
+- [i18n] Added yara/yara-export. [Steve Clement]
+- Fixed i18n strings in Event controller, model and view. [4ekin]
+- Typos in controllers. [4ekin]
+- [installer] Fixed installer misp-modules permissions. [Steve Clement]
+- [doc] misp-modules failed to install because of a Permission issue.
+  [Steve Clement]
+- [install] Fixed the endless loop in viper db update. [Steve Clement]
+- [required taxonomies] not firing via regular publishing only via
+  publish (no email), fixes #4546. [iglocska]
+- [UI] Sightings could not be added by read only users, even if they had
+  sighting rights. [iglocska]
+- [updateSubmodule] Simplified calculation of time difference.
+  [mokaddem]
+- [object:edit] Removed faulty line. [mokaddem]
+- [object:revise] Reverted correct <code>endif</code> position - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />. [mokaddem]
+- [diagnostic:submodules] [Sami Mokaddem]</p>
 <p>Time difference is correctly calculated. Should solve #4538
 - [enrichment] typo causing enrichments to redirect to the event view
   fixed. [iglocska]
@@ -8098,16 +8129,26 @@
   ░░░░██░░░░░░░░░░░░░░░░░░░░░░░██░░</p>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge remote-tracking branch 'upstream/2.4' into 2.4. [Steve Clement]</li>
-<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]</li>
-<li>Merge branch 'yara2' into 2.4. [iglocska]</li>
-<li>Cleaning up imports. [edhoedt]</li>
-<li>Yara export. [edhoedt]</li>
-<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]</li>
-<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
-<li>Merge pull request #4545 from MISP/mergeSimilarObject. [Alexandre
-  Dulaunoy]</li>
+<li>Merge branch '2.4' into tools. [Steve Clement]</li>
+<li>Merge pull request #4556 from SteveClement/tools. [Steve Clement]</li>
 </ul>
+<p>chg: [AdminShell] return the name of the setting change and what we changed it to
+- Zoidberg's son: Update system (#4534) [Steve Clement]</p>
+<p>Zoidberg's son: Update system
+- Fix typos and i18n in Event controller, model and views (#4541) [Steve
+  Clement]</p>
+<p>Fix typos and i18n in Event controller, model and views
+- Merge branch '2.4' into fix-i18n. [Steve Clement]
+- Merge branch 'guides' into tools. [Steve Clement]
+- Merge remote-tracking branch 'upstream/2.4' into 2.4. [Steve Clement]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge branch 'yara2' into 2.4. [iglocska]
+- Cleaning up imports. [edhoedt]
+- Yara export. [edhoedt]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4545 from MISP/mergeSimilarObject. [Alexandre
+  Dulaunoy]</p>
 <p>Several improvement on objects manipulation
 - Merge branch '2.4' of github.com:MISP/MISP into mergeSimilarObject.
   [mokaddem]

@@ -1451,7 +1451,7 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
 
   <span class="c1"># sudo config to run $LUSER commands</span>
-  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>groups <span class="p">|</span>grep -o <span class="s1">&#39;staff&#39;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;staff&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>groups <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> <span class="p">|</span>grep -o <span class="s1">&#39;staff&#39;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;staff&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
   <span class="k">else</span>
     <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -2004,8 +2004,6 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 3_misp-modules.sh&gt;</span>
 <span class="c1"># Main MISP Modules install function</span>
 mispmodules <span class="o">()</span> <span class="o">{</span>
-  <span class="c1"># FIXME:  this is broken, ${PATH_TO_MISP} is litteral</span>
-<span class="c1">##sudo sed -i -e &#39;$i \sudo -u www-data /var/www/MISP/venv/bin/misp-modules -l 127.0.0.1 -s &gt; /tmp/misp-modules_rc.local.log &amp;\n&#39; /etc/rc.local</span>
   <span class="nb">cd</span> /usr/local/src/
   <span class="c1">## TODO: checkUsrLocalSrc in main doc</span>
   debug <span class="s2">&quot;Cloning misp-modules&quot;</span>
@@ -2274,11 +2272,17 @@ viper <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="nv">$AUTH_KEY</span><span class="s2">/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
   <span class="c1"># Reset admin password to: admin/Password1234</span>
   <span class="nb">echo</span> <span class="s2">&quot;Fixing admin.db with default password&quot;</span>
+  <span class="nv">VIPER_COUNT</span><span class="o">=</span><span class="m">0</span>
   <span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="k">$(</span>sudo sqlite3 <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/admin.db <span class="s1">&#39;UPDATE auth_user SET password=&quot;pbkdf2_sha256$100000$iXgEJh8hz7Cf$vfdDAwLX8tko1t0M1TLTtGlxERkNnltUnMhbv56wK/U=&quot;&#39;</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span><span class="s2">&quot;</span> -ne <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
     <span class="c1"># FIXME This might lead to a race condition, the while loop is sub-par</span>
     sudo chown <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/admin.db
     <span class="nb">echo</span> <span class="s2">&quot;Updating viper-web admin password, giving process time to start-up, sleeping 5, 4, 3,…&quot;</span>
     sleep <span class="m">6</span>
+    <span class="nv">VIPER_COUNT</span><span class="o">=</span>$<span class="o">[</span><span class="nv">$VIPER_COUNT</span>+1<span class="o">]</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$VIPER_COUNT</span><span class="s2">&quot;</span> &gt; <span class="s1">&#39;10&#39;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="nb">echo</span> <span class="s2">&quot;Something is wrong with updating viper. Continuing without db update.&quot;</span>
+      <span class="nb">break</span>
+    <span class="k">fi</span>
   <span class="k">done</span>
 
   <span class="c1"># Add viper-web to rc.local to be started on boot</span>
@@ -2621,6 +2625,15 @@ checkID <span class="o">()</span> <span class="o">{</span>
     sudo adduser <span class="nv">$MISP_USER</span> staff
     sudo adduser <span class="nv">$MISP_USER</span> <span class="nv">$WWW_USER</span>
   <span class="k">fi</span>
+
+  <span class="c1"># FIXME: the below SUDO_USER check is a duplicate from global variables, try to have just one check</span>
+  <span class="c1"># sudo config to run $LUSER commands</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>groups <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> <span class="p">|</span>grep -o <span class="s1">&#39;staff&#39;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;staff&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
+  <span class="k">else</span>
+    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">fi</span>
+
 <span class="o">}</span>
 
 <span class="c1"># pre-install check to make sure what we will be installing on, is ready and not a half installed system</span>
