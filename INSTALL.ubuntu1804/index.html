@@ -1567,6 +1567,9 @@ installCore <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># install python-magic</span>
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install python-magic
 
+  <span class="c1"># install plyara</span>
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install plyara
+
   <span class="c1"># Install Crypt_GPG and Console_CommandLine</span>
   sudo pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Console_CommandLine/package.xml
   sudo pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Crypt_GPG/package.xml
