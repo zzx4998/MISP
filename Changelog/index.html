@@ -7999,21 +7999,40 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[update] Avoid executing pre-update test multiple times. [mokaddem]</li>
-<li>[updates] Implented changes requested by the PR's review #4534.
-  [mokaddem]</li>
-<li>[updateProgress] bit of cleanup. [mokaddem]</li>
-<li>[updateProgress] Moved CSS in its own file and usage of the
-  assetLoader. [mokaddem]</li>
-<li>[onDemandAction] Redirect on updateProgress page is no longueur de
-  default behavior. [mokaddem]</li>
-<li>[update] repaired badly merged file. [mokaddem]</li>
-<li>[AdminShell] Adde PHP_EOLs where it made sense. (QoL enhancement)
-  [Steve Clement]</li>
-<li>[AdminShell] return the name of the setting change and what we changed
-  it to. [Steve Clement]</li>
-<li>[doc] Added plyara (#4554) [Steve Clement]</li>
+<li>[installer] Updated installer. [Steve Clement]</li>
+<li>[doc] Updated to Debian 9.9 via python source install (#4571) [Steve
+  Clement]</li>
 </ul>
+<p>chg: [doc] Updated to Debian 9.9 via python source install
+- [doc] Some changes to misp-modules install. [Steve Clement]
+- [doc] Updated to Debian 9.9 via python source install. [Steve Clement]
+- [misp-objects] updated to the latest version. [Alexandre Dulaunoy]
+- [default-feeds] abuse.ch SSL IP fixed. [Alexandre Dulaunoy]
+- [distributionNetwork] Filter out organisations not being marked as
+  local. Fix #4568. [mokaddem]
+- [event:view] Collapse related event in preview[Feed/Event]. Fix #4561.
+  [mokaddem]
+- [cluster:matrix] Slightly imporved memory performance. [mokaddem]
+- [diagnostic] Improved worker's message when updating the submodules.
+  [mokaddem]
+- [diagnostic] Changed update button with more relevant icons.
+  [mokaddem]
+- [diagnostic] Added message if <code>.git</code> can't be read by MISP. [mokaddem]
+- [object:add] Changed back button text into <code>Back</code> [mokaddem]
+- [update] Avoid executing pre-update test multiple times. [mokaddem]
+- [updates] Implented changes requested by the PR's review #4534.
+  [mokaddem]
+- [updateProgress] bit of cleanup. [mokaddem]
+- [updateProgress] Moved CSS in its own file and usage of the
+  assetLoader. [mokaddem]
+- [onDemandAction] Redirect on updateProgress page is no longueur de
+  default behavior. [mokaddem]
+- [update] repaired badly merged file. [mokaddem]
+- [AdminShell] Adde PHP_EOLs where it made sense. (QoL enhancement)
+  [Steve Clement]
+- [AdminShell] return the name of the setting change and what we changed
+  it to. [Steve Clement]
+- [doc] Added plyara (#4554) [Steve Clement]</p>
 <p>chg: [doc] Added plyara
 - [doc] Added plyara. [Steve Clement]
 - [INSTALL] Updated installer. (#4553) [Steve Clement]</p>
@@ -8024,8 +8043,13 @@
 <p>chg: [doc] rhel8/fedora30/debian Install guide updates
 - [doc] Added updates to rhel8, which partially works with Fedora Server
   30. [Steve Clement]
+- [doc] Debian stable install doc still not working, until Python3.6
+  will be default. Debian 10 will fix that. [Steve Clement]
+- [misp-objects] updated to the latest version. [Alexandre Dulaunoy]
 - [misp-galaxy] updated to the latest version of ATT&amp;CK. [Alexandre
   Dulaunoy]
+- [event:row_attribute] Added <code>title</code> to the checkboxes. [mokaddem]</p>
+<p>This reveal to be useful if the table header is not visible.
 - [object:revise] Improved text and added a back button. [mokaddem]
 - [addTag] Force no caching on the submitTag request. [mokaddem]
 - [object:revise] Changed text of back button. [mokaddem]
@@ -8065,8 +8089,6 @@
 <ul>
 <li>nicer looks</li>
 <li>sorting</li>
-<li>[doc] Debian stable install doc still not working, until Python3.6
-  will be default. Debian 10 will fix that. [Steve Clement]</li>
 <li>[doc] Updates to Debian install document (#4531) [Steve Clement]</li>
 </ul>
 <p>chg: [doc] Updates to Debian install document
@@ -8075,9 +8097,15 @@
 - [doc] Updates to Debian install document. [Steve Clement]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[installer] Fixed installer misp-modules permissions. (#4558) [Steve
-  Clement]</li>
+<li>[object:revise] Force field to be <code>value1</code>, preventing bug in some
+  cases. [mokaddem]</li>
+<li>[cluster:galaxyMatrix] Increased coverage of attack matrix. [mokaddem]</li>
 </ul>
+<p>Now consider the following new links for the pivot tag:
+  Attributes -&gt; Events
+  Events -&gt; Attributes
+- [installer] Fixed installer misp-modules permissions. (#4558) [Steve
+  Clement]</p>
 <p>fix: [installer] Fixed installer misp-modules permissions.
 - [doc] misp-modules failed to install because of a Permission issue.
   (#4557) [Steve Clement]</p>
@@ -8129,6 +8157,9 @@
   ░░░░██░░░░░░░░░░░░░░░░░░░░░░░██░░</p>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]</li>
 <li>Merge branch '2.4' into tools. [Steve Clement]</li>
 <li>Merge pull request #4556 from SteveClement/tools. [Steve Clement]</li>
 </ul>
@@ -8152,8 +8183,6 @@
 <p>Several improvement on objects manipulation
 - Merge branch '2.4' of github.com:MISP/MISP into mergeSimilarObject.
   [mokaddem]
-- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
-- Merge remote-tracking branch 'upstream/2.4' into 2.4. [Steve Clement]
 - Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</p>
 <h2 id="v24106-2019-04-25">v2.4.106 (2019-04-25)<a class="headerlink" href="#v24106-2019-04-25" title="Permanent link">&para;</a></h2>
 <h2 id="new_1">New<a class="headerlink" href="#new_1" title="Permanent link">&para;</a></h2>

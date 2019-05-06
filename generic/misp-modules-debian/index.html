@@ -691,15 +691,14 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_USER</span> git clone https://github.com/MISP/misp-modules.git
   <span class="nb">cd</span> misp-modules
   <span class="c1"># some misp-modules dependencies</span>
-  sudo apt-get install python3-dev python3-pip libpq5 libjpeg-dev tesseract-ocr libpoppler-cpp-dev imagemagick virtualenv libopencv-dev zbar-tools libzbar0 libzbar-dev libfuzzy-dev -y
+  sudo apt install libpq5 libjpeg-dev tesseract-ocr libpoppler-cpp-dev imagemagick libopencv-dev zbar-tools libzbar0 libzbar-dev libfuzzy-dev -y
   <span class="c1"># If you build an egg, the user you build it as need write permissions in the CWD</span>
   sudo chgrp <span class="nv">$WWW_USER</span> .
   sudo chmod g+w .
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I -r REQUIREMENTS
   sudo chgrp staff .
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I .
-  sudo apt install ruby-pygments.rb libopencv-dev zbar-tools -y
-  sudo gem install asciidoctor-pdf --pre
+  <span class="c1">## sudo gem install asciidoctor-pdf --pre</span>
 
   <span class="c1"># Start misp-modules as a service</span>
   sudo cp etc/systemd/system/misp-modules.service /etc/systemd/system/
