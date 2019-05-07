@@ -42,7 +42,7 @@
     
     
       
-        <title>Centos 7 - MISP Install Documentation</title>
+        <title>**deprecated** INSTALLATION INSTRUCTIONS - MISP Install Documentation</title>
       
     
     
@@ -125,7 +125,7 @@
               MISP Install Documentation
             </span>
             <span class="md-header-nav__topic">
-              Centos 7
+              **deprecated** INSTALLATION INSTRUCTIONS
             </span>
           
         </div>
@@ -305,12 +305,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
     <label class="md-nav__link" for="nav-3">
       xInstall Guides
@@ -350,226 +348,6 @@
           
           
 
-  
-
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Centos 7
-      </label>
-    
-    <a href="./" title="Centos 7" class="md-nav__link md-nav__link--active">
-      Centos 7
-    </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#for-centos-7x" title="for CentOS 7.x" class="md-nav__link">
-    for CentOS 7.x
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#-1-installer-and-manual-install-instructions" title="-1/ Installer and Manual install instructions" class="md-nav__link">
-    -1/ Installer and Manual install instructions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#0-misp-centos-7-minimal-netinstall-status" title="0/ MISP CentOS 7 Minimal NetInstall - Status" class="md-nav__link">
-    0/ MISP CentOS 7 Minimal NetInstall - Status
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#misp-configuration-variables" title="MISP configuration variables" class="md-nav__link">
-    MISP configuration variables
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#1-minimal-centos-install" title="1/ Minimal CentOS install" class="md-nav__link">
-    1/ Minimal CentOS install
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-dependencies" title="2/ Dependencies *" class="md-nav__link">
-    2/ Dependencies *
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-misp-code" title="3/ MISP code" class="md-nav__link">
-    3/ MISP code
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-cakephp" title="4/ CakePHP" class="md-nav__link">
-    4/ CakePHP
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#cakephp-is-now-included-as-a-submodule-of-misp-and-has-been-fetch-by-a-previous-step" title="CakePHP is now included as a submodule of MISP and has been fetch by a previous step." class="md-nav__link">
-    CakePHP is now included as a submodule of MISP and has been fetch by a previous step.
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#install-cakeresque-along-with-its-dependencies-if-you-intend-to-use-the-built-in-background-jobs" title="Install CakeResque along with its dependencies if you intend to use the built in background jobs." class="md-nav__link">
-    Install CakeResque along with its dependencies if you intend to use the built in background jobs.
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-set-the-permissions" title="5/ Set the permissions" class="md-nav__link">
-    5/ Set the permissions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#6-create-a-database-and-user" title="6/ Create a database and user" class="md-nav__link">
-    6/ Create a database and user
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#manual-procedure" title="Manual procedure:" class="md-nav__link">
-    Manual procedure:
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#same-as-manual-but-for-copypaste-foo" title="Same as Manual but for copy/paste foo:" class="md-nav__link">
-    Same as Manual but for copy/paste foo:
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#import-the-empty-mysql-database-from-mysqlsql" title="Import the empty MySQL database from MYSQL.sql" class="md-nav__link">
-    Import the empty MySQL database from MYSQL.sql
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#7-apache-configuration" title="7/ Apache configuration" class="md-nav__link">
-    7/ Apache configuration
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#8-log-rotation" title="8/ Log rotation" class="md-nav__link">
-    8/ Log rotation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#9-misp-configuration" title="9/ MISP configuration" class="md-nav__link">
-    9/ MISP configuration
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#misp-dashboard-on-centos" title="MISP Dashboard on CentOS" class="md-nav__link">
-    MISP Dashboard on CentOS
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#initialize-misp-configuration-and-set-some-defaults" title="Initialize MISP configuration and set some defaults" class="md-nav__link">
-    Initialize MISP configuration and set some defaults
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#recommended-actions" title="Recommended actions" class="md-nav__link">
-    Recommended actions
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
-  </li>
-
-        
-          
-          
-          
-
 
   <li class="md-nav__item">
     <a href="../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
@@ -586,18 +364,6 @@
   <li class="md-nav__item">
     <a href="../xINSTALL.debian_testing/" title="Debian testing" class="md-nav__link">
       Debian testing
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-nav__link">
-      Debian 9 \w postgresql
     </a>
   </li>
 
@@ -632,8 +398,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.4" class="md-nav__link">
-      OpenBSD 6.4
+    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
+      OpenBSD 6.5
     </a>
   </li>
 
@@ -1178,12 +944,15 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># &lt;snippet-end 0_global-vars.sh&gt;</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="c1"># CentOS Specific</span>
-<span class="nv">RUN_PHP</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-php72 &#39;</span>
-<span class="nv">RUN_PYTHON</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-python36 &#39;</span>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_RHEL_PHP_INI.sh&gt;</span>
+<span class="c1"># RHEL/CentOS Specific</span>
+<span class="nv">RUN_PHP</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-php72&#39;</span>
+<span class="nv">RUN_PYTHON</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-python36&#39;</span>
 <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s1">&#39;sudo -H -u apache&#39;</span>
+<span class="nv">WWW_USER</span><span class="o">=</span><span class="s1">&#39;apache&#39;</span>
 
 <span class="nv">PHP_INI</span><span class="o">=</span>/etc/opt/rh/rh-php72/php.ini
+<span class="c1"># &lt;snippet-end 0_RHEL_PHP_INI.sh&gt;</span>
 </pre></div>
 
 <h3 id="1-minimal-centos-install">1/ Minimal CentOS install<a class="headerlink" href="#1-minimal-centos-install" title="Permanent link">&para;</a></h3>
@@ -1211,8 +980,8 @@ sudo yum install epel-release -y
 <span class="c1"># Software Collections is a way do to this, see https://wiki.centos.org/AdditionalResources/Repositories/SCL</span>
 sudo yum install centos-release-scl -y
 
-<span class="c1"># Because vim is just so practical</span>
-sudo yum install vim -y
+<span class="c1"># Because (neo)vim is just so practical</span>
+sudo yum install neovim -y
 
 <span class="c1"># Install the dependencies:</span>
 sudo yum install gcc git zip <span class="se">\</span>
@@ -1230,8 +999,7 @@ sudo yum install rh-php72 rh-php72-php-fpm rh-php72-php-devel rh-php72-php-mysql
 <span class="c1"># https://www.softwarecollections.org/en/scls/rhscl/rh-python36/</span>
 sudo yum install rh-python36 -y
 
-sudo systemctl <span class="nb">enable</span> rh-php72-php-fpm.service
-sudo systemctl start  rh-php72-php-fpm.service
+sudo systemctl <span class="nb">enable</span> --now rh-php72-php-fpm.service
 </pre></div>
 
 <div class="admonition notice">
@@ -1240,20 +1008,17 @@ sudo systemctl start  rh-php72-php-fpm.service
 </div>
 <div class="codehilite"><pre><span></span><span class="c1"># GPG needs lots of entropy, haveged provides entropy</span>
 sudo yum install haveged -y
-sudo systemctl <span class="nb">enable</span> haveged.service
-sudo systemctl start  haveged.service
-
+sudo systemctl <span class="nb">enable</span> --now haveged.service
 
 <span class="c1"># Enable and start redis</span>
-sudo systemctl <span class="nb">enable</span> redis.service
-sudo systemctl start  redis.service
+sudo systemctl <span class="nb">enable</span> --now redis.service
 </pre></div>
 
 <h3 id="3-misp-code">3/ MISP code<a class="headerlink" href="#3-misp-code" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="codehilite"><pre><span></span><span class="c1"># Download MISP using git in the /var/www/ directory.</span>
 sudo mkdir <span class="nv">$PATH_TO_MISP</span>
-sudo chown apache:apache <span class="nv">$PATH_TO_MISP</span>
+sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>
 <span class="nb">cd</span> /var/www
 <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/MISP.git
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>
@@ -1267,6 +1032,8 @@ sudo chown apache:apache <span class="nv">$PATH_TO_MISP</span>
 <span class="nv">$SUDO_WWW</span> git submodule update --init --recursive
 <span class="c1"># Make git ignore filesystem permission differences for submodules</span>
 <span class="nv">$SUDO_WWW</span> git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
+<span class="c1"># Make git ignore filesystem permission differences</span>
+<span class="nv">$SUDO_WWW</span> git config core.filemode <span class="nb">false</span>
 
 <span class="c1"># Install packaged pears</span>
 sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear channel-update pear.php.net&quot;</span>
@@ -1276,14 +1043,18 @@ sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span
 <span class="c1"># Create a python3 virtualenv</span>
 <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PYTHON</span> <span class="s2">&quot;virtualenv -p python3 </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/venv&quot;</span>
 sudo mkdir /usr/share/httpd/.cache
-sudo chown apache:apache /usr/share/httpd/.cache
+sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> /usr/share/httpd/.cache
 <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U pip setuptools
 
 <span class="c1"># install Mitre&#39;s STIX and its dependencies by running the following commands:</span>
-sudo yum install python-importlib python-lxml python-dateutil python-six -y
+<span class="c1">##sudo yum install python-importlib python-lxml python-dateutil python-six -y</span>
+
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts
 <span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/python-cybox.git
 <span class="nv">$SUDO_WWW</span> git clone https://github.com/STIXProject/python-stix.git
+<span class="nv">$SUDO_WWW</span> git clone --branch master --single-branch https://github.com/lief-project/LIEF.git lief
+<span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/mixbox.git
+
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-cybox
 <span class="c1"># If you umask is has been changed from the default, it is a good idea to reset it to 0022 before installing python modules</span>
 <span class="nv">UMASK</span><span class="o">=</span><span class="k">$(</span><span class="nb">umask</span><span class="k">)</span>
@@ -1303,8 +1074,6 @@ sudo yum install python-importlib python-lxml python-dateutil python-six -y
 <span class="c1"># lief needs manual compilation</span>
 sudo yum install devtoolset-7 cmake3 -y
 
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts
-<span class="nv">$SUDO_WWW</span> git clone --branch master --single-branch https://github.com/lief-project/LIEF.git lief
 
 <span class="c1"># TODO: Fix static path with PATH_TO_MISP</span>
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief
@@ -1327,9 +1096,6 @@ sudo make install
 <span class="c1"># install magic, pydeep</span>
 <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U python-magic git+https://github.com/kbandla/pydeep.git
 
-<span class="c1"># install mixbox to accommodate the new STIX dependencies:</span>
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/
-<span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/mixbox.git
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mixbox
 <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
 
@@ -1358,9 +1124,9 @@ sudo systemctl restart rh-php72-php-fpm.service
 <hr />
 <h4 id="cakephp-is-now-included-as-a-submodule-of-misp-and-has-been-fetch-by-a-previous-step">CakePHP is now included as a submodule of MISP and has been fetch by a previous step.<a class="headerlink" href="#cakephp-is-now-included-as-a-submodule-of-misp-and-has-been-fetch-by-a-previous-step" title="Permanent link">&para;</a></h4>
 <h4 id="install-cakeresque-along-with-its-dependencies-if-you-intend-to-use-the-built-in-background-jobs">Install CakeResque along with its dependencies if you intend to use the built in background jobs.<a class="headerlink" href="#install-cakeresque-along-with-its-dependencies-if-you-intend-to-use-the-built-in-background-jobs" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>sudo chown -R apache:apache <span class="nv">$PATH_TO_MISP</span>
+<div class="codehilite"><pre><span></span>sudo chown -R <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>
 sudo mkdir /usr/share/httpd/.composer
-sudo chown apache:apache /usr/share/httpd/.composer
+sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> /usr/share/httpd/.composer
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
 <span class="c1"># Update composer.phar (optional)</span>
 <span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
@@ -1396,7 +1162,7 @@ sudo cp -fa <span class="nv">$PATH_TO_MISP</span>/INSTALL/setup/config.php <span
 <h3 id="5-set-the-permissions">5/ Set the permissions<a class="headerlink" href="#5-set-the-permissions" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="codehilite"><pre><span></span><span class="c1"># Make sure the permissions are set correctly using the following commands as root:</span>
-sudo chown -R apache:apache <span class="nv">$PATH_TO_MISP</span>
+sudo chown -R <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>
 sudo find <span class="nv">$PATH_TO_MISP</span> -type d -exec chmod <span class="nv">g</span><span class="o">=</span>rx <span class="o">{}</span> <span class="se">\;</span>
 sudo chmod -R g+r,o<span class="o">=</span> <span class="nv">$PATH_TO_MISP</span>
 sudo chmod -R <span class="m">750</span> <span class="nv">$PATH_TO_MISP</span>
@@ -1405,21 +1171,20 @@ sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/files
 sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/tmp
 sudo chmod -R g+rw <span class="nv">$PATH_TO_MISP</span>/venv
 sudo chmod -R g+rw <span class="nv">$PATH_TO_MISP</span>/.git
-sudo chown apache:apache <span class="nv">$PATH_TO_MISP</span>/app/files
-sudo chown apache:apache <span class="nv">$PATH_TO_MISP</span>/app/files/terms
-sudo chown apache:apache <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/tmp
-sudo chown apache:apache <span class="nv">$PATH_TO_MISP</span>/app/Plugin/CakeResque/tmp
-sudo chown -R apache:apache <span class="nv">$PATH_TO_MISP</span>/app/Config
-sudo chown -R apache:apache <span class="nv">$PATH_TO_MISP</span>/app/tmp
-sudo chown -R apache:apache <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/orgs
-sudo chown -R apache:apache <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/custom
+sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>/app/files
+sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>/app/files/terms
+sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/tmp
+sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>/app/Plugin/CakeResque/tmp
+sudo chown -R <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>/app/Config
+sudo chown -R <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>/app/tmp
+sudo chown -R <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/orgs
+sudo chown -R <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/custom
 </pre></div>
 
 <h3 id="6-create-a-database-and-user">6/ Create a database and user<a class="headerlink" href="#6-create-a-database-and-user" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="codehilite"><pre><span></span><span class="c1"># Enable, start and secure your mysql database server</span>
-sudo systemctl <span class="nb">enable</span> mariadb.service
-sudo systemctl start  mariadb.service
+sudo systemctl <span class="nb">enable</span> --now mariadb.service
 
 sudo yum install expect -y
 
@@ -1549,8 +1314,7 @@ sudo setsebool -P httpd_can_network_connect on
 sudo setsebool -P httpd_can_sendmail on
 
 <span class="c1"># Enable and start the httpd service</span>
-sudo systemctl <span class="nb">enable</span> httpd.service
-sudo systemctl start  httpd.service
+sudo systemctl <span class="nb">enable</span> --now httpd.service
 
 <span class="c1"># Open a hole in the iptables firewall</span>
 sudo firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">80</span>/tcp --permanent
@@ -1633,7 +1397,7 @@ sudo semodule -i /tmp/misplogrotate.pp
 <span class="c1"># delete the user from mysql and log in again using the default admin credentials (admin@admin.test / admin)</span>
 
 <span class="c1"># If you want to be able to change configuration parameters from the webinterface:</span>
-sudo chown apache:apache <span class="nv">$PATH_TO_MISP</span>/app/Config/config.php
+sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>/app/Config/config.php
 sudo chcon -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/Config/config.php
 
 <span class="c1"># Generate a GPG encryption key.</span>
@@ -1654,11 +1418,11 @@ cat &gt;/tmp/gen-key-script <span class="s">&lt;&lt;EOF</span>
 
 sudo gpg --homedir <span class="nv">$PATH_TO_MISP</span>/.gnupg --batch --gen-key /tmp/gen-key-script
 sudo rm -f /tmp/gen-key-script
-sudo chown -R apache:apache <span class="nv">$PATH_TO_MISP</span>/.gnupg
+sudo chown -R <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>/.gnupg
 
 <span class="c1"># And export the public key to the webroot</span>
 sudo gpg --homedir <span class="nv">$PATH_TO_MISP</span>/.gnupg --export --armor <span class="nv">$GPG_EMAIL_ADDRESS</span> <span class="p">|</span>sudo tee <span class="nv">$PATH_TO_MISP</span>/app/webroot/gpg.asc
-sudo chown apache:apache <span class="nv">$PATH_TO_MISP</span>/app/webroot/gpg.asc
+sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="nv">$PATH_TO_MISP</span>/app/webroot/gpg.asc
 
 <span class="c1"># Start the workers to enable background jobs</span>
 sudo chmod +x <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
@@ -2057,41 +1821,6 @@ index f9f69d4..2e8fd78 100644
       
         
 <footer class="md-footer">
-  
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-          <a href="../xINSTALL.centos6/" title="Centos 6" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
-            </div>
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Centos 6
-              </span>
-            </div>
-          </a>
-        
-        
-          <a href="../xINSTALL.debian9/" title="Debian stable" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Debian stable
-              </span>
-            </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">

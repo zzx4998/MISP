@@ -350,18 +350,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.centos7/" title="Centos 7" class="md-nav__link">
-      Centos 7
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
       Debian stable
     </a>
@@ -376,18 +364,6 @@
   <li class="md-nav__item">
     <a href="../xINSTALL.debian_testing/" title="Debian testing" class="md-nav__link">
       Debian testing
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-nav__link">
-      Debian 9 \w postgresql
     </a>
   </li>
 
@@ -422,8 +398,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.4" class="md-nav__link">
-      OpenBSD 6.4
+    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
+      OpenBSD 6.5
     </a>
   </li>
 
@@ -7999,10 +7975,18 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[installer] Updated installer. [Steve Clement]</li>
-<li>[doc] Updated to Debian 9.9 via python source install (#4571) [Steve
-  Clement]</li>
+<li>[doc] MISP works on OpenBSD 6.5, partially (#4577) [Steve Clement]</li>
 </ul>
+<p>chg: [doc] MISP works on OpenBSD 6.5, partially
+- [doc] MISP works on OpenBSD 6.5, partially chg: [doc] Removed link to
+  Debian PostgreSQL. [Steve Clement]
+- [event:view] Added button to quickly extend an event. Fix #4481.
+  [mokaddem]
+- [eventgraph] Force constant color for the eventgraph's nodes. Fix
+  #4536. [mokaddem]
+- [installer] Updated installer. [Steve Clement]
+- [doc] Updated to Debian 9.9 via python source install (#4571) [Steve
+  Clement]</p>
 <p>chg: [doc] Updated to Debian 9.9 via python source install
 - [doc] Some changes to misp-modules install. [Steve Clement]
 - [doc] Updated to Debian 9.9 via python source install. [Steve Clement]
@@ -8097,10 +8081,18 @@
 - [doc] Updates to Debian install document. [Steve Clement]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[object:revise] Force field to be <code>value1</code>, preventing bug in some
-  cases. [mokaddem]</li>
-<li>[cluster:galaxyMatrix] Increased coverage of attack matrix. [mokaddem]</li>
+<li>[doc] Remove CentOS 7 from xINSTALL list. (#4579) [Steve Clement]</li>
 </ul>
+<p>fix: [doc] Remove CentOS 7 from xINSTALL list.
+- [doc] Remove CentOS 7 from xINSTALL list. [Steve Clement]
+- [export] Yara Export variable typo fix. Use getPythonVersion. (#4578)
+  [Steve Clement]</p>
+<p>fix: [export] Yara Export variable typo fix. Use getPythonVersion.
+- [export] Yara Export variable typo fix. Use getPythonVersion. [Steve
+  Clement]
+- [object:revise] Force field to be <code>value1</code>, preventing bug in some
+  cases. [mokaddem]
+- [cluster:galaxyMatrix] Increased coverage of attack matrix. [mokaddem]</p>
 <p>Now consider the following new links for the pivot tag:
   Attributes -&gt; Events
   Events -&gt; Attributes

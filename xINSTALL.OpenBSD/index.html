@@ -42,7 +42,7 @@
     
     
       
-        <title>OpenBSD 6.4 - MISP Install Documentation</title>
+        <title>OpenBSD 6.5 - MISP Install Documentation</title>
       
     
     
@@ -125,7 +125,7 @@
               MISP Install Documentation
             </span>
             <span class="md-header-nav__topic">
-              OpenBSD 6.4
+              OpenBSD 6.5
             </span>
           
         </div>
@@ -352,18 +352,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.centos7/" title="Centos 7" class="md-nav__link">
-      Centos 7
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
       Debian stable
     </a>
@@ -378,18 +366,6 @@
   <li class="md-nav__item">
     <a href="../xINSTALL.debian_testing/" title="Debian testing" class="md-nav__link">
       Debian testing
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../xINSTALL.debian9-postgresql/" title="Debian 9 \w postgresql" class="md-nav__link">
-      Debian 9 \w postgresql
     </a>
   </li>
 
@@ -433,11 +409,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        OpenBSD 6.4
+        OpenBSD 6.5
       </label>
     
-    <a href="./" title="OpenBSD 6.4" class="md-nav__link md-nav__link--active">
-      OpenBSD 6.4
+    <a href="./" title="OpenBSD 6.5" class="md-nav__link md-nav__link--active">
+      OpenBSD 6.5
     </a>
     
       
@@ -451,16 +427,16 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-openbsd-64-amd64" title="for OpenBSD 6.4-amd64" class="md-nav__link">
-    for OpenBSD 6.4-amd64
+  <a href="#for-openbsd-65-amd64" title="for OpenBSD 6.5-amd64" class="md-nav__link">
+    for OpenBSD 6.5-amd64
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#0-wip-you-are-warned-this-does-not-work-yet" title="0/ WIP! You are warned, this does not work yet!" class="md-nav__link">
-    0/ WIP! You are warned, this does not work yet!
+  <a href="#0-wip-you-are-warned-this-does-only-partially-work" title="0/ WIP! You are warned, this does only partially work!" class="md-nav__link">
+    0/ WIP! You are warned, this does only partially work!
   </a>
   
     <nav class="md-nav">
@@ -511,6 +487,13 @@
           <li class="md-nav__item">
   <a href="#in-case-you-forgot-to-fetch-ports-optional" title="In case you forgot to fetch ports (optional)" class="md-nav__link">
     In case you forgot to fetch ports (optional)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-you-want-to-use-php-gd-resizing-of-images-you-need-x-optional" title="If you want to use php-gd (resizing of images) you need X (optional)" class="md-nav__link">
+    If you want to use php-gd (resizing of images) you need X (optional)
   </a>
   
 </li>
@@ -577,8 +560,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#etchttpdconf" title="/etc/httpd.conf" class="md-nav__link">
-    /etc/httpd.conf
+  <a href="#etchttpdconf-native-httpd" title="/etc/httpd.conf (native httpd)" class="md-nav__link">
+    /etc/httpd.conf (native httpd)
   </a>
   
 </li>
@@ -626,8 +609,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#etcphp-72ini" title="/etc/php-7.2.ini" class="md-nav__link">
-    /etc/php-7.2.ini
+  <a href="#etcphp-73ini" title="/etc/php-7.3.ini" class="md-nav__link">
+    /etc/php-7.3.ini
   </a>
   
 </li>
@@ -1021,16 +1004,16 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-openbsd-64-amd64" title="for OpenBSD 6.4-amd64" class="md-nav__link">
-    for OpenBSD 6.4-amd64
+  <a href="#for-openbsd-65-amd64" title="for OpenBSD 6.5-amd64" class="md-nav__link">
+    for OpenBSD 6.5-amd64
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#0-wip-you-are-warned-this-does-not-work-yet" title="0/ WIP! You are warned, this does not work yet!" class="md-nav__link">
-    0/ WIP! You are warned, this does not work yet!
+  <a href="#0-wip-you-are-warned-this-does-only-partially-work" title="0/ WIP! You are warned, this does only partially work!" class="md-nav__link">
+    0/ WIP! You are warned, this does only partially work!
   </a>
   
     <nav class="md-nav">
@@ -1081,6 +1064,13 @@
           <li class="md-nav__item">
   <a href="#in-case-you-forgot-to-fetch-ports-optional" title="In case you forgot to fetch ports (optional)" class="md-nav__link">
     In case you forgot to fetch ports (optional)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-you-want-to-use-php-gd-resizing-of-images-you-need-x-optional" title="If you want to use php-gd (resizing of images) you need X (optional)" class="md-nav__link">
+    If you want to use php-gd (resizing of images) you need X (optional)
   </a>
   
 </li>
@@ -1147,8 +1137,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#etchttpdconf" title="/etc/httpd.conf" class="md-nav__link">
-    /etc/httpd.conf
+  <a href="#etchttpdconf-native-httpd" title="/etc/httpd.conf (native httpd)" class="md-nav__link">
+    /etc/httpd.conf (native httpd)
   </a>
   
 </li>
@@ -1196,8 +1186,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#etcphp-72ini" title="/etc/php-7.2.ini" class="md-nav__link">
-    /etc/php-7.2.ini
+  <a href="#etcphp-73ini" title="/etc/php-7.3.ini" class="md-nav__link">
+    /etc/php-7.3.ini
   </a>
   
 </li>
@@ -1368,19 +1358,18 @@
                 
                 
                 <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h1>
-<h2 id="for-openbsd-64-amd64">for OpenBSD 6.4-amd64<a class="headerlink" href="#for-openbsd-64-amd64" title="Permanent link">&para;</a></h2>
+<h2 id="for-openbsd-65-amd64">for OpenBSD 6.5-amd64<a class="headerlink" href="#for-openbsd-65-amd64" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This is not fully working yet. Mostly it is a template for our ongoing documentation efforts <img alt="🕷" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f577.svg" title=":spider:" />
-    LIEF, will probably not be available for a long long time on OpenBSD, until someone is brave enough to make it work.
-    GnuPG also needs some more TLC.</p>
+LIEF, will probably not be available for a long long time on OpenBSD, until someone is brave enough to make it work.
+GnuPG also needs some more TLC.</p>
 </div>
-<h3 id="0-wip-you-are-warned-this-does-not-work-yet">0/ WIP! You are warned, this does not work yet!<a class="headerlink" href="#0-wip-you-are-warned-this-does-not-work-yet" title="Permanent link">&para;</a></h3>
+<h3 id="0-wip-you-are-warned-this-does-only-partially-work">0/ WIP! You are warned, this does only partially work!<a class="headerlink" href="#0-wip-you-are-warned-this-does-only-partially-work" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>Current issues: php-redis only available in binary for php-56, workaround: use OpenBSD 6.4.
-This guide attempts to offer native httpd or apache2/nginx.</p>
+<p>This guide attempts to offer native httpd or apache2/nginx.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1483,7 +1472,9 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 <li>TBD</li>
 </ul>
 <h4 id="doas-pkg-as-root">doas &amp; pkg (as root)<a class="headerlink" href="#doas-pkg-as-root" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><span class="nb">echo</span> https://cdn.openbsd.org/pub/OpenBSD/ &gt; /etc/installurl
+<div class="codehilite"><pre><span></span><span class="k">if</span> <span class="o">[[</span> ! -e /etc/installurl <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">echo</span> https://cdn.openbsd.org/pub/OpenBSD/ &gt; /etc/installurl
+<span class="k">fi</span>
 <span class="nb">echo</span> <span class="s2">&quot;permit keepenv setenv { PKG_PATH ENV PS1 SSH_AUTH_SOCK } :wheel&quot;</span> &gt; /etc/doas.conf
 <span class="c1">## FIXME: this does NOT set the HOME env correctly, please fix to make pip happier</span>
 <span class="nb">echo</span> <span class="s2">&quot;permit nopass setenv { ENV PS1 HOME=/var/www } www&quot;</span> &gt;&gt; /etc/doas.conf
@@ -1494,6 +1485,16 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 ftp https://ftp.openbsd.org/pub/OpenBSD/<span class="k">$(</span>uname -r<span class="k">)</span>/<span class="o">{</span>ports.tar.gz,SHA256.sig<span class="o">}</span>
 signify -Cp /etc/signify/openbsd-<span class="k">$(</span>uname -r <span class="p">|</span> cut -c <span class="m">1</span>,3<span class="k">)</span>-base.pub -x SHA256.sig ports.tar.gz
 doas tar -x -z -f /tmp/ports.tar.gz -C /usr
+</pre></div>
+
+<h5 id="if-you-want-to-use-php-gd-resizing-of-images-you-need-x-optional">If you want to use php-gd (resizing of images) you need X (optional)<a class="headerlink" href="#if-you-want-to-use-php-gd-resizing-of-images-you-need-x-optional" title="Permanent link">&para;</a></h5>
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> /tmp
+ftp https://ftp.openbsd.org/pub/OpenBSD/<span class="k">$(</span>uname -r<span class="k">)</span>/<span class="k">$(</span>uname -m<span class="k">)</span>/<span class="o">{</span>xbase<span class="k">$(</span>uname -r<span class="p">|</span> tr -d <span class="se">\.</span><span class="k">)</span>.tgz,SHA256.sig<span class="o">}</span>
+signify -Cp /etc/signify/openbsd-<span class="k">$(</span>uname -r <span class="p">|</span> cut -c <span class="m">1</span>,3<span class="k">)</span>-base.pub -x SHA256.sig xbase<span class="k">$(</span>uname -r <span class="p">|</span>tr -d <span class="se">\.</span><span class="k">)</span>.tgz
+doas tar -xzphf /tmp/xbase<span class="k">$(</span>uname -r<span class="p">|</span> tr -d <span class="se">\.</span><span class="k">)</span>.tgz -C /
+ftp https://ftp.openbsd.org/pub/OpenBSD/<span class="k">$(</span>uname -r<span class="k">)</span>/<span class="k">$(</span>uname -m<span class="k">)</span>/<span class="o">{</span>xshare<span class="k">$(</span>uname -r<span class="p">|</span> tr -d <span class="se">\.</span><span class="k">)</span>.tgz,SHA256.sig<span class="o">}</span>
+signify -Cp /etc/signify/openbsd-<span class="k">$(</span>uname -r <span class="p">|</span> cut -c <span class="m">1</span>,3<span class="k">)</span>-base.pub -x SHA256.sig xshare<span class="k">$(</span>uname -r <span class="p">|</span>tr -d <span class="se">\.</span><span class="k">)</span>.tgz
+doas tar -xzphf /tmp/xshare<span class="k">$(</span>uname -r<span class="p">|</span> tr -d <span class="se">\.</span><span class="k">)</span>.tgz -C /
 </pre></div>
 
 <h4 id="update-system">Update system<a class="headerlink" href="#update-system" title="Permanent link">&para;</a></h4>
@@ -1552,10 +1553,14 @@ doas /usr/local/sbin/ntpd -p /var/run/ntpd.pid
 </pre></div>
 
 <h4 id="misp-user">misp user<a class="headerlink" href="#misp-user" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>doas useradd -m -s /usr/local/bin/bash -G wheel,www misp
+<div class="codehilite"><pre><span></span><span class="k">if</span> <span class="o">[[</span> -z <span class="k">$(</span>id misp <span class="m">2</span>&gt;/dev/null<span class="k">)</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  doas useradd -m -s /usr/local/bin/bash -G wheel,www misp
+<span class="k">else</span>
+  doas usermod -G www misp
+<span class="k">fi</span>
 </pre></div>
 
-<h4 id="etchttpdconf">/etc/httpd.conf<a class="headerlink" href="#etchttpdconf" title="Permanent link">&para;</a></h4>
+<h4 id="etchttpdconf-native-httpd">/etc/httpd.conf (native httpd)<a class="headerlink" href="#etchttpdconf-native-httpd" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>doas cp /etc/examples/httpd.conf /etc <span class="c1"># adjust by hand, or copy/paste the config example below</span>
 </pre></div>
 
@@ -1679,28 +1684,28 @@ doas pkg_add -v fcgi-cgi fcgi
 <p class="admonition-title">Notice</p>
 <p>php-5.6 is marked as end-of-life starting December 2018, use php 7.0 instead.
 Option 2.
-If on OpenBSD 6.3, upgrade to 6.4 to make your life much easier.</p>
+If on OpenBSD 6.3, upgrade to 6.5 to make your life much easier.</p>
 </div>
-<div class="codehilite"><pre><span></span>doas pkg_add -v php-mysqli php-pcntl php-pdo_mysql php-apache pecl72-redis php-gd
+<div class="codehilite"><pre><span></span>doas pkg_add -v php-mysqli php-pcntl php-pdo_mysql php-apache pecl73-redis php-gd
 </pre></div>
 
-<h4 id="etcphp-72ini">/etc/php-7.2.ini<a class="headerlink" href="#etcphp-72ini" title="Permanent link">&para;</a></h4>
+<h4 id="etcphp-73ini">/etc/php-7.3.ini<a class="headerlink" href="#etcphp-73ini" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>## TODO: sed foo as .ini exists
 allow_url_fopen = On
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> /etc/php-7.2
-doas cp ../php-7.2.sample/* .
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> /etc/php-7.3
+doas cp ../php-7.3.sample/* .
 </pre></div>
 
 <h4 id="php-symlinks">php symlinks<a class="headerlink" href="#php-symlinks" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>doas ln -s /usr/local/bin/php-7.2 /usr/local/bin/php
-doas ln -s /usr/local/bin/phpize-7.2 /usr/local/bin/phpize
-doas ln -s /usr/local/bin/php-config-7.2 /usr/local/bin/php-config
+<div class="codehilite"><pre><span></span>doas ln -s /usr/local/bin/php-7.3 /usr/local/bin/php
+doas ln -s /usr/local/bin/phpize-7.3 /usr/local/bin/phpize
+doas ln -s /usr/local/bin/php-config-7.3 /usr/local/bin/php-config
 </pre></div>
 
 <h4 id="enable-php-fpm">Enable php fpm<a class="headerlink" href="#enable-php-fpm" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>doas rcctl <span class="nb">enable</span> php72_fpm
+<div class="codehilite"><pre><span></span>doas rcctl <span class="nb">enable</span> php73_fpm
 </pre></div>
 
 <h4 id="configure-fpm">Configure fpm<a class="headerlink" href="#configure-fpm" title="Permanent link">&para;</a></h4>
@@ -1729,7 +1734,7 @@ pm.min_spare_servers = 1
 pm.max_spare_servers = 3
 chroot = /var/www&quot; | doas tee /etc/php-fpm.d/default.conf
 
-doas /etc/rc.d/php72_fpm start 
+doas /etc/rc.d/php73_fpm start 
 </pre></div>
 
 <div class="admonition notice">
@@ -1919,7 +1924,7 @@ Listen 443
 DirectoryIndex index.php
 </pre></div>
 
-<div class="codehilite"><pre><span></span>doas ln -sf /var/www/conf/modules.sample/php-7.2.conf /var/www/conf/modules/php.conf
+<div class="codehilite"><pre><span></span>doas ln -sf /var/www/conf/modules.sample/php-7.3.conf /var/www/conf/modules/php.conf
 <span class="c1"># Restart apache</span>
 doas /etc/rc.d/apache2 restart
 </pre></div>
