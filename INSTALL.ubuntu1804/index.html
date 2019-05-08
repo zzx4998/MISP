@@ -1848,7 +1848,7 @@ backgroundWorkers <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># Core cake commands</span>
 coreCAKE <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Running core Cake commands to set sane defaults for </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
-  <span class="nv">$SUDO_WWW</span> -E <span class="nv">$CAKE</span> userInit -q
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> userInit -q
 
   <span class="c1"># This makes sure all Database upgrades are done, without logging in.</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateDatabase
@@ -1956,9 +1956,12 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
 
 <span class="c1"># This updates Galaxies, ObjectTemplates, Warninglists, Noticelists, Templates</span>
 updateGOWNT <span class="o">()</span> <span class="o">{</span>
+<span class="c1"># AUTH_KEY Place holder in case we need to **curl** somehing in the future</span>
+<span class="c1"># </span>
+<span class="c1"># AUTH_KEY=$(mysql -u $DBUSER_MISP -p$DBPASSWORD_MISP misp -e &quot;SELECT authkey FROM users;&quot; | tail -1)</span>
+<span class="c1"># RHEL/CentOS</span>
+<span class="c1"># AUTH_KEY=$(scl enable rh-mariadb102 &quot;mysql -u $DBUSER_MISP -p$DBPASSWORD_MISP misp -e &#39;SELECT authkey FROM users;&#39; | tail -1&quot;)</span>
   debug <span class="s2">&quot;Updating Galaxies, ObjectTemplates, Warninglists, Noticelists and Templates&quot;</span>
-  <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1<span class="k">)</span>
-
   <span class="c1"># Update the galaxies…</span>
   <span class="c1"># TODO: Fix updateGalaxies</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateGalaxies
@@ -1969,9 +1972,7 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Updating the notice lists…</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateNoticeLists
   <span class="c1"># Updating the object templates…</span>
-  <span class="c1"># TODO: FIXME: updateObjectTemplates (currently throws: usage udpateNoticeLists)</span>
-  <span class="c1">##$SUDO_WWW $CAKE Admin updateObjectTemplates</span>
-  curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/objectTemplates/update
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateObjectTemplates <span class="s2">&quot;1337&quot;</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 2_core-cake.sh&gt;</span>
 </pre></div>
@@ -2464,6 +2465,28 @@ setOpt <span class="o">()</span> <span class="o">{</span>
       <span class="o">(</span>*<span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$o</span><span class="s2"> is not a valid argument&quot;</span><span class="p">;</span> <span class="nb">exit</span> <span class="m">1</span> <span class="p">;;</span>
     <span class="k">esac</span>
   <span class="k">done</span>
+<span class="o">}</span>
+
+<span class="c1"># Try to detect what we are running on</span>
+checkCoreOS <span class="o">()</span> <span class="o">{</span>
+
+  <span class="c1"># lsb_release can exist on any platform. RedHat package: redhat-lsb</span>
+  <span class="nv">LSB_RELEASE</span><span class="o">=</span><span class="k">$(</span>which lsb_release &gt; /dev/null <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span>
+  <span class="nv">APT</span><span class="o">=</span><span class="k">$(</span>which apt &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">;</span> <span class="nb">echo</span> -n <span class="nv">$?</span><span class="k">)</span>
+  <span class="nv">APT_GET</span><span class="o">=</span><span class="k">$(</span>which apt-get &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span>
+
+  <span class="c1"># debian specific</span>
+  <span class="c1"># /etc/debian_version</span>
+  <span class="c1">## os-release #generic</span>
+  <span class="c1"># /etc/os-release</span>
+
+  <span class="c1"># Redhat checks</span>
+  <span class="k">if</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/redhat-release&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;This is some redhat flavour&quot;</span>
+    <span class="nv">REDHAT</span><span class="o">=</span><span class="m">1</span>
+    <span class="nv">RHfla</span><span class="o">=</span><span class="k">$(</span>cat /etc/redhat-release <span class="p">|</span> cut -f <span class="m">1</span> -d<span class="se">\ </span><span class="p">|</span> tr <span class="o">[</span>A-Z<span class="o">]</span> <span class="o">[</span>a-z<span class="o">]</span><span class="k">)</span>
+  <span class="k">fi</span>
+
 <span class="o">}</span>
 
 <span class="c1"># Extract debian flavour</span>

@@ -662,7 +662,7 @@
 <span class="c1"># Core cake commands</span>
 coreCAKE <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Running core Cake commands to set sane defaults for </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
-  <span class="nv">$SUDO_WWW</span> -E <span class="nv">$CAKE</span> userInit -q
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> userInit -q
 
   <span class="c1"># This makes sure all Database upgrades are done, without logging in.</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateDatabase
@@ -770,9 +770,12 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
 
 <span class="c1"># This updates Galaxies, ObjectTemplates, Warninglists, Noticelists, Templates</span>
 updateGOWNT <span class="o">()</span> <span class="o">{</span>
+<span class="c1"># AUTH_KEY Place holder in case we need to **curl** somehing in the future</span>
+<span class="c1"># </span>
+<span class="c1"># AUTH_KEY=$(mysql -u $DBUSER_MISP -p$DBPASSWORD_MISP misp -e &quot;SELECT authkey FROM users;&quot; | tail -1)</span>
+<span class="c1"># RHEL/CentOS</span>
+<span class="c1"># AUTH_KEY=$(scl enable rh-mariadb102 &quot;mysql -u $DBUSER_MISP -p$DBPASSWORD_MISP misp -e &#39;SELECT authkey FROM users;&#39; | tail -1&quot;)</span>
   debug <span class="s2">&quot;Updating Galaxies, ObjectTemplates, Warninglists, Noticelists and Templates&quot;</span>
-  <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1<span class="k">)</span>
-
   <span class="c1"># Update the galaxies…</span>
   <span class="c1"># TODO: Fix updateGalaxies</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateGalaxies
@@ -783,9 +786,7 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Updating the notice lists…</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateNoticeLists
   <span class="c1"># Updating the object templates…</span>
-  <span class="c1"># TODO: FIXME: updateObjectTemplates (currently throws: usage udpateNoticeLists)</span>
-  <span class="c1">##$SUDO_WWW $CAKE Admin updateObjectTemplates</span>
-  curl --header <span class="s2">&quot;Authorization: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;Accept: application/json&quot;</span> --header <span class="s2">&quot;Content-Type: application/json&quot;</span> -k -X POST https://127.0.0.1/objectTemplates/update
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin updateObjectTemplates <span class="s2">&quot;1337&quot;</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 2_core-cake.sh&gt;</span>
 </pre></div>
