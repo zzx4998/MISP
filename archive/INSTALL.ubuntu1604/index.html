@@ -2003,7 +2003,7 @@ mispDashboard <span class="o">()</span> <span class="o">{</span>
   sudo -H /var/www/misp-dashboard/install_dependencies.sh
   sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
   sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 0.0.0.0:8001&#39;</span> /etc/apache2/ports.conf
-  sudo apt install libapache2-mod-wsgi-py3 -y
+  sudo apt install libapache2-mod-wsgi-py3 net-tools -y
   <span class="nb">echo</span> <span class="s2">&quot;&lt;VirtualHost *:8001&gt;</span>
 <span class="s2">      ServerAdmin admin@misp.local</span>
 <span class="s2">      ServerName misp.local</span>

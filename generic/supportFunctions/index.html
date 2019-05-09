@@ -658,7 +658,7 @@ usage <span class="o">()</span> <span class="o">{</span>
   space
   <span class="nb">echo</span> -e <span class="s2">&quot;                -C | Only do </span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="s2">pre-install checks and exit</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># pre</span>
   space
-  <span class="nb">echo</span> -e <span class="s2">&quot;                -u | Do an unattanded Install, no questions asked&quot;</span>      <span class="c1"># UNATTENDED</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;                -u | Do an unattended Install, no questions asked&quot;</span>      <span class="c1"># UNATTENDED</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">       -U | Attempt and upgrade of selected item</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>         <span class="c1"># UPGRADE</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">       -N | Nuke this MISP Instance</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>                      <span class="c1"># NUKE</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">       -f | Force test install on current Ubuntu LTS schim, add -B for 18.04 -&gt; 18.10, or -BB 18.10 -&gt; 19.10)</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># FORCE</span>
@@ -751,9 +751,10 @@ checkManufacturer <span class="o">()</span> <span class="o">{</span>
   <span class="nb">echo</span> <span class="nv">$MANUFACTURER</span>
 <span class="o">}</span>
 
-<span class="c1"># Dynamic horizontal spacer</span>
+<span class="c1"># Dynamic horizontal spacer if needed, for autonomeous an no progress bar install, we are static.</span>
 space <span class="o">()</span> <span class="o">{</span>
-  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$NO_PROGRESS</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$NO_PROGRESS</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$PACKER</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------------&quot;</span>
     <span class="k">return</span>
   <span class="k">fi</span>
   <span class="c1"># Check terminal width</span>
@@ -784,7 +785,7 @@ spin<span class="o">()</span>
 
 <span class="c1"># Progress bar</span>
 progress <span class="o">()</span> <span class="o">{</span>
-  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$NO_PROGRESS</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$NO_PROGRESS</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$PACKER</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
     <span class="k">return</span>
   <span class="k">fi</span>
   <span class="nv">bar</span><span class="o">=</span><span class="s2">&quot;#&quot;</span>
@@ -1371,6 +1372,12 @@ theEnd <span class="o">()</span> <span class="o">{</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Unattended install!</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="nb">echo</span> -e <span class="s2">&quot;This means we guessed the Base URL, it might be wrong, please double check.&quot;</span>
+    space
+  <span class="k">fi</span>
+
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$PACKER</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">This was an Automated Packer install!</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;This means we forced an unattended install.&quot;</span>
     space
   <span class="k">fi</span>
 
