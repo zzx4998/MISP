@@ -594,6 +594,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.rhel8/" title="RHEL8" class="md-nav__link">
+      RHEL8
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -698,18 +710,6 @@
   <li class="md-nav__item">
     <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
       OpenBSD 6.5
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../xINSTALL.rhel8/" title="RHEL8 (Beta)" class="md-nav__link">
-      RHEL8 (Beta)
     </a>
   </li>
 
@@ -1373,7 +1373,19 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="nv">MISP_PASSWORD</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
 
   <span class="c1"># The web server user</span>
-  <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+  <span class="c1"># RHEL/CentOS</span>
+  <span class="k">if</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/redhat-release&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WWW_USER</span><span class="o">=</span><span class="s1">&#39;apache&#39;</span>
+  <span class="c1"># Debian flavoured</span>
+  <span class="k">elif</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/debian_version&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+  <span class="c1"># OpenBSD</span>
+  <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>uname -s<span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;OpenBSD&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www&quot;</span>
+  <span class="k">else</span>
+  <span class="c1"># I am feeling lucky</span>
+    <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+  <span class="k">fi</span>
 
   <span class="c1"># MISP configuration variables</span>
   <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s1">&#39;/var/www/MISP&#39;</span>
@@ -2579,20 +2591,25 @@ spin<span class="o">()</span>
 
 <span class="c1"># Progress bar</span>
 progress <span class="o">()</span> <span class="o">{</span>
-  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$NO_PROGRESS</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$PACKER</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
+  <span class="nv">progress</span><span class="o">=</span>$<span class="o">[</span><span class="nv">$progress</span>+<span class="nv">$1</span><span class="o">]</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$NO_PROGRESS</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$PACKER</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;progress=</span><span class="si">${</span><span class="nv">progress</span><span class="si">}</span><span class="s2">&quot;</span> &gt; /tmp/INSTALL.stat
     <span class="k">return</span>
   <span class="k">fi</span>
   <span class="nv">bar</span><span class="o">=</span><span class="s2">&quot;#&quot;</span>
+
+  <span class="c1"># Prevent progress of overflowing</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="nv">$progress</span> -ge <span class="m">100</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nb">echo</span> -ne <span class="s2">&quot;#####################################################################################################  (100%)\r&quot;</span>
     <span class="k">return</span>
   <span class="k">fi</span>
-  <span class="nv">progress</span><span class="o">=</span>$<span class="o">[</span><span class="nv">$progress</span>+<span class="nv">$1</span><span class="o">]</span>
+  <span class="c1"># Display progress</span>
   <span class="k">for</span> p in <span class="k">$(</span>seq <span class="m">1</span> <span class="nv">$progress</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
     <span class="nv">bar</span><span class="o">+=</span><span class="s2">&quot;#&quot;</span>
     <span class="nb">echo</span> -ne <span class="s2">&quot;</span><span class="nv">$bar</span><span class="s2">  (</span><span class="nv">$p</span><span class="s2">%)\r&quot;</span>
   <span class="k">done</span>
   <span class="nb">echo</span> -ne <span class="s1">&#39;\n&#39;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;progress=</span><span class="si">${</span><span class="nv">progress</span><span class="si">}</span><span class="s2">&quot;</span> &gt; /tmp/INSTALL.stat
 <span class="o">}</span>
 
 <span class="c1"># Check locale</span>

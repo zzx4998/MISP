@@ -390,6 +390,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.rhel8/" title="RHEL8" class="md-nav__link">
+      RHEL8
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -494,18 +506,6 @@
   <li class="md-nav__item">
     <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
       OpenBSD 6.5
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../xINSTALL.rhel8/" title="RHEL8 (Beta)" class="md-nav__link">
-      RHEL8 (Beta)
     </a>
   </li>
 
@@ -855,7 +855,19 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="nv">MISP_PASSWORD</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
 
   <span class="c1"># The web server user</span>
-  <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+  <span class="c1"># RHEL/CentOS</span>
+  <span class="k">if</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/redhat-release&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WWW_USER</span><span class="o">=</span><span class="s1">&#39;apache&#39;</span>
+  <span class="c1"># Debian flavoured</span>
+  <span class="k">elif</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/debian_version&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+  <span class="c1"># OpenBSD</span>
+  <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>uname -s<span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;OpenBSD&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www&quot;</span>
+  <span class="k">else</span>
+  <span class="c1"># I am feeling lucky</span>
+    <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+  <span class="k">fi</span>
 
   <span class="c1"># MISP configuration variables</span>
   <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s1">&#39;/var/www/MISP&#39;</span>
@@ -923,19 +935,9 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># &lt;snippet-end 0_global-vars.sh&gt;</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_RHEL_PHP_INI.sh&gt;</span>
-<span class="c1"># RHEL/CentOS Specific</span>
-<span class="nv">RUN_PHP</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-php72&#39;</span>
-<span class="nv">RUN_PYTHON</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-python36&#39;</span>
-<span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s1">&#39;sudo -H -u apache&#39;</span>
-<span class="nv">WWW_USER</span><span class="o">=</span><span class="s1">&#39;apache&#39;</span>
-
-<span class="nv">PHP_INI</span><span class="o">=</span>/etc/opt/rh/rh-php72/php.ini
-<span class="c1"># &lt;snippet-end 0_RHEL_PHP_INI.sh&gt;</span>
-</pre></div>
-
 <div class="admonition note">
-<p class="admonition-title">Note<p>For fresh installs the following tips might be handy.<br />
+<p class="admonition-title">Note</p>
+<p>For fresh installs the following tips might be handy.<br />
 Allow ssh to pass the firewall on the CLI
 <div class="codehilite"><pre><span></span>firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">22</span>/tcp --permanent
 firewall-cmd --reload
@@ -944,7 +946,6 @@ firewall-cmd --reload
 To quickly make sure if NetworkManager handles your network interface on boot, check in the following location:
 <div class="codehilite"><pre><span></span>/etc/sysconfig/network-scripts/ifcfg-*
 </pre></div></p>
-</p>
 </div>
 <h1 id="1-os-install-and-additional-repositories">1/ OS Install and additional repositories<a class="headerlink" href="#1-os-install-and-additional-repositories" title="Permanent link">&para;</a></h1>
 <h2 id="11-complete-a-minimal-rhelcentos-installation-configure-ip-address-to-connect-automatically">1.1/ Complete a minimal RHEL/CentOS installation, configure IP address to connect automatically.<a class="headerlink" href="#11-complete-a-minimal-rhelcentos-installation-configure-ip-address-to-connect-automatically" title="Permanent link">&para;</a></h2>
@@ -1028,6 +1029,8 @@ yumInstallCoreDeps <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Enable and start redis</span>
   sudo systemctl <span class="nb">enable</span> --now rh-redis32-redis.service
 
+  <span class="nv">RUN_PHP</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-php72&#39;</span>
+  <span class="nv">PHP_INI</span><span class="o">=</span>/etc/opt/rh/rh-php72/php.ini
   <span class="c1"># Install PHP 7.2 from SCL, see https://www.softwarecollections.org/en/scls/rhscl/rh-php72/</span>
   sudo yum install rh-php72 rh-php72-php-fpm rh-php72-php-devel <span class="se">\</span>
                    rh-php72-php-mysqlnd <span class="se">\</span>
@@ -1039,6 +1042,7 @@ yumInstallCoreDeps <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># Install Python 3.6 from SCL, see</span>
   <span class="c1"># https://www.softwarecollections.org/en/scls/rhscl/rh-python36/</span>
+  <span class="nv">RUN_PYTHON</span><span class="o">=</span><span class="s1">&#39;/usr/bin/scl enable rh-python36&#39;</span>
   sudo yum install rh-python36 -y
 
   sudo systemctl <span class="nb">enable</span> --now rh-php72-php-fpm.service
@@ -2004,13 +2008,13 @@ index f9f69d4..2e8fd78 100644
           </a>
         
         
-          <a href="../xINSTALL/" title="Warning" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../INSTALL.rhel8/" title="RHEL8" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Warning
+                RHEL8
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

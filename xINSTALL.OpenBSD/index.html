@@ -296,6 +296,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.rhel8/" title="RHEL8" class="md-nav__link">
+      RHEL8
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -771,18 +783,6 @@
   
 </nav>
     
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../xINSTALL.rhel8/" title="RHEL8 (Beta)" class="md-nav__link">
-      RHEL8 (Beta)
-    </a>
   </li>
 
         
@@ -1392,7 +1392,19 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="nv">MISP_PASSWORD</span><span class="o">=</span><span class="s1">&#39;Password1234&#39;</span>
 
   <span class="c1"># The web server user</span>
-  <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+  <span class="c1"># RHEL/CentOS</span>
+  <span class="k">if</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/redhat-release&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WWW_USER</span><span class="o">=</span><span class="s1">&#39;apache&#39;</span>
+  <span class="c1"># Debian flavoured</span>
+  <span class="k">elif</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/debian_version&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+  <span class="c1"># OpenBSD</span>
+  <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>uname -s<span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;OpenBSD&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www&quot;</span>
+  <span class="k">else</span>
+  <span class="c1"># I am feeling lucky</span>
+    <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+  <span class="k">fi</span>
 
   <span class="c1"># MISP configuration variables</span>
   <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s1">&#39;/var/www/MISP&#39;</span>
@@ -2456,13 +2468,13 @@ index f9f69d4..2e8fd78 100644
           </a>
         
         
-          <a href="../xINSTALL.rhel8/" title="RHEL8 (Beta)" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../CONFIG.elasticsearch-logging/" title="Elastic Search Logging" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                RHEL8 (Beta)
+                Elastic Search Logging
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

@@ -296,6 +296,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../INSTALL.rhel8/" title="RHEL8" class="md-nav__link">
+      RHEL8
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -400,18 +412,6 @@
   <li class="md-nav__item">
     <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
       OpenBSD 6.5
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../xINSTALL.rhel8/" title="RHEL8 (Beta)" class="md-nav__link">
-      RHEL8 (Beta)
     </a>
   </li>
 
@@ -7967,6 +7967,10 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[API] Added includeWarninglistHits to the attribute search API.
+  [iglocska]</li>
+<li>[API] Added includeWarninglistHits as a possible filter for the event
+  level restsearch. [iglocska]</li>
 <li>[installer] First scaffolding of an OS detector. [Steve Clement]</li>
 <li>[update] Injected update-related files/changes from zoidberg.
   [mokaddem]</li>
@@ -7976,18 +7980,23 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[installer] Updated Installer (#4611) [Steve Clement]</li>
+<li>[installer] Updated to latest installer (#4617) [Steve Clement]</li>
 </ul>
+<p>chg: [installer] Updated to latest installer
+- [installer] Updated to latest installer. [Steve Clement]
+- [doc] Updated RHEL8 to not be BETA chg: [vars] WWW_USER is now
+  autodedected. [Steve Clement]
+- [installer] Updated Installer (#4611) [Steve Clement]</p>
 <p>chg: [installer] Updated Installer
-- [doc] Kafka export is now included in the list of features. [Alexandre
-  Dulaunoy]
-- [galaxy/taxonomy/warninglists] updated to the latest version.
-  [Alexandre Dulaunoy]
 - [installer] Updated Installer. [Steve Clement]
 - [doc] Finally got rid of the RHELL/CentOS specific Cake commands
   (<em>yay</em>) [Steve Clement]
 - [tools] Enabled more modules by default and tweaked some settings.
   [Steve Clement]
+- [doc] Kafka export is now included in the list of features. [Alexandre
+  Dulaunoy]
+- [galaxy/taxonomy/warninglists] updated to the latest version.
+  [Alexandre Dulaunoy]
 - [installer] If we detect packer, we behave accordingly. (#4602) [Steve
   Clement]</p>
 <p>chg: [installer] If we detect packer, we behave accordingly.
@@ -8002,6 +8011,9 @@
 - [doc] Moved tsurugi away from /INSTALL. [Steve Clement]
 - [doc] Moved tsurugi install out of the way, to be implemented way
   later into installer. [Steve Clement]
+- [adminShell] Added recovery function to replay updates. [mokaddem]</p>
+<p>It fetches the last successful DB update number in the log, then
+  re-apply all of them up to the latest available.
 - [AdminShell] Some comments on current state of bugs. [Steve Clement]
 - [AdminShell] Let's at least tell what ID was not found. [Steve
   Clement]
@@ -8015,9 +8027,6 @@
 <p>chg: [doc] MISP works on OpenBSD 6.5, partially
 - [doc] MISP works on OpenBSD 6.5, partially chg: [doc] Removed link to
   Debian PostgreSQL. [Steve Clement]
-- [adminShell] Added recovery function to replay updates. [mokaddem]</p>
-<p>It fetches the last successful DB update number in the log, then
-  re-apply all of them up to the latest available.
 - [event:view] Added button to quickly extend an event. Fix #4481.
   [mokaddem]
 - [eventgraph] Force constant color for the eventgraph's nodes. Fix
@@ -8119,10 +8128,15 @@
 - [doc] Updates to Debian install document. [Steve Clement]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[installer] Installer Checksums out-of-sync. [Steve Clement]</li>
-<li>[doc] Let the user know he wants to be the "webserver" user (#4603)
+<li>[bug] getPythonVersion undefined, pull in where it is defined. (#4615)
   [Steve Clement]</li>
 </ul>
+<p>fix: [bug] getPythonVersion undefined, pull in where it is defined.
+- [bug] getPythonVersion undefined, pull in where it is defined. [Steve
+  Clement]
+- [installer] Installer Checksums out-of-sync. [Steve Clement]
+- [doc] Let the user know he wants to be the "webserver" user (#4603)
+  [Steve Clement]</p>
 <p>fix: [doc] Let the user know he wants to be the "webserver" user
 - [doc] Let the user know he wants to be the "webserver" user. [Steve
   Clement]
@@ -8138,15 +8152,6 @@
 - [AdminShell] Fixed typo. [Steve Clement]
 - [AdminShell] Added apache user. [Steve Clement]
 - [AdminShell] Misplaced the debug message. [Steve Clement]
-- [update] Disabled background processing until it's fixed. [iglocska]
-- [AdminShell] very dirt fix to get updateObjectTemplates working
-  (#4585) [Steve Clement]</p>
-<p>fix: [AdminShell] very dirt fix to get updateObjectTemplates working
-- [AdminShell] very dirt fix to get updateObjectTemplates working from
-  the CLI. [Steve Clement]
-- [UI] Notice errors fixed in the discussion threads. [iglocska]
-- [bug] Fixed a bug in the update process that caused updates to fail
-  due to an invalid value assigned as default for org_id. [iglocska]
 - [stix export] Fixed email attachment export. [chrisr3d]</p>
 <ul>
 <li>Fixed condition trying to reach the case where
@@ -8156,9 +8161,24 @@
 <li>Fixed the email attachment related file object
     creation initiation</li>
 <li>
-<p><img alt="🔒" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f512.svg" title=":lock:" /> Fix persistent xss due to invalid sanitisation of image
-  names in titles. [iglocska]</p>
+<p>[galaxy clusters] Choosing them via the UI was dog slow. [iglocska]</p>
 </li>
+<li>
+<p>now it's just plain slow</p>
+</li>
+<li>[update] Disabled background processing until it's fixed. [iglocska]</li>
+<li>[AdminShell] very dirt fix to get updateObjectTemplates working
+  (#4585) [Steve Clement]</li>
+</ul>
+<p>fix: [AdminShell] very dirt fix to get updateObjectTemplates working
+- [AdminShell] very dirt fix to get updateObjectTemplates working from
+  the CLI. [Steve Clement]
+- [UI] Notice errors fixed in the discussion threads. [iglocska]
+- [bug] Fixed a bug in the update process that caused updates to fail
+  due to an invalid value assigned as default for org_id. [iglocska]
+- <img alt="🔒" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f512.svg" title=":lock:" /> Fix persistent xss due to invalid sanitisation of image
+  names in titles. [iglocska]</p>
+<ul>
 <li>
 <p>triggered by expanding a screenshot</p>
 </li>
@@ -8257,12 +8277,16 @@
   ░░░░██░░░░░░░░░░░░░░░░░░░░░░░██░░</p>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge branch '2.4' into tools. [Steve Clement]</li>
-<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
-  Dulaunoy]</li>
-<li>Merge pull request #4607 from pettai/new-rpz-action-fix. [Andras
-  Iklody]</li>
+<li>Merge pull request #4616 from SteveClement/guides. [Steve Clement]</li>
 </ul>
+<p>chg: [doc] Updated RHEL8 to not be BETA
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' into tools. [Steve Clement]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]
+- Merge pull request #4607 from pettai/new-rpz-action-fix. [Andras
+  Iklody]</p>
 <p>rpz: fix missing rpz policy actions
 - Rpz: add missing rpz policy actions. [frpet]
 - Merge pull request #4600 from pettai/local-data. [Andras Iklody]</p>
