@@ -7967,6 +7967,20 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[installer] Added rhash and an sfv file for the installer chg:
+  [installer] Updated installer to latest. [Steve Clement]</li>
+<li>
+<p>[ATT&amp;CK] Added new export system for restsearch for ATT&amp;CK. [iglocska]</p>
+</li>
+<li>
+<p>Return the ATT&amp;CK matrix data as HTML via the API</p>
+</li>
+<li>
+<p>Directly viewable via the REST client</p>
+</li>
+<li>
+<p>Greetings from the ATT&amp;CK workshop @ Eurocontrol</p>
+</li>
 <li>[API] Added includeWarninglistHits to the attribute search API.
   [iglocska]</li>
 <li>[API] Added includeWarninglistHits as a possible filter for the event
@@ -7980,8 +7994,13 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[installer] Updated to latest installer (#4617) [Steve Clement]</li>
+<li>[doc] Various documentation updates (#4621) [Steve Clement]</li>
 </ul>
+<p>chg: [doc] Various documentation updates
+- [doc] Better handling of sudoers. [Steve Clement]
+- [doc] Added 2 more hardening sources. [Steve Clement]
+- [misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]
+- [installer] Updated to latest installer (#4617) [Steve Clement]</p>
 <p>chg: [installer] Updated to latest installer
 - [installer] Updated to latest installer. [Steve Clement]
 - [doc] Updated RHEL8 to not be BETA chg: [vars] WWW_USER is now
@@ -8128,12 +8147,16 @@
 - [doc] Updates to Debian install document. [Steve Clement]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[age based publish blocking] Fixed and using the timestamp. [iglocska]</li>
+<li>[docs] Added attackGalaxy as a valid option for the restsearch APIs.
+  [iglocska]</li>
 <li>[bug] getPythonVersion undefined, pull in where it is defined. (#4615)
   [Steve Clement]</li>
 </ul>
 <p>fix: [bug] getPythonVersion undefined, pull in where it is defined.
 - [bug] getPythonVersion undefined, pull in where it is defined. [Steve
   Clement]
+- [API] Some fixes for the restsearch -&gt; attack export. [iglocska]
 - [installer] Installer Checksums out-of-sync. [Steve Clement]
 - [doc] Let the user know he wants to be the "webserver" user (#4603)
   [Steve Clement]</p>
@@ -8277,6 +8300,9 @@
   ░░░░██░░░░░░░░░░░░░░░░░░░░░░░██░░</p>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
+<li>Merge remote-tracking branch 'upstream/2.4' into guides. [Steve
+  Clement]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
 <li>Merge pull request #4616 from SteveClement/guides. [Steve Clement]</li>
 </ul>
 <p>chg: [doc] Updated RHEL8 to not be BETA

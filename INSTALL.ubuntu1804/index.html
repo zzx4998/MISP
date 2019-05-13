@@ -1227,7 +1227,7 @@ curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh <s
 
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>Installer tested working by <a href="https://twitter.com/SteveClement">@SteveClement</a> on 20190420 (works with <strong>Ubuntu 18.10/19.04</strong> too)</p>
+<p>Installer tested working by <a href="https://twitter.com/SteveClement">@SteveClement</a> on 20190513 (works with <strong>Ubuntu 18.10/19.04</strong> too)</p>
 </div>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
@@ -1272,9 +1272,9 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
     su -c <span class="s2">&quot;apt install etckeeper -y&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to install sudo&quot;</span>
     su -c <span class="s2">&quot;apt install sudo -y&quot;</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to add </span><span class="nv">$MISP_USER</span><span class="s2"> to sudo group&quot;</span>
-    su -c <span class="s2">&quot;adduser </span><span class="nv">$MISP_USER</span><span class="s2"> sudo&quot;</span>
-    <span class="nb">echo</span> <span class="s2">&quot;We added </span><span class="nv">$MISP_USER</span><span class="s2"> to group sudo and now we need to log out and in again.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to add </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> to sudo group&quot;</span>
+    su -c <span class="s2">&quot;adduser </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> sudo&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;We added </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> to group sudo and now we need to log out and in again.&quot;</span>
     <span class="nb">exit</span>
   <span class="k">else</span>
     sudo apt update
@@ -1304,8 +1304,10 @@ checkUsrLocalSrc <span class="o">()</span> <span class="o">{</span>
     <span class="nb">echo</span> <span class="s2">&quot;/usr/local/src does not exist, creating.&quot;</span>
     mkdir -p /usr/local/src
     sudo chmod <span class="m">2775</span> /usr/local/src
-    <span class="c1"># FIXME: This might fail on distros with no staff user</span>
-    sudo chown root:staff /usr/local/src
+    <span class="c1"># TODO: Better handling /usr/local/src permissions</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>cat /etc/group <span class="p">|</span>grep staff &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      sudo chown root:staff /usr/local/src
+    <span class="k">fi</span>
   <span class="k">fi</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end add-user.sh&gt;</span>
@@ -1471,7 +1473,6 @@ installCoreDeps <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># install Mitre&#39;s STIX and its dependencies by running the following commands:</span>
   sudo apt-get install python3-dev python3-pip libxml2-dev libxslt1-dev zlib1g-dev python-setuptools -qy
 
-  sudo apt-get install python3-pip -qy
   sudo apt install expect -qy
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_installCoreDeps.sh&gt;</span>
@@ -1645,12 +1646,13 @@ prepareDB <span class="o">()</span> <span class="o">{</span>
     sudo apt-get purge -y expect <span class="p">;</span> sudo apt autoremove -qy
   <span class="k">fi</span> 
 
-  sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;create database </span><span class="nv">$DBNAME</span><span class="s2">;&quot;</span>
-  sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant usage on *.* to </span><span class="nv">$DBNAME</span><span class="s2">@localhost identified by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
-  sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant all privileges on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
-  sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;flush privileges;&quot;</span>
+  sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;CREATE DATABASE </span><span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span><span class="s2">;&quot;</span>
+  sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;CREATE USER </span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2"> IDENTIFIED BY &#39;</span><span class="si">${</span><span class="nv">DBPASSWORD_MISP</span><span class="si">}</span><span class="s2">&#39;;&quot;</span>
+  sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT USAGE ON *.* to </span><span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span><span class="s2">@localhost;&quot;</span>
+  sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT ALL PRIVILEGES on </span><span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span><span class="s2">.* to &#39;</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
+  sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;FLUSH PRIVILEGES;&quot;</span>
   <span class="c1"># Import the empty MISP database from MYSQL.sql</span>
-  <span class="nv">$SUDO_WWW</span> cat <span class="nv">$PATH_TO_MISP</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
+  <span class="nv">$SUDO_WWW</span> cat <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">DBPASSWORD_MISP</span><span class="si">}</span> <span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 1_prepareDB.sh&gt;</span>
 </pre></div>
@@ -2415,6 +2417,8 @@ index f9f69d4..2e8fd78 100644
 </pre></div>
 
 <h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
+<p><a href="https://www.ncsc.nl/english/current-topics/factsheets/it-security-guidelines-for-transport-layer-security-tls.html">IT Security Guidelines for TLS by NCSC.nl</a></p>
+<p><a href="https://weakdh.org/sysadmin.html">Weak Diffie-Hellman and the Logjam Attack</a></p>
 <p><a href="https://wiki.debian.org/Hardening">Debian Wiki Hardening</a></p>
 <p><a href="https://wiki.centos.org/HowTos/OS_Protection">CentOS Hardening</a></p>
 <p><a href="https://www.cyberciti.biz/tips/linux-security.html">Some Linux hardening tips</a></p>
