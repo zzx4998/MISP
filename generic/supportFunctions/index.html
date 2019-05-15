@@ -741,6 +741,24 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
   <span class="k">fi</span>
 <span class="o">}</span>
 
+checkInstaller <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># SHAsums to be computed, not the -- notatiation is for ease of use with rhash</span>
+  <span class="nv">SHA_SUMS</span><span class="o">=</span><span class="s2">&quot;--sha1 --sha256 --sha384 --sha512&quot;</span>
+  <span class="k">for</span> sum in <span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">SHA_SUMS</span><span class="si">}</span> <span class="p">|</span>sed <span class="s1">&#39;s/--sha//g&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+    /usr/bin/wget -q -O /tmp/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span> https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span>
+    <span class="nv">INSTsum</span><span class="o">=</span><span class="k">$(</span>shasum -a <span class="si">${</span><span class="nv">sum</span><span class="si">}</span> <span class="si">${</span><span class="nv">0</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
+    <span class="nv">chsum</span><span class="o">=</span><span class="k">$(</span>cat /tmp/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
+
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">chsum</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">INSTsum</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="nb">echo</span> <span class="s2">&quot;sha</span><span class="si">${</span><span class="nv">sum</span><span class="si">}</span><span class="s2"> matches&quot;</span>
+    <span class="k">else</span>
+      <span class="nb">echo</span> <span class="s2">&quot;sha</span><span class="si">${</span><span class="nv">sum</span><span class="si">}</span><span class="s2">: </span><span class="si">${</span><span class="nv">chsum</span><span class="si">}</span><span class="s2"> does not match the installer sum of: </span><span class="si">${</span><span class="nv">INSTsum</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="nb">echo</span> <span class="s2">&quot;Delete installer, re-download and please run again.&quot;</span>
+      <span class="nb">exit</span> <span class="m">1</span>
+    <span class="k">fi</span>
+  <span class="k">done</span>
+<span class="o">}</span>
+
 <span class="c1"># Extract manufacturer</span>
 checkManufacturer <span class="o">()</span> <span class="o">{</span>
   <span class="k">if</span> <span class="o">[</span> -z <span class="k">$(</span>which dmidecode<span class="k">)</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
@@ -975,7 +993,7 @@ setBaseURL <span class="o">()</span> <span class="o">{</span>
   <span class="nv">CONN</span><span class="o">=</span><span class="k">$(</span>ip -br -o -4 a <span class="p">|</span>grep UP <span class="p">|</span>head -1 <span class="p">|</span>tr -d <span class="s2">&quot;UP&quot;</span><span class="k">)</span>
   <span class="nv">IFACE</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$CONN</span> <span class="p">|</span>awk <span class="o">{</span><span class="s1">&#39;print $1&#39;</span><span class="o">}</span><span class="sb">`</span>
   <span class="nv">IP</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$CONN</span> <span class="p">|</span>awk <span class="o">{</span><span class="s1">&#39;print $2&#39;</span><span class="o">}</span><span class="p">|</span> cut -f1 -d/<span class="sb">`</span>
-  <span class="k">if</span> <span class="o">[[</span> <span class="k">$(</span>checkManufacturer<span class="k">)</span> !<span class="o">=</span> <span class="s2">&quot;innotek GmbH&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>checkManufacturer<span class="k">)</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;innotek GmbH&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>checkManufacturer<span class="k">)</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;VMware, Inc.&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     debug <span class="s2">&quot;We guess that this is a physical machine and cannot possibly guess what the MISP_BASEURL might be.&quot;</span>
     <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
       <span class="nb">echo</span> <span class="s2">&quot;You can now enter your own MISP_BASEURL, if you wish to NOT do that, the MISP_BASEURL will be empty, which will work, but ideally you configure it afterwards.&quot;</span>
@@ -1366,6 +1384,8 @@ theEnd <span class="o">()</span> <span class="o">{</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;The </span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">LOCAL</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> system credentials:&quot;</span>
   <span class="nb">echo</span> <span class="s2">&quot;User: </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="nb">echo</span> <span class="s2">&quot;Password: </span><span class="si">${</span><span class="nv">MISP_PASSWORD</span><span class="si">}</span><span class="s2"> # Or the password you used of your custom user&quot;</span>
+  space
+  <span class="nb">echo</span> <span class="s2">&quot;GnuPG Passphrase is: </span><span class="si">${</span><span class="nv">GPG_PASSPHRASE</span><span class="si">}</span><span class="s2">&quot;</span>
   space
   <span class="nb">echo</span> <span class="s2">&quot;To enable outgoing mails via postfix set a permissive SMTP server for the domains you want to contact:&quot;</span>
   <span class="nb">echo</span>
