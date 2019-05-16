@@ -742,6 +742,10 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 
 checkInstaller <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># TODO: Implement $FLAVOUR checks and install depending on the platform we are on</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="k">$(</span>which shasum &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> !<span class="o">=</span> <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    sudo apt install libdigest-sha-perl -qyy
+  <span class="k">fi</span>
   <span class="c1"># SHAsums to be computed, not the -- notatiation is for ease of use with rhash</span>
   <span class="nv">SHA_SUMS</span><span class="o">=</span><span class="s2">&quot;--sha1 --sha256 --sha384 --sha512&quot;</span>
   <span class="k">for</span> sum in <span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">SHA_SUMS</span><span class="si">}</span> <span class="p">|</span>sed <span class="s1">&#39;s/--sha//g&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
