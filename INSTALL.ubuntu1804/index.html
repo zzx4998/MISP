@@ -1219,10 +1219,12 @@
 <p>Make sure you are reading the parsed version of this Document. When in doubt <a href="https://misp.github.io/MISP/INSTALL.ubuntu1804/">click here</a>.</p>
 <p>To install MISP on a fresh Ubuntu install all you need to do is:</p>
 <div class="codehilite"><pre><span></span><span class="c1"># Please check the installer options first to make the best choice for your install</span>
-curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh <span class="p">|</span> bash -s
+wget -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
+bash /tmp/INSTALL.sh
 
-<span class="c1"># This will install MISP Core and misp-modules (recommended)</span>
-curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh <span class="p">|</span> bash -s -- -c -M
+<span class="c1"># This will install MISP Core</span>
+wget -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
+bash /tmp/INSTALL.sh -c
 </pre></div>
 
 <div class="admonition notice">
@@ -1654,7 +1656,7 @@ prepareDB <span class="o">()</span> <span class="o">{</span>
 
   sudo mysql -u <span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span> -e <span class="s2">&quot;CREATE DATABASE </span><span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span><span class="s2">;&quot;</span>
   sudo mysql -u <span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span> -e <span class="s2">&quot;CREATE USER &#39;</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;</span><span class="si">${</span><span class="nv">DBPASSWORD_MISP</span><span class="si">}</span><span class="s2">&#39;;&quot;</span>
-  sudo mysql -u <span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span> -e <span class="s2">&quot;GRANT USAGE ON *.* to </span><span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span><span class="s2">@localhost;&quot;</span>
+  sudo mysql -u <span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span> -e <span class="s2">&quot;GRANT USAGE ON *.* to </span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">@localhost;&quot;</span>
   sudo mysql -u <span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span> -e <span class="s2">&quot;GRANT ALL PRIVILEGES on </span><span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span><span class="s2">.* to &#39;</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
   sudo mysql -u <span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span> -e <span class="s2">&quot;FLUSH PRIVILEGES;&quot;</span>
   <span class="c1"># Import the empty MISP database from MYSQL.sql</span>
@@ -1901,6 +1903,9 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># The default install is Python &gt;=3.6 in a virtualenv, setting accordingly</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
+
+  <span class="c1"># Set default role</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> setDefaultRole <span class="m">3</span>
 
   <span class="c1"># Tune global time outs</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.autoRegenerate&quot;</span> <span class="m">0</span>
@@ -2584,7 +2589,7 @@ checkInstaller <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># SHAsums to be computed, not the -- notatiation is for ease of use with rhash</span>
   <span class="nv">SHA_SUMS</span><span class="o">=</span><span class="s2">&quot;--sha1 --sha256 --sha384 --sha512&quot;</span>
   <span class="k">for</span> sum in <span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">SHA_SUMS</span><span class="si">}</span> <span class="p">|</span>sed <span class="s1">&#39;s/--sha//g&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
-    /usr/bin/wget -q -O /tmp/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span> https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span>
+    /usr/bin/wget --no-cache -q -O /tmp/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span> https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span>
     <span class="nv">INSTsum</span><span class="o">=</span><span class="k">$(</span>shasum -a <span class="si">${</span><span class="nv">sum</span><span class="si">}</span> <span class="si">${</span><span class="nv">0</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
     <span class="nv">chsum</span><span class="o">=</span><span class="k">$(</span>cat /tmp/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
 

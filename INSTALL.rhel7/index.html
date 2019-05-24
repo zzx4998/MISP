@@ -813,10 +813,12 @@
 <p class="admonition-title">Warning</p>
 <p>In the <strong>future</strong>, to install MISP on a fresh RHEL 7 install all you need to do is:</p>
 <p><div class="codehilite"><pre><span></span><span class="c1"># Please check the installer options first to make the best choice for your install</span>
-curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.debian.sh <span class="p">|</span> bash -s
+wget -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
+bash /tmp/INSTALL.sh
 
-<span class="c1"># This will install MISP Core and misp-modules (recommended)</span>
-curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.debian.sh <span class="p">|</span> bash -s -- -c -M
+<span class="c1"># This will install MISP Core</span>
+wget -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
+bash /tmp/INSTALL.sh -c
 </pre></div>
 <strong>The above does NOT work yet</strong></p>
 </div>
@@ -1723,6 +1725,9 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># The default install is Python &gt;=3.6 in a virtualenv, setting accordingly</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
+
+  <span class="c1"># Set default role</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> setDefaultRole <span class="m">3</span>
 
   <span class="c1"># Tune global time outs</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.autoRegenerate&quot;</span> <span class="m">0</span>
