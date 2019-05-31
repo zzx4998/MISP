@@ -8037,6 +8037,14 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>
+<p>[Sync] Add a tool to create MISP sync configuration JSONs and to
+  ingest them, fixes #4696. [iglocska]</p>
+</li>
+<li>
+<p>sync user can log into remote instance, extract config JSON</p>
+</li>
+<li>paste it into own instance as site admin to add MISP sync connection</li>
 <li>[API] AND for tag filters in restSeach added. [iglocska]</li>
 <li>[API] Added object_relation as a filter for both the event/attribute
   restSearch functions. [iglocska]</li>
@@ -8059,14 +8067,23 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[installer] Updated the installer to the latest version. [Steve
+  Clement]</li>
+<li>[doc] RHEL8 updates. [Steve Clement]</li>
+<li>[tools] unused import module removed. [Alexandre Dulaunoy]</li>
+<li>[feeds] Benkow.cc RAT feed added. [Alexandre Dulaunoy]</li>
+<li>[default feeds] additional properties is allowed. [Alexandre Dulaunoy]</li>
 <li>[doc] Updated SQL (#4670) [Steve Clement]</li>
 </ul>
 <p>chg: [doc] Updated SQL
 - [doc] Updated SQL chg: [installer] Updated installer. [Steve Clement]
+- [restResponse] Added documentation for adding tags on Objects.
+  [mokaddem]
 - [diagnostic:view] Improved visibility of the <code>updateAllJson</code> update
   button. [mokaddem]
 - [event:view] Correctly display title to large by truncating
   (+ellipsis) [mokaddem]
+- [misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]
 - [feeds] malshare.com - current all added. [Alexandre Dulaunoy]
 - [PyMISP] updated to the latest version. [Alexandre Dulaunoy]
 - [misp-taxonomies] updated to the latest version. [Alexandre Dulaunoy]
@@ -8108,20 +8125,41 @@
   Dulaunoy]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[submodule version check] fixed. [iglocska]</li>
-<li>[event:view] Correctly support the new <code>deleted</code> parameter behavior.
-  [mokaddem]</li>
-<li>Fix: [restSearche] Correctly interpret the <code>deleted</code> parameter on
+<li>[authkey] Fixed The authkey variable (Viper should work again) (#4694)
+  [Steve Clement]</li>
+</ul>
+<p>fix: [authkey] Fixed The authkey variable (Viper should work again)
+- [authkey] Fixed The authkey variable (Viper should work again next
+  run) fix: [doc] Upated RHEL formatting and added $RUN_MYSQL (scl
+  enable foo) variable. [Steve Clement]
+- [sync] Fixed an issue that dropped the remote org. [iglocska]
+- [UI] Add the create server sync description menu to the server list.
+  [iglocska]
+- [sync] whitelist fields that can be added via the JSON config.
+  [iglocska]
+- [UI] Invalid redirect fixed. [iglocska]
+- [organisation:view] Fixed spinner when viewing events from an org.
+  [mokaddem]
+- [API] Weird responses from JSON objects fixed when data returned is
+  empty. [iglocska]
+- [API]  Wrong JSON output when /events/index returns empty result,
+  fixes #4690. [iglocska]
+- [UI] Org index filter fixed. [iglocska]
+- [stix2 import] Fixed external domain &amp; x509 patterns import.
+  [chrisr3d]
+- [freetext import] Fixed shadow attribute import. [chrisr3d]
+- [feed] Feodo  tracker blocklist URL replaced. [Sascha Rommelfangen]
+- [submodule version check] fixed. [iglocska]
+- [event:view] Correctly support the new <code>deleted</code> parameter behavior.
+  [mokaddem]
+- Fix: [restSearche] Correctly interpret the <code>deleted</code> parameter on
   <code>event</code> and <code>attribute</code> scope. -- Pair programming with @iglocksa.
-  [mokaddem]</li>
-<li>[UI] Fixed checklocks polluting the top bar. [iglocska]</li>
-<li>
-<p>[upgrade process] For the recovery script, also take "failed" upgrades
+  [mokaddem]
+- [UI] Fixed checklocks polluting the top bar. [iglocska]
+- [upgrade process] For the recovery script, also take "failed" upgrades
   into account. [iglocska]</p>
-</li>
-<li>
-<p>not all update script errors are actual failures, some insertions of table rows that already exist to resolve potential previous update issues would otherwise not be flagged</p>
-</li>
+<ul>
+<li>not all update script errors are actual failures, some insertions of table rows that already exist to resolve potential previous update issues would otherwise not be flagged</li>
 <li>On-Demand Action missed side menu fixed. [4ekin]</li>
 <li>
 <p>[API] Allow more flexibility on the return content types. [iglocska]</p>
@@ -8166,8 +8204,14 @@
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
-<li>Merge pull request #4639 from wasserman/patch-1. [Andras Iklody]</li>
+<li>Merge pull request #4683 from MISP/chrisr3d_patch. [Christian Studer]</li>
 </ul>
+<p>fix: [freetext import] Fixed shadow attribute import
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4639 from wasserman/patch-1. [Andras Iklody]</p>
 <p>GRANTs updated to DBUSER_MISP instead of DBNAME.
 - GRANTs updated to DBUSER_MISP instead of DBNAME. [wasserman]</p>
 <p>Two spots were GRANTing to the DBNAME instead of the DBUSER_MISP.  It still works if the user and DBNAME are the same.

@@ -790,10 +790,9 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
 updateGOWNT <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># AUTH_KEY Place holder in case we need to **curl** somehing in the future</span>
   <span class="c1"># </span>
-  <span class="c1"># AUTH_KEY=$(mysql -u $DBUSER_MISP -p$DBPASSWORD_MISP misp -e &quot;SELECT authkey FROM users;&quot; | tail -1)</span>
-  <span class="c1"># RHEL/CentOS</span>
-  <span class="c1"># AUTH_KEY=$(scl enable rh-mariadb102 &quot;mysql -u $DBUSER_MISP -p$DBPASSWORD_MISP misp -e &#39;SELECT authkey FROM users;&#39; | tail -1&quot;)</span>
-  <span class="c1">#</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_MYSQL</span> -- mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1 &gt; /tmp/auth.key
+  <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>cat /tmp/auth.key<span class="k">)</span>
+  rm /tmp/auth.key
 
   debug <span class="s2">&quot;Updating Galaxies, ObjectTemplates, Warninglists, Noticelists and Templates&quot;</span>
   <span class="c1"># Update the galaxies…</span>
