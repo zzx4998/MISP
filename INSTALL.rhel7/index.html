@@ -1639,6 +1639,15 @@ sudo yum install devtoolset-7 cmake3 cppcheck -y
 <span class="s2">..&#39;&quot;</span>
 <span class="nv">$SUDO_WWW</span> make -j3 pyLIEF
 
+<span class="c1"># In case you get &quot;internal compiler error: Killed (program cc1plus)&quot;</span>
+<span class="c1"># You ran out of memory.</span>
+<span class="c1"># Create some swap</span>
+<span class="c1"># sudo dd if=/dev/zero of=/var/swap.img bs=1024k count=4000</span>
+<span class="c1"># sudo mkswap /var/swap.img</span>
+<span class="c1"># sudo swapon /var/swap.img</span>
+<span class="c1"># And compile again</span>
+<span class="c1"># $SUDO_WWW make -j3 pyLIEF</span>
+
 <span class="c1"># The following adds a PYTHONPATH to where the pyLIEF module has been compiled</span>
 <span class="nb">echo</span> /var/www/MISP/app/files/scripts/lief/build/api/python <span class="p">|</span><span class="nv">$SUDO_WWW</span> tee /var/www/MISP/venv/lib/python3.6/site-packages/lief.pth
 
@@ -1791,7 +1800,7 @@ prepareDB_RHEL <span class="o">()</span> <span class="o">{</span>
   sudo systemctl restart rh-mariadb102-mariadb
 
   scl <span class="nb">enable</span> rh-mariadb102 <span class="s2">&quot;mysql -u </span><span class="nv">$DBUSER_ADMIN</span><span class="s2"> -p</span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2"> -e &#39;CREATE DATABASE </span><span class="nv">$DBNAME</span><span class="s2">;&#39;&quot;</span>
-  scl <span class="nb">enable</span> rh-mariadb102 <span class="s2">&quot;mysql -u </span><span class="nv">$DBUSER_ADMIN</span><span class="s2"> -p</span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2"> -e \&quot;GRANT USAGE on *.* to </span><span class="nv">$DBNAME</span><span class="s2">@localhost IDENTIFIED by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;\&quot;&quot;</span>
+  scl <span class="nb">enable</span> rh-mariadb102 <span class="s2">&quot;mysql -u </span><span class="nv">$DBUSER_ADMIN</span><span class="s2"> -p</span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2"> -e \&quot;GRANT USAGE on *.* to </span><span class="nv">$DBUSER_MISP</span><span class="s2">@localhost IDENTIFIED by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;\&quot;&quot;</span>
   scl <span class="nb">enable</span> rh-mariadb102 <span class="s2">&quot;mysql -u </span><span class="nv">$DBUSER_ADMIN</span><span class="s2"> -p</span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2"> -e \&quot;GRANT ALL PRIVILEGES on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;\&quot;&quot;</span>
   scl <span class="nb">enable</span> rh-mariadb102 <span class="s2">&quot;mysql -u </span><span class="nv">$DBUSER_ADMIN</span><span class="s2"> -p</span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2"> -e &#39;FLUSH PRIVILEGES;&#39;&quot;</span>
 
@@ -1893,6 +1902,7 @@ firewall_RHEL <span class="o">()</span> <span class="o">{</span>
 <h2 id="801-enable-log-rotation">8.01/ Enable log rotation<a class="headerlink" href="#801-enable-log-rotation" title="Permanent link">&para;</a></h2>
 <p>MISP saves the stdout and stderr of its workers in /var/www/MISP/app/tmp/logs
 To rotate these logs install the supplied logrotate script:</p>
+<p>FIXME: The below does not work</p>
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 2_logRotation_RHEL.sh&gt;</span>
 logRotation_RHEL <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># MISP saves the stdout and stderr of its workers in $PATH_TO_MISP/app/tmp/logs</span>
@@ -2070,7 +2080,9 @@ sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-devel -y
 <span class="s2">Type=simple</span>
 <span class="s2">User=apache</span>
 <span class="s2">Group=apache</span>
-<span class="s2">ExecStart=\&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/misp-modules –l 127.0.0.1 –s\&quot;</span>
+<span class="s2">WorkingDirectory=/usr/local/src/misp-modules</span>
+<span class="s2">Environment=&quot;</span><span class="nv">PATH</span><span class="o">=</span>/var/www/MISP/venv/bin<span class="s2">&quot;</span>
+<span class="s2">ExecStart=\&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/misp-modules -l 127.0.0.1 -s\&quot;</span>
 <span class="s2">Restart=always</span>
 <span class="s2">RestartSec=10</span>
 
@@ -2224,7 +2236,8 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
 
   <span class="c1"># Set default role</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> setDefaultRole <span class="m">3</span>
+  <span class="c1"># TESTME: The following seem defunct, please test.</span>
+  <span class="c1"># $SUDO_WWW $RUN_PHP -- $CAKE setDefaultRole 3</span>
 
   <span class="c1"># Tune global time outs</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.autoRegenerate&quot;</span> <span class="m">0</span>
