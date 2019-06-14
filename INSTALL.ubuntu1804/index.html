@@ -2563,7 +2563,7 @@ checkCoreOS <span class="o">()</span> <span class="o">{</span>
   <span class="k">if</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/redhat-release&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nb">echo</span> <span class="s2">&quot;This is some redhat flavour&quot;</span>
     <span class="nv">REDHAT</span><span class="o">=</span><span class="m">1</span>
-    <span class="nv">RHfla</span><span class="o">=</span><span class="k">$(</span>cat /etc/redhat-release <span class="p">|</span> cut -f <span class="m">1</span> -d<span class="se">\ </span><span class="p">|</span> tr <span class="o">[</span>A-Z<span class="o">]</span> <span class="o">[</span>a-z<span class="o">]</span><span class="k">)</span>
+    <span class="nv">RHfla</span><span class="o">=</span><span class="k">$(</span>cat /etc/redhat-release <span class="p">|</span> cut -f <span class="m">1</span> -d<span class="se">\ </span><span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
   <span class="k">fi</span>
 
 <span class="o">}</span>
@@ -2575,7 +2575,7 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
     sudo apt install lsb-release dialog -y
   <span class="k">fi</span>
 
-  <span class="nv">FLAVOUR</span><span class="o">=</span><span class="k">$(</span>lsb_release -s -i <span class="p">|</span>tr <span class="o">[</span>A-Z<span class="o">]</span> <span class="o">[</span>a-z<span class="o">]</span><span class="k">)</span>
+  <span class="nv">FLAVOUR</span><span class="o">=</span><span class="k">$(</span>lsb_release -s -i <span class="p">|</span>tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
   <span class="k">if</span> <span class="o">[</span> <span class="nv">FLAVOUR</span> <span class="o">==</span> <span class="s2">&quot;ubuntu&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">RELEASE</span><span class="o">=</span><span class="k">$(</span>lsb_release -s -r<span class="k">)</span>
     debug <span class="s2">&quot;We detected the following Linux flavour: </span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="k">$(</span>tr <span class="s1">&#39;[:lower:]&#39;</span> <span class="s1">&#39;[:upper:]&#39;</span> <span class="o">&lt;&lt;&lt;</span> <span class="si">${</span><span class="nv">FLAVOUR</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span><span class="k">)</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">RELEASE</span><span class="si">}${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -2693,6 +2693,27 @@ checkFail <span class="o">()</span> <span class="o">{</span>
   <span class="k">fi</span>
 <span class="o">}</span>
 
+ask_o <span class="o">()</span> <span class="o">{</span>
+
+  <span class="nv">ANSWER</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+
+  <span class="k">if</span> <span class="o">[</span> -z <span class="si">${</span><span class="nv">1</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;This function needs at least 1 parameter.&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+  <span class="k">fi</span>
+
+  <span class="o">[</span> -z <span class="nv">$2</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nv">OPT1</span><span class="o">=</span><span class="s2">&quot;y&quot;</span> <span class="o">||</span> <span class="nv">OPT1</span><span class="o">=</span><span class="nv">$2</span>
+  <span class="o">[</span> -z <span class="nv">$3</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nv">OPT2</span><span class="o">=</span><span class="s2">&quot;n&quot;</span> <span class="o">||</span> <span class="nv">OPT2</span><span class="o">=</span><span class="nv">$3</span>
+
+  <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span>
+    <span class="k">case</span> <span class="nv">$ANSWER</span> in <span class="si">${</span><span class="nv">OPT1</span><span class="si">}</span> <span class="p">|</span> <span class="si">${</span><span class="nv">OPT2</span><span class="si">}</span><span class="o">)</span> <span class="nb">break</span> <span class="p">;;</span> <span class="k">esac</span>
+    <span class="nb">echo</span> -n <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2"> (</span><span class="si">${</span><span class="nv">OPT1</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">OPT2</span><span class="si">}</span><span class="s2">) &quot;</span>
+    <span class="nb">read</span> ANSWER
+    <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>  tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
+  <span class="k">done</span>
+
+<span class="o">}</span>
+
 <span class="c1"># Check if misp user is present and if run as root</span>
 checkID <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Checking if run as root and </span><span class="nv">$MISP_USER</span><span class="s2"> is present&quot;</span>
@@ -2703,7 +2724,7 @@ checkID <span class="o">()</span> <span class="o">{</span>
     <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
       <span class="nb">echo</span> <span class="s2">&quot;There is NO user called &#39;</span><span class="nv">$MISP_USER</span><span class="s2">&#39; create a user &#39;</span><span class="nv">$MISP_USER</span><span class="s2">&#39; (y) or continue as </span><span class="nv">$USER</span><span class="s2"> (n)? (y/n) &quot;</span>
       <span class="nb">read</span> ANSWER
-      <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>tr <span class="o">[</span>A-Z<span class="o">]</span> <span class="o">[</span>a-z<span class="o">]</span><span class="k">)</span>
+      <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
     <span class="k">else</span>
       <span class="nv">ANSWER</span><span class="o">=</span><span class="s2">&quot;y&quot;</span>
     <span class="k">fi</span>
@@ -2846,7 +2867,7 @@ setBaseURL <span class="o">()</span> <span class="o">{</span>
       <span class="nb">echo</span> <span class="s2">&quot;You can now enter your own MISP_BASEURL, if you wish to NOT do that, the MISP_BASEURL will be empty, which will work, but ideally you configure it afterwards.&quot;</span>
       <span class="nb">echo</span> <span class="s2">&quot;Do you want to change it now? (y/n) &quot;</span>
       <span class="nb">read</span> ANSWER
-      <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>tr <span class="o">[</span>A-Z<span class="o">]</span> <span class="o">[</span>a-z<span class="o">]</span><span class="k">)</span>
+      <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
       <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$ANSWER</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
         <span class="k">if</span> <span class="o">[[</span> ! -z <span class="nv">$IP</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
           <span class="nb">echo</span> <span class="s2">&quot;It seems you have an interface called </span><span class="nv">$IFACE</span><span class="s2"> UP with the following IP: </span><span class="nv">$IP</span><span class="s2"> - FYI&quot;</span>
