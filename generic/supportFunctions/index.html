@@ -854,19 +854,19 @@ ask_o <span class="o">()</span> <span class="o">{</span>
 
   <span class="nv">ANSWER</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
 
-  <span class="k">if</span> <span class="o">[</span> -z <span class="si">${</span><span class="nv">1</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nb">echo</span> <span class="s2">&quot;This function needs at least 1 parameter.&quot;</span>
     <span class="nb">exit</span> <span class="m">1</span>
   <span class="k">fi</span>
 
-  <span class="o">[</span> -z <span class="nv">$2</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nv">OPT1</span><span class="o">=</span><span class="s2">&quot;y&quot;</span> <span class="o">||</span> <span class="nv">OPT1</span><span class="o">=</span><span class="nv">$2</span>
-  <span class="o">[</span> -z <span class="nv">$3</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nv">OPT2</span><span class="o">=</span><span class="s2">&quot;n&quot;</span> <span class="o">||</span> <span class="nv">OPT2</span><span class="o">=</span><span class="nv">$3</span>
+  <span class="o">[</span> -z <span class="s2">&quot;</span><span class="si">${</span><span class="nv">2</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nv">OPT1</span><span class="o">=</span><span class="s2">&quot;y&quot;</span> <span class="o">||</span> <span class="nv">OPT1</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">2</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="o">[</span> -z <span class="s2">&quot;</span><span class="si">${</span><span class="nv">3</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nv">OPT2</span><span class="o">=</span><span class="s2">&quot;n&quot;</span> <span class="o">||</span> <span class="nv">OPT2</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">3</span><span class="si">}</span><span class="s2">&quot;</span>
 
   <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span>
-    <span class="k">case</span> <span class="nv">$ANSWER</span> in <span class="si">${</span><span class="nv">OPT1</span><span class="si">}</span> <span class="p">|</span> <span class="si">${</span><span class="nv">OPT2</span><span class="si">}</span><span class="o">)</span> <span class="nb">break</span> <span class="p">;;</span> <span class="k">esac</span>
+    <span class="k">case</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ANSWER</span><span class="si">}</span><span class="s2">&quot;</span> in <span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPT1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPT2</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">)</span> <span class="nb">break</span> <span class="p">;;</span> <span class="k">esac</span>
     <span class="nb">echo</span> -n <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2"> (</span><span class="si">${</span><span class="nv">OPT1</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">OPT2</span><span class="si">}</span><span class="s2">) &quot;</span>
     <span class="nb">read</span> ANSWER
-    <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>  tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
+    <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ANSWER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">|</span>  tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
   <span class="k">done</span>
 
 <span class="o">}</span>
@@ -1352,6 +1352,7 @@ genRCLOCAL <span class="o">()</span> <span class="o">{</span>
   sed -i -e <span class="s1">&#39;$i \echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled\n&#39;</span> /etc/rc.local
   sed -i -e <span class="s1">&#39;$i \echo 1024 &gt; /proc/sys/net/core/somaxconn\n&#39;</span> /etc/rc.local
   sed -i -e <span class="s1">&#39;$i \sysctl vm.overcommit_memory=1\n&#39;</span> /etc/rc.local
+  sed -i -e <span class="s1">&#39;$i \[ -f /etc/init.d/firstBoot ] &amp;&amp; bash /etc/init.d/firstBoot\n&#39;</span> /etc/rc.local
 <span class="o">}</span>
 
 <span class="c1"># Run PyMISP tests</span>
