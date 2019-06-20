@@ -2062,7 +2062,7 @@ sudo systemctl daemon-reload
 
 <h2 id="907-misp-modules-wip">9.07/ misp-modules (WIP!)<a class="headerlink" href="#907-misp-modules-wip" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><span class="c1"># some misp-modules dependencies</span>
-sudo yum install openjpeg-devel gcc-c++ poppler-cpp-devel -y
+sudo yum install openjpeg-devel gcc-c++ poppler-cpp-devel pkgconfig python-devel redhat-rpm-config -y
 
 sudo chmod <span class="m">2777</span> /usr/local/src
 sudo chown root:users /usr/local/src
