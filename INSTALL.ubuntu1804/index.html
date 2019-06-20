@@ -1259,7 +1259,16 @@ aptUpgrade <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Upgrading system&quot;</span>
   checkAptLock
   sudo apt-get update
-  sudo apt-get upgrade -qy
+
+  <span class="c1"># If we run in non-interactive mode, make sure we do not stop all of a sudden</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PACKER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">||</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">UNATTENDED</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">export</span> <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive
+    <span class="nb">export</span> <span class="nv">DEBIAN_PRIORITY</span><span class="o">=</span>critical
+    sudo -E apt-get -qy -o <span class="s2">&quot;Dpkg::Options::=--force-confdef&quot;</span> -o <span class="s2">&quot;Dpkg::Options::=--force-confold&quot;</span> upgrade
+    sudo -E apt-get -qy autoclean
+  <span class="k">else</span>
+    sudo apt-get upgrade -qy
+  <span class="k">fi</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_apt-upgrade.sh&gt;</span>
 </pre></div>
