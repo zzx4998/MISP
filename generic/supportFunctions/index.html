@@ -871,11 +871,17 @@ ask_o <span class="o">()</span> <span class="o">{</span>
 
 <span class="o">}</span>
 
+clean <span class="o">()</span> <span class="o">{</span>
+  rm /tmp/INSTALL.stat
+  rm /tmp/INSTALL.sh.*
+<span class="o">}</span>
+
 <span class="c1"># Check if misp user is present and if run as root</span>
 checkID <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Checking if run as root and </span><span class="nv">$MISP_USER</span><span class="s2"> is present&quot;</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="nv">$EUID</span> <span class="o">==</span> <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nb">echo</span> <span class="s2">&quot;This script cannot be run as a root&quot;</span>
+    clean &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
     <span class="nb">exit</span> <span class="m">1</span>
   <span class="k">elif</span> <span class="o">[[</span> <span class="k">$(</span>id <span class="nv">$MISP_USER</span> &gt;/dev/null<span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
@@ -1018,6 +1024,7 @@ setBaseURL <span class="o">()</span> <span class="o">{</span>
   <span class="nv">CONN</span><span class="o">=</span><span class="k">$(</span>ip -br -o -4 a <span class="p">|</span>grep UP <span class="p">|</span>head -1 <span class="p">|</span>tr -d <span class="s2">&quot;UP&quot;</span><span class="k">)</span>
   <span class="nv">IFACE</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$CONN</span> <span class="p">|</span>awk <span class="o">{</span><span class="s1">&#39;print $1&#39;</span><span class="o">}</span><span class="sb">`</span>
   <span class="nv">IP</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$CONN</span> <span class="p">|</span>awk <span class="o">{</span><span class="s1">&#39;print $2&#39;</span><span class="o">}</span><span class="p">|</span> cut -f1 -d/<span class="sb">`</span>
+  <span class="c1"># TODO: Consider &quot;QEMU&quot;</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>checkManufacturer<span class="k">)</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;innotek GmbH&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>checkManufacturer<span class="k">)</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;VMware, Inc.&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     debug <span class="s2">&quot;We guess that this is a physical machine and cannot possibly guess what the MISP_BASEURL might be.&quot;</span>
     <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 

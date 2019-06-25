@@ -8177,12 +8177,31 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[UI] Filter the object template index using the quick search.
-  [iglocska]</li>
-<li>
-<p>[API] On-demand inclusion of attribute relations via the event view
+<li>[correlation graph] Toggle physics on/off. [iglocska]</li>
+</ul>
+<p>.,/#&amp;&amp;@@@@@@@@&amp;%(<em>.
+                                                    .&amp;@@%,,.,,.,,,</em>#%&amp;&amp;&amp;%#(/<strong>,,</strong>/(%&amp;&amp;&amp;%(/,.......(@@@,
+                                            &amp;@&amp;,,,,,<em>&amp;&amp;(....  .</em>....<em>..//.../../(...</em>.<em>(...%..........#&amp;(....</em>@@/
+                        @#,,/&amp;%,.(<em>..........#,/.............................................................../...</em>..<em>(.......</em>&amp;.,<em>@,
+                     @</em>,,%@/......#<em>(................................................................................./. (./.#.....#%..%@
+                  @/,,&amp;@,............/(..................................................................................#............</em>&amp;../@
+                 @<em>,/&amp;&amp;.................................................................................................................&amp;,..@
+               (@,,(&amp;(...................................................................................................................%%..@(
+             #@,,%&amp;........................................................</em>/,...../(<em>......................................................&amp;..</em>@
+           @<em>,#%,................................................</em>   ..                       (................................................&amp;.,<em>%
+         @</em>,(%................................................<em>,..</em>(<em>.</em>,,...<em>,/..</em>,.. ... .,.<em>... ...............................................&amp;</em>..@
+             @%/<em>#</em>.,....%<em>.#</em>%,,...................................................................................................%.........%.,@
+                         @&amp;(**%@,.,/.,.(<em>...//...................................%&amp;(................................&amp; &amp;,..</em>..%,..%,,.@
+                             @&amp;(//(&amp;@...%#/.......#/%..<em>.( /,..........................................</em>,,...../<em>%</em>,...#..../(.,.@.
+                                          #@%////#%%&amp;<em>....#.,(.,#</em>,..<em>,...</em>,./<em>.....#(........(,....(.......(%/,,,,&amp;@.
+                                                       /@@@(/(////((((###%&amp;&amp;&amp;&amp;%%%%%%%%&amp;%%##(/******</em>/&amp;@@(
+                                                              ,%@@@@%#((//////******/////(/#%@@@@%,
+                                                                            .,<strong><em>/</em></strong>,.
+- [UI] Filter the object template index using the quick search.
+  [iglocska]
+- [API] On-demand inclusion of attribute relations via the event view
   endpoint. [iglocska]</p>
-</li>
+<ul>
 <li>
 <p>new URL param, includeGranularCorrelations:1 added</p>
 <div class="codehilite"><pre><span></span>                           |\    /|
@@ -8220,6 +8239,21 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[installer] Updated installer. [Steve Clement]</li>
+<li>[doc] Fixed some issues with dashboard. [Steve Clement]</li>
+<li>[doc] Added more steps to make it work on RHEL/CentOS. [Steve Clement]</li>
+<li>[event:view] More UI tweaking on related-* [mokaddem]</li>
+<li>[event:view] UI tweaking on related-* [mokaddem]</li>
+<li>[event:view] Make <code>Related *</code> scrollable. [mokaddem]</li>
+<li>[relatedEvent:view] Display the number of unique correlation.
+  [mokaddem]</li>
+<li>[view:relatedEvents] Improved UI. [mokaddem]</li>
+<li>[relatedEvent:view] Started integration into event:view - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />.
+  [mokaddem]</li>
+<li>[previewEvent] Improved UI of related events - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />. [mokaddem]</li>
+<li>[misp-taxonomies] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[stix2] Bumped latest version. [chrisr3d]</li>
 <li>[installer] Update installer to Fix Auto-VMs. [Steve Clement]</li>
 <li>[installer] Updated installer. [Steve Clement]</li>
 <li>[doc] Added plyara to kali installer, amended RHEL misp-modules
@@ -8257,16 +8291,30 @@
   reuse. [iglocska]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[row_attribute] feed correlation popover not being displayed for feed
+  type other than MISP format. [mokaddem]</li>
+<li>[relatedEvent:view] catch if number of correlation cannot be found.
+  [mokaddem]</li>
+<li>[event:addTag] User can add multiple tag collection at once.
+  [mokaddem]</li>
+<li>[stix2 import] Fixed wrong function used. [chrisr3d]</li>
 <li>[installer] Currently misp-packer fails on waiting for user inpu…
   (#4788) [Steve Clement]</li>
 </ul>
 <p>fix: [installer] Currently misp-packer fails on waiting for user inpu…
 - [installer] Currently misp-packer fails on waiting for user input
   during upgrade. [Steve Clement]
-- [js] fixes #4678 and javascript errors. [Christophe Vandeplas]
-- [API] Simple worker management added. [iglocska]</p>
+- [data-massaging] Removed massaging for float type attributes.
+  [iglocska]</p>
 <ul>
-<li>/servers/startWorker/[queue]</li>
+<li>it not only stripped anything but floats as expected, but additionally also rounded the value</li>
+<li>[js] fixes #4678 and javascript errors. [Christophe Vandeplas]</li>
+<li>
+<p>[API] Simple worker management added. [iglocska]</p>
+</li>
+<li>
+<p>/servers/startWorker/[queue]</p>
+</li>
 <li>/servers/stopWorker/[pid]</li>
 <li>/servers/getWorkers</li>
 <li>[object:proposeValidTemplate] Support only_full_group_by sql mode. Fix
@@ -8295,9 +8343,22 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
-<li>Merge pull request #4769 from cvandeplas/2.4. [Andras Iklody]</li>
+<li>Merge pull request #4798 from SteveClement/guides. [Steve Clement]</li>
 </ul>
+<p>chg: [doc] Various updates to RHEL/Ubuntu
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
+- Merge pull request #4570 from mokaddem/relatedEventUI. [Andras Iklody]</p>
+<p>Related event ui
+- Merge branch '2.4' of github.com:MISP/MISP into relatedEventUI.
+  [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into relatedEventUI.
+  [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into relatedEventUI.
+  [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #4769 from cvandeplas/2.4. [Andras Iklody]</p>
 <p>fix: [js] fixes #4678 and javascript errors
 - Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
 - Merge pull request #4674 from juju4/devel-globalstrict. [Andras

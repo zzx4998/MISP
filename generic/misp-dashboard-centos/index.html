@@ -665,7 +665,7 @@
 </div>
 <div class="codehilite"><pre><span></span>sudo yum install wget screen -y
 sudo mkdir /var/www/misp-dashboard
-sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> misp-dashboard
+sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/misp-dashboard
 <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git /var/www/misp-dashboard
 <span class="nb">cd</span> /var/www/misp-dashboard
 sudo sed -i -E <span class="s1">&#39;s/sudo apt/#sudo apt/&#39;</span> install_dependencies.sh

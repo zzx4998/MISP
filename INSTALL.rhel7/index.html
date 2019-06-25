@@ -1703,6 +1703,12 @@ installCake_RHEL <span class="o">()</span>
   sudo scl <span class="nb">enable</span> rh-php72 <span class="s1">&#39;yes no|pecl install redis&#39;</span>
   <span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> <span class="p">|</span>sudo tee /etc/opt/rh/rh-php72/php-fpm.d/redis.ini
   sudo ln -s /etc/opt/rh/rh-php72/php-fpm.d/redis.ini /etc/opt/rh/rh-php72/php.d/99-redis.ini
+
+  <span class="c1"># Install gnupg extension</span>
+  sudo yum install gpgme-devel
+  sudo scl <span class="nb">enable</span> rh-php72 <span class="s1">&#39;pecl install gnupg&#39;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;extension=gnupg.so&quot;</span> <span class="p">|</span>sudo tee /etc/opt/rh/rh-php72/php-fpm.d/gnupg.ini
+  sudo ln -s /etc/opt/rh/rh-php72/php-fpm.d/gnupg.ini /etc/opt/rh/rh-php72/php.d/99-gnupg.ini
   sudo systemctl restart rh-php72-php-fpm.service
 
   <span class="c1"># If you have not yet set a timezone in php.ini</span>
@@ -1856,9 +1862,7 @@ apacheConfig_RHEL <span class="o">()</span> <span class="o">{</span>
   sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
   sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mispzmq/mispzmq.py
   sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mispzmq/mispzmqtest.py
-  sudo chcon -t httpd_sys_script_exec_t /usr/bin/ps
-  sudo chcon -t httpd_sys_script_exec_t /usr/bin/grep
-  sudo chcon -t httpd_sys_script_exec_t /usr/bin/awk
+  sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief/build/api/python/lief.so
   sudo chcon -t httpd_sys_script_exec_t /usr/bin/gpg
   sudo chcon -t httpd_sys_script_exec_t /usr/bin/gpg-agent
   sudo chcon -t httpd_sys_script_exec_t /usr/bin/whoami
@@ -2145,7 +2149,7 @@ sudo systemctl <span class="nb">enable</span> --now misp-modules
 </div>
 <div class="codehilite"><pre><span></span>sudo yum install wget screen -y
 sudo mkdir /var/www/misp-dashboard
-sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> misp-dashboard
+sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/misp-dashboard
 <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git /var/www/misp-dashboard
 <span class="nb">cd</span> /var/www/misp-dashboard
 sudo sed -i -E <span class="s1">&#39;s/sudo apt/#sudo apt/&#39;</span> install_dependencies.sh
