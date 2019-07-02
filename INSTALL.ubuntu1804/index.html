@@ -2562,9 +2562,14 @@ setOpt <span class="o">()</span> <span class="o">{</span>
   <span class="k">done</span>
 <span class="o">}</span>
 
+<span class="c1"># check if command_exists</span>
+command_exists <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">command</span> -v <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span> &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+<span class="o">}</span>
+
+<span class="c1"># TODO: fix os detection mess</span>
 <span class="c1"># Try to detect what we are running on</span>
 checkCoreOS <span class="o">()</span> <span class="o">{</span>
-
   <span class="c1"># lsb_release can exist on any platform. RedHat package: redhat-lsb</span>
   <span class="nv">LSB_RELEASE</span><span class="o">=</span><span class="k">$(</span>which lsb_release &gt; /dev/null <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span>
   <span class="nv">APT</span><span class="o">=</span><span class="k">$(</span>which apt &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">;</span> <span class="nb">echo</span> -n <span class="nv">$?</span><span class="k">)</span>
@@ -2581,22 +2586,112 @@ checkCoreOS <span class="o">()</span> <span class="o">{</span>
     <span class="nv">REDHAT</span><span class="o">=</span><span class="m">1</span>
     <span class="nv">RHfla</span><span class="o">=</span><span class="k">$(</span>cat /etc/redhat-release <span class="p">|</span> cut -f <span class="m">1</span> -d<span class="se">\ </span><span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
   <span class="k">fi</span>
-
 <span class="o">}</span>
 
 <span class="c1"># Extract debian flavour</span>
 checkFlavour <span class="o">()</span> <span class="o">{</span>
-  <span class="k">if</span> <span class="o">[</span> -z <span class="k">$(</span>which lsb_release<span class="k">)</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    checkAptLock
-    sudo apt install lsb-release dialog -y
+  <span class="nv">lsb_dist</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+  <span class="c1"># Every system that we officially support has /etc/os-release</span>
+  <span class="k">if</span> <span class="o">[</span> -r /etc/os-release <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">FLAVOUR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$ID</span><span class="s2">&quot;</span><span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
   <span class="k">fi</span>
 
-  <span class="nv">FLAVOUR</span><span class="o">=</span><span class="k">$(</span>lsb_release -s -i <span class="p">|</span>tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
-  <span class="k">if</span> <span class="o">[</span> <span class="nv">FLAVOUR</span> <span class="o">==</span> <span class="s2">&quot;ubuntu&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2">&quot;</span> in
+    ubuntu<span class="o">)</span>
+      <span class="k">if</span> command_exists lsb_release<span class="p">;</span> <span class="k">then</span>
+        <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>lsb_release --codename <span class="p">|</span> cut -f2<span class="k">)</span><span class="s2">&quot;</span>
+      <span class="k">fi</span>
+      <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -r /etc/lsb-release <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/lsb-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$DISTRIB_CODENAME</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
+      <span class="k">fi</span>
+    <span class="p">;;</span>
+    debian<span class="p">|</span>raspbian<span class="o">)</span>
+      <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>sed <span class="s1">&#39;s/\/.*//&#39;</span> /etc/debian_version <span class="p">|</span> sed <span class="s1">&#39;s/\..*//&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
+      <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> in
+        <span class="m">10</span><span class="o">)</span>
+          <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;buster&quot;</span>
+        <span class="p">;;</span>
+        <span class="m">9</span><span class="o">)</span>
+          <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;stretch&quot;</span>
+        <span class="p">;;</span>
+      <span class="k">esac</span>
+    <span class="p">;;</span>
+    centos<span class="o">)</span>
+      <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -r /etc/os-release <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
+      <span class="k">fi</span>
+      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$lsb_dist</span><span class="s2"> not supported at the moment&quot;</span>
+      <span class="nb">exit</span> <span class="m">1</span>
+    <span class="p">;;</span>
+    rhel<span class="p">|</span>ol<span class="p">|</span>sles<span class="o">)</span>
+      <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -r /etc/os-release <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
+      <span class="k">fi</span>
+      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$lsb_dist</span><span class="s2"> not supported at the moment&quot;</span>
+      <span class="nb">exit</span> <span class="m">1</span>
+    <span class="p">;;</span>
+    *<span class="o">)</span>
+      <span class="k">if</span> command_exists lsb_release<span class="p">;</span> <span class="k">then</span>
+        <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>lsb_release --release <span class="p">|</span> cut -f2<span class="k">)</span><span class="s2">&quot;</span>
+      <span class="k">fi</span>
+      <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -r /etc/os-release <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
+      <span class="k">fi</span>
+    <span class="p">;;</span>
+  <span class="k">esac</span>
+
+  <span class="c1"># FIXME: The below want to be refactored</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;ubuntu&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">RELEASE</span><span class="o">=</span><span class="k">$(</span>lsb_release -s -r<span class="k">)</span>
     debug <span class="s2">&quot;We detected the following Linux flavour: </span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="k">$(</span>tr <span class="s1">&#39;[:lower:]&#39;</span> <span class="s1">&#39;[:upper:]&#39;</span> <span class="o">&lt;&lt;&lt;</span> <span class="si">${</span><span class="nv">FLAVOUR</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span><span class="k">)</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">RELEASE</span><span class="si">}${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="k">else</span>
     debug <span class="s2">&quot;We detected the following Linux flavour: </span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="k">$(</span>tr <span class="s1">&#39;[:lower:]&#39;</span> <span class="s1">&#39;[:upper:]&#39;</span> <span class="o">&lt;&lt;&lt;</span> <span class="si">${</span><span class="nv">FLAVOUR</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span><span class="k">)</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="p">:</span><span class="nv">1</span><span class="si">}${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+
+<span class="c1"># Check if this is a forked Linux distro</span>
+check_forked <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># Check for lsb_release command existence, it usually exists in forked distros</span>
+  <span class="k">if</span> command_exists lsb_release<span class="p">;</span> <span class="k">then</span>
+    <span class="c1"># Check if the `-u` option is supported</span>
+    <span class="nb">set</span> +e
+    lsb_release -a -u &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+    <span class="nv">lsb_release_exit_code</span><span class="o">=</span><span class="nv">$?</span>
+    <span class="nb">set</span> -e
+
+    <span class="c1"># Check if the command has exited successfully, it means we&#39;re in a forked distro</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$lsb_release_exit_code</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="c1"># Print info about current distro</span>
+      cat <span class="s">&lt;&lt;-EOF</span>
+<span class="s">      You&#39;re using &#39;$lsb_dist&#39; version &#39;$dist_version&#39;.</span>
+<span class="s">EOF</span>
+      <span class="c1"># Get the upstream release info</span>
+      <span class="nv">lsb_dist</span><span class="o">=</span><span class="k">$(</span>lsb_release -a -u <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span> <span class="p">|</span> grep -E <span class="s1">&#39;id&#39;</span> <span class="p">|</span> cut -d <span class="s1">&#39;:&#39;</span> -f <span class="m">2</span> <span class="p">|</span> tr -d <span class="s1">&#39;[:space:]&#39;</span><span class="k">)</span>
+      <span class="nv">dist_version</span><span class="o">=</span><span class="k">$(</span>lsb_release -a -u <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span> <span class="p">|</span> grep -E <span class="s1">&#39;codename&#39;</span> <span class="p">|</span> cut -d <span class="s1">&#39;:&#39;</span> -f <span class="m">2</span> <span class="p">|</span> tr -d <span class="s1">&#39;[:space:]&#39;</span><span class="k">)</span>
+
+      <span class="c1"># Print info about upstream distro</span>
+      cat <span class="s">&lt;&lt;-EOF</span>
+<span class="s">      Upstream release is &#39;$lsb_dist&#39; version &#39;$dist_version&#39;.</span>
+<span class="s">EOF</span>
+    <span class="k">else</span>
+      <span class="k">if</span> <span class="o">[</span> -r /etc/debian_version <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$lsb_dist</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;ubuntu&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$lsb_dist</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;raspbian&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="c1"># We&#39;re Debian and don&#39;t even know it!</span>
+        <span class="nv">lsb_dist</span><span class="o">=</span>debian
+        <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>sed <span class="s1">&#39;s/\/.*//&#39;</span> /etc/debian_version <span class="p">|</span> sed <span class="s1">&#39;s/\..*//&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
+        <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> in
+          <span class="m">10</span><span class="o">)</span>
+            <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;buster&quot;</span>
+          <span class="p">;;</span>
+          <span class="m">9</span><span class="o">)</span>
+            <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;stretch&quot;</span>
+          <span class="p">;;</span>
+          <span class="m">8</span><span class="p">|</span><span class="s1">&#39;Kali Linux 2&#39;</span><span class="o">)</span>
+            <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;jessie&quot;</span>
+          <span class="p">;;</span>
+        <span class="k">esac</span>
+      <span class="k">fi</span>
+    <span class="k">fi</span>
   <span class="k">fi</span>
 <span class="o">}</span>
 

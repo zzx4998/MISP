@@ -8239,6 +8239,9 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[installer] Added fork checker. [Steve Clement]</li>
+<li>[installer] One step closer to "sane" aka. generic os-detection.
+  [Steve Clement]</li>
 <li>[doc] Leveled RHEL7/RHEL8 Install procedure (<img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />) (#4824) [Steve
   Clement]</li>
 </ul>
@@ -8352,23 +8355,25 @@
   reuse. [iglocska]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[stix2 export] Making stix2-validator happy with email additional
-  header fields. [chrisr3d]</li>
-<li>[stix2 export] Making stix2-validator happpy with registry key
-  patterns. [chrisr3d]</li>
-<li>[internal] processing freetext data without background workers fixed.
-  [iglocska]</li>
-<li>[enrichment view] Testing if event metadata elements exist before
-  displaying them. [chrisr3d]</li>
-<li>
-<p>[enrichment] Applying regular expressions to values before displaying
+<li>[installer] Installer had some bugs for os-detection. [Steve Clement]</li>
+<li>[doc] Added missing misp-modules centos (#4825) [Steve Clement]</li>
+</ul>
+<p>fix: [doc] Added missing misp-modules centos
+- [doc] Added missing misp-modules centos. [Steve Clement]
+- [stix2 export] Making stix2-validator happy with email additional
+  header fields. [chrisr3d]
+- [stix2 export] Making stix2-validator happpy with registry key
+  patterns. [chrisr3d]
+- [internal] processing freetext data without background workers fixed.
+  [iglocska]
+- [enrichment view] Testing if event metadata elements exist before
+  displaying them. [chrisr3d]
+- [enrichment] Applying regular expressions to values before displaying
   them. [chrisr3d]</p>
-</li>
-<li>
-<p>So when the DB is queried to find if object
+<ul>
+<li>So when the DB is queried to find if object
     attributes with those values already exist,
-    we do not miss some stored values</p>
-</li>
+    we do not miss some stored values</li>
 <li>[enrichment] Strengthened query conditions to find existing object
   attributes. [chrisr3d]</li>
 <li>[enrichment view] Displaying Tags only if not empty (error otherwise)
@@ -8619,9 +8624,12 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge branch '2.4' into guides. [Steve Clement]</li>
-<li>Merge pull request #4822 from Kortho/patch-1. [Andras Iklody]</li>
+<li>Merge pull request #4826 from SteveClement/tools. [Steve Clement]</li>
 </ul>
+<p>chg: [installer] One step closer to "sane" aka. generic os-detection
+- Merge branch '2.4' into tools. [Steve Clement]
+- Merge branch '2.4' into guides. [Steve Clement]
+- Merge pull request #4822 from Kortho/patch-1. [Andras Iklody]</p>
 <p>fixed mixed dbuser - dbname
 - Fixed mixed dbuser - dbname. [Kortho]</p>
 <p>changed so the script uses the correct var
