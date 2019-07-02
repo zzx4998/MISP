@@ -1347,7 +1347,7 @@ prepareDB_RHEL <span class="o">()</span> <span class="o">{</span>
   sudo systemctl restart mariadb
 
   mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;CREATE DATABASE </span><span class="nv">$DBNAME</span><span class="s2">;&quot;</span>
-  mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT USAGE on *.* to </span><span class="nv">$DBNAME</span><span class="s2">@localhost IDENTIFIED by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
+  mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT USAGE on *.* to </span><span class="nv">$DBUSER</span><span class="s2">@localhost IDENTIFIED by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
   mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT ALL PRIVILEGES on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
   mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s1">&#39;FLUSH PRIVILEGES;&#39;</span>
 
@@ -1686,6 +1686,7 @@ sudo cp /opt/rh/httpd24/root/etc/httpd/conf.modules.d/10-rh-python36-wsgi.conf /
 <span class="s2">    ServerSignature Off</span>
 <span class="s2">&lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> sudo tee /etc/httpd/conf.d/misp-dashboard.conf
 
+sudo semanage port -a -t http_port_t -p tcp <span class="m">8001</span>
 sudo systemctl restart httpd.service
 
 <span class="c1"># Add misp-dashboard to rc.local to start on boot.</span>

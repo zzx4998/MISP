@@ -8239,26 +8239,79 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[installer] Updated installer. [Steve Clement]</li>
-<li>[doc] Fixed some issues with dashboard. [Steve Clement]</li>
-<li>[doc] Added more steps to make it work on RHEL/CentOS. [Steve Clement]</li>
-<li>[event:view] More UI tweaking on related-* [mokaddem]</li>
-<li>[event:view] UI tweaking on related-* [mokaddem]</li>
-<li>[event:view] Make <code>Related *</code> scrollable. [mokaddem]</li>
-<li>[relatedEvent:view] Display the number of unique correlation.
-  [mokaddem]</li>
-<li>[view:relatedEvents] Improved UI. [mokaddem]</li>
-<li>[relatedEvent:view] Started integration into event:view - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />.
-  [mokaddem]</li>
-<li>[previewEvent] Improved UI of related events - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />. [mokaddem]</li>
-<li>[misp-taxonomies] updated to the latest version. [Alexandre Dulaunoy]</li>
-<li>[misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]</li>
-<li>[stix2] Bumped latest version. [chrisr3d]</li>
-<li>[installer] Update installer to Fix Auto-VMs. [Steve Clement]</li>
-<li>[installer] Updated installer. [Steve Clement]</li>
-<li>[doc] Added plyara to kali installer, amended RHEL misp-modules
-  (#4787) [Steve Clement]</li>
+<li>[i18n] Updated Russian Translation to &gt;30% (#4821) [Steve Clement]</li>
 </ul>
+<p>chg: [i18n] Updated Russian Translation to &gt;30%
+- [i18n] Updated Russian Translation to &gt;30% [Steve Clement]
+- Bumped query version. [chrisr3d]
+- [enrichment] Import modules now support new modules format. [chrisr3d]</p>
+<ul>
+<li>Import module results are sent to the new view
+    (same as for expansion modules) whenever they
+    support objects import</li>
+<li>Function handling the results right after they
+    are returned from the module has also been moved
+    to Model/Event and is used for both expansion &amp;
+    import modules</li>
+<li>
+<p>[enrichment] Making attributes category &amp; type changeable. [chrisr3d]</p>
+</li>
+<li>
+<p>To keep possibility to select the attribute type
+    or category, as it is in freetext import</p>
+</li>
+<li>Category and Type values that can be selected by
+    users should be specified in the results, using
+    an array. Otherwise, they are set and cannot be
+    changed in the view (as it is the case for the
+    other fields like value and uuid)</li>
+<li>This feature is only applicable on attributes
+    level, and not on object attributes level</li>
+<li>
+<p>[enrichment] Passing the initial object to the form. [chrisr3d]</p>
+</li>
+<li>
+<p>If the attribute we query the module on is an
+    object attribute, we want to have this object
+    information se we do not add or overwrite
+    attributes already here</p>
+</li>
+<li>[ObjectReference] Referenced id, uuid &amp; type set now from a function
+  that could be reused. [chrisr3d]</li>
+<li>[enrichment] Defined function to appy inflector on strings. [chrisr3d]</li>
+</ul>
+<p>So we can use it each time we want to display the
+  freetext import / module results status message
+- [stix2] Bumped latest version. [chrisr3d]</p>
+<ul>
+<li>Fixing issues with 'parse' called on bundles
+    containing custom objects</li>
+<li>[installer] If unattended do not switch user. (#4812) [Steve Clement]</li>
+</ul>
+<p>chg: [installer] If unattended do not switch user.
+- [installer] If unattended do not switch user. [Steve Clement]
+- Remove php 7.0 from travis. [Raphaël Vinot]
+- Try to solve the entropy problem on travis. [Raphaël Vinot]
+- [doc] More tweaks to the CentOS howto. [Steve Clement]
+- [installer] Updated installer. [Steve Clement]
+- [doc] Fixed some issues with dashboard. [Steve Clement]
+- [doc] Added more steps to make it work on RHEL/CentOS. [Steve Clement]
+- [event:view] More UI tweaking on related-* [mokaddem]
+- [event:view] UI tweaking on related-* [mokaddem]
+- [event:view] Make <code>Related *</code> scrollable. [mokaddem]
+- [relatedEvent:view] Display the number of unique correlation.
+  [mokaddem]
+- [view:relatedEvents] Improved UI. [mokaddem]
+- [relatedEvent:view] Started integration into event:view - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />.
+  [mokaddem]
+- [previewEvent] Improved UI of related events - <img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" />. [mokaddem]
+- [misp-taxonomies] updated to the latest version. [Alexandre Dulaunoy]
+- [misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]
+- [stix2] Bumped latest version. [chrisr3d]
+- [installer] Update installer to Fix Auto-VMs. [Steve Clement]
+- [installer] Updated installer. [Steve Clement]
+- [doc] Added plyara to kali installer, amended RHEL misp-modules
+  (#4787) [Steve Clement]</p>
 <p>chg: [doc] Added plyara to kali installer, amended RHEL misp-modules
 - [doc] Added plyara to kali installer, amended RHEL misp-modules.
   [Steve Clement]
@@ -8291,6 +8344,221 @@
   reuse. [iglocska]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[stix2 export] Making stix2-validator happy with email additional
+  header fields. [chrisr3d]</li>
+<li>[stix2 export] Making stix2-validator happpy with registry key
+  patterns. [chrisr3d]</li>
+<li>[internal] processing freetext data without background workers fixed.
+  [iglocska]</li>
+<li>[enrichment view] Testing if event metadata elements exist before
+  displaying them. [chrisr3d]</li>
+<li>
+<p>[enrichment] Applying regular expressions to values before displaying
+  them. [chrisr3d]</p>
+</li>
+<li>
+<p>So when the DB is queried to find if object
+    attributes with those values already exist,
+    we do not miss some stored values</p>
+</li>
+<li>[enrichment] Strengthened query conditions to find existing object
+  attributes. [chrisr3d]</li>
+<li>[enrichment view] Displaying Tags only if not empty (error otherwise)
+  [chrisr3d]</li>
+<li>[enrichment] Added missing variable. [chrisr3d]</li>
+<li>Returning tags &amp; galaxies from module results. [chrisr3d]</li>
+<li>
+<p>[enrichment view] Fixed attributes display wwwwwwwwwww. [chrisr3d]</p>
+</li>
+<li>
+<p>Making attribute value display accept to be on
+    multilines to let more space for uuids to be on
+    1 line</p>
+</li>
+<li>This makes the global display lighter with long
+    attribute values, because they were displayed on
+    only 1 line, making uuids displayed on 3 or 4
+    lines, making the complete view height way bigger
+    than expected</li>
+<li>[enrichment view] Displaying forgotten header when there is no object
+  in module results. [chrisr3d]</li>
+<li>
+<p>[enrichment] Setting importComment value before going to the view.
+  [chrisr3d]</p>
+</li>
+<li>
+<p>Saving a variable &amp; will avoid issues when reusing
+    the view for import modules</p>
+</li>
+<li>[enrichment] Json format of validation errors. [chrisr3d]</li>
+<li>[enrichment view] Fixed mispositioned closing tags. [chrisr3d]</li>
+<li>[enrichment] Fixed tags classes names following the latest changes on
+  the module results view. [chrisr3d]</li>
+<li>
+<p>[enrichment view] Using some MISP event view parts. [chrisr3d]</p>
+</li>
+<li>
+<p>Using the same design as objects and attributes as in
+    the MISP event view</p>
+</li>
+<li>[enrichment] Fixed change on types &amp; categories. [chrisr3d]</li>
+</ul>
+<p>... that should be applied on attributes level and
+  not on object attributes level
+- [enrichment] Removing traces of some variables related to the freetext
+  import. [chrisr3d]
+- [enrichment] Removed possibility to display freetext result in the new
+  module results view. [chrisr3d]
+- [hover enrichment] Displaying information of empty results when
+  needed. [chrisr3d]
+- [enrichment] Displaying reference saving errors in the job status.
+  [chrisr3d]</p>
+<ul>
+<li>Finaly using the dedicated list to display
+    validation errors for references</li>
+<li>
+<p>[enrichment] Better references handling. [chrisr3d]</p>
+</li>
+<li>
+<p>References are all handled at the end, after the
+    attributes and objects are all saved (or skipped
+    when needed).</p>
+</li>
+<li>Since we no longer have any data in '$failed',
+    we simply skip every reference related to uuids
+    present in this list.</li>
+<li>'$recovered_uuids' is the list used to handle
+    uuids of resolved attributes/objects already
+    in the event.</li>
+<li>We also skip references already present in the
+    event (i.e same source, same target and same
+    relationship type).</li>
+<li>
+<p>[enrichment] Better resolved objects handling. [chrisr3d]</p>
+</li>
+<li>
+<p>We handle the initial object independently from
+    all the other objects.</p>
+</li>
+<li>We make sure Object attributes are not already
+    in the event (i.e the object is not already in
+    the event) before saving it</li>
+<li>Some other cases handled a better way to make
+    sure we skip saving object attributes or
+    references when they should not be, or to skip
+    what should be skipped.</li>
+<li>
+<p>[enrichment] Redefinition of the '$failed' array. [chrisr3d]</p>
+</li>
+<li>
+<p>Used as list and not as dict</p>
+</li>
+<li>Used to keep a list of failing attribute &amp; objects</li>
+<li>Attributes already present in the event are no
+    longer saved in this list, and their uuid is saved
+    in the '$recovered_uuids' list which is used to
+    redirect the resolved attribute / object uuid to
+    the same already present attribute / object</li>
+<li>[enrichment] Fixed inflector typo. [chrisr3d]</li>
+<li>
+<p>[enrichment] Simplified tests if not empty. [chrisr3d]</p>
+</li>
+<li>
+<p>In those specific cases, we can simply skip
+    testing if something is set or equals 0, '' or
+    false, since it is all implied in 'empty'</p>
+</li>
+<li>[enrichment view] Quick change, using variable. [chrisr3d]</li>
+</ul>
+<p>... Instead of going twice through the dictionary
+  keys to fetch the same value
+- [enrichment] Displaying error value in the job status instead of the
+  json format. [chrisr3d]
+- Removed test variables. [chrisr3d]</p>
+<ul>
+<li>Also pardon my French</li>
+<li>[enrichment] Typo on Object references field relationship_type.
+  [chrisr3d]</li>
+<li>[enrichment] Fixed missing object_relation field. [chrisr3d]</li>
+</ul>
+<p>... for object attributes fetched from module
+  results form
+- [enrichment view] Quick display fix. [chrisr3d]</p>
+<ul>
+<li>Making sure the submit button is always at the
+    bottom of the page</li>
+<li>Fixed missing closing tags</li>
+<li>[freetext import] Deleted not used variable. [chrisr3d]</li>
+<li>[cleanup] Fixed indentations. [chrisr3d]</li>
+<li>[enrichment] Fixed handleModuleResults input variable name. [chrisr3d]</li>
+<li>[enrichment] Fixed missing merge conflict. [chrisr3d]</li>
+<li>
+<p>[enrichment] Set sharing group id to 0 when distribution is not
+  'Sharing Group' [chrisr3d]</p>
+</li>
+<li>
+<p>Also setting some return data &amp; fields</p>
+</li>
+<li>
+<p>[enrichment view] Added missing form fields + button typo. [chrisr3d]</p>
+</li>
+<li>
+<p>Those form inputs are the ones that are used in
+    the javascript part to submit results</p>
+</li>
+<li>[enrichment view] Fixed Object sharing group field location.
+  [chrisr3d]</li>
+<li>[enrichment view] Trying to avoid submit button to be somewhere not
+  intended. [chrisr3d]</li>
+<li>
+<p>[enrichment] Avoiding errors on distribution and sharing group data.
+  [chrisr3d]</p>
+</li>
+<li>
+<p>Making sure we do have a value for distribution
+    and sharing group</p>
+</li>
+<li>Avoid translating distribution levels into their
+    human meaning because the output process capturing
+    data from the form will anyway use the numeric
+    values. Readable values are btw displayed in the
+    form for users confort</li>
+<li>Also sanitized data displayed</li>
+<li>[enrichment] Testing if an object has attributes before looping over
+  them. [chrisr3d]</li>
+<li>[stix2 export] Making stix2-validator happy about mac addresses.
+  [chrisr3d]</li>
+<li>[stix2 export] Fixed TLP marking definition objects creation.
+  [chrisr3d]</li>
+<li>
+<p>[stix2 export] Fixed registry-key keys and values parsing for
+  patterns. [chrisr3d]</p>
+</li>
+<li>
+<p>There was an issue with back slashes that made
+    sometime indicators creation fail</p>
+</li>
+<li>Also switched from concatenation to join</li>
+<li>Libonig2 -&gt; libonig4 (ubuntu bionic) [Raphaël Vinot]</li>
+<li>
+<p>[stix2 export] Making reusable subfunctions. [chrisr3d]</p>
+</li>
+<li>
+<p>Useful for the next functions to come using the
+    same pieces of code</p>
+</li>
+<li>
+<p>[stix2 export] Defining pattern with join intead of concatenation.
+  [chrisr3d]</p>
+</li>
+<li>
+<p>Started splitting functions with sub-functions
+    for a reuse</p>
+</li>
+<li>[stix2 export] Improved network socket object creation. [chrisr3d]</li>
+<li>[stix2 export] Fixed credential objects mapping to avoid missing
+  required stix fields. [chrisr3d]</li>
+<li>[stix import] Fixed stix_edh library import error catching. [chrisr3d]</li>
 <li>[row_attribute] feed correlation popover not being displayed for feed
   type other than MISP format. [mokaddem]</li>
 <li>[relatedEvent:view] catch if number of correlation cannot be found.
@@ -8343,9 +8611,205 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #4798 from SteveClement/guides. [Steve Clement]</li>
+<li>Merge pull request #4822 from Kortho/patch-1. [Andras Iklody]</li>
 </ul>
+<p>fixed mixed dbuser - dbname
+- Fixed mixed dbuser - dbname. [Kortho]</p>
+<p>changed so the script uses the correct var
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
+- Merge branch 'module_rework2' into 2.4. [iglocska]
+- Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]
+- Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]
+- Add: [enrichment] Fetching data fields from the view. [chrisr3d]
+- Add: [enrichment view] Added data fields + cancel button to the form.
+  [chrisr3d]
+- Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]
+- Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]
+- Add: [enrichment] Displaying + returning tags at attributes level from
+  the module results. [chrisr3d]</p>
+<ul>
+<li>If one of our UI master could review this and find
+    a better way of displaying the tags at attribute
+    level in the module results view, it would be
+    very cool :D</li>
+<li>Add: [enrichment] Attaching event level tags returned by the module
+  results. [chrisr3d]</li>
+<li>Add: [enrichment view] Displaying event level tags. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Add: [enrichment view] Displaying events metadata &amp; number of returned
+  attributes. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>
+<p><img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> [enrichment] Handling the potential uuids differences. [chrisr3d]</p>
+</li>
+<li>
+<p>We want to be sure the references we add to an
+    event are pointing to the right target, so
+    when an attribute/object is already in the event
+    and is a reference target, we want to point to
+    this already existing attribute/object, and not
+    to the one we get from the module results, which
+    will afterall be skipped.</p>
+</li>
+<li>Also to to that, attributes already in the event
+    are simply not saved, but we need to find in the
+    event if an event already exists or not, using
+    its attributes</li>
+<li>More care to the references themselves to come</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>
+<p><img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> [enrichment] Avoiding duplicate object attributes. [chrisr3d]</p>
+</li>
+<li>
+<p>It concerns obviously the case where we query a
+    module using an attribute within an object as input</p>
+</li>
+<li>More to come about the ObjectReference field that
+    should not be overwritten/duplicated either</li>
+<li>
+<p><img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> [enrichment] Passing initial object references as well.
+  [chrisr3d]</p>
+</li>
+<li>
+<p>Also testing if the initial object found is not empty</p>
+</li>
+<li>
+<p><img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> [enrichment] Passing the initial object within the request data.
+  [chrisr3d]</p>
+</li>
+<li>
+<p>Makes its parsing easier afterwards</p>
+</li>
+<li>
+<p>Add: [hover enrichment] Displaying resolved objects &amp; attributes from
+  new modules results. [chrisr3d]</p>
+</li>
+<li>
+<p>Also quick indentation fix</p>
+</li>
+<li><img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> [hover enrichment] Passing new modules results to the hover
+  enrichment view. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>
+<p><img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> [enrichment] Support of object references. [chrisr3d]</p>
+</li>
+<li>
+<p>Handling the references between objects and
+    attributes or objects that are displayed in the
+    form and saving them.</p>
+</li>
+<li>Avoiding issue when an attribute or object can
+    not be saved and is referenced: trying to find
+    in the event if it is an attribute, returning
+    a warning message if it is an object or if
+    nothing corresponding to the failing referenced
+    object or attribute is found.</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li><img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> [enrichment] Returning a status message after the module results
+  handling is done. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>
+<p><img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> [enrichment] Saving attributes &amp; objects from module results.
+  [chrisr3d]</p>
+</li>
+<li>
+<p>Need to handle specific cases, relationships,
+    and to update the progress status information</p>
+</li>
+<li>Add: [enrichment] Added possibility to get object template version &amp;
+  uuid. [chrisr3d]</li>
+<li><img alt="🚧" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f6a7.svg" title=":construction:" /> [enrichment] Capturing objects &amp; attributes. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into
+  rework_modules. [chrisr3d]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Add: [stix2 export] Added network connection to the mapped objects.
+  [chrisr3d]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Merge pull request #4802 from SteveClement/guides. [Steve Clement]</li>
+</ul>
+<p>chg: [doc] More tweaks to the CentOS howto
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
+- Merge pull request #4798 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [doc] Various updates to RHEL/Ubuntu
+- Add: [stix2 export] Mapping credential MISP objects. [chrisr3d]
 - Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
 - Merge pull request #4570 from mokaddem/relatedEventUI. [Andras Iklody]</p>
 <p>Related event ui

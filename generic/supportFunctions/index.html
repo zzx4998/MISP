@@ -1439,7 +1439,7 @@ theEnd <span class="o">()</span> <span class="o">{</span>
     space
   <span class="k">fi</span>
 
-  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$USER</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;</span><span class="nv">$MISP_USER</span><span class="s2">&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$USER</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;</span><span class="nv">$MISP_USER</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     sudo su - <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>
   <span class="k">fi</span>
 <span class="o">}</span>

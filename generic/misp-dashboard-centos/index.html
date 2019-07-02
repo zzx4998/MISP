@@ -715,6 +715,7 @@ sudo cp /opt/rh/httpd24/root/etc/httpd/conf.modules.d/10-rh-python36-wsgi.conf /
 <span class="s2">    ServerSignature Off</span>
 <span class="s2">&lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> sudo tee /etc/httpd/conf.d/misp-dashboard.conf
 
+sudo semanage port -a -t http_port_t -p tcp <span class="m">8001</span>
 sudo systemctl restart httpd.service
 
 <span class="c1"># Add misp-dashboard to rc.local to start on boot.</span>

@@ -1565,114 +1565,117 @@ sudo systemctl <span class="nb">enable</span> --now haveged.service
 <h3 id="3-misp-code">3/ MISP code<a class="headerlink" href="#3-misp-code" title="Permanent link">&para;</a></h3>
 <h2 id="301-download-misp-code-using-git-in-varwww-directory">3.01/ Download MISP code using git in /var/www/ directory<a class="headerlink" href="#301-download-misp-code-using-git-in-varwww-directory" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 1_mispCoreInstall_RHEL.sh&gt;</span>
-<span class="c1"># Download MISP using git in the /var/www/ directory.</span>
-sudo mkdir <span class="nv">$PATH_TO_MISP</span>
-sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>
-<span class="nb">cd</span> /var/www
-<span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/MISP.git
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>
-<span class="c1">##$SUDO_WWW git checkout tags/$(git describe --tags `git rev-list --tags --max-count=1`)</span>
-<span class="c1"># if the last shortcut doesn&#39;t work, specify the latest version manually</span>
-<span class="c1"># example: git checkout tags/v2.4.XY</span>
-<span class="c1"># the message regarding a &quot;detached HEAD state&quot; is expected behaviour</span>
-<span class="c1"># (you only have to create a new branch, if you want to change stuff and do a pull request for example)</span>
+installCoreRHEL <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># Download MISP using git in the /var/www/ directory.</span>
+  sudo mkdir <span class="nv">$PATH_TO_MISP</span>
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>
+  <span class="nb">cd</span> /var/www
+  <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/MISP.git
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>
+  <span class="c1">##$SUDO_WWW git checkout tags/$(git describe --tags `git rev-list --tags --max-count=1`)</span>
+  <span class="c1"># if the last shortcut doesn&#39;t work, specify the latest version manually</span>
+  <span class="c1"># example: git checkout tags/v2.4.XY</span>
+  <span class="c1"># the message regarding a &quot;detached HEAD state&quot; is expected behaviour</span>
+  <span class="c1"># (you only have to create a new branch, if you want to change stuff and do a pull request for example)</span>
 
-<span class="c1"># Fetch submodules</span>
-<span class="nv">$SUDO_WWW</span> git submodule update --init --recursive
-<span class="c1"># Make git ignore filesystem permission differences for submodules</span>
-<span class="nv">$SUDO_WWW</span> git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
-<span class="c1"># Make git ignore filesystem permission differences</span>
-<span class="nv">$SUDO_WWW</span> git config core.filemode <span class="nb">false</span>
+  <span class="c1"># Fetch submodules</span>
+  <span class="nv">$SUDO_WWW</span> git submodule update --init --recursive
+  <span class="c1"># Make git ignore filesystem permission differences for submodules</span>
+  <span class="nv">$SUDO_WWW</span> git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
+  <span class="c1"># Make git ignore filesystem permission differences</span>
+  <span class="nv">$SUDO_WWW</span> git config core.filemode <span class="nb">false</span>
 
-<span class="c1"># Install packaged pears</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear channel-update pear.php.net&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/INSTALL/dependencies/Console_CommandLine/package.xml&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/INSTALL/dependencies/Crypt_GPG/package.xml&quot;</span>
+  <span class="c1"># Install packaged pears</span>
+  sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear channel-update pear.php.net&quot;</span>
+  sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/INSTALL/dependencies/Console_CommandLine/package.xml&quot;</span>
+  sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/INSTALL/dependencies/Crypt_GPG/package.xml&quot;</span>
 
-<span class="c1"># Create a python3 virtualenv</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PYTHON</span> <span class="s2">&quot;virtualenv -p python3 </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/venv&quot;</span>
-sudo mkdir /usr/share/httpd/.cache
-sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /usr/share/httpd/.cache
-<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U pip setuptools
+  <span class="c1"># Create a python3 virtualenv</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PYTHON</span> <span class="s2">&quot;virtualenv -p python3 </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/venv&quot;</span>
+  sudo mkdir /usr/share/httpd/.cache
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /usr/share/httpd/.cache
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U pip setuptools
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
 
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts
-<span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/python-cybox.git
-<span class="nv">$SUDO_WWW</span> git clone https://github.com/STIXProject/python-stix.git
-<span class="nv">$SUDO_WWW</span> git clone --branch master --single-branch https://github.com/lief-project/LIEF.git lief
-<span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/mixbox.git
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts
+  <span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/python-cybox.git
+  <span class="nv">$SUDO_WWW</span> git clone https://github.com/STIXProject/python-stix.git
+  <span class="nv">$SUDO_WWW</span> git clone --branch master --single-branch https://github.com/lief-project/LIEF.git lief
+  <span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/mixbox.git
 
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-cybox
-<span class="c1"># If you umask is has been changed from the default, it is a good idea to reset it to 0022 before installing python modules</span>
-<span class="nv">UMASK</span><span class="o">=</span><span class="k">$(</span><span class="nb">umask</span><span class="k">)</span>
-<span class="nb">umask</span> <span class="m">0022</span>
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-stix
-<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-cybox
+  <span class="c1"># If you umask is has been changed from the default, it is a good idea to reset it to 0022 before installing python modules</span>
+  <span class="nv">UMASK</span><span class="o">=</span><span class="k">$(</span><span class="nb">umask</span><span class="k">)</span>
+  <span class="nb">umask</span> <span class="m">0022</span>
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-stix
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
 
-<span class="c1"># install mixbox to accommodate the new STIX dependencies:</span>
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mixbox
-<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
+  <span class="c1"># install mixbox to accommodate the new STIX dependencies:</span>
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mixbox
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
 
-<span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/cti-python-stix2
-<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
+  <span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/cti-python-stix2
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
 
-<span class="c1"># install maec</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U maec
+  <span class="c1"># install maec</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U maec
 
-<span class="c1"># install zmq</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U zmq
+  <span class="c1"># install zmq</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U zmq
 
-<span class="c1"># install redis</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U redis
+  <span class="c1"># install redis</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U redis
 
-<span class="c1"># lief needs manual compilation</span>
-sudo yum install devtoolset-7 cmake3 cppcheck -y
+  <span class="c1"># lief needs manual compilation</span>
+  sudo yum install devtoolset-7 cmake3 cppcheck -y
 
-<span class="c1"># FIXME: This does not work!</span>
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief
-<span class="nv">$SUDO_WWW</span> mkdir build
-<span class="nb">cd</span> build
-<span class="nv">$SUDO_WWW</span> scl <span class="nb">enable</span> devtoolset-7 rh-python36 <span class="s2">&quot;bash -c &#39;cmake3 \</span>
-<span class="s2">-DLIEF_PYTHON_API=on \</span>
-<span class="s2">-DPYTHON_VERSION=3.6 \</span>
-<span class="s2">-DPYTHON_EXECUTABLE=</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/venv/bin/python \</span>
-<span class="s2">-DLIEF_DOC=off \</span>
-<span class="s2">-DCMAKE_BUILD_TYPE=Release \</span>
-<span class="s2">..&#39;&quot;</span>
-<span class="nv">$SUDO_WWW</span> make -j3 pyLIEF
+  <span class="c1"># FIXME: This does not work!</span>
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief
+  <span class="nv">$SUDO_WWW</span> mkdir build
+  <span class="nb">cd</span> build
+  <span class="nv">$SUDO_WWW</span> scl <span class="nb">enable</span> devtoolset-7 rh-python36 <span class="s2">&quot;bash -c &#39;cmake3 \</span>
+<span class="s2">  -DLIEF_PYTHON_API=on \</span>
+<span class="s2">  -DPYTHON_VERSION=3.6 \</span>
+<span class="s2">  -DPYTHON_EXECUTABLE=</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/venv/bin/python \</span>
+<span class="s2">  -DLIEF_DOC=off \</span>
+<span class="s2">  -DCMAKE_BUILD_TYPE=Release \</span>
+<span class="s2">  ..&#39;&quot;</span>
+  <span class="nv">$SUDO_WWW</span> make -j3 pyLIEF
 
-<span class="c1"># In case you get &quot;internal compiler error: Killed (program cc1plus)&quot;</span>
-<span class="c1"># You ran out of memory.</span>
-<span class="c1"># Create some swap</span>
-<span class="c1"># sudo dd if=/dev/zero of=/var/swap.img bs=1024k count=4000</span>
-<span class="c1"># sudo mkswap /var/swap.img</span>
-<span class="c1"># sudo swapon /var/swap.img</span>
-<span class="c1"># And compile again</span>
-<span class="c1"># $SUDO_WWW make -j3 pyLIEF</span>
+  <span class="c1"># In case you get &quot;internal compiler error: Killed (program cc1plus)&quot;</span>
+  <span class="c1"># You ran out of memory.</span>
+  <span class="c1"># Create some swap</span>
+  <span class="c1"># sudo dd if=/dev/zero of=/var/swap.img bs=1024k count=4000</span>
+  <span class="c1"># sudo mkswap /var/swap.img</span>
+  <span class="c1"># sudo swapon /var/swap.img</span>
+  <span class="c1"># And compile again</span>
+  <span class="c1"># $SUDO_WWW make -j3 pyLIEF</span>
 
-<span class="c1"># The following adds a PYTHONPATH to where the pyLIEF module has been compiled</span>
-<span class="nb">echo</span> /var/www/MISP/app/files/scripts/lief/build/api/python <span class="p">|</span><span class="nv">$SUDO_WWW</span> tee /var/www/MISP/venv/lib/python3.6/site-packages/lief.pth
+  <span class="c1"># The following adds a PYTHONPATH to where the pyLIEF module has been compiled</span>
+  <span class="nb">echo</span> /var/www/MISP/app/files/scripts/lief/build/api/python <span class="p">|</span><span class="nv">$SUDO_WWW</span> tee /var/www/MISP/venv/lib/python3.6/site-packages/lief.pth
 
-<span class="c1"># install magic, pydeep</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U python-magic git+https://github.com/kbandla/pydeep.git plyara
+  <span class="c1"># install magic, pydeep</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U python-magic git+https://github.com/kbandla/pydeep.git plyara
 
-<span class="c1"># install PyMISP</span>
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP
-<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U .
+  <span class="c1"># install PyMISP</span>
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U .
 
-<span class="c1"># Enable python3 for php-fpm</span>
-<span class="nb">echo</span> <span class="s1">&#39;source scl_source enable rh-python36&#39;</span> <span class="p">|</span> sudo tee -a /etc/opt/rh/rh-php72/sysconfig/php-fpm
-sudo sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> /etc/opt/rh/rh-php72/php-fpm.d/www.conf
-sudo systemctl restart rh-php72-php-fpm.service
+  <span class="c1"># Enable python3 for php-fpm</span>
+  <span class="nb">echo</span> <span class="s1">&#39;source scl_source enable rh-python36&#39;</span> <span class="p">|</span> sudo tee -a /etc/opt/rh/rh-php72/sysconfig/php-fpm
+  sudo sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> /etc/opt/rh/rh-php72/php-fpm.d/www.conf
+  sudo systemctl restart rh-php72-php-fpm.service
 
-<span class="nb">umask</span> <span class="nv">$UMASK</span>
+  <span class="nb">umask</span> <span class="nv">$UMASK</span>
 
-<span class="c1"># Enable dependencies detection in the diagnostics page</span>
-<span class="c1"># This allows MISP to detect GnuPG, the Python modules&#39; versions and to read the PHP settings.</span>
-<span class="c1"># The LD_LIBRARY_PATH setting is needed for rh-git218 to work, one might think to install httpd24 and not just httpd ...</span>
-<span class="nb">echo</span> <span class="s2">&quot;env[PATH] = /opt/rh/rh-git218/root/usr/bin:/opt/rh/rh-redis32/root/usr/bin:/opt/rh/rh-python36/root/usr/bin:/opt/rh/rh-php72/root/usr/bin:/usr/local/bin:/usr/bin:/bin&quot;</span> <span class="p">|</span>sudo tee -a /etc/opt/rh/rh-php72/php-fpm.d/www.conf
-<span class="nb">echo</span> <span class="s2">&quot;env[LD_LIBRARY_PATH] = /opt/rh/httpd24/root/usr/lib64/&quot;</span> <span class="p">|</span>sudo tee -a /etc/opt/rh/rh-php72/php-fpm.d/www.conf
-sudo systemctl restart rh-php72-php-fpm.service
+  <span class="c1"># Enable dependencies detection in the diagnostics page</span>
+  <span class="c1"># This allows MISP to detect GnuPG, the Python modules&#39; versions and to read the PHP settings.</span>
+  <span class="c1"># The LD_LIBRARY_PATH setting is needed for rh-git218 to work, one might think to install httpd24 and not just httpd ...</span>
+  <span class="nb">echo</span> <span class="s2">&quot;env[PATH] = /opt/rh/rh-git218/root/usr/bin:/opt/rh/rh-redis32/root/usr/bin:/opt/rh/rh-python36/root/usr/bin:/opt/rh/rh-php72/root/usr/bin:/usr/local/bin:/usr/bin:/bin&quot;</span> <span class="p">|</span>sudo tee -a /etc/opt/rh/rh-php72/php-fpm.d/www.conf
+  <span class="nb">echo</span> <span class="s2">&quot;env[LD_LIBRARY_PATH] = /opt/rh/httpd24/root/usr/lib64/&quot;</span> <span class="p">|</span>sudo tee -a /etc/opt/rh/rh-php72/php-fpm.d/www.conf
+  sudo systemctl restart rh-php72-php-fpm.service
+<span class="o">}</span>
 <span class="c1"># &lt;snippet-end 1_mispCoreInstall_RHEL.sh&gt;</span>
 </pre></div>
 
@@ -1705,7 +1708,7 @@ installCake_RHEL <span class="o">()</span>
   sudo ln -s /etc/opt/rh/rh-php72/php-fpm.d/redis.ini /etc/opt/rh/rh-php72/php.d/99-redis.ini
 
   <span class="c1"># Install gnupg extension</span>
-  sudo yum install gpgme-devel
+  sudo yum install gpgme-devel -y
   sudo scl <span class="nb">enable</span> rh-php72 <span class="s1">&#39;pecl install gnupg&#39;</span>
   <span class="nb">echo</span> <span class="s2">&quot;extension=gnupg.so&quot;</span> <span class="p">|</span>sudo tee /etc/opt/rh/rh-php72/php-fpm.d/gnupg.ini
   sudo ln -s /etc/opt/rh/rh-php72/php-fpm.d/gnupg.ini /etc/opt/rh/rh-php72/php.d/99-gnupg.ini
@@ -1853,7 +1856,6 @@ apacheConfig_RHEL <span class="o">()</span> <span class="o">{</span>
   sudo systemctl restart httpd.service
 
   <span class="c1"># Since SELinux is enabled, we need to allow httpd to write to certain directories</span>
-  sudo chcon -t usr_t <span class="nv">$PATH_TO_MISP</span>/venv
   sudo chcon -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/files
   sudo chcon -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/files/terms
   sudo chcon -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/tmp
@@ -1863,17 +1865,12 @@ apacheConfig_RHEL <span class="o">()</span> <span class="o">{</span>
   sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mispzmq/mispzmq.py
   sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mispzmq/mispzmqtest.py
   sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief/build/api/python/lief.so
-  sudo chcon -t httpd_sys_script_exec_t /usr/bin/gpg
-  sudo chcon -t httpd_sys_script_exec_t /usr/bin/gpg-agent
-  sudo chcon -t httpd_sys_script_exec_t /usr/bin/whoami
   sudo chcon -t httpd_sys_rw_content_t /tmp
   sudo chcon -R -t usr_t <span class="nv">$PATH_TO_MISP</span>/venv
   sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/.git
-  sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/.gnupg
   sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/tmp
   sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/Lib
   sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/Config
-  sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/tmp
   sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/orgs
   sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/custom
   sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mispzmq
@@ -2008,6 +2005,7 @@ configMISP_RHEL <span class="o">()</span> <span class="o">{</span>
   sudo gpg --homedir <span class="nv">$PATH_TO_MISP</span>/.gnupg --batch --gen-key /tmp/gen-key-script
   sudo rm -f /tmp/gen-key-script
   sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/.gnupg
+  sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/.gnupg
 
   <span class="c1"># And export the public key to the webroot</span>
   sudo gpg --homedir <span class="nv">$PATH_TO_MISP</span>/.gnupg --export --armor <span class="nv">$GPG_EMAIL_ADDRESS</span> <span class="p">|</span>sudo tee <span class="nv">$PATH_TO_MISP</span>/app/webroot/gpg.asc
@@ -2199,6 +2197,7 @@ sudo cp /opt/rh/httpd24/root/etc/httpd/conf.modules.d/10-rh-python36-wsgi.conf /
 <span class="s2">    ServerSignature Off</span>
 <span class="s2">&lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> sudo tee /etc/httpd/conf.d/misp-dashboard.conf
 
+sudo semanage port -a -t http_port_t -p tcp <span class="m">8001</span>
 sudo systemctl restart httpd.service
 
 <span class="c1"># Add misp-dashboard to rc.local to start on boot.</span>
