@@ -550,44 +550,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#906-use-misps-background-workers" title="9.06/ Use MISP's background workers" class="md-nav__link">
-    9.06/ Use MISP's background workers
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#906a-create-a-systemd-unit-for-the-workers" title="9.06a/ Create a systemd unit for the workers" class="md-nav__link">
-    9.06a/ Create a systemd unit for the workers
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#906b-start-the-workers-and-enable-them-on-boot" title="9.06b/ Start the workers and enable them on boot" class="md-nav__link">
-    9.06b/ Start the workers and enable them on boot
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#907-misp-modules-wip" title="9.07/ misp-modules (WIP!)" class="md-nav__link">
-    9.07/ misp-modules (WIP!)
+  <a href="#906-use-misp-background-workers" title="9.06/ Use MISP background workers" class="md-nav__link">
+    9.06/ Use MISP background workers
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#misp-dashboard-on-centos" title="MISP Dashboard on CentOS" class="md-nav__link">
-    MISP Dashboard on CentOS
+  <a href="#initialize-misp-configuration-and-set-some-defaults" title="Initialize MISP configuration and set some defaults" class="md-nav__link">
+    Initialize MISP configuration and set some defaults
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#initialize-misp-configuration-and-set-some-defaults" title="Initialize MISP configuration and set some defaults" class="md-nav__link">
-    Initialize MISP configuration and set some defaults
+  <a href="#misp-dashboard-on-centos" title="MISP Dashboard on CentOS" class="md-nav__link">
+    MISP Dashboard on CentOS
   </a>
   
 </li>
@@ -1205,44 +1184,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#906-use-misps-background-workers" title="9.06/ Use MISP's background workers" class="md-nav__link">
-    9.06/ Use MISP's background workers
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#906a-create-a-systemd-unit-for-the-workers" title="9.06a/ Create a systemd unit for the workers" class="md-nav__link">
-    9.06a/ Create a systemd unit for the workers
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#906b-start-the-workers-and-enable-them-on-boot" title="9.06b/ Start the workers and enable them on boot" class="md-nav__link">
-    9.06b/ Start the workers and enable them on boot
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#907-misp-modules-wip" title="9.07/ misp-modules (WIP!)" class="md-nav__link">
-    9.07/ misp-modules (WIP!)
+  <a href="#906-use-misp-background-workers" title="9.06/ Use MISP background workers" class="md-nav__link">
+    9.06/ Use MISP background workers
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#misp-dashboard-on-centos" title="MISP Dashboard on CentOS" class="md-nav__link">
-    MISP Dashboard on CentOS
+  <a href="#initialize-misp-configuration-and-set-some-defaults" title="Initialize MISP configuration and set some defaults" class="md-nav__link">
+    Initialize MISP configuration and set some defaults
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#initialize-misp-configuration-and-set-some-defaults" title="Initialize MISP configuration and set some defaults" class="md-nav__link">
-    Initialize MISP configuration and set some defaults
+  <a href="#misp-dashboard-on-centos" title="MISP Dashboard on CentOS" class="md-nav__link">
+    MISP Dashboard on CentOS
   </a>
   
 </li>
@@ -1459,10 +1417,12 @@ sudo subscription-manager register --auto-attach <span class="c1"># register you
 
 <h2 id="14-rhel-enable-the-optional-extras-and-software-collections-scl-repos">1.4/ <strong>[RHEL]</strong> Enable the optional, extras and Software Collections (SCL) repos<a class="headerlink" href="#14-rhel-enable-the-optional-extras-and-software-collections-scl-repos" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_RHEL_SCL.sh&gt;</span>
-sudo subscription-manager refresh 
-sudo subscription-manager repos --enable rhel-7-server-optional-rpms
-sudo subscription-manager repos --enable rhel-7-server-extras-rpms
-sudo subscription-manager repos --enable rhel-server-rhscl-7-rpms
+enableReposRHEL <span class="o">()</span> <span class="o">{</span>
+  sudo subscription-manager refresh
+  sudo subscription-manager repos --enable rhel-7-server-optional-rpms
+  sudo subscription-manager repos --enable rhel-7-server-extras-rpms
+  sudo subscription-manager repos --enable rhel-server-rhscl-7-rpms
+<span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_RHEL_SCL.sh&gt;</span>
 </pre></div>
 
@@ -1496,13 +1456,17 @@ sudo ntpdate pool.ntp.org
 
 <h2 id="15-update-the-system-and-reboot">1.5/ Update the system and reboot<a class="headerlink" href="#15-update-the-system-and-reboot" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_yum-update.sh&gt;</span>
-sudo yum update -y
+yumUpdate <span class="o">()</span> <span class="o">{</span>
+  sudo yum update -y
+<span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_yum-update.sh&gt;</span>
 </pre></div>
 
 <h2 id="16-rhel-install-the-epel-repo">1.6/ <strong>[RHEL]</strong> Install the EPEL repo<a class="headerlink" href="#16-rhel-install-the-epel-repo" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_RHEL_EPEL.sh&gt;</span>
-sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
+enableEPEL <span class="o">()</span> <span class="o">{</span>
+  sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
+<span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_RHEL_EPEL.sh&gt;</span>
 </pre></div>
 
@@ -1586,16 +1550,15 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> git config core.filemode <span class="nb">false</span>
 
   <span class="c1"># Install packaged pears</span>
-  sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear channel-update pear.php.net&quot;</span>
-  sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/INSTALL/dependencies/Console_CommandLine/package.xml&quot;</span>
-  sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/INSTALL/dependencies/Crypt_GPG/package.xml&quot;</span>
+  sudo <span class="nv">$RUN_PHP</span> -- pear channel-update pear.php.net
+  sudo <span class="nv">$RUN_PHP</span> -- pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Console_CommandLine/package.xml
+  sudo <span class="nv">$RUN_PHP</span> -- pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Crypt_GPG/package.xml
 
   <span class="c1"># Create a python3 virtualenv</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PYTHON</span> <span class="s2">&quot;virtualenv -p python3 </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/venv&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PYTHON</span> -- virtualenv -p python3 <span class="nv">$PATH_TO_MISP</span>/venv
   sudo mkdir /usr/share/httpd/.cache
   sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /usr/share/httpd/.cache
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U pip setuptools
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
 
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts
   <span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/python-cybox.git
@@ -1643,14 +1606,18 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
 <span class="s2">  ..&#39;&quot;</span>
   <span class="nv">$SUDO_WWW</span> make -j3 pyLIEF
 
-  <span class="c1"># In case you get &quot;internal compiler error: Killed (program cc1plus)&quot;</span>
-  <span class="c1"># You ran out of memory.</span>
-  <span class="c1"># Create some swap</span>
-  <span class="c1"># sudo dd if=/dev/zero of=/var/swap.img bs=1024k count=4000</span>
-  <span class="c1"># sudo mkswap /var/swap.img</span>
-  <span class="c1"># sudo swapon /var/swap.img</span>
-  <span class="c1"># And compile again</span>
-  <span class="c1"># $SUDO_WWW make -j3 pyLIEF</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="o">==</span> <span class="m">2</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="c1"># In case you get &quot;internal compiler error: Killed (program cc1plus)&quot;</span>
+    <span class="c1"># You ran out of memory.</span>
+    <span class="c1"># Create some swap</span>
+    sudo dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/var/swap.img <span class="nv">bs</span><span class="o">=</span>1024k <span class="nv">count</span><span class="o">=</span><span class="m">4000</span>
+    sudo mkswap /var/swap.img
+    sudo swapon /var/swap.img
+    <span class="c1"># And compile again</span>
+    <span class="nv">$SUDO_WWW</span> make -j3 pyLIEF
+    sudo swapoff /var/swap.img
+    sudo rm /var/swap.img
+  <span class="k">fi</span>
 
   <span class="c1"># The following adds a PYTHONPATH to where the pyLIEF module has been compiled</span>
   <span class="nb">echo</span> /var/www/MISP/app/files/scripts/lief/build/api/python <span class="p">|</span><span class="nv">$SUDO_WWW</span> tee /var/www/MISP/venv/lib/python3.6/site-packages/lief.pth
@@ -1835,6 +1802,7 @@ apacheConfig_RHEL <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># A sample vhost can be found in $PATH_TO_MISP/INSTALL/apache.misp.centos7</span>
 
   sudo cp <span class="nv">$PATH_TO_MISP</span>/INSTALL/apache.misp.centos7.ssl /etc/httpd/conf.d/misp.ssl.conf
+  <span class="c1">#sudo sed -i &quot;s/SetHandler/\#SetHandler/g&quot; /etc/httpd/conf.d/misp.ssl.conf</span>
   sudo rm /etc/httpd/conf.d/ssl.conf
   sudo chmod <span class="m">644</span> /etc/httpd/conf.d/misp.ssl.conf
   sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 443&#39;</span> /etc/httpd/conf/httpd.conf
@@ -2017,15 +1985,6 @@ configMISP_RHEL <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># &lt;snippet-end 2_configMISP_RHEL.sh&gt;</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="c1"># In case you have no /etc/rc.local make a bare-bones one.</span>
-<span class="k">if</span> <span class="o">[</span> ! -e /etc/rc.local <span class="o">]</span>
-<span class="k">then</span>
-    <span class="nb">echo</span> <span class="s1">&#39;#!/bin/sh -e&#39;</span> <span class="p">|</span> sudo tee -a /etc/rc.local
-    <span class="nb">echo</span> <span class="s1">&#39;exit 0&#39;</span> <span class="p">|</span> sudo tee -a /etc/rc.local
-    sudo chmod u+x /etc/rc.local
-<span class="k">fi</span>
-</pre></div>
-
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>There is a bug that if a passphrase is added MISP will produce an error on the diagnostic page.<br />
@@ -2036,190 +1995,30 @@ configMISP_RHEL <span class="o">()</span> <span class="o">{</span>
 <p>The email address should match the one set in the config.php configuration file
 Make sure that you use the same settings in the MISP Server Settings tool</p>
 </div>
-<h2 id="906-use-misps-background-workers">9.06/ Use MISP's background workers<a class="headerlink" href="#906-use-misps-background-workers" title="Permanent link">&para;</a></h2>
-<h2 id="906a-create-a-systemd-unit-for-the-workers">9.06a/ Create a systemd unit for the workers<a class="headerlink" href="#906a-create-a-systemd-unit-for-the-workers" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
-<span class="s2">Description=MISP background workers</span>
-<span class="s2">After=rh-mariadb102-mariadb.service rh-redis32-redis.service rh-php72-php-fpm.service</span>
+<h2 id="906-use-misp-background-workers">9.06/ Use MISP background workers<a class="headerlink" href="#906-use-misp-background-workers" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 3_configWorkers_RHEL.sh&gt;</span>
+configWorkersRHEL <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
+<span class="s2">  Description=MISP background workers</span>
+<span class="s2">  After=rh-mariadb102-mariadb.service rh-redis32-redis.service rh-php72-php-fpm.service</span>
 
-<span class="s2">[Service]</span>
-<span class="s2">Type=forking</span>
-<span class="s2">User=apache</span>
-<span class="s2">Group=apache</span>
-<span class="s2">ExecStart=/usr/bin/scl enable rh-php72 rh-redis32 rh-mariadb102 /var/www/MISP/app/Console/worker/start.sh</span>
-<span class="s2">Restart=always</span>
-<span class="s2">RestartSec=10</span>
+<span class="s2">  [Service]</span>
+<span class="s2">  Type=forking</span>
+<span class="s2">  User=apache</span>
+<span class="s2">  Group=apache</span>
+<span class="s2">  ExecStart=/usr/bin/scl enable rh-php72 rh-redis32 rh-mariadb102 /var/www/MISP/app/Console/worker/start.sh</span>
+<span class="s2">  Restart=always</span>
+<span class="s2">  RestartSec=10</span>
 
-<span class="s2">[Install]</span>
-<span class="s2">WantedBy=multi-user.target&quot;</span> <span class="p">|</span>sudo tee /etc/systemd/system/misp-workers.service
-</pre></div>
+<span class="s2">  [Install]</span>
+<span class="s2">  WantedBy=multi-user.target&quot;</span> <span class="p">|</span>sudo tee /etc/systemd/system/misp-workers.service
 
-<p>Make the workers' script executable and reload the systemd units :
-<div class="codehilite"><pre><span></span>sudo chmod +x /var/www/MISP/app/Console/worker/start.sh
-sudo systemctl daemon-reload
-</pre></div></p>
-<h2 id="906b-start-the-workers-and-enable-them-on-boot">9.06b/ Start the workers and enable them on boot<a class="headerlink" href="#906b-start-the-workers-and-enable-them-on-boot" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span>sudo systemctl <span class="nb">enable</span> --now misp-workers.service
-</pre></div>
+  sudo chmod +x /var/www/MISP/app/Console/worker/start.sh
+  sudo systemctl daemon-reload
 
-<h2 id="907-misp-modules-wip">9.07/ misp-modules (WIP!)<a class="headerlink" href="#907-misp-modules-wip" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="c1"># some misp-modules dependencies</span>
-sudo yum install openjpeg-devel gcc-c++ poppler-cpp-devel pkgconfig python-devel redhat-rpm-config -y
-
-sudo chmod <span class="m">2777</span> /usr/local/src
-sudo chown root:users /usr/local/src
-<span class="nb">cd</span> /usr/local/src/
-<span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-modules.git
-<span class="nb">cd</span> misp-modules
-<span class="c1"># pip install</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U -I -r REQUIREMENTS
-<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U .
-sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-devel -y
-
-<span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
-<span class="s2">Description=MISP modules</span>
-<span class="s2">After=misp-workers.service</span>
-
-<span class="s2">[Service]</span>
-<span class="s2">Type=simple</span>
-<span class="s2">User=apache</span>
-<span class="s2">Group=apache</span>
-<span class="s2">WorkingDirectory=/usr/local/src/misp-modules</span>
-<span class="s2">Environment=&quot;</span><span class="nv">PATH</span><span class="o">=</span>/var/www/MISP/venv/bin<span class="s2">&quot;</span>
-<span class="s2">ExecStart=\&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/misp-modules -l 127.0.0.1 -s\&quot;</span>
-<span class="s2">Restart=always</span>
-<span class="s2">RestartSec=10</span>
-
-<span class="s2">[Install]</span>
-<span class="s2">WantedBy=multi-user.target&quot;</span> <span class="p">|</span>sudo tee /etc/systemd/system/misp-modules.service
-
-sudo systemctl daemon-reload
-<span class="c1"># Test misp-modules</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/misp-modules -l <span class="m">127</span>.0.0.1 -s
-sudo systemctl <span class="nb">enable</span> --now misp-modules
-
-  <span class="c1"># Enable Enrichment, set better timeouts</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_timeout&quot;</span> <span class="m">300</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_timeout&quot;</span> <span class="m">150</span>
-  <span class="c1"># TODO:&quot;Investigate why the next one fails&quot;</span>
-  <span class="c1">#$SUDO_WWW $RUN_PHP -- $CAKE Admin setSetting &quot;Plugin.Enrichment_asn_history_enabled&quot; true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_cve_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_dns_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_btc_steroids_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_ipasn_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_yara_syntax_validator_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_yara_query_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_pdf_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_docx_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_xlsx_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_pptx_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_ods_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_odt_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_port&quot;</span> <span class="m">6666</span>
-
-  <span class="c1"># Enable Import modules, set better timeout</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_port&quot;</span> <span class="m">6666</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_timeout&quot;</span> <span class="m">300</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_ocr_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_mispjson_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_openiocimport_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_threatanalyzer_import_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_csvimport_enabled&quot;</span> <span class="nb">true</span>
-
-  <span class="c1"># Enable Export modules, set better timeout</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_port&quot;</span> <span class="m">6666</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_timeout&quot;</span> <span class="m">300</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_pdfexport_enabled&quot;</span> <span class="nb">true</span>
-</pre></div>
-
-<h4 id="misp-dashboard-on-centos">MISP Dashboard on CentOS<a class="headerlink" href="#misp-dashboard-on-centos" title="Permanent link">&para;</a></h4>
-<hr />
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Currently defunct.</p>
-</div>
-<div class="codehilite"><pre><span></span>sudo yum install wget screen -y
-sudo mkdir /var/www/misp-dashboard
-sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/misp-dashboard
-<span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git /var/www/misp-dashboard
-<span class="nb">cd</span> /var/www/misp-dashboard
-sudo sed -i -E <span class="s1">&#39;s/sudo apt/#sudo apt/&#39;</span> install_dependencies.sh
-sudo sed -i -E <span class="s1">&#39;s/virtualenv -p python3 DASHENV/\/usr\/bin\/scl enable rh-python36 \&quot;virtualenv -p python3 DASHENV\&quot;/&#39;</span> install_dependencies.sh
-sudo -H /var/www/misp-dashboard/install_dependencies.sh
-sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
-sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 0.0.0.0:8001&#39;</span> /etc/httpd/conf/httpd.conf
-sudo yum install rh-python36-mod_wsgi -y
-sudo cp /opt/rh/httpd24/root/usr/lib64/httpd/modules/mod_rh-python36-wsgi.so /etc/httpd/modules/
-sudo cp /opt/rh/httpd24/root/etc/httpd/conf.modules.d/10-rh-python36-wsgi.conf /etc/httpd/conf.modules.d/
-
-<span class="nb">echo</span> <span class="s2">&quot;&lt;VirtualHost *:8001&gt;</span>
-<span class="s2">    ServerAdmin admin@misp.local</span>
-<span class="s2">    ServerName misp.local</span>
-<span class="s2">    DocumentRoot /var/www/misp-dashboard</span>
-
-<span class="s2">    WSGIDaemonProcess misp-dashboard \</span>
-<span class="s2">       user=misp group=misp \</span>
-<span class="s2">       python-home=/var/www/misp-dashboard/DASHENV \</span>
-<span class="s2">       processes=1 \</span>
-<span class="s2">       threads=15 \</span>
-<span class="s2">       maximum-requests=5000 \</span>
-<span class="s2">       listen-backlog=100 \</span>
-<span class="s2">       queue-timeout=45 \</span>
-<span class="s2">       socket-timeout=60 \</span>
-<span class="s2">       connect-timeout=15 \</span>
-<span class="s2">       request-timeout=60 \</span>
-<span class="s2">       inactivity-timeout=0 \</span>
-<span class="s2">       deadlock-timeout=60 \</span>
-<span class="s2">       graceful-timeout=15 \</span>
-<span class="s2">       eviction-timeout=0 \</span>
-<span class="s2">       shutdown-timeout=5 \</span>
-<span class="s2">       send-buffer-size=0 \</span>
-<span class="s2">       receive-buffer-size=0 \</span>
-<span class="s2">       header-buffer-size=0 \</span>
-<span class="s2">       response-buffer-size=0 \</span>
-<span class="s2">       server-metrics=Off</span>
-<span class="s2">    WSGIScriptAlias / /var/www/misp-dashboard/misp-dashboard.wsgi</span>
-<span class="s2">    &lt;Directory /var/www/misp-dashboard&gt;</span>
-<span class="s2">        WSGIProcessGroup misp-dashboard</span>
-<span class="s2">        WSGIApplicationGroup %{GLOBAL}</span>
-<span class="s2">        Require all granted</span>
-<span class="s2">    &lt;/Directory&gt;</span>
-<span class="s2">    LogLevel info</span>
-<span class="s2">    ErrorLog /var/log/httpd/misp-dashboard.local_error.log</span>
-<span class="s2">    CustomLog /var/log/httpd/misp-dashboard.local_access.log combined</span>
-<span class="s2">    ServerSignature Off</span>
-<span class="s2">&lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> sudo tee /etc/httpd/conf.d/misp-dashboard.conf
-
-sudo semanage port -a -t http_port_t -p tcp <span class="m">8001</span>
-sudo systemctl restart httpd.service
-
-<span class="c1"># Add misp-dashboard to rc.local to start on boot.</span>
-sudo sed -i -e <span class="s1">&#39;$i \sudo -u apache bash /var/www/misp-dashboard/start_all.sh &gt; /tmp/misp-dashboard_rc.local.log\n&#39;</span> /etc/rc.local
-
-<span class="c1"># Enable ZeroMQ for misp-dashboard</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_enable&quot;</span> <span class="nb">true</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_event_notifications_enable&quot;</span> <span class="nb">true</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_notifications_enable&quot;</span> <span class="nb">true</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_reference_notifications_enable&quot;</span> <span class="nb">true</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_attribute_notifications_enable&quot;</span> <span class="nb">true</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_sighting_notifications_enable&quot;</span> <span class="nb">true</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_user_notifications_enable&quot;</span> <span class="nb">true</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_organisation_notifications_enable&quot;</span> <span class="nb">true</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_port&quot;</span> <span class="m">50000</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_host&quot;</span> <span class="s2">&quot;localhost&quot;</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_port&quot;</span> <span class="m">6379</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_database&quot;</span> <span class="m">1</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_namespace&quot;</span> <span class="s2">&quot;mispq&quot;</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_include_attachments&quot;</span> <span class="nb">false</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_tag_notifications_enable&quot;</span> <span class="nb">false</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_audit_notifications_enable&quot;</span> <span class="nb">false</span>
+  sudo systemctl <span class="nb">enable</span> --now misp-workers.service
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 3_configWorkers_RHEL.sh&gt;</span>
 </pre></div>
 
 <h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
@@ -2374,6 +2173,94 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin updateObjectTemplates <span class="s2">&quot;1337&quot;</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 2_core-cake.sh&gt;</span>
+</pre></div>
+
+<h4 id="misp-dashboard-on-centos">MISP Dashboard on CentOS<a class="headerlink" href="#misp-dashboard-on-centos" title="Permanent link">&para;</a></h4>
+<hr />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Does not work on RHEL 8</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 4_misp-dashboardRHEL.sh&gt;</span>
+<span class="c1"># Main MISP Dashboard install function</span>
+mispDashboard <span class="o">()</span> <span class="o">{</span>
+  sudo yum install wget screen -y
+  sudo mkdir /var/www/misp-dashboard
+  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/misp-dashboard
+  <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git /var/www/misp-dashboard
+  <span class="nb">cd</span> /var/www/misp-dashboard
+  sudo sed -i -E <span class="s1">&#39;s/sudo apt/#sudo apt/&#39;</span> install_dependencies.sh
+  sudo sed -i -E <span class="s1">&#39;s/virtualenv -p python3 DASHENV/\/usr\/bin\/scl enable rh-python36 \&quot;virtualenv -p python3 DASHENV\&quot;/&#39;</span> install_dependencies.sh
+  sudo -H /var/www/misp-dashboard/install_dependencies.sh
+  sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
+  sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 0.0.0.0:8001&#39;</span> /etc/httpd/conf/httpd.conf
+  sudo yum install rh-python36-mod_wsgi -y
+  sudo cp /opt/rh/httpd24/root/usr/lib64/httpd/modules/mod_rh-python36-wsgi.so /etc/httpd/modules/
+  sudo cp /opt/rh/httpd24/root/etc/httpd/conf.modules.d/10-rh-python36-wsgi.conf /etc/httpd/conf.modules.d/
+
+  <span class="nb">echo</span> <span class="s2">&quot;&lt;VirtualHost *:8001&gt;</span>
+<span class="s2">      ServerAdmin admin@misp.local</span>
+<span class="s2">      ServerName misp.local</span>
+<span class="s2">      DocumentRoot /var/www/misp-dashboard</span>
+
+<span class="s2">      WSGIDaemonProcess misp-dashboard \</span>
+<span class="s2">         user=misp group=misp \</span>
+<span class="s2">         python-home=/var/www/misp-dashboard/DASHENV \</span>
+<span class="s2">         processes=1 \</span>
+<span class="s2">         threads=15 \</span>
+<span class="s2">         maximum-requests=5000 \</span>
+<span class="s2">         listen-backlog=100 \</span>
+<span class="s2">         queue-timeout=45 \</span>
+<span class="s2">         socket-timeout=60 \</span>
+<span class="s2">         connect-timeout=15 \</span>
+<span class="s2">         request-timeout=60 \</span>
+<span class="s2">         inactivity-timeout=0 \</span>
+<span class="s2">         deadlock-timeout=60 \</span>
+<span class="s2">         graceful-timeout=15 \</span>
+<span class="s2">         eviction-timeout=0 \</span>
+<span class="s2">         shutdown-timeout=5 \</span>
+<span class="s2">         send-buffer-size=0 \</span>
+<span class="s2">         receive-buffer-size=0 \</span>
+<span class="s2">         header-buffer-size=0 \</span>
+<span class="s2">         response-buffer-size=0 \</span>
+<span class="s2">         server-metrics=Off</span>
+<span class="s2">      WSGIScriptAlias / /var/www/misp-dashboard/misp-dashboard.wsgi</span>
+<span class="s2">      &lt;Directory /var/www/misp-dashboard&gt;</span>
+<span class="s2">          WSGIProcessGroup misp-dashboard</span>
+<span class="s2">          WSGIApplicationGroup %{GLOBAL}</span>
+<span class="s2">          Require all granted</span>
+<span class="s2">      &lt;/Directory&gt;</span>
+<span class="s2">      LogLevel info</span>
+<span class="s2">      ErrorLog /var/log/httpd/misp-dashboard.local_error.log</span>
+<span class="s2">      CustomLog /var/log/httpd/misp-dashboard.local_access.log combined</span>
+<span class="s2">      ServerSignature Off</span>
+<span class="s2">  &lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> sudo tee /etc/httpd/conf.d/misp-dashboard.conf
+
+  sudo semanage port -a -t http_port_t -p tcp <span class="m">8001</span>
+  sudo systemctl restart httpd.service
+
+  <span class="c1"># Add misp-dashboard to rc.local to start on boot.</span>
+  sudo sed -i -e <span class="s1">&#39;$i \sudo -u apache bash /var/www/misp-dashboard/start_all.sh &gt; /tmp/misp-dashboard_rc.local.log\n&#39;</span> /etc/rc.local
+
+  <span class="c1"># Enable ZeroMQ for misp-dashboard</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_event_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_reference_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_attribute_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_sighting_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_user_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_organisation_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_port&quot;</span> <span class="m">50000</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_host&quot;</span> <span class="s2">&quot;localhost&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_port&quot;</span> <span class="m">6379</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_database&quot;</span> <span class="m">1</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_namespace&quot;</span> <span class="s2">&quot;mispq&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_include_attachments&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_tag_notifications_enable&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_audit_notifications_enable&quot;</span> <span class="nb">false</span>
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 4_misp-dashboardRHEL.sh&gt;</span>
 </pre></div>
 
 <div class="admonition warning">

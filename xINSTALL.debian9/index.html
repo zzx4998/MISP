@@ -1423,11 +1423,12 @@
 <hr />
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>Maintained and tested by @SteveClement on 20190425</p>
+<p>Maintained and tested by @SteveClement on 20190702</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This install document is <strong>NOT</strong> working as expected. There are Python issues as we "only" have python 3.5 but need at least python 3.6</p>
+<p>This install document is compiles a custom Python 3.7 meaning some things might be unexpected.
+Debian stretch has Python 3.5 but we need at least python 3.6</p>
 </div>
 <h3 id="1-minimal-debian-install">1/ Minimal Debian install<a class="headerlink" href="#1-minimal-debian-install" title="Permanent link">&para;</a></h3>
 <hr />
@@ -1531,6 +1532,9 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 
 <div class="codehilite"><pre><span></span><span class="nv">PHP_ETC_BASE</span><span class="o">=</span>/etc/php/7.0
 <span class="nv">PHP_INI</span><span class="o">=</span><span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/apache2/php.ini
+
+sudo adduser <span class="nv">$MISP_USER</span> staff
+sudo adduser <span class="nv">$MISP_USER</span> <span class="nv">$WWW_USER</span>
 </pre></div>
 
 <h4 id="install-etckeeper-and-sudo-optional">install etckeeper and sudo (optional)<a class="headerlink" href="#install-etckeeper-and-sudo-optional" title="Permanent link">&para;</a></h4>
@@ -1623,7 +1627,7 @@ OR on Ubuntu 19.04 (yay for changing this every 5 commits... #n00bs)
 </div>
 <h4 id="make-sure-your-system-is-up2date">Make sure your system is up2date<a class="headerlink" href="#make-sure-your-system-is-up2date" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>sudo apt update
-sudo apt -y dist-upgrade
+sudo apt dist-upgrade -y
 </pre></div>
 
 <h4 id="install-postfix-there-will-be-some-questions-optional">install postfix, there will be some questions. (optional)<a class="headerlink" href="#install-postfix-there-will-be-some-questions-optional" title="Permanent link">&para;</a></h4>
@@ -1641,16 +1645,20 @@ sudo postfix reload
 <h4 id="install-all-the-dependencies-some-might-already-be-installed">Install all the dependencies (some might already be installed)<a class="headerlink" href="#install-all-the-dependencies-some-might-already-be-installed" title="Permanent link">&para;</a></h4>
 <p>You need to update python3.5 to python3.7 for <a href="https://github.com/MISP/PyMISP">PyMISP</a> to work properly.</p>
 <p>FIXME: The below breaks redis-server and mariadb-server</p>
-<div class="codehilite"><pre><span></span><span class="c1"># Manual Python3.7.3 install</span>
-sudo apt update
-sudo apt install make build-essential libssl-dev zlib1g-dev libbz2-dev <span class="se">\</span>
+<div class="codehilite"><pre><span></span><span class="c1"># Manual Python3.7.3 install in $HOME</span>
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev <span class="se">\</span>
 libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev <span class="se">\</span>
 xz-utils tk-dev libffi-dev liblzma-dev -qqy
-mkdir -p code <span class="p">;</span> <span class="nb">cd</span> code <span class="p">;</span> wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tar.xz <span class="p">;</span> tar xfvJ Python-3.7.3.tar.xz <span class="p">;</span> <span class="nb">cd</span> Python-3.7.3 <span class="p">;</span> ./configure --enable-optimizations <span class="p">;</span> make -j8 <span class="p">;</span> sudo make altinstall
-sudo update-alternatives --install /usr/bin/python python /usr/local/bin/python3.7 <span class="m">50</span>
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 <span class="m">40</span>
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.5 <span class="m">30</span>
-
+mkdir -p ~/opt/python3
+<span class="nb">cd</span> /tmp
+wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tar.xz
+tar xvfJ Python-3.7.3.tar.xz
+rm Python-3.7.3.tar.xz
+<span class="nb">cd</span> Python-3.7.3
+<span class="c1"># --enable-optimizations will run tests to optimize the resulting python binary, this takes time and is expected</span>
+./configure --enable-optimizations --with-ensurepip<span class="o">=</span>install --prefix<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">&quot;</span>/opt/python3
+make -j3
+make altinstall
 sudo apt install virtualenv -qqy
 </pre></div>
 
@@ -1662,7 +1670,7 @@ jq ntp ntpdate imagemagick tesseract-ocr <span class="se">\</span>
 libxml2-dev libxslt1-dev zlib1g-dev <span class="se">\</span>
 net-tools -qqy
 
-sudo apt install libapache2-mod-php php php-cli php-mbstring php-dev php-json php-xml php-mysql php-opcache php-readline php-redis php-gnupg php-gd -qqy
+sudo apt install libapache2-mod-php php php-cli php-mbstring php-dev php-json php-xml php-mysql php7.0-opcache php-readline php-redis php-gnupg php-gd -qqy
 
 sudo apt install <span class="se">\</span>
 mariadb-client <span class="se">\</span>
@@ -1732,7 +1740,7 @@ sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <
 <span class="nv">$SUDO_WWW</span> git config core.filemode <span class="nb">false</span>
 
 <span class="c1"># Create a python3 virtualenv</span>
-<span class="nv">$SUDO_WWW</span> virtualenv -p python3.7 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
+<span class="nv">$SUDO_WWW</span> virtualenv -p ~/opt/python3/bin/python3.7 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
 
 <span class="c1"># make pip happy</span>
 sudo mkdir /var/www/.cache/
@@ -1752,10 +1760,28 @@ sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-maec
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/cti-python-stix2
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
 
 <span class="c1"># install PyMISP</span>
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+
+<span class="c1"># install pydeep</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
+
+<span class="c1"># install lief</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+
+<span class="c1"># install zmq needed by mispzmq</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install zmq
+
+<span class="c1"># install python-magic</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install python-magic
+
+<span class="c1"># install plyara</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install plyara
 
 <span class="c1"># Install Crypt_GPG and Console_CommandLine</span>
 sudo pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Console_CommandLine/package.xml
@@ -2406,6 +2432,11 @@ viper <span class="o">()</span> <span class="o">{</span>
   sudo apt-get install <span class="se">\</span>
     libssl-dev swig python3-ssdeep p7zip-full unrar-free sqlite python3-pyclamd exiftool radare2 <span class="se">\</span>
     python3-magic python3-sqlalchemy python3-prettytable libffi-dev libfreetype6-dev libpng-dev -qy
+  <span class="k">if</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/debian_version&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>cat /etc/debian_version<span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;9.9&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      sudo apt-get install libpython3.5-dev -qy
+    <span class="k">fi</span>
+  <span class="k">fi</span>
   <span class="nb">echo</span> <span class="s2">&quot;Cloning Viper&quot;</span>
   <span class="nv">$SUDO_USER</span> git clone https://github.com/viper-framework/viper.git
   sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper

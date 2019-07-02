@@ -667,6 +667,11 @@ viper <span class="o">()</span> <span class="o">{</span>
   sudo apt-get install <span class="se">\</span>
     libssl-dev swig python3-ssdeep p7zip-full unrar-free sqlite python3-pyclamd exiftool radare2 <span class="se">\</span>
     python3-magic python3-sqlalchemy python3-prettytable libffi-dev libfreetype6-dev libpng-dev -qy
+  <span class="k">if</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/debian_version&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>cat /etc/debian_version<span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;9.9&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      sudo apt-get install libpython3.5-dev -qy
+    <span class="k">fi</span>
+  <span class="k">fi</span>
   <span class="nb">echo</span> <span class="s2">&quot;Cloning Viper&quot;</span>
   <span class="nv">$SUDO_USER</span> git clone https://github.com/viper-framework/viper.git
   sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper

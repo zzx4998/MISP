@@ -995,8 +995,10 @@ checkUsrLocalSrc <span class="o">()</span> <span class="o">{</span>
     <span class="nb">echo</span> <span class="s2">&quot;/usr/local/src does not exist, creating.&quot;</span>
     mkdir -p /usr/local/src
     sudo chmod <span class="m">2775</span> /usr/local/src
-    <span class="c1"># FIXME: This might fail on distros with no staff user</span>
-    sudo chown root:staff /usr/local/src
+    <span class="c1"># TODO: Better handling /usr/local/src permissions</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>cat /etc/group <span class="p">|</span>grep staff &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      sudo chown root:staff /usr/local/src
+    <span class="k">fi</span>
   <span class="k">fi</span>
 <span class="o">}</span>
 
