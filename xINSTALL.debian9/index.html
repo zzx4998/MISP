@@ -1987,8 +1987,8 @@ cat &gt;/tmp/gen-key-script <span class="s">&lt;&lt;EOF</span>
 sudo chmod +x <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
 
 <span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
-<span class="s2">Description=MISP&#39;s background workers</span>
-<span class="s2">After=rh-mariadb102-mariadb.service rh-redis32-redis.service rh-php72-php-fpm.service</span>
+<span class="s2">Description=MISP background workers</span>
+<span class="s2">After=mariadb.service redis-server.service</span>
 
 <span class="s2">[Service]</span>
 <span class="s2">Type=forking</span>
