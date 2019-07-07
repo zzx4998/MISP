@@ -362,8 +362,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
-      Debian stable
+    <a href="../xINSTALL.debian10/" title="Debian 10" class="md-nav__link">
+      Debian 10
     </a>
   </li>
 
@@ -374,8 +374,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.debian_testing/" title="Debian testing" class="md-nav__link">
-      Debian testing
+    <a href="../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
+      Debian 9.9
     </a>
   </li>
 
@@ -8239,6 +8239,33 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[doc] Updated Debian testing install docs (#4840) [Steve Clement]</li>
+</ul>
+<p>chg: [doc] Updated Debian testing install docs
+- [misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]
+- [misp-objects] updated to the latest version. [Alexandre Dulaunoy]
+- [travis] Fix perms (?) [Raphaël Vinot]
+- [travis] Try to fix upload_sample. [Raphaël Vinot]
+- [PyMISP] Bump version. [Raphaël Vinot]
+- [PyMISP] updated to the latest version. [Alexandre Dulaunoy]
+- [travis] more gpg experiments. [Alexandre Dulaunoy]
+- [travis] It's not my week with GnuPG and OpenPGP. [Alexandre Dulaunoy]
+- [i18n] Uploaded version from crowdin. Updated default.pot (#4835)
+  [Steve Clement]</p>
+<p>chg: [i18n] Uploaded version from crowdin. Updated default.pot
+- [i18n] Uploaded version from crowdin. Updated default.pot. [Steve
+  Clement]
+- [misp-objects] updated to the latest version. [Alexandre Dulaunoy]
+- [enrichment] Reusing the new function fetchInitialObject. [chrisr3d]</p>
+<ul>
+<li>New function that is exactly the copy paste of
+    what is removed in this commit and replaced by
+    the function call</li>
+<li>[enrichment] New modules available from event enrichment. [chrisr3d]</li>
+<li>[doc] Update to Debian 10 install guide, everything works as expected.
+  chg: [doc] OpenBSD is broken for misp-modules (OpenCV etc) [Steve
+  Clement]</li>
+<li>[doc] Updated Debian testing install docs. [Steve Clement]</li>
 <li>[installer] Added fork checker. [Steve Clement]</li>
 <li>[installer] One step closer to "sane" aka. generic os-detection.
   [Steve Clement]</li>
@@ -8355,11 +8382,52 @@
   reuse. [iglocska]</p>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[stix2 import] Quick variable simplification. [chrisr3d]</li>
+<li>[stix2 import] Reusing functions to simplify the code &amp; avoid
+  duplicates. [chrisr3d]</li>
+<li>[stix2 import] Fixed network socket values from pattern. [chrisr3d]</li>
+<li>[stix import] Fixed backward compatibility of an exception. [chrisr3d]</li>
+<li>[eventGraph] Correctly pick the first-matching requiredOneOff to
+  generate the object's label. [mokaddem]</li>
+<li>
+<p>[enrichment] Avoiding issues with failing references. [chrisr3d]</p>
+</li>
+<li>
+<p>In our case of handling module results, we don't
+    especially want the results parsing to stop
+    because of a missing/failing reference, we just
+    want to skip it</p>
+</li>
+<li>[events] Create massive dummy events. [mokaddem]</li>
+<li>
+<p>[enrichment] Fixed meta-category fetching. [chrisr3d]</p>
+</li>
+<li>
+<p>Due to the javascript part, we need to set a
+    'meta_category' field, which we then translate
+    to the expected 'meta-category' field, but which
+    is not required when enrichment is called from
+    the event level</p>
+</li>
+<li>[installer] Variable regression (#4829) [Steve Clement]</li>
+</ul>
+<p>fix: [installer] Variable regression
+- [installer] Variable regression. [Steve Clement]
+- [modules] Added full attribute to full event enrichment's module
+  query. [iglocska]
+- [stix2 import] Fixed socket extension parsing + reusing code.
+  [chrisr3d]</p>
+<ul>
+<li>Reusing the function defined to avoid duplicates
+    for network socket objects generated via the
+    MISP to STIX2 export</li>
+<li>[stix2 import] Replacing unnecessary defaultdict by dict. [chrisr3d]</li>
+<li>[stix2 import] Reusing function &amp; avoiding duplicates. [chrisr3d]</li>
 <li>[doc] Fixed systemd unit (#4827) [Steve Clement]</li>
 </ul>
 <p>fix: [doc] Fixed systemd unit
-- [doc] Fixed systemd unit. [Steve Clement]
 - [installer] Update to correct checksums. [Steve Clement]
+- [doc] Fixed systemd unit. [Steve Clement]
 - [installer] Installer had some bugs for os-detection. [Steve Clement]
 - [doc] Added missing misp-modules centos (#4825) [Steve Clement]</p>
 <p>fix: [doc] Added missing misp-modules centos
@@ -8628,8 +8696,31 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #4826 from SteveClement/tools. [Steve Clement]</li>
+<li>Merge branch '2.4' into guides. [Steve Clement]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Add: [stix2 import] Importing credential objects. [chrisr3d]</li>
+<li>Add: [stix2 import] Parsing network traffic in the case of network
+  connection object. [chrisr3d]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]</li>
+<li>Added norwegian translation (#4832) [Steve Clement]</li>
 </ul>
+<p>Added norwegian translation
+- Added norwegian. [Kortho]</p>
+<p>Added norwegian translation
+- Merge pull request #4807 from RichieB2B/ncsc-nl/IOCImport. [Andras
+  Iklody]</p>
+<p>Support empty attribute type in IOC import
+- Support empty attribute type in IOC import. [Richard van den Berg]
+- Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into 2.4.
+  [chrisr3d]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' into guides. [Steve Clement]
+- Merge pull request #4826 from SteveClement/tools. [Steve Clement]</p>
 <p>chg: [installer] One step closer to "sane" aka. generic os-detection
 - Merge branch '2.4' into tools. [Steve Clement]
 - Merge branch '2.4' into guides. [Steve Clement]

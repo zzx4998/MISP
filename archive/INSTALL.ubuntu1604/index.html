@@ -362,8 +362,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
-      Debian stable
+    <a href="../../xINSTALL.debian10/" title="Debian 10" class="md-nav__link">
+      Debian 10
     </a>
   </li>
 
@@ -374,8 +374,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.debian_testing/" title="Debian testing" class="md-nav__link">
-      Debian testing
+    <a href="../../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
+      Debian 9.9
     </a>
   </li>
 
@@ -1324,8 +1324,10 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
     su -c <span class="s2">&quot;apt install etckeeper -y&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to install sudo&quot;</span>
     su -c <span class="s2">&quot;apt install sudo -y&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to install sudo&quot;</span>
+    su -c <span class="s2">&quot;apt install curl -y&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to add </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> to sudo group&quot;</span>
-    su -c <span class="s2">&quot;adduser </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> sudo&quot;</span>
+    su -c <span class="s2">&quot;/usr/sbin/adduser </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> sudo&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;We added </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> to group sudo and now we need to log out and in again.&quot;</span>
     <span class="nb">exit</span>
   <span class="k">else</span>

@@ -364,8 +364,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
-      Debian stable
+    <a href="../xINSTALL.debian10/" title="Debian 10" class="md-nav__link">
+      Debian 10
     </a>
   </li>
 
@@ -376,8 +376,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.debian_testing/" title="Debian testing" class="md-nav__link">
-      Debian testing
+    <a href="../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
+      Debian 9.9
     </a>
   </li>
 
@@ -1363,7 +1363,8 @@
 <p class="admonition-title">Warning</p>
 <p>This is not fully working yet. Mostly it is a template for our ongoing documentation efforts <img alt="🕷" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f577.svg" title=":spider:" />
 LIEF, will probably not be available for a long long time on OpenBSD, until someone is brave enough to make it work.
-GnuPG also needs some more TLC.</p>
+GnuPG also needs some more TLC.
+misp-modules are broken because of the python-opencv dependency.</p>
 </div>
 <h3 id="0-wip-you-are-warned-this-does-only-partially-work">0/ WIP! You are warned, this does only partially work!<a class="headerlink" href="#0-wip-you-are-warned-this-does-only-partially-work" title="Permanent link">&para;</a></h3>
 <hr />
@@ -1496,17 +1497,17 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 
 <h5 id="in-case-you-forgot-to-fetch-ports-optional">In case you forgot to fetch ports (optional)<a class="headerlink" href="#in-case-you-forgot-to-fetch-ports-optional" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><span class="nb">cd</span> /tmp
-ftp https://ftp.openbsd.org/pub/OpenBSD/<span class="k">$(</span>uname -r<span class="k">)</span>/<span class="o">{</span>ports.tar.gz,SHA256.sig<span class="o">}</span>
+ftp https://cdn.openbsd.org/pub/OpenBSD/<span class="k">$(</span>uname -r<span class="k">)</span>/<span class="o">{</span>ports.tar.gz,SHA256.sig<span class="o">}</span>
 signify -Cp /etc/signify/openbsd-<span class="k">$(</span>uname -r <span class="p">|</span> cut -c <span class="m">1</span>,3<span class="k">)</span>-base.pub -x SHA256.sig ports.tar.gz
 doas tar -x -z -f /tmp/ports.tar.gz -C /usr
 </pre></div>
 
 <h5 id="if-you-want-to-use-php-gd-resizing-of-images-you-need-x-optional">If you want to use php-gd (resizing of images) you need X (optional)<a class="headerlink" href="#if-you-want-to-use-php-gd-resizing-of-images-you-need-x-optional" title="Permanent link">&para;</a></h5>
 <div class="codehilite"><pre><span></span><span class="nb">cd</span> /tmp
-ftp https://ftp.openbsd.org/pub/OpenBSD/<span class="k">$(</span>uname -r<span class="k">)</span>/<span class="k">$(</span>uname -m<span class="k">)</span>/<span class="o">{</span>xbase<span class="k">$(</span>uname -r<span class="p">|</span> tr -d <span class="se">\.</span><span class="k">)</span>.tgz,SHA256.sig<span class="o">}</span>
+ftp https://cdn.openbsd.org/pub/OpenBSD/<span class="k">$(</span>uname -r<span class="k">)</span>/<span class="k">$(</span>uname -m<span class="k">)</span>/<span class="o">{</span>xbase<span class="k">$(</span>uname -r<span class="p">|</span> tr -d <span class="se">\.</span><span class="k">)</span>.tgz,SHA256.sig<span class="o">}</span>
 signify -Cp /etc/signify/openbsd-<span class="k">$(</span>uname -r <span class="p">|</span> cut -c <span class="m">1</span>,3<span class="k">)</span>-base.pub -x SHA256.sig xbase<span class="k">$(</span>uname -r <span class="p">|</span>tr -d <span class="se">\.</span><span class="k">)</span>.tgz
 doas tar -xzphf /tmp/xbase<span class="k">$(</span>uname -r<span class="p">|</span> tr -d <span class="se">\.</span><span class="k">)</span>.tgz -C /
-ftp https://ftp.openbsd.org/pub/OpenBSD/<span class="k">$(</span>uname -r<span class="k">)</span>/<span class="k">$(</span>uname -m<span class="k">)</span>/<span class="o">{</span>xshare<span class="k">$(</span>uname -r<span class="p">|</span> tr -d <span class="se">\.</span><span class="k">)</span>.tgz,SHA256.sig<span class="o">}</span>
+ftp https://cdn.openbsd.org/pub/OpenBSD/<span class="k">$(</span>uname -r<span class="k">)</span>/<span class="k">$(</span>uname -m<span class="k">)</span>/<span class="o">{</span>xshare<span class="k">$(</span>uname -r<span class="p">|</span> tr -d <span class="se">\.</span><span class="k">)</span>.tgz,SHA256.sig<span class="o">}</span>
 signify -Cp /etc/signify/openbsd-<span class="k">$(</span>uname -r <span class="p">|</span> cut -c <span class="m">1</span>,3<span class="k">)</span>-base.pub -x SHA256.sig xshare<span class="k">$(</span>uname -r <span class="p">|</span>tr -d <span class="se">\.</span><span class="k">)</span>.tgz
 doas tar -xzphf /tmp/xshare<span class="k">$(</span>uname -r<span class="p">|</span> tr -d <span class="se">\.</span><span class="k">)</span>.tgz -C /
 </pre></div>
@@ -1824,9 +1825,13 @@ doas /usr/local/virtualenvs/MISP/bin/pip install git+https://github.com/kbandla/
 <span class="c1"># Install CakeResque along with its dependencies if you intend to use the built in background jobs:</span>
 <span class="nb">cd</span> /var/www/htdocs/MISP/app
 doas mkdir /var/www/.composer <span class="p">;</span> doas chown www:www /var/www/.composer
-doas -u www php composer.phar require kamisama/cake-resque:4.1.2
-doas -u www php composer.phar config vendor-dir Vendor
-doas -u www php composer.phar install
+doas -u www php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
+doas -u www php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
+doas -u www env <span class="nv">HOME</span><span class="o">=</span>/var/www php composer-setup.php
+doas -u www php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
+doas -u www env <span class="nv">HOME</span><span class="o">=</span>/var/www php composer.phar require kamisama/cake-resque:4.1.2
+doas -u www env <span class="nv">HOME</span><span class="o">=</span>/var/www php composer.phar config vendor-dir Vendor
+doas -u www env <span class="nv">HOME</span><span class="o">=</span>/var/www php composer.phar install
 
 <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
 doas -u www cp -f /var/www/htdocs/MISP/INSTALL/setup/config.php /var/www/htdocs/MISP/app/Plugin/CakeResque/Config/config.php

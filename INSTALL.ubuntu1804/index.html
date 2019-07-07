@@ -660,8 +660,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
-      Debian stable
+    <a href="../xINSTALL.debian10/" title="Debian 10" class="md-nav__link">
+      Debian 10
     </a>
   </li>
 
@@ -672,8 +672,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.debian_testing/" title="Debian testing" class="md-nav__link">
-      Debian testing
+    <a href="../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
+      Debian 9.9
     </a>
   </li>
 
@@ -1283,8 +1283,10 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
     su -c <span class="s2">&quot;apt install etckeeper -y&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to install sudo&quot;</span>
     su -c <span class="s2">&quot;apt install sudo -y&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to install sudo&quot;</span>
+    su -c <span class="s2">&quot;apt install curl -y&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to add </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> to sudo group&quot;</span>
-    su -c <span class="s2">&quot;adduser </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> sudo&quot;</span>
+    su -c <span class="s2">&quot;/usr/sbin/adduser </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> sudo&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;We added </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> to group sudo and now we need to log out and in again.&quot;</span>
     <span class="nb">exit</span>
   <span class="k">else</span>
@@ -2590,7 +2592,7 @@ checkCoreOS <span class="o">()</span> <span class="o">{</span>
 
 <span class="c1"># Extract debian flavour</span>
 checkFlavour <span class="o">()</span> <span class="o">{</span>
-  <span class="nv">lsb_dist</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+  <span class="nv">FLAVOUR</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
   <span class="c1"># Every system that we officially support has /etc/os-release</span>
   <span class="k">if</span> <span class="o">[</span> -r /etc/os-release <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">FLAVOUR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$ID</span><span class="s2">&quot;</span><span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
@@ -2620,14 +2622,14 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
       <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -r /etc/os-release <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
         <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
       <span class="k">fi</span>
-      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$lsb_dist</span><span class="s2"> not supported at the moment&quot;</span>
+      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2"> not supported at the moment&quot;</span>
       <span class="nb">exit</span> <span class="m">1</span>
     <span class="p">;;</span>
     rhel<span class="p">|</span>ol<span class="p">|</span>sles<span class="o">)</span>
       <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -r /etc/os-release <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
         <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
       <span class="k">fi</span>
-      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$lsb_dist</span><span class="s2"> not supported at the moment&quot;</span>
+      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2"> not supported at the moment&quot;</span>
       <span class="nb">exit</span> <span class="m">1</span>
     <span class="p">;;</span>
     *<span class="o">)</span>
@@ -2664,20 +2666,20 @@ check_forked <span class="o">()</span> <span class="o">{</span>
     <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$lsb_release_exit_code</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
       <span class="c1"># Print info about current distro</span>
       cat <span class="s">&lt;&lt;-EOF</span>
-<span class="s">      You&#39;re using &#39;$lsb_dist&#39; version &#39;$dist_version&#39;.</span>
+<span class="s">      You&#39;re using &#39;$FLAVOUR&#39; version &#39;$dist_version&#39;.</span>
 <span class="s">EOF</span>
       <span class="c1"># Get the upstream release info</span>
-      <span class="nv">lsb_dist</span><span class="o">=</span><span class="k">$(</span>lsb_release -a -u <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span> <span class="p">|</span> grep -E <span class="s1">&#39;id&#39;</span> <span class="p">|</span> cut -d <span class="s1">&#39;:&#39;</span> -f <span class="m">2</span> <span class="p">|</span> tr -d <span class="s1">&#39;[:space:]&#39;</span><span class="k">)</span>
+      <span class="nv">FLAVOUR</span><span class="o">=</span><span class="k">$(</span>lsb_release -a -u <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span> <span class="p">|</span> grep -E <span class="s1">&#39;id&#39;</span> <span class="p">|</span> cut -d <span class="s1">&#39;:&#39;</span> -f <span class="m">2</span> <span class="p">|</span> tr -d <span class="s1">&#39;[:space:]&#39;</span><span class="k">)</span>
       <span class="nv">dist_version</span><span class="o">=</span><span class="k">$(</span>lsb_release -a -u <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span> <span class="p">|</span> grep -E <span class="s1">&#39;codename&#39;</span> <span class="p">|</span> cut -d <span class="s1">&#39;:&#39;</span> -f <span class="m">2</span> <span class="p">|</span> tr -d <span class="s1">&#39;[:space:]&#39;</span><span class="k">)</span>
 
       <span class="c1"># Print info about upstream distro</span>
       cat <span class="s">&lt;&lt;-EOF</span>
-<span class="s">      Upstream release is &#39;$lsb_dist&#39; version &#39;$dist_version&#39;.</span>
+<span class="s">      Upstream release is &#39;$FLAVOUR&#39; version &#39;$dist_version&#39;.</span>
 <span class="s">EOF</span>
     <span class="k">else</span>
-      <span class="k">if</span> <span class="o">[</span> -r /etc/debian_version <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$lsb_dist</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;ubuntu&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$lsb_dist</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;raspbian&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="k">if</span> <span class="o">[</span> -r /etc/debian_version <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;ubuntu&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;raspbian&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
         <span class="c1"># We&#39;re Debian and don&#39;t even know it!</span>
-        <span class="nv">lsb_dist</span><span class="o">=</span>debian
+        <span class="nv">FLAVOUR</span><span class="o">=</span>debian
         <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>sed <span class="s1">&#39;s/\/.*//&#39;</span> /etc/debian_version <span class="p">|</span> sed <span class="s1">&#39;s/\..*//&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
         <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> in
           <span class="m">10</span><span class="o">)</span>

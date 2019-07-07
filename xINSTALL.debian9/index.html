@@ -42,7 +42,7 @@
     
     
       
-        <title>Debian stable - MISP Install Documentation</title>
+        <title>Debian 9.9 - MISP Install Documentation</title>
       
     
     
@@ -125,7 +125,7 @@
               MISP Install Documentation
             </span>
             <span class="md-header-nav__topic">
-              Debian stable
+              Debian 9.9
             </span>
           
         </div>
@@ -362,6 +362,18 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.debian10/" title="Debian 10" class="md-nav__link">
+      Debian 10
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -373,11 +385,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Debian stable
+        Debian 9.9
       </label>
     
-    <a href="./" title="Debian stable" class="md-nav__link md-nav__link--active">
-      Debian stable
+    <a href="./" title="Debian 9.9" class="md-nav__link md-nav__link--active">
+      Debian 9.9
     </a>
     
       
@@ -765,18 +777,6 @@
   
 </nav>
     
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../xINSTALL.debian_testing/" title="Debian testing" class="md-nav__link">
-      Debian testing
-    </a>
   </li>
 
         
@@ -1423,6 +1423,10 @@
 <hr />
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
+<p>Please use <a href="https://misp.github.io/MISP/xINSTALL.debian10/">Debian 10</a> as everything works as expected.</p>
+</div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
 <p>Maintained and tested by @SteveClement on 20190702</p>
 </div>
 <div class="admonition warning">
@@ -1547,8 +1551,10 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
     su -c <span class="s2">&quot;apt install etckeeper -y&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to install sudo&quot;</span>
     su -c <span class="s2">&quot;apt install sudo -y&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to install sudo&quot;</span>
+    su -c <span class="s2">&quot;apt install curl -y&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to add </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> to sudo group&quot;</span>
-    su -c <span class="s2">&quot;adduser </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> sudo&quot;</span>
+    su -c <span class="s2">&quot;/usr/sbin/adduser </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> sudo&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;We added </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> to group sudo and now we need to log out and in again.&quot;</span>
     <span class="nb">exit</span>
   <span class="k">else</span>
@@ -1643,8 +1649,7 @@ sudo postfix reload
 <h3 id="2-install-lamp-dependencies">2/ Install LAMP &amp; dependencies<a class="headerlink" href="#2-install-lamp-dependencies" title="Permanent link">&para;</a></h3>
 <hr />
 <h4 id="install-all-the-dependencies-some-might-already-be-installed">Install all the dependencies (some might already be installed)<a class="headerlink" href="#install-all-the-dependencies-some-might-already-be-installed" title="Permanent link">&para;</a></h4>
-<p>You need to update python3.5 to python3.7 for <a href="https://github.com/MISP/PyMISP">PyMISP</a> to work properly.</p>
-<p>FIXME: The below breaks redis-server and mariadb-server</p>
+<p>You need to use at least Python3.6 for <a href="https://github.com/MISP/PyMISP">PyMISP</a> to work properly.</p>
 <div class="codehilite"><pre><span></span><span class="c1"># Manual Python3.7.3 install in $HOME</span>
 sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev <span class="se">\</span>
 libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev <span class="se">\</span>
@@ -2719,7 +2724,7 @@ index f9f69d4..2e8fd78 100644
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../xINSTALL.centos6/" title="Centos 6" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../xINSTALL.debian10/" title="Debian 10" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -2728,19 +2733,19 @@ index f9f69d4..2e8fd78 100644
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Centos 6
+                Debian 10
               </span>
             </div>
           </a>
         
         
-          <a href="../xINSTALL.debian_testing/" title="Debian testing" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../xINSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Debian testing
+                Ubuntu 18.04 \w webmin
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

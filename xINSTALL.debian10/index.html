@@ -13,7 +13,7 @@
         <meta name="description" content="MISP Project - Install Guides">
       
       
-        <link rel="canonical" href="https://www.misp-project.org/xINSTALL.debian_testing/">
+        <link rel="canonical" href="https://www.misp-project.org/xINSTALL.debian10/">
       
       
         <meta name="author" content="MISP Project">
@@ -42,7 +42,7 @@
     
     
       
-        <title>Debian testing - MISP Install Documentation</title>
+        <title>Debian 10 - MISP Install Documentation</title>
       
     
     
@@ -125,7 +125,7 @@
               MISP Install Documentation
             </span>
             <span class="md-header-nav__topic">
-              Debian testing
+              Debian 10
             </span>
           
         </div>
@@ -362,18 +362,6 @@
           
           
 
-
-  <li class="md-nav__item">
-    <a href="../xINSTALL.debian9/" title="Debian stable" class="md-nav__link">
-      Debian stable
-    </a>
-  </li>
-
-        
-          
-          
-          
-
   
 
 
@@ -385,11 +373,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Debian testing
+        Debian 10
       </label>
     
-    <a href="./" title="Debian testing" class="md-nav__link md-nav__link--active">
-      Debian testing
+    <a href="./" title="Debian 10" class="md-nav__link md-nav__link--active">
+      Debian 10
     </a>
     
       
@@ -403,8 +391,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-debian-testing-buster-server" title="for Debian testing "buster" server" class="md-nav__link">
-    for Debian testing "buster" server
+  <a href="#for-debian-10-buster" title="for Debian 10 "buster"" class="md-nav__link">
+    for Debian 10 "buster"
   </a>
   
     <nav class="md-nav">
@@ -473,8 +461,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#make-sure-your-system-is-up2date" title="Make sure your system is up2date" class="md-nav__link">
-    Make sure your system is up2date
+  <a href="#add-misp_user-to-staff-and-www_user" title="Add $MISP_USER to staff and $WWW_USER" class="md-nav__link">
+    Add $MISP_USER to staff and $WWW_USER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-sure-your-system-is-up2date-and-curl-installed" title="Make sure your system is up2date and curl installed" class="md-nav__link">
+    Make sure your system is up2date and curl installed
   </a>
   
 </li>
@@ -792,6 +787,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
+      Debian 9.9
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../xINSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
       Ubuntu 18.04 \w webmin
     </a>
@@ -1040,8 +1047,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-debian-testing-buster-server" title="for Debian testing "buster" server" class="md-nav__link">
-    for Debian testing "buster" server
+  <a href="#for-debian-10-buster" title="for Debian 10 "buster"" class="md-nav__link">
+    for Debian 10 "buster"
   </a>
   
     <nav class="md-nav">
@@ -1110,8 +1117,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#make-sure-your-system-is-up2date" title="Make sure your system is up2date" class="md-nav__link">
-    Make sure your system is up2date
+  <a href="#add-misp_user-to-staff-and-www_user" title="Add $MISP_USER to staff and $WWW_USER" class="md-nav__link">
+    Add $MISP_USER to staff and $WWW_USER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-sure-your-system-is-up2date-and-curl-installed" title="Make sure your system is up2date and curl installed" class="md-nav__link">
+    Make sure your system is up2date and curl installed
   </a>
   
 </li>
@@ -1430,14 +1444,14 @@
                 
                 
                 <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h1>
-<h2 id="for-debian-testing-buster-server">for Debian testing "buster" server<a class="headerlink" href="#for-debian-testing-buster-server" title="Permanent link">&para;</a></h2>
+<h2 id="for-debian-10-buster">for Debian 10 "buster"<a class="headerlink" href="#for-debian-10-buster" title="Permanent link">&para;</a></h2>
 <h3 id="0-misp-testing-dev-install-status">0/ MISP testing dev install - Status<a class="headerlink" href="#0-misp-testing-dev-install-status" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>This is mostly the install <a href="https://twitter.com/SteveClement">@SteveClement</a>
 uses for testing, qc and random development.
-Maintained and tested by @SteveClement on 20190405</p>
+Maintained and tested by @SteveClement on 20190702</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1558,8 +1572,10 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
     su -c <span class="s2">&quot;apt install etckeeper -y&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to install sudo&quot;</span>
     su -c <span class="s2">&quot;apt install sudo -y&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to install sudo&quot;</span>
+    su -c <span class="s2">&quot;apt install curl -y&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;Please enter your root password below to add </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> to sudo group&quot;</span>
-    su -c <span class="s2">&quot;adduser </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> sudo&quot;</span>
+    su -c <span class="s2">&quot;/usr/sbin/adduser </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> sudo&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;We added </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> to group sudo and now we need to log out and in again.&quot;</span>
     <span class="nb">exit</span>
   <span class="k">else</span>
@@ -1636,9 +1652,15 @@ OR on Ubuntu 19.04 (yay for changing this every 5 commits... #n00bs)
 <div class="codehilite"><pre><span></span>sudo sed -i &quot;s/enp0s3/eth0/&quot; /etc/netplan/01-netcfg.yaml
 </pre></div></p>
 </div>
-<h4 id="make-sure-your-system-is-up2date">Make sure your system is up2date<a class="headerlink" href="#make-sure-your-system-is-up2date" title="Permanent link">&para;</a></h4>
+<h4 id="add-misp_user-to-staff-and-www_user">Add $MISP_USER to staff and $WWW_USER<a class="headerlink" href="#add-misp_user-to-staff-and-www_user" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span>sudo adduser <span class="nv">$MISP_USER</span> staff
+sudo adduser <span class="nv">$MISP_USER</span> <span class="nv">$WWW_USER</span>
+</pre></div>
+
+<h4 id="make-sure-your-system-is-up2date-and-curl-installed">Make sure your system is up2date and curl installed<a class="headerlink" href="#make-sure-your-system-is-up2date-and-curl-installed" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>sudo apt update
-sudo apt -y dist-upgrade
+sudo apt dist-upgrade -y
+sudo apt install curl -y
 </pre></div>
 
 <h4 id="install-postfix-there-will-be-some-questions-optional">install postfix, there will be some questions. (optional)<a class="headerlink" href="#install-postfix-there-will-be-some-questions-optional" title="Permanent link">&para;</a></h4>
@@ -1666,10 +1688,10 @@ jq ntp ntpdate jupyter-notebook imagemagick tesseract-ocr <span class="se">\</sp
 libxml2-dev libxslt1-dev zlib1g-dev -y
 
 <span class="c1"># Start haveged to get more entropy (optional)</span>
-sudo apt install haveged -y
+sudo apt install haveged -qqy
 sudo service haveged start
 
-sudo apt install expect -y
+sudo apt install expect -qqy
 
 <span class="c1"># Add your credentials if needed, if sudo has NOPASS, comment out the relevant lines</span>
 <span class="nv">pw</span><span class="o">=</span><span class="s2">&quot;Password1234&quot;</span>
@@ -1698,7 +1720,7 @@ expect -f - <span class="s">&lt;&lt;-EOF</span>
 <span class="s">  send -- &quot;y\r&quot;</span>
 <span class="s">  expect eof</span>
 <span class="s">EOF</span>
-sudo apt-get purge -y expect <span class="p">;</span> sudo apt autoremove -y
+sudo apt purge -qqy expect <span class="p">;</span> sudo apt autoremove -qqy
 
 <span class="c1"># Enable modules, settings, and default of SSL in Apache</span>
 sudo a2dismod status
@@ -1746,10 +1768,28 @@ sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-maec
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/cti-python-stix2
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
 
 <span class="c1"># install PyMISP</span>
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+
+<span class="c1"># install pydeep</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
+
+<span class="c1"># install lief</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+
+<span class="c1"># install zmq needed by mispzmq</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install zmq
+
+<span class="c1"># install python-magic</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install python-magic
+
+<span class="c1"># install plyara</span>
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install plyara
 
 <span class="c1"># Install Crypt_GPG and Console_CommandLine</span>
 sudo pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Console_CommandLine/package.xml
@@ -1961,8 +2001,8 @@ cat &gt;/tmp/gen-key-script <span class="s">&lt;&lt;EOF</span>
 sudo chmod +x <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
 
 <span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
-<span class="s2">Description=MISP&#39;s background workers</span>
-<span class="s2">After=rh-mariadb102-mariadb.service rh-redis32-redis.service rh-php72-php-fpm.service</span>
+<span class="s2">Description=MISP background workers</span>
+<span class="s2">After=mariadb.service redis-server.service</span>
 
 <span class="s2">[Service]</span>
 <span class="s2">Type=forking</span>
@@ -2292,7 +2332,8 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 </pre></div>
 
 <h4 id="misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands">MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>sudo apt-get install librdkafka-dev php-dev
+<div class="codehilite"><pre><span></span>sudo apt install librdkafka-dev php-dev
+sudo pecl channel-update pecl.php.net
 sudo pecl install rdkafka
 <span class="nb">echo</span> <span class="s2">&quot;extension=rdkafka.so&quot;</span> <span class="p">|</span> sudo tee <span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/mods-available/rdkafka.ini
 sudo phpenmod rdkafka
@@ -2692,7 +2733,7 @@ index f9f69d4..2e8fd78 100644
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../xINSTALL.debian9/" title="Debian stable" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../xINSTALL.centos6/" title="Centos 6" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -2701,19 +2742,19 @@ index f9f69d4..2e8fd78 100644
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Debian stable
+                Centos 6
               </span>
             </div>
           </a>
         
         
-          <a href="../xINSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../xINSTALL.debian9/" title="Debian 9.9" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Ubuntu 18.04 \w webmin
+                Debian 9.9
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
