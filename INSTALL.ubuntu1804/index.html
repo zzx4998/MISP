@@ -1482,7 +1482,7 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 installCoreDeps <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Installing core dependencies&quot;</span>
   <span class="c1"># Install the dependencies: (some might already be installed)</span>
-  sudo apt-get install curl gcc git gpg-agent make python python3 openssl redis-server sudo vim zip unzip virtualenv libfuzzy-dev sqlite3 -qy
+  sudo apt-get install curl gcc git gpg-agent make python python3 openssl redis-server sudo vim zip unzip virtualenv libfuzzy-dev sqlite3 moreutils -qy
 
   <span class="c1"># Install MariaDB (a MySQL fork/alternative)</span>
   sudo apt-get install mariadb-client mariadb-server -qy
