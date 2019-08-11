@@ -95,8 +95,12 @@ line.link {
     padding: 0px 10px;
 }
 
-.correlation-stop-btn {
+.control-button-group {
     position: absolute;
     top: 60px;
     right:10px;
+}
+
+.query_box {
+    display:none;
 }

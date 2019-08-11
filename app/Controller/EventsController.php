@@ -4769,7 +4769,6 @@ class EventsController extends AppController
         if (empty($event)) {
             throw new MethodNotAllowedException(__('Invalid Event.'));
         }
-
         $this->set('event', $event[0]);
         $this->set('scope', 'event');
         $this->set('id', $id);
@@ -4799,29 +4798,7 @@ class EventsController extends AppController
             $json = $grapher->deleteNode($id);
         }
     */
-
-    public function updateGraph($id, $type = 'event')
-    {
-        $validTools = array('event', 'galaxy', 'tag');
-        if (!in_array($type, $validTools)) {
-            throw new MethodNotAllowedException(__('Invalid type.'));
-        }
-        $this->loadModel('Taxonomy');
-        $this->loadModel('GalaxyCluster');
-        App::uses('CorrelationGraphTool', 'Tools');
-        $grapher = new CorrelationGraphTool();
-        $data = $this->request->is('post') ? $this->request->data : array();
-        $grapher->construct($this->Event, $this->Taxonomy, $this->GalaxyCluster, $this->Auth->user(), $data);
-        $json = $grapher->buildGraphJson($id, $type);
-        array_walk_recursive($json, function (&$item, $key) {
-            if (!mb_detect_encoding($item, 'utf-8', true)) {
-                $item = utf8_encode($item);
-            }
-        });
-        $this->response->type('json');
-        return new CakeResponse(array('body' => json_encode($json), 'status' => 200, 'type' => 'json'));
-    }
-
+    
     private function genDistributionGraph($id, $type = 'event', $extended = 0) {
         $validTools = array('event');
         if (!in_array($type, $validTools)) {

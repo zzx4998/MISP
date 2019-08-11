@@ -8,8 +8,12 @@
     echo $this->Html->script('d3');
     echo $this->Html->script('correlation-graph');
     echo $this->Html->script('font-awesome-helper');
-?>
-<?php
+    $queryHeaders = 'Content-type: application/json' . PHP_EOL .
+        'Accept: application/json' . PHP_EOL;
+    $queryBody = json_encode(array(
+        'returnFormat' => 'correlation-graph',
+        'publish_timestamp' => '1h'
+    ), JSON_PRETTY_PRINT);
     if (!$ajax):
 ?>
     <div class="graph-view">
@@ -30,7 +34,23 @@
             <li id="expand"><?php echo __('Expand');?></li>
             <li id="context-delete"><?php echo __('Delete');?></li>
         </ul>
-        <button class="correlation-stop-btn btn btn-inverse" onClick="togglePhysics();" title="<?php echo __('Toggle the physics engine on/off.');?> ">Toggle physics</button>
+        <div class="control-button-group">
+            <div style="float:right;">
+                <button class="btn btn-inverse" onClick="toggleQueryInterface();" title="<?php echo __('Toggle the query interface on/off.');?> ">Toggle query interface</button>
+                <button class="btn btn-inverse" onClick="togglePhysics();" title="<?php echo __('Toggle the physics engine on/off.');?> ">Toggle physics</button>
+            </div><br />
+            <div id="query_box" class="query_box">
+                <div>
+                    <span class="bold">URL:</span><br />
+                    <input id="query_url" type="text" class="input input-xxlarge" value="/events/restSearch" /><br />
+                    <span class="bold">Headers:</span><br />
+                    <textarea id="query_headers" type="text" class="input input-xxlarge" rows="5" cols="30"><?php echo $queryHeaders; ?></textarea><br />
+                    <span class="bold">Query body:</span><br />
+                    <textarea id="query_body" type="text" class="input input-xxlarge" rows="5" cols="30"><?php echo h($queryBody); ?></textarea>
+                </div>
+                <button style="float:right;" class="btn btn-primary" id="submit_correlation_query">Submit</button>
+            </div>
+        </div>
 <?php
     if (!$ajax):
 ?>
