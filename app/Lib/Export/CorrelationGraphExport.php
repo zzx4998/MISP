@@ -23,7 +23,7 @@ class CorrelationGraphExport
     }
 
     private function __checkAndAddNode($node)
-    {;
+    {
         foreach ($this->__nodes as $k => $existingNode) {
             if ($existingNode['unique_id'] === $node['unique_id']) {
                 if (!empty($node['expanded'])) {
@@ -103,6 +103,9 @@ class CorrelationGraphExport
               'imgClass' => 'th-list',
             );
             $this->__checkAndAddNode($node);
+            foreach ($aNodes as $aNode) {
+                $this->__checkAndAddEdge($node['unique_id'], $aNode, 100);
+            }
             return 'object-' . $object['id'];
         } else {
             return false;
