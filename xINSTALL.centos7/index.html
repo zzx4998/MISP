@@ -1151,7 +1151,7 @@ sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
 <span class="c1"># Update composer.phar (optional)</span>
 <span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-<span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
+<span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
 <span class="c1">#$SUDO_WWW $RUN_PHP &quot;php composer-setup.php&quot;</span>
 <span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
 <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;php composer.phar require kamisama/cake-resque:4.1.2&quot;</span>

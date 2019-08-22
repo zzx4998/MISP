@@ -1461,8 +1461,8 @@ genRCLOCAL <span class="o">()</span> <span class="o">{</span>
 
 <span class="c1"># Run PyMISP tests</span>
 runTests <span class="o">()</span> <span class="o">{</span>
-  sudo sed -i -E <span class="s2">&quot;s~url\ =\ (.*)~url\ =\ &#39;</span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">&#39;~g&quot;</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP/tests/testlive_comprehensive.py
-  sudo sed -i -E <span class="s2">&quot;s/key\ =\ (.*)/key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP/tests/testlive_comprehensive.py
+  <span class="nb">echo</span> <span class="s2">&quot;url = </span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">key = </span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">|</span>sudo tee <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/PyMISP/tests/keys.py
   sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP/
 
   sudo -H -u <span class="nv">$WWW_USER</span> sh -c <span class="s2">&quot;cd </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/PyMISP &amp;&amp; git submodule foreach git pull origin master&quot;</span>
