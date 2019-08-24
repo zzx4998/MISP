@@ -946,7 +946,7 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="nv">upload_max_filesize</span><span class="o">=</span>50M
   <span class="nv">post_max_size</span><span class="o">=</span>50M
   <span class="nv">max_execution_time</span><span class="o">=</span><span class="m">300</span>
-  <span class="nv">memory_limit</span><span class="o">=</span>512M
+  <span class="nv">memory_limit</span><span class="o">=</span>2048M
 
   <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
 
@@ -1167,7 +1167,7 @@ sudo ln -s ../php-fpm.d/timezone.ini /etc/opt/rh/rh-php72/php.d/99-timezone.ini
 
 <span class="c1"># Recommended: Change some PHP settings in /etc/opt/rh/rh-php72/php.ini</span>
 <span class="c1"># max_execution_time = 300</span>
-<span class="c1"># memory_limit = 512M</span>
+<span class="c1"># memory_limit = 2048M</span>
 <span class="c1"># upload_max_filesize = 50M</span>
 <span class="c1"># post_max_size = 50M</span>
 <span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
