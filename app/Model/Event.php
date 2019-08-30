@@ -1608,6 +1608,7 @@ class Event extends AppModel
                     'timestamp' => array('function' => 'set_filter_timestamp', 'pop' => true),
                     'event_timestamp' => array('function' => 'set_filter_timestamp', 'pop' => true),
                     'publish_timestamp' => array('function' => 'set_filter_timestamp', 'pop' => true),
+                    'sighting_timestamp' => array('function' => 'set_filter_timestamp', 'pop' => true),
                     'org' => array('function' => 'set_filter_org', 'pop' => true),
                     'uuid' => array('function' => 'set_filter_uuid', 'pop' => true),
                     'published' => array('function' => 'set_filter_published', 'pop' => true)
@@ -2016,7 +2017,7 @@ class Event extends AppModel
         // $conditions['AND'][] = array('Event.published =' => 1);
 
         // do not expose all the data ...
-        $fields = array('Event.id', 'Event.orgc_id', 'Event.org_id', 'Event.date', 'Event.threat_level_id', 'Event.info', 'Event.published', 'Event.uuid', 'Event.attribute_count', 'Event.analysis', 'Event.timestamp', 'Event.distribution', 'Event.proposal_email_lock', 'Event.user_id', 'Event.locked', 'Event.publish_timestamp', 'Event.sharing_group_id', 'Event.disable_correlation', 'Event.extends_uuid');
+        $fields = array('Event.id', 'Event.orgc_id', 'Event.org_id', 'Event.date', 'Event.threat_level_id', 'Event.info', 'Event.published', 'Event.uuid', 'Event.attribute_count', 'Event.analysis', 'Event.timestamp', 'Event.distribution', 'Event.proposal_email_lock', 'Event.user_id', 'Event.locked', 'Event.publish_timestamp', 'Event.sighting_timestamp', 'Event.sharing_group_id', 'Event.disable_correlation', 'Event.extends_uuid');
         $fieldsAtt = array('Attribute.id', 'Attribute.type', 'Attribute.category', 'Attribute.value', 'Attribute.to_ids', 'Attribute.uuid', 'Attribute.event_id', 'Attribute.distribution', 'Attribute.timestamp', 'Attribute.comment', 'Attribute.sharing_group_id', 'Attribute.deleted', 'Attribute.disable_correlation', 'Attribute.object_id', 'Attribute.object_relation');
         $fieldsObj = array('*');
         $fieldsShadowAtt = array('ShadowAttribute.id', 'ShadowAttribute.type', 'ShadowAttribute.category', 'ShadowAttribute.value', 'ShadowAttribute.to_ids', 'ShadowAttribute.uuid', 'ShadowAttribute.event_uuid', 'ShadowAttribute.event_id', 'ShadowAttribute.old_id', 'ShadowAttribute.comment', 'ShadowAttribute.org_id', 'ShadowAttribute.proposal_to_delete', 'ShadowAttribute.timestamp');
@@ -3696,6 +3697,16 @@ class Event extends AppModel
         if (count($existingEvent)) {
             $data['Event']['id'] = $existingEvent['Event']['id'];
             $id = $existingEvent['Event']['id'];
+            // zeroq: if sightings then attach to event, do this early so only perm_sighting is needed for this
+            if (!isset($data['Event']['sighting_timestamp']) || $data['Event']['sighting_timestamp'] > $existingEvent['Event']['sighting_timestamp']) {
+                if (isset($data['Sighting']) && !empty($data['Sighting']) && ($user['Role']['perm_sighting'] || ($user['Role']['perm_sync']))) {
+                    $this->Sighting = ClassRegistry::init('Sighting');
+                    $sightingTimestamp = $data['Event']['sighting_timestamp'] ?? 0;
+                    foreach ($data['Sighting'] as $s) {
+                        $result = $this->Sighting->saveSightings($s['attribute_uuid'], false, $s['date_sighting'], $user, $s['type'], $s['source'], $s['uuid'], $sightingTimestamp);
+                    }
+                }
+						}
             // Conditions affecting all:
             // user.org == event.org
             // edit timestamp newer than existing event timestamp
@@ -3822,13 +3833,6 @@ class Event extends AppModel
                     }
                 }
             }
-            // zeroq: if sightings then attach to event
-            if (isset($data['Sighting']) && !empty($data['Sighting'])) {
-                $this->Sighting = ClassRegistry::init('Sighting');
-                foreach ($data['Sighting'] as $s) {
-                    $result = $this->Sighting->saveSightings($s['attribute_uuid'], false, $s['date_sighting'], $user, $s['type'], $s['source'], $s['uuid']);
-                }
-            }
             // if published -> do the actual publishing
             if ((!empty($data['Event']['published']) && 1 == $data['Event']['published'])) {
                 // The edited event is from a remote server ?
@@ -3884,6 +3888,18 @@ class Event extends AppModel
             return true;
         }
         return $this->validationErrors;
+    }
+
+    // Update just the sighting_timestamp of an existing event
+    public function updateSightingTimestamp($id, $timestamp = false) {
+        if (!$timestamp) {
+            $timestamp = time();
+        }
+        $event = $this->findById($id);
+        if ($event && $event['Event']['sighting_timestamp'] < $timestamp) {
+            $event['Event']['sighting_timestamp'] = $timestamp;
+            $this->save($event);
+        }
     }
 
     // format has to be:

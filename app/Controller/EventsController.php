@@ -2192,7 +2192,7 @@ class EventsController extends AppController
         }
         $this->Event->read(null, $id);
         // check if private and user not authorised to edit
-        if (!$this->_isSiteAdmin() && !($this->userRole['perm_sync'] && $this->_isRest())) {
+        if (!$this->_isSiteAdmin() && !(($this->userRole['perm_sync'] || $this->userRole['perm_sighting']) && $this->_isRest())) {
             if (($this->Event->data['Event']['orgc_id'] != $this->_checkOrg()) || !($this->userRole['perm_modify'])) {
                 $message = __('You are not authorised to do that. Please consider using the \'propose attribute\' feature.');
                 if ($this->_isRest()) {
@@ -4246,27 +4246,27 @@ class EventsController extends AppController
 
     public function filterEventIdsForPush()
     {
-        if (!$this->userRole['perm_sync']) {
+        if (!$this->userRole['perm_sync'] && !$this->userRole['perm_sighting']) {
             throw new MethodNotAllowedException(__('You do not have the permission to do that.'));
         }
         if ($this->request->is('post')) {
             $incomingIDs = array();
             $incomingEvents = array();
+            $incomingEventsSighting = array();
             foreach ($this->request->data as $event) {
                 $incomingIDs[] = $event['Event']['uuid'];
                 $incomingEvents[$event['Event']['uuid']] = $event['Event']['timestamp'];
+                $incomingEventsSighting[$event['Event']['uuid']] = $event['Event']['sighting_timestamp'] ?? 0;
             }
             $events = $this->Event->find('all', array(
                 'conditions' => array('Event.uuid' => $incomingIDs),
                 'recursive' => -1,
-                'fields' => array('Event.uuid', 'Event.timestamp', 'Event.locked'),
+                'fields' => array('Event.uuid', 'Event.timestamp', 'Event.sighting_timestamp', 'Event.locked'),
             ));
             foreach ($events as $k => $v) {
-                if ($v['Event']['timestamp'] >= $incomingEvents[$v['Event']['uuid']]) {
-                    unset($incomingEvents[$v['Event']['uuid']]);
-                    continue;
-                }
-                if ($v['Event']['locked'] == 0) {
+                if (($v['Event']['timestamp'] >= $incomingEvents[$v['Event']['uuid']] || $v['Event']['locked'] == 0) &&
+                    $v['Event']['sighting_timestamp'] >= $incomingEventsSighting[$v['Event']['uuid']])
+								{
                     unset($incomingEvents[$v['Event']['uuid']]);
                 }
             }
