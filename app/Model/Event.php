@@ -4133,39 +4133,40 @@ class Event extends AppModel
         return $workerType;
     }
 
-    public function publishRouter($id, $passAlong = null, $user)
+    public function publishRouter($id, $passAlong = null, $user, $sightingsOnly = false)
     {
         if (Configure::read('MISP.background_jobs')) {
+            $type = $sightingsOnly ? 'sighting' : 'event';
             $job = ClassRegistry::init('Job');
             $job->create();
             $data = array(
                     'worker' => $this->__getPrioWorkerIfPossible(),
-                    'job_type' => 'publish_event',
+                    'job_type' => 'publish_' . $type,
                     'job_input' => 'Event ID: ' . $id,
                     'status' => 0,
                     'retries' => 0,
                     'org_id' => $user['org_id'],
                     'org' => $user['Organisation']['name'],
-                    'message' => 'Publishing.',
+                    'message' => 'Publishing ' . $type . '.',
             );
             $job->save($data);
             $jobId = $job->id;
             $process_id = CakeResque::enqueue(
                     'prio',
                     'EventShell',
-                    array('publish', $id, $passAlong, $jobId, $user['id']),
+                    array('publish', $id, $passAlong, $sightingsOnly, $jobId, $user['id']),
                     true
             );
             $job->saveField('process_id', $process_id);
             return $process_id;
         } else {
-            $result = $this->publish($id, $passAlong);
+            $result = $this->publish($id, $passAlong, $sightingsOnly);
             return $result;
         }
     }
 
     // Performs all the actions required to publish an event
-    public function publish($id, $passAlong = null, $jobId = null)
+    public function publish($id, $passAlong = null, $sightingsOnly = false, $jobId = null)
     {
         $this->id = $id;
         $this->recursive = 0;
@@ -4175,7 +4176,7 @@ class Event extends AppModel
         }
         if ($jobId) {
             $this->Behaviors->unload('SysLogLogable.SysLogLogable');
-        } else {
+        } else if(!$sightingsOnly) {
             // update the DB to set the published flag
             // for background jobs, this should be done already
             $fieldList = array('published', 'id', 'info', 'publish_timestamp');
@@ -4188,7 +4189,7 @@ class Event extends AppModel
         $pubToZmq = Configure::read('Plugin.ZeroMQ_enable');
         $kafkaTopic = Configure::read('Plugin.Kafka_event_publish_notifications_topic');
         $pubToKafka = Configure::read('Plugin.Kafka_enable') && Configure::read('Plugin.Kafka_event_publish_notifications_enable') && !empty($kafkaTopic);
-        if ($pubToZmq || $pubToKafka) {
+        if (($pubToZmq || $pubToKafka) && !$sightingsOnly) {
             $hostOrg = $this->Org->find('first', array('conditions' => array('name' => Configure::read('MISP.org')), 'fields' => array('id')));
             if (!empty($hostOrg)) {
                 $user = array('org_id' => $hostOrg['Org']['id'], 'Role' => array('perm_sync' => 0, 'perm_audit' => 0, 'perm_site_admin' => 0), 'Organisation' => $hostOrg['Org']);

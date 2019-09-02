@@ -66,7 +66,7 @@ class SightingsController extends AppController
                 $source = isset($this->request->data['source']) ? trim($this->request->data['source']) : '';
             }
             if (!$error) {
-                $result = $this->Sighting->saveSightings($id, $values, $timestamp, $this->Auth->user(), $type, $source);
+                $result = $this->Sighting->saveSightings($id, $values, $timestamp, $this->Auth->user(), $type, $source, false, false, true);
             }
             if (!is_numeric($result)) {
                 $error = $result;
