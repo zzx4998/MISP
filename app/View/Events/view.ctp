@@ -349,6 +349,7 @@
                         ?>
                             <?php
                                 echo $this->element('/Events/View/related_event', array(
+                                    'event_id' => $event['Event']['id'],
                                     'related' => $relatedEvent['Event'],
                                     'color_red' => $relatedEvent['Event']['orgc_id'] == $me['org_id'],
                                     'hide' => $count > $display_threshold,

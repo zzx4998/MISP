@@ -11,7 +11,7 @@
                         <?php echo $this->OrgImg->getOrgImg(array('name' => $related['Orgc']['name'], 'id' => $related['Orgc']['id'], 'size' => 24)); ?>
                     </td>
                     <td style="line-height: 14px; padding-left: 2px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; max-width: 430px;">
-                        <a title="<?php echo h($related['info']); ?>" href="<?php echo h($href_url) . '/' . $related['id']?>">
+                        <a title="<?php echo h($related['info']); ?>" href="<?php echo h($href_url) . '/view/' . h($related['id']) . '/1/' . h($event_id) ?>">
                             <span><?php echo h($related['info']) ?>
                         </a>
                     </td>
