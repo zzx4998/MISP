@@ -1219,6 +1219,12 @@ class AttributesController extends AppController
         } elseif (!is_numeric($id)) {
             throw new NotFoundException('Invalid attribute');
         }
+        if (isset($this->params['named']['hard'])) {
+            $hard = $this->params['named']['hard'];
+        }
+        if (isset($this->request->data['hard'])) {
+            $hard = $this->request->data['hard'];
+        }
         $this->set('id', $id);
         $conditions = array('id' => $id);
         if (!$hard) {
@@ -1245,8 +1251,8 @@ class AttributesController extends AppController
                 $this->render('ajax/attributeConfirmationForm');
             }
         } else {
-            if (!$this->request->is('post') && !$this->_isRest()) {
-                throw new MethodNotAllowedException();
+            if (!$this->request->is('post') && !$this->request->is('delete')) {
+                throw new MethodNotAllowedException(__('This function is only accessible via POST requests.'));
             }
             if ($this->Attribute->deleteAttribute($id, $this->Auth->user(), $hard)) {
                 if ($this->_isRest() || $this->response->type() === 'application/json') {
@@ -1891,7 +1897,8 @@ class AttributesController extends AppController
             'value' , 'type', 'category', 'org', 'tags', 'from', 'to', 'last', 'eventid', 'withAttachments', 'uuid', 'publish_timestamp',
             'timestamp', 'enforceWarninglist', 'to_ids', 'deleted', 'includeEventUuid', 'event_timestamp', 'threat_level_id', 'includeEventTags',
             'includeProposals', 'returnFormat', 'published', 'limit', 'page', 'requested_attributes', 'includeContext', 'headerless',
-            'includeWarninglistHits', 'attackGalaxy', 'object_relation', 'includeSightings', 'includeCorrelations'
+            'includeWarninglistHits', 'attackGalaxy', 'object_relation', 'includeSightings', 'includeCorrelations', 'includeDecayScore',
+            'decayingModel', 'excludeDecayed', 'modelOverrides', 'includeFullModel', 'score'
         );
         $filterData = array(
             'request' => $this->request,

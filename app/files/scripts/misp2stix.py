@@ -89,7 +89,8 @@ class StixBuilder(object):
                 idgen.set_id_namespace(Namespace(self.baseurl, self.orgname, "MISP"))
         self.namespace_prefix = idgen.get_id_namespace_alias()
         ## MAPPING FOR ATTRIBUTES
-        self.simple_type_to_method = {"port": self.generate_port_observable, "domain|ip": self.generate_domain_ip_observable}
+        self.simple_type_to_method = {"port": self.generate_port_observable, "domain|ip": self.generate_domain_ip_observable,
+                                      "named pipe": self.generate_pipe_observable}
         self.simple_type_to_method.update(dict.fromkeys(list(hash_type_attributes["single"]) + list(hash_type_attributes["composite"]) + ["filename"], self.resolve_file_observable))
         self.simple_type_to_method.update(dict.fromkeys(["ip-src", "ip-dst"], self.generate_ip_observable))
         self.simple_type_to_method.update(dict.fromkeys(["ip-src|port", "ip-dst|port", "hostname|port"], self.generate_socket_address_observable))
@@ -531,6 +532,17 @@ class StixBuilder(object):
         observable.id_ = "{}:Observable-{}".format(self.namespace_prefix, attribute_uuid)
         return observable
 
+    def generate_pipe_observable(self, attribute):
+        attribute_uuid = attribute['uuid']
+        pipe_object = Pipe()
+        pipe.named = True
+        pipe.name = attribute['value']
+        pipe.name.condition = 'Equals'
+        pipe.parent.id_ = "{}PipeObject-{}".format(self.namesapce_prefix, attribute_uuid)
+        observable = Observable(pipe_object)
+        observable.id_ = "{}:Pipe-{}".format(self.namespace_prefix, attribute_uuid)
+        return observable
+
     def generate_port_observable(self, attribute):
         attribute_uuid = attribute['uuid']
         port_object = self.create_port_object(attribute['value'])
@@ -684,12 +696,12 @@ class StixBuilder(object):
             ttp = self.create_ttp_from_galaxy(uuid, galaxy_name, cluster['id'], cluster['type'])
             attack_pattern = AttackPattern()
             attack_pattern.id_ = "{}:AttackPattern-{}".format(self.namespace_prefix, uuid)
-            attack_pattern.title = cluster['value']
+            attack_pattern.title = "{}: {}".format(galaxy_name, cluster['value'])
             attack_pattern.description = cluster['description']
             if cluster['meta'].get('external_id'):
                 external_id = cluster['meta']['external_id'][0]
                 if external_id.startswith('CAPEC'):
-                    attack_pattern.capec_id = external_id.split('-')[1]
+                    attack_pattern.capec_id = external_id
             behavior = Behavior()
             behavior.add_attack_pattern(attack_pattern)
             ttp.behavior = behavior
@@ -773,7 +785,7 @@ class StixBuilder(object):
             uuid = cluster['collection_uuid']
             course_of_action = CourseOfAction()
             course_of_action.id_ = "{}:CourseOfAction-{}".format(self.namespace_prefix, uuid)
-            course_of_action.title = cluster['value']
+            course_of_action.title = "{}: {}".format(galaxy_name, cluster['value'])
             course_of_action.description = cluster['description']
             self.galaxies['course_of_action'].append(course_of_action)
 
@@ -879,7 +891,7 @@ class StixBuilder(object):
             ttp = self.create_ttp_from_galaxy(uuid, galaxy_name, cluster['id'], cluster['type'])
             malware = MalwareInstance()
             malware.id_ = "{}:MalwareInstance-{}".format(self.namespace_prefix, uuid)
-            malware.title = cluster['value']
+            malware.title = "{}: {}".format(galaxy_name, cluster['value'])
             if cluster.get('description'):
                 malware.description = cluster['description']
             if cluster['meta'].get('synonyms'):
@@ -995,7 +1007,7 @@ class StixBuilder(object):
             uuid = cluster['collection_uuid']
             threat_actor = ThreatActor()
             threat_actor.id_ = "{}:ThreatActor-{}".format(self.namespace_prefix, uuid)
-            threat_actor.title = cluster['value']
+            threat_actor.title = "{}: {}".format(galaxy_name, cluster['value'])
             if cluster.get('description'):
                 threat_actor.description = cluster['description']
             meta = cluster['meta']
@@ -1015,7 +1027,8 @@ class StixBuilder(object):
             ttp = self.create_ttp_from_galaxy(uuid, galaxy_name, cluster['id'], cluster['type'])
             tool = ToolInformation()
             tool.id_ = "{}:ToolInformation-{}".format(self.namespace_prefix, uuid)
-            tool.name = cluster['value']
+            name = "Mitre Tool" if galaxy['type'] == 'mitre-tool' else galaxy['name']
+            tool.name = "{}: {}".format(name, cluster['value'])
             if cluster.get('description'):
                 tool.description = cluster['description']
             tools = Tools()
@@ -1082,6 +1095,26 @@ class StixBuilder(object):
         ET.add_vulnerability(vulnerability)
         ttp.add_exploit_target(ET)
         self.ttps_from_objects[uuid] = ttp
+
+    def parse_vulnerability_galaxy(self, galaxy):
+        galaxy_name = galaxy['name']
+        for cluster in galaxy['GalaxyCluster']:
+            uuid = cluster['collection_uuid']
+            ttp = self.create_ttp_from_galaxy(uuid, galaxy_name, cluster['id'], cluster['type'])
+            vulnerability = Vulnerability()
+            vulnerability.id_ = "{}:Vulnerability-{}".format(self.namespace_prefix, uuid)
+            vulnerability.title = cluster['value']
+            vulnerability.description = cluster['description']
+            if cluster['meta'].get('aliases'):
+                vulnerability.cve_id = cluster['meta']['aliases'][0]
+            if cluster['meta'].get('refs'):
+                for reference in cluster['meta']['refs']:
+                    vulnerability.add_reference(reference)
+            ET = ExploitTarget()
+            ET.id_ = "{}:ExploitTarget-{}".format(self.namespace_prefix, uuid)
+            ET.add_vulnerability(vulnerability)
+            ttp.add_exploit_target(ET)
+            self.incident.add_leveraged_ttps(self.append_ttp(galaxy_name, ttp))
 
     def parse_weakness(self, misp_object):
         ttp = self.create_ttp_from_object(misp_object)

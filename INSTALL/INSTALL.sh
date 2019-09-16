@@ -763,7 +763,6 @@ installDepsPhp70 () {
   php php-cli \
   php-dev \
   php-json php-xml php-mysql php-opcache php-readline php-mbstring \
-  php-pear \
   php-redis php-gnupg \
   php-gd
 
@@ -785,7 +784,6 @@ installDepsPhp73 () {
   php7.3 php7.3-cli \
   php7.3-dev \
   php7.3-json php7.3-xml php7.3-mysql php7.3-opcache php7.3-readline php7.3-mbstring \
-  php-pear \
   php-redis php-gnupg \
   php-gd
 }
@@ -945,8 +943,6 @@ alias composer70='composer72'
 composer72 () {
   cd $PATH_TO_MISP/app
   mkdir /var/www/.composer ; chown $WWW_USER:$WWW_USER /var/www/.composer
-  $SUDO_WWW php composer.phar require kamisama/cake-resque:4.1.2
-  $SUDO_WWW php composer.phar config vendor-dir Vendor
   $SUDO_WWW php composer.phar install
 }
 
@@ -963,8 +959,6 @@ composer73 () {
   checkFail "composer.phar checksum failed, please investigate manually. " $?
   $SUDO_WWW php composer-setup.php
   $SUDO_WWW php -r "unlink('composer-setup.php');"
-  $SUDO_WWW php composer.phar require kamisama/cake-resque:4.1.2
-  $SUDO_WWW php composer.phar config vendor-dir Vendor
   $SUDO_WWW php composer.phar install
 }
 
@@ -1137,7 +1131,6 @@ installDepsPhp73 () {
   php7.3 php7.3-cli \
   php7.3-dev \
   php7.3-json php7.3-xml php7.3-mysql php7.3-opcache php7.3-readline php7.3-mbstring \
-  php-pear \
   php-redis php-gnupg \
   php-gd
 }
@@ -1153,7 +1146,6 @@ installDepsPhp72 () {
   php php-cli \
   php-dev \
   php-json php-xml php-mysql php7.2-opcache php-readline php-mbstring \
-  php-pear \
   php-redis php-gnupg \
   php-gd
 
@@ -1174,7 +1166,6 @@ installDepsPhp70 () {
   php php-cli \
   php-dev \
   php-json php-xml php-mysql php-opcache php-readline php-mbstring \
-  php-pear \
   php-redis php-gnupg \
   php-gd
 
@@ -1324,10 +1315,6 @@ installCore () {
 
   # install plyara
   $SUDO_WWW ${PATH_TO_MISP}/venv/bin/pip install plyara
-
-  # Install Crypt_GPG and Console_CommandLine
-  sudo pear install ${PATH_TO_MISP}/INSTALL/dependencies/Console_CommandLine/package.xml
-  sudo pear install ${PATH_TO_MISP}/INSTALL/dependencies/Crypt_GPG/package.xml
 }
 
 installCake () {
@@ -1338,8 +1325,6 @@ installCake () {
   # Make composer cache happy
   # /!\ composer on Ubuntu when invoked with sudo -u doesn't set $HOME to /var/www but keeps it /home/misp \!/
   sudo mkdir /var/www/.composer ; sudo chown $WWW_USER:$WWW_USER /var/www/.composer
-  $SUDO_WWW php composer.phar require kamisama/cake-resque:4.1.2
-  $SUDO_WWW php composer.phar config vendor-dir Vendor
   $SUDO_WWW php composer.phar install
 
   # Enable CakeResque with php-redis
