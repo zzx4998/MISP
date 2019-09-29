@@ -202,8 +202,8 @@ class User extends AppModel
             'finderQuery' => '',
             'counterQuery' => ''
         ),
-        'Post',
-        'UserSetting'
+        'Post'
+        //'UserSetting'
     );
 
     public $actsAs = array(
