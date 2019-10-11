@@ -145,11 +145,6 @@ $SUDO_WWW git submodule update --init --recursive
 # Make git ignore filesystem permission differences for submodules
 $SUDO_WWW git submodule foreach --recursive git config core.filemode false
 
-# Install packaged pears
-sudo $RUN_PHP "pear channel-update pear.php.net"
-sudo $RUN_PHP "pear install ${PATH_TO_MISP}/INSTALL/dependencies/Console_CommandLine/package.xml"
-sudo $RUN_PHP "pear install ${PATH_TO_MISP}/INSTALL/dependencies/Crypt_GPG/package.xml"
-
 # Create a python3 virtualenv
 $SUDO_WWW $RUN_PYTHON "virtualenv -p python3 $PATH_TO_MISP/venv"
 sudo mkdir /var/www/.cache
@@ -249,8 +244,6 @@ cd $PATH_TO_MISP/app
 #$SUDO_WWW $RUN_PHP -- php -r "if (hash_file('SHA384', 'composer-setup.php') === 'a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 #$SUDO_WWW $RUN_PHP "php composer-setup.php"
 #$SUDO_WWW $RUN_PHP -- php -r "unlink('composer-setup.php');"
-$SUDO_WWW $RUN_PHP "php composer.phar require kamisama/cake-resque:4.1.2"
-$SUDO_WWW $RUN_PHP "php composer.phar config vendor-dir Vendor"
 $SUDO_WWW $RUN_PHP "php composer.phar install"
 
 sudo yum install php-redis -y

@@ -216,11 +216,6 @@ installCoreRHEL () {
   # Make git ignore filesystem permission differences
   $SUDO_WWW git config core.filemode false
 
-  # Install packaged pears
-  sudo $RUN_PHP -- pear channel-update pear.php.net
-  sudo $RUN_PHP -- pear install ${PATH_TO_MISP}/INSTALL/dependencies/Console_CommandLine/package.xml
-  sudo $RUN_PHP -- pear install ${PATH_TO_MISP}/INSTALL/dependencies/Crypt_GPG/package.xml
-
   # Create a python3 virtualenv
   $SUDO_WWW $RUN_PYTHON -- virtualenv -p python3 $PATH_TO_MISP/venv
   sudo mkdir /usr/share/httpd/.cache
@@ -332,8 +327,6 @@ installCake_RHEL ()
   #$SUDO_WWW $RUN_PHP -- php -r "if (hash_file('SHA384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
   #$SUDO_WWW $RUN_PHP "php composer-setup.php"
   #$SUDO_WWW $RUN_PHP -- php -r "unlink('composer-setup.php');"
-  $SUDO_WWW $RUN_PHP "php composer.phar require kamisama/cake-resque:4.1.2"
-  $SUDO_WWW $RUN_PHP "php composer.phar config vendor-dir Vendor"
   $SUDO_WWW $RUN_PHP "php composer.phar install"
 
   ## sudo yum install php-redis -y
