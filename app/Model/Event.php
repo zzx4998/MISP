@@ -3746,6 +3746,7 @@ class Event extends AppModel
                 // If the above is true, we have two more options:
                 // For users that are of the creating org of the event, always allow the edit
                 // For users that are sync users, only allow the edit if the event is locked
+                // Fail silently for sighting users because their job is already done above
                 if ($existingEvent['Event']['orgc_id'] === $user['org_id']
                 || ($user['Role']['perm_sync'] && $existingEvent['Event']['locked']) || $user['Role']['perm_site_admin']) {
                     if ($user['Role']['perm_sync']) {
@@ -3754,7 +3755,12 @@ class Event extends AppModel
                         }
                     }
                 } else {
-                    return (array('error' => 'Event could not be saved: The user used to edit the event is not authorised to do so. This can be caused by the user not being of the same organisation as the original creator of the event whilst also not being a site administrator.'));
+                    if ($user['Role']['perm_sighting']) {
+                        // Sighting user but not sync user: the process ends here, succesfully
+                        return true;
+                    } else {
+                        return (array('error' => 'Event could not be saved: The user used to edit the event is not authorised to do so. This can be caused by the user not being of the same organisation as the original creator of the event whilst also not being a site administrator.'));
+                    }
                 }
             } else {
                 return (array('error' => 'Event could not be saved: Event in the request not newer than the local copy.'));
