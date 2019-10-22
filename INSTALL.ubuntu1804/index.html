@@ -600,8 +600,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.rhel8/" title="RHEL8" class="md-nav__link">
-      RHEL8
+    <a href="../INSTALL.rhel8/" title="RHEL8/CentOS8" class="md-nav__link">
+      RHEL8/CentOS8
     </a>
   </li>
 
@@ -1509,7 +1509,6 @@ installDepsPhp72 <span class="o">()</span> <span class="o">{</span>
   php php-cli <span class="se">\</span>
   php-dev <span class="se">\</span>
   php-json php-xml php-mysql php7.2-opcache php-readline php-mbstring <span class="se">\</span>
-  php-pear <span class="se">\</span>
   php-redis php-gnupg <span class="se">\</span>
   php-gd
 
@@ -1581,10 +1580,6 @@ installCore <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># install plyara</span>
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install plyara
-
-  <span class="c1"># Install Crypt_GPG and Console_CommandLine</span>
-  sudo pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Console_CommandLine/package.xml
-  sudo pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Crypt_GPG/package.xml
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 1_mispCoreInstall.sh&gt;</span>
 </pre></div>
@@ -1600,8 +1595,6 @@ installCake <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Make composer cache happy</span>
   <span class="c1"># /!\ composer on Ubuntu when invoked with sudo -u doesn&#39;t set $HOME to /var/www but keeps it /home/misp \!/</span>
   sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.composer
-  <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
-  <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
   <span class="nv">$SUDO_WWW</span> php composer.phar install
 
   <span class="c1"># Enable CakeResque with php-redis</span>
@@ -3096,7 +3089,6 @@ installDepsPhp70 <span class="o">()</span> <span class="o">{</span>
   php php-cli <span class="se">\</span>
   php-dev <span class="se">\</span>
   php-json php-xml php-mysql php-opcache php-readline php-mbstring <span class="se">\</span>
-  php-pear <span class="se">\</span>
   php-redis php-gnupg <span class="se">\</span>
   php-gd
 
@@ -3120,7 +3112,6 @@ installDepsPhp73 <span class="o">()</span> <span class="o">{</span>
   php7.3 php7.3-cli <span class="se">\</span>
   php7.3-dev <span class="se">\</span>
   php7.3-json php7.3-xml php7.3-mysql php7.3-opcache php7.3-readline php7.3-mbstring <span class="se">\</span>
-  php-pear <span class="se">\</span>
   php-redis php-gnupg <span class="se">\</span>
   php-gd
 <span class="o">}</span>
@@ -3281,8 +3272,6 @@ gitPullAllRCLOCAL <span class="o">()</span> <span class="o">{</span>
 composer72 <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
   mkdir /var/www/.composer <span class="p">;</span> chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.composer
-  <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
-  <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
   <span class="nv">$SUDO_WWW</span> php composer.phar install
 <span class="o">}</span>
 
@@ -3299,8 +3288,6 @@ composer73 <span class="o">()</span> <span class="o">{</span>
   checkFail <span class="s2">&quot;composer.phar checksum failed, please investigate manually. &quot;</span> <span class="nv">$?</span>
   <span class="nv">$SUDO_WWW</span> php composer-setup.php
   <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
-  <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
-  <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
   <span class="nv">$SUDO_WWW</span> php composer.phar install
 <span class="o">}</span>
 

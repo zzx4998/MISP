@@ -302,8 +302,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.rhel8/" title="RHEL8" class="md-nav__link">
-      RHEL8
+    <a href="../INSTALL.rhel8/" title="RHEL8/CentOS8" class="md-nav__link">
+      RHEL8/CentOS8
     </a>
   </li>
 
@@ -668,7 +668,6 @@ to allow for a stateless MISP setup (i.e for containerisation)</p>
 <h2 id="0-installing-dependencies">0. Installing Dependencies<a class="headerlink" href="#0-installing-dependencies" title="Permanent link">&para;</a></h2>
 <p>Install the AWS PHP SDK</p>
 <div class="codehilite"><pre><span></span><span class="nb">cd</span> /var/www/MISP/app
-sudo -u www-data php composer.phar config vendor-dir Vendor
 sudo -u www-data php composer.phar require aws/aws-sdk-php
 </pre></div>
 

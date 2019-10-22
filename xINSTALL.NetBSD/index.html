@@ -302,8 +302,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.rhel8/" title="RHEL8" class="md-nav__link">
-      RHEL8
+    <a href="../INSTALL.rhel8/" title="RHEL8/CentOS8" class="md-nav__link">
+      RHEL8/CentOS8
     </a>
   </li>
 
@@ -1236,9 +1236,6 @@ sudo -u www php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;c
 <span class="s2">(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
 sudo -u www env <span class="nv">HOME</span><span class="o">=</span>/tmp php composer-setup.php
 sudo -u www php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
-
-sudo -u www <span class="nv">HOME</span><span class="o">=</span>/tmp php composer.phar require kamisama/cake-resque:4.1.2
-sudo -u www <span class="nv">HOME</span><span class="o">=</span>/tmp php composer.phar config vendor-dir Vendor
 sudo -u www <span class="nv">HOME</span><span class="o">=</span>/tmp php composer.phar install
 
 <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>

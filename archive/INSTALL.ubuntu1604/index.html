@@ -302,8 +302,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../INSTALL.rhel8/" title="RHEL8" class="md-nav__link">
-      RHEL8
+    <a href="../../INSTALL.rhel8/" title="RHEL8/CentOS8" class="md-nav__link">
+      RHEL8/CentOS8
     </a>
   </li>
 
@@ -1533,8 +1533,6 @@ sudo -H -u www-data /var/www/MISP/venv/bin/pip install .
 <span class="c1"># Make composer cache happy</span>
 <span class="c1"># /!\ composer on Ubuntu when invoked with sudo -u doesn&#39;t set $HOME to /var/www but keeps it /home/misp \!/</span>
 sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown www-data:www-data /var/www/.composer
-sudo -H -u www-data php composer.phar require kamisama/cake-resque:4.1.2
-sudo -H -u www-data php composer.phar config vendor-dir Vendor
 sudo -H -u www-data php composer.phar install
 
 <span class="c1"># Enable CakeResque with php-redis</span>

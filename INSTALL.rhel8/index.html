@@ -42,7 +42,7 @@
     
     
       
-        <title>RHEL8 - MISP Install Documentation</title>
+        <title>RHEL8/CentOS8 - MISP Install Documentation</title>
       
     
     
@@ -125,7 +125,7 @@
               MISP Install Documentation
             </span>
             <span class="md-header-nav__topic">
-              RHEL8
+              RHEL8/CentOS8
             </span>
           
         </div>
@@ -313,11 +313,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        RHEL8
+        RHEL8/CentOS8
       </label>
     
-    <a href="./" title="RHEL8" class="md-nav__link md-nav__link--active">
-      RHEL8
+    <a href="./" title="RHEL8/CentOS8" class="md-nav__link md-nav__link--active">
+      RHEL8/CentOS8
     </a>
     
       
@@ -1513,7 +1513,7 @@ yumInstallCoreDeps <span class="o">()</span> <span class="o">{</span>
   sudo systemctl <span class="nb">enable</span> --now redis.service
 
   <span class="nv">PHP_INI</span><span class="o">=</span>/etc/php.ini
-  sudo yum install php php-fpm php-devel php-pear <span class="se">\</span>
+  sudo yum install php php-fpm php-devel <span class="se">\</span>
        php-mysqlnd <span class="se">\</span>
        php-mbstring <span class="se">\</span>
        php-xml <span class="se">\</span>
@@ -1568,11 +1568,6 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
   <span class="c1"># Make git ignore filesystem permission differences</span>
   <span class="nv">$SUDO_WWW</span> git config core.filemode <span class="nb">false</span>
-
-  <span class="c1"># Install packaged pears</span>
-  sudo <span class="nv">$RUN_PHP</span> -- pear channel-update pear.php.net
-  sudo <span class="nv">$RUN_PHP</span> -- pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Console_CommandLine/package.xml
-  sudo <span class="nv">$RUN_PHP</span> -- pear install <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/dependencies/Crypt_GPG/package.xml
 
   <span class="c1"># Create a python3 virtualenv</span>
   <span class="nv">$SUDO_WWW</span> virtualenv-3 -p python3 <span class="nv">$PATH_TO_MISP</span>/venv
@@ -1677,8 +1672,6 @@ installCake_RHEL <span class="o">()</span>
   <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
   <span class="nv">$SUDO_WWW</span> php composer-setup.php
   <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
-  <span class="nv">$SUDO_WWW</span> php composer.phar require kamisama/cake-resque:4.1.2
-  <span class="nv">$SUDO_WWW</span> php composer.phar config vendor-dir Vendor
   <span class="nv">$SUDO_WWW</span> php composer.phar install
 
   <span class="c1">## sudo yum install php-redis -y</span>

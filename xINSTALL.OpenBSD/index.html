@@ -302,8 +302,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.rhel8/" title="RHEL8" class="md-nav__link">
-      RHEL8
+    <a href="../INSTALL.rhel8/" title="RHEL8/CentOS8" class="md-nav__link">
+      RHEL8/CentOS8
     </a>
   </li>
 
@@ -1682,17 +1682,7 @@ doas virtualenv -ppython3 /usr/local/virtualenvs/MISP
 </pre></div>
 
 <h4 id="install-ssdeep">Install ssdeep<a class="headerlink" href="#install-ssdeep" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>doas mkdir /usr/local/src
-doas chown misp:misp /usr/local/src
-cd /usr/local/src
-doas -u misp git clone https://github.com/ssdeep-project/ssdeep.git
-cd ssdeep
-export AUTOMAKE_VERSION=1.16
-export AUTOCONF_VERSION=2.69
-doas -u misp ./bootstrap
-doas -u misp ./configure --prefix=/usr
-doas -u misp make
-doas make install
+<div class="codehilite"><pre><span></span>doas pkg_add -v ssdeep
 </pre></div>
 
 <h4 id="apache2-only">Apache2 only<a class="headerlink" href="#apache2-only" title="Permanent link">&para;</a></h4>
@@ -1834,8 +1824,6 @@ doas -u www php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/inst
 doas -u www php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
 doas -u www env <span class="nv">HOME</span><span class="o">=</span>/var/www php composer-setup.php
 doas -u www php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
-doas -u www env <span class="nv">HOME</span><span class="o">=</span>/var/www php composer.phar require kamisama/cake-resque:4.1.2
-doas -u www env <span class="nv">HOME</span><span class="o">=</span>/var/www php composer.phar config vendor-dir Vendor
 doas -u www env <span class="nv">HOME</span><span class="o">=</span>/var/www php composer.phar install
 
 <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>

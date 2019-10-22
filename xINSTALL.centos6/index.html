@@ -302,8 +302,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.rhel8/" title="RHEL8" class="md-nav__link">
-      RHEL8
+    <a href="../INSTALL.rhel8/" title="RHEL8/CentOS8" class="md-nav__link">
+      RHEL8/CentOS8
     </a>
   </li>
 
@@ -1275,11 +1275,6 @@ sudo chown apache:apache <span class="nv">$PATH_TO_MISP</span>
 <span class="c1"># Make git ignore filesystem permission differences for submodules</span>
 <span class="nv">$SUDO_WWW</span> git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
 
-<span class="c1"># Install packaged pears</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear channel-update pear.php.net&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/INSTALL/dependencies/Console_CommandLine/package.xml&quot;</span>
-sudo <span class="nv">$RUN_PHP</span> <span class="s2">&quot;pear install </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/INSTALL/dependencies/Crypt_GPG/package.xml&quot;</span>
-
 <span class="c1"># Create a python3 virtualenv</span>
 <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PYTHON</span> <span class="s2">&quot;virtualenv -p python3 </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/venv&quot;</span>
 sudo mkdir /var/www/.cache
@@ -1378,8 +1373,6 @@ sudo chown apache:apache /var/www/.composer/
 <span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
 <span class="c1">#$SUDO_WWW $RUN_PHP &quot;php composer-setup.php&quot;</span>
 <span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;php composer.phar require kamisama/cake-resque:4.1.2&quot;</span>
-<span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;php composer.phar config vendor-dir Vendor&quot;</span>
 <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;php composer.phar install&quot;</span>
 
 sudo yum install php-redis -y

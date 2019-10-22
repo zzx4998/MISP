@@ -302,8 +302,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.rhel8/" title="RHEL8" class="md-nav__link">
-      RHEL8
+    <a href="../INSTALL.rhel8/" title="RHEL8/CentOS8" class="md-nav__link">
+      RHEL8/CentOS8
     </a>
   </li>
 
@@ -845,9 +845,7 @@ MISP_PASSWORD='Password1234'</p>
   a2enmod ssl rewrite headers
   a2dissite 000-default
   a2ensite default-ssl</p>
-<p>pear channel-update pear.php.net
-  pear install Crypt_GPG
-  pecl channel-update pecl.php.net</p>
+<p>pecl channel-update pecl.php.net</p>
 <p>yes '' |pecl install redis</p>
 <p>echo "extension=redis.so" | tee /etc/php/7.0/mods-available/redis.ini</p>
 <p>phpenmod redis</p>
@@ -888,8 +886,6 @@ MISP_PASSWORD='Password1234'</p>
   $SUDO_WWW $PATH_TO_MISP/venv/bin/pip install .</p>
 <p>cd $PATH_TO_MISP/app
   mkdir /var/www/.composer ; chown www-data:www-data /var/www/.composer
-  $SUDO_WWW php composer.phar require kamisama/cake-resque:4.1.2
-  $SUDO_WWW php composer.phar config vendor-dir Vendor
   $SUDO_WWW php composer.phar install</p>
 <p>$SUDO_WWW cp -fa $PATH_TO_MISP/INSTALL/setup/config.php $PATH_TO_MISP/app/Plugin/CakeResque/Config/config.php</p>
 <p>chown -R www-data:www-data $PATH_TO_MISP

@@ -302,8 +302,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../INSTALL.rhel8/" title="RHEL8" class="md-nav__link">
-      RHEL8
+    <a href="../INSTALL.rhel8/" title="RHEL8/CentOS8" class="md-nav__link">
+      RHEL8/CentOS8
     </a>
   </li>
 
@@ -1348,8 +1348,6 @@ ${PATH_TO_MISP}/venv/bin/pip install .
 
 <span class="c1"># Install CakeResque along with its dependencies if you intend to use the built in background jobs:</span>
 <span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app
-php composer.phar require kamisama/cake-resque:4.1.2
-php composer.phar config vendor-dir Vendor
 php composer.phar install
 
 <span class="c1"># Enable CakeResque with php-redis</span>
