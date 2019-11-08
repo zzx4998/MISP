@@ -1619,7 +1619,6 @@ class Event extends AppModel
                     'timestamp' => array('function' => 'set_filter_timestamp', 'pop' => true),
                     'event_timestamp' => array('function' => 'set_filter_timestamp', 'pop' => true),
                     'publish_timestamp' => array('function' => 'set_filter_timestamp', 'pop' => true),
-                    'sighting_timestamp' => array('function' => 'set_filter_timestamp', 'pop' => true),
                     'org' => array('function' => 'set_filter_org', 'pop' => true),
                     'uuid' => array('function' => 'set_filter_uuid', 'pop' => true),
                     'published' => array('function' => 'set_filter_published', 'pop' => true)
@@ -2032,7 +2031,7 @@ class Event extends AppModel
         // $conditions['AND'][] = array('Event.published =' => 1);
 
         // do not expose all the data ...
-        $fields = array('Event.id', 'Event.orgc_id', 'Event.org_id', 'Event.date', 'Event.threat_level_id', 'Event.info', 'Event.published', 'Event.uuid', 'Event.attribute_count', 'Event.analysis', 'Event.timestamp', 'Event.distribution', 'Event.proposal_email_lock', 'Event.user_id', 'Event.locked', 'Event.publish_timestamp', 'Event.sighting_timestamp', 'Event.sharing_group_id', 'Event.disable_correlation', 'Event.extends_uuid');
+        $fields = array('Event.id', 'Event.orgc_id', 'Event.org_id', 'Event.date', 'Event.threat_level_id', 'Event.info', 'Event.published', 'Event.uuid', 'Event.attribute_count', 'Event.analysis', 'Event.timestamp', 'Event.distribution', 'Event.proposal_email_lock', 'Event.user_id', 'Event.locked', 'Event.publish_timestamp', 'Event.sharing_group_id', 'Event.disable_correlation', 'Event.extends_uuid');
         $fieldsAtt = array('Attribute.id', 'Attribute.type', 'Attribute.category', 'Attribute.value', 'Attribute.to_ids', 'Attribute.uuid', 'Attribute.event_id', 'Attribute.distribution', 'Attribute.timestamp', 'Attribute.comment', 'Attribute.sharing_group_id', 'Attribute.deleted', 'Attribute.disable_correlation', 'Attribute.object_id', 'Attribute.object_relation');
         $fieldsObj = array('*');
         $fieldsShadowAtt = array('ShadowAttribute.id', 'ShadowAttribute.type', 'ShadowAttribute.category', 'ShadowAttribute.value', 'ShadowAttribute.to_ids', 'ShadowAttribute.uuid', 'ShadowAttribute.event_uuid', 'ShadowAttribute.event_id', 'ShadowAttribute.old_id', 'ShadowAttribute.comment', 'ShadowAttribute.org_id', 'ShadowAttribute.proposal_to_delete', 'ShadowAttribute.timestamp');
@@ -2096,6 +2095,7 @@ class Event extends AppModel
         if ($options['metadata']) {
             unset($params['contain']['Attribute']);
             unset($params['contain']['ShadowAttribute']);
+            unset($params['contain']['Object']);
         }
         if ($user['Role']['perm_site_admin']) {
             $params['contain']['User'] = array('fields' => 'email');
@@ -2270,7 +2270,9 @@ class Event extends AppModel
                 }
                 $event['ShadowAttribute'] = $this->Feed->attachFeedCorrelations($event['ShadowAttribute'], $user, $event['Event'], $overrideLimit, 'Server');
             }
-            $event['Sighting'] = $this->Sighting->attachToEvent($event, $user);
+            if (empty($options['metadata'])) {
+                $event['Sighting'] = $this->Sighting->attachToEvent($event, $user);
+            }
             // remove proposals to attributes that we cannot see
             // if the shadow attribute wasn't moved within an attribute before, this is the case
             if (isset($event['ShadowAttribute'])) {
@@ -3719,16 +3721,6 @@ class Event extends AppModel
         if (count($existingEvent)) {
             $data['Event']['id'] = $existingEvent['Event']['id'];
             $id = $existingEvent['Event']['id'];
-            // zeroq: if sightings then attach to event, do this early so only perm_sighting is needed for this
-            if (!isset($data['Event']['sighting_timestamp']) || $data['Event']['sighting_timestamp'] > $existingEvent['Event']['sighting_timestamp']) {
-                if (isset($data['Sighting']) && !empty($data['Sighting']) && ($user['Role']['perm_sighting'] || ($user['Role']['perm_sync']))) {
-                    $this->Sighting = ClassRegistry::init('Sighting');
-                    $sightingTimestamp = $data['Event']['sighting_timestamp'] ?? 0;
-                    foreach ($data['Sighting'] as $s) {
-                        $result = $this->Sighting->saveSightings($s['attribute_uuid'], false, $s['date_sighting'], $user, $s['type'], $s['source'], $s['uuid'], $sightingTimestamp);
-                    }
-                }
-						}
             // Conditions affecting all:
             // user.org == event.org
             // edit timestamp newer than existing event timestamp
@@ -3755,7 +3747,6 @@ class Event extends AppModel
                 // If the above is true, we have two more options:
                 // For users that are of the creating org of the event, always allow the edit
                 // For users that are sync users, only allow the edit if the event is locked
-                // Fail silently for sighting users because their job is already done above
                 if ($existingEvent['Event']['orgc_id'] === $user['org_id']
                 || ($user['Role']['perm_sync'] && $existingEvent['Event']['locked']) || $user['Role']['perm_site_admin']) {
                     if ($user['Role']['perm_sync']) {
@@ -3764,12 +3755,7 @@ class Event extends AppModel
                         }
                     }
                 } else {
-                    if ($user['Role']['perm_sighting']) {
-                        // Sighting user but not sync user: the process ends here, succesfully
-                        return true;
-                    } else {
-                        return (array('error' => 'Event could not be saved: The user used to edit the event is not authorised to do so. This can be caused by the user not being of the same organisation as the original creator of the event whilst also not being a site administrator.'));
-                    }
+                    return (array('error' => 'Event could not be saved: The user used to edit the event is not authorised to do so. This can be caused by the user not being of the same organisation as the original creator of the event whilst also not being a site administrator.'));
                 }
             } else {
                 return (array('error' => 'Event could not be saved: Event in the request not newer than the local copy.'));
@@ -3861,6 +3847,13 @@ class Event extends AppModel
                     }
                 }
             }
+            // zeroq: if sightings then attach to event
+            if (isset($data['Sighting']) && !empty($data['Sighting'])) {
+                $this->Sighting = ClassRegistry::init('Sighting');
+                foreach ($data['Sighting'] as $s) {
+                    $result = $this->Sighting->saveSightings($s['attribute_uuid'], false, $s['date_sighting'], $user, $s['type'], $s['source'], $s['uuid']);
+                }
+            }
             // if published -> do the actual publishing
             if ((!empty($data['Event']['published']) && 1 == $data['Event']['published'])) {
                 // The edited event is from a remote server ?
@@ -3916,18 +3909,6 @@ class Event extends AppModel
             return true;
         }
         return $this->validationErrors;
-    }
-
-    // Update just the sighting_timestamp of an existing event
-    public function updateSightingTimestamp($id, $timestamp = false) {
-        if (!$timestamp) {
-            $timestamp = time();
-        }
-        $event = $this->findById($id);
-        if ($event && $event['Event']['sighting_timestamp'] < $timestamp) {
-            $event['Event']['sighting_timestamp'] = $timestamp;
-            $this->save($event);
-        }
     }
 
     // format has to be:
@@ -4063,7 +4044,7 @@ class Event extends AppModel
     }
 
     // Uploads this specific event to all remote servers
-    public function uploadEventToServersRouter($id, $passAlong = null)
+    public function uploadEventToServersRouter($id, $passAlong = null, $scope = 'events')
     {
         $eventOrgcId = $this->find('first', array(
             'conditions' => array('Event.id' => $id),
@@ -4164,40 +4145,50 @@ class Event extends AppModel
         return $workerType;
     }
 
-    public function publishRouter($id, $passAlong = null, $user, $sightingsOnly = false)
+    public function sightingPublishRouter($id, $passAlong = null, $user)
+    {
+
+    }
+
+    public function publishRouter($id, $passAlong = null, $user, $scope = 'event')
     {
         if (Configure::read('MISP.background_jobs')) {
-            $type = $sightingsOnly ? 'sighting' : 'event';
+            $job_type = 'publish_' . $scope;
+            $function = 'publish';
+            $message = 'Publishing.';
+            if ($scope === 'sighting') {
+                $message = 'Publishing sightings.';
+                $function = 'publish_sightings';
+            }
             $job = ClassRegistry::init('Job');
             $job->create();
             $data = array(
                     'worker' => $this->__getPrioWorkerIfPossible(),
-                    'job_type' => 'publish_' . $type,
+                    'job_type' => 'publish_event',
                     'job_input' => 'Event ID: ' . $id,
                     'status' => 0,
                     'retries' => 0,
                     'org_id' => $user['org_id'],
                     'org' => $user['Organisation']['name'],
-                    'message' => 'Publishing ' . $type . '.',
+                    'message' => $message
             );
             $job->save($data);
             $jobId = $job->id;
             $process_id = CakeResque::enqueue(
                     'prio',
                     'EventShell',
-                    array('publish', $id, $passAlong, $sightingsOnly, $jobId, $user['id']),
+                    array($function, $id, $passAlong, $jobId, $user['id']),
                     true
             );
             $job->saveField('process_id', $process_id);
             return $process_id;
         } else {
-            $result = $this->publish($id, $passAlong, $sightingsOnly);
+            $result = $this->publish_sightings($id, $passAlong);
             return $result;
         }
     }
 
-    // Performs all the actions required to publish an event
-    public function publish($id, $passAlong = null, $sightingsOnly = false, $jobId = null)
+    public function publish_sightings($id, $passAlong = null, $jobId = null)
     {
         $event = $this->find('first', array(
             'recursive' => -1,
@@ -4208,7 +4199,32 @@ class Event extends AppModel
         }
         if ($jobId) {
             $this->Behaviors->unload('SysLogLogable.SysLogLogable');
-        } else if(!$sightingsOnly) {
+        } else {
+            // update the DB to set the published flag
+            // for background jobs, this should be done already
+            $fieldList = array('id', 'info', 'sighting_timestamp');
+            $event['Event']['sighting_timestamp'] = time();
+            $event['Event']['skip_zmq'] = 1;
+            $event['Event']['skip_kafka'] = 1;
+            $this->save($event, array('fieldList' => $fieldList));
+        }
+        $uploaded = $this->uploadEventToServersRouter($id, $passAlong);
+        return $uploaded;
+    }
+
+    // Performs all the actions required to publish an event
+    public function publish($id, $passAlong = null, $jobId = null)
+    {
+        $event = $this->find('first', array(
+            'recursive' => -1,
+            'conditions' => array('Event.id' => $id)
+        ));
+        if (empty($event)) {
+            return false;
+        }
+        if ($jobId) {
+            $this->Behaviors->unload('SysLogLogable.SysLogLogable');
+        } else {
             // update the DB to set the published flag
             // for background jobs, this should be done already
             $fieldList = array('published', 'id', 'info', 'publish_timestamp');
@@ -4221,7 +4237,7 @@ class Event extends AppModel
         $pubToZmq = Configure::read('Plugin.ZeroMQ_enable');
         $kafkaTopic = Configure::read('Plugin.Kafka_event_publish_notifications_topic');
         $pubToKafka = Configure::read('Plugin.Kafka_enable') && Configure::read('Plugin.Kafka_event_publish_notifications_enable') && !empty($kafkaTopic);
-        if (($pubToZmq || $pubToKafka) && !$sightingsOnly) {
+        if ($pubToZmq || $pubToKafka) {
             $hostOrg = $this->Org->find('first', array('conditions' => array('name' => Configure::read('MISP.org')), 'fields' => array('id')));
             if (!empty($hostOrg)) {
                 $user = array('org_id' => $hostOrg['Org']['id'], 'Role' => array('perm_sync' => 0, 'perm_audit' => 0, 'perm_site_admin' => 0), 'Organisation' => $hostOrg['Org']);
@@ -6966,5 +6982,10 @@ class Event extends AppModel
             }
         }
         return true;
+    }
+
+    public function prepareEventForPublishing()
+    {
+
     }
 }

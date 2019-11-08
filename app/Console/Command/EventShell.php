@@ -489,13 +489,12 @@ class EventShell extends AppShell
     public function publish() {
         $id = $this->args[0];
         $passAlong = $this->args[1];
-        $sightingsOnly = $this->args[2];
-        $jobId = $this->args[3];
-        $userId = $this->args[4];
+        $jobId = $this->args[2];
+        $userId = $this->args[3];
         $user = $this->User->getAuthUser($userId);
         $job = $this->Job->read(null, $jobId);
         $this->Event->Behaviors->unload('SysLogLogable.SysLogLogable');
-        $result = $this->Event->publish($id, $passAlong, $sightingsOnly);
+        $result = $this->Event->publish($id, $passAlong);
         $job['Job']['progress'] = 100;
         $job['Job']['date_modified'] = date("Y-m-d H:i:s");
         if ($result) {
@@ -506,11 +505,7 @@ class EventShell extends AppShell
         $this->Job->save($job);
         $log = ClassRegistry::init('Log');
         $log->create();
-        if ($sightingsOnly) {
-            $log->createLogEntry($user, 'publish', 'Event', $id, 'Sighting for event (' . $id . '): published.', 'Sighting pushed');
-        } else {
-            $log->createLogEntry($user, 'publish', 'Event', $id, 'Event (' . $id . '): published.', 'published () => (1)');
-        }
+        $log->createLogEntry($user, 'publish', 'Event', $id, 'Event (' . $id . '): published.', 'published () => (1)');
     }
 
     public function enrichment() {

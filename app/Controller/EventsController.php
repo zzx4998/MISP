@@ -2232,7 +2232,7 @@ class EventsController extends AppController
         }
         $this->Event->read(null, $id);
         // check if private and user not authorised to edit
-        if (!$this->_isSiteAdmin() && !(($this->userRole['perm_sync'] || $this->userRole['perm_sighting']) && $this->_isRest())) {
+        if (!$this->_isSiteAdmin() && !($this->userRole['perm_sync'] && $this->_isRest())) {
             if (($this->Event->data['Event']['orgc_id'] != $this->_checkOrg()) || !($this->userRole['perm_modify'])) {
                 $message = __('You are not authorised to do that. Please consider using the \'propose attribute\' feature.');
                 if ($this->_isRest()) {
@@ -2494,6 +2494,58 @@ class EventsController extends AppController
         } else {
             $this->set('id', $id);
             $this->set('type', 'unpublish');
+            $this->render('ajax/eventPublishConfirmationForm');
+        }
+    }
+
+    public function publishSightings($id = null)
+    {
+        $id = $this->Toolbox->findIdByUuid($this->Event, $id);
+        $event = fetchEvent(
+            $this->Auth->user(),
+            array(
+                'metadata' => 1
+            )
+        );
+        if (empty($event)) {
+            throw new NotFoundException(__('Invalid event'));
+        }
+        if ($this->request->is('post') || $this->request->is('put')) {
+            $result = $this->Event->publishRouter($id, null, $this->Auth->user(), 'sightings');
+            if (!Configure::read('MISP.background_jobs')) {
+                if (!is_array($result)) {
+                    // redirect to the view event page
+                    $message = 'Event published without alerts';
+                } else {
+                    $lastResult = array_pop($result);
+                    $resultString = (count($result) > 0) ? implode(', ', $result) . ' and ' . $lastResult : $lastResult;
+                    $errors['failed_servers'] = $result;
+                    $message = sprintf('Event published but not pushed to %s, re-try later. If the issue persists, make sure that the correct sync user credentials are used for the server link and that the sync user on the remote server has authentication privileges.', $resultString);
+                }
+            } else {
+                // update the DB to set the published flag
+                // for background jobs, this should be done already
+                $fieldList = array('id', 'info', 'sighting_timestamp');
+                $event['Event']['sighting_timestamp'] = time();
+                $this->Event->save($event, array('fieldList' => $fieldList));
+                $message = 'Job queued';
+            }
+            if ($this->_isRest()) {
+                $this->set('name', 'Publish Sightings');
+                $this->set('message', $message);
+                if (!empty($errors)) {
+                    $this->set('errors', $errors);
+                }
+                $this->set('url', '/events/publishSightings/' . $id);
+                $this->set('id', $id);
+                $this->set('_serialize', array('name', 'message', 'url', 'id', 'errors'));
+            } else {
+                $this->Flash->success($message);
+                $this->redirect(array('action' => 'view', $id));
+            }
+        } else {
+            $this->set('id', $id);
+            $this->set('type', 'publish_sightings');
             $this->render('ajax/eventPublishConfirmationForm');
         }
     }
@@ -4286,27 +4338,27 @@ class EventsController extends AppController
 
     public function filterEventIdsForPush()
     {
-        if (!$this->userRole['perm_sync'] && !$this->userRole['perm_sighting']) {
+        if (!$this->userRole['perm_sync']) {
             throw new MethodNotAllowedException(__('You do not have the permission to do that.'));
         }
         if ($this->request->is('post')) {
             $incomingIDs = array();
             $incomingEvents = array();
-            $incomingEventsSighting = array();
             foreach ($this->request->data as $event) {
                 $incomingIDs[] = $event['Event']['uuid'];
                 $incomingEvents[$event['Event']['uuid']] = $event['Event']['timestamp'];
-                $incomingEventsSighting[$event['Event']['uuid']] = $event['Event']['sighting_timestamp'] ?? 0;
             }
             $events = $this->Event->find('all', array(
                 'conditions' => array('Event.uuid' => $incomingIDs),
                 'recursive' => -1,
-                'fields' => array('Event.uuid', 'Event.timestamp', 'Event.sighting_timestamp', 'Event.locked'),
+                'fields' => array('Event.uuid', 'Event.timestamp', 'Event.locked'),
             ));
             foreach ($events as $k => $v) {
-                if (($v['Event']['timestamp'] >= $incomingEvents[$v['Event']['uuid']] || $v['Event']['locked'] == 0) &&
-                    $v['Event']['sighting_timestamp'] >= $incomingEventsSighting[$v['Event']['uuid']])
-								{
+                if ($v['Event']['timestamp'] >= $incomingEvents[$v['Event']['uuid']]) {
+                    unset($incomingEvents[$v['Event']['uuid']]);
+                    continue;
+                }
+                if ($v['Event']['locked'] == 0) {
                     unset($incomingEvents[$v['Event']['uuid']]);
                 }
             }

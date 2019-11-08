@@ -422,4 +422,26 @@ class SightingsController extends AppController
         $this->layout = 'ajax';
         $this->render('ajax/view_sightings');
     }
+
+    // Save sightings synced over, restricted to sync users
+    public function bulkSaveSightings($eventId = false)
+    {
+        if ($this->request->is('post')) {
+            $orgs = array();
+            $this->loadModel('Event');
+            $event = $this->Event->fetchEvent($this->Auth->user(), array(
+                'eventid' => $id,
+                'flatten' => true
+            ));
+            if (empty($event)) {
+                
+            }
+            if (empty($this->request->data['Sighting'])) {
+                $this->request->data = array('Sighting' => $this->request->data);
+            }
+            foreach ($this->request->data['Sighting'] as $sighting) {
+
+            }
+        }
+    }
 }
