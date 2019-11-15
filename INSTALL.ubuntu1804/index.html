@@ -1573,7 +1573,7 @@ installCore <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
 
   <span class="c1"># install zmq needed by mispzmq</span>
-  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install zmq
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install zmq redis
 
   <span class="c1"># install python-magic</span>
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install python-magic
@@ -1913,7 +1913,7 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> userInit -q
 
   <span class="c1"># This makes sure all Database upgrades are done, without logging in.</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin updateDatabase
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin runUpdates
 
   <span class="c1"># The default install is Python &gt;=3.6 in a virtualenv, setting accordingly</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
@@ -3314,8 +3314,8 @@ genRCLOCAL <span class="o">()</span> <span class="o">{</span>
 
 <span class="c1"># Run PyMISP tests</span>
 runTests <span class="o">()</span> <span class="o">{</span>
-  <span class="nb">echo</span> <span class="s2">&quot;url = </span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2"></span>
-<span class="s2">key = </span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">|</span>sudo tee <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/PyMISP/tests/keys.py
+  <span class="nb">echo</span> <span class="s2">&quot;url = &#39;</span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">&#39;</span>
+<span class="s2">key = &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="p">|</span>sudo tee <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/PyMISP/tests/keys.py
   sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP/
 
   sudo -H -u <span class="nv">$WWW_USER</span> sh -c <span class="s2">&quot;cd </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/PyMISP &amp;&amp; git submodule foreach git pull origin master&quot;</span>

@@ -2,112 +2,112 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://www.misp-project.org/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/INSTALL.ubuntu1804/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/INSTALL.kali/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/INSTALL.rhel7/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/INSTALL.rhel8/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/xINSTALL/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/xINSTALL.centos6/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/xINSTALL.debian10/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/xINSTALL.debian9/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/xINSTALL.ubuntu1804.with.webmin/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/xINSTALL.tsurugi/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/xINSTALL.OpenBSD/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/CONFIG.elasticsearch-logging/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/CONFIG.s3-attachments/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/CONFIG.SMIME/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/UPDATE/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/UPGRADE/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/archive/old-2_3to2_4-UPGRADE/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/archive/INSTALL.ubuntu1604/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/archive/xINSTALL.FreeBSD/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/Changelog/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://www.misp-project.org/license/</loc>
-     <lastmod>2019-10-22</lastmod>
+     <lastmod>2019-11-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

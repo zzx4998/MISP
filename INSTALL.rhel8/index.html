@@ -1316,7 +1316,11 @@ For more information on what might differ, <a href="https://unix.stackexchange.c
 <p>The core MISP team cannot verify if this guide is working or not. Please help us in keeping it up to date and accurate.
 Thus we also have difficulties in supporting RHEL issues but will do a best effort on a similar yet slightly different setup.</p>
 </div>
-<p>This document details the steps to install MISP on Red Hat Enterprise Linux 8.x (RHEL 8.x).</p>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Maintenance for CentOS 8 will end on: May 31<sup>st</sup>, 2029 <a href="https://wiki.centos.org/About/Product">Source[0]</a> <a href="https://linuxlifecycle.com/">Source[1]</a>
+CentOS 8 <a href="http://mirrorlist.centos.org/?release=8&amp;arch=x86_64&amp;repo=BaseOS">NetInstallURL</a></p>
+</div>
 <p>This document details the steps to install MISP on Red Hat Enterprise Linux 8.x (RHEL 8.x) and CentOS 8.x.
 At time of this writing it was tested on versions 8.0 for RHEL.
 This is a joint RHEL/CentOS install guide. The authors tried to make it contextually evident what applies to which flavor.</p>
@@ -1475,12 +1479,8 @@ sudo yum update -y
 </pre></div>
 
 <h2 id="16-rhel-install-the-epel-repo">1.6/ <strong>[RHEL]</strong> Install the EPEL repo<a class="headerlink" href="#16-rhel-install-the-epel-repo" title="Permanent link">&para;</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>There is no epel-releas-latest-8 yet, but the RHEL 7 seems to work for testing.</p>
-</div>
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 0_RHEL_EPEL.sh&gt;</span>
-sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
+sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
 <span class="c1"># &lt;snippet-end 0_RHEL_EPEL.sh&gt;</span>
 </pre></div>
 
@@ -1513,7 +1513,7 @@ yumInstallCoreDeps <span class="o">()</span> <span class="o">{</span>
   sudo systemctl <span class="nb">enable</span> --now redis.service
 
   <span class="nv">PHP_INI</span><span class="o">=</span>/etc/php.ini
-  sudo yum install php php-fpm php-devel <span class="se">\</span>
+  sudo yum install php php-fpm php-devel php-pear <span class="se">\</span>
        php-mysqlnd <span class="se">\</span>
        php-mbstring <span class="se">\</span>
        php-xml <span class="se">\</span>
@@ -1607,7 +1607,7 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># lief needs manual compilation</span>
   sudo yum groupinstall <span class="s2">&quot;Development Tools&quot;</span> -y
-  sudo yum install cmake3 cppcheck -y
+  sudo yum install cmake3 -y
 
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief
   <span class="nv">$SUDO_WWW</span> mkdir build
@@ -1621,14 +1621,18 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   ..
   <span class="nv">$SUDO_WWW</span> make -j3 pyLIEF
 
-  <span class="c1"># In case you get &quot;internal compiler error: Killed (program cc1plus)&quot;</span>
-  <span class="c1"># You ran out of memory.</span>
-  <span class="c1"># Create some swap</span>
-  <span class="c1"># sudo dd if=/dev/zero of=/var/swap.img bs=1024k count=4000</span>
-  <span class="c1"># sudo mkswap /var/swap.img</span>
-  <span class="c1"># sudo swapon /var/swap.img</span>
-  <span class="c1"># And compile again</span>
-  <span class="c1"># $SUDO_WWW make -j3 pyLIEF</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="o">==</span> <span class="m">2</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="c1"># In case you get &quot;internal compiler error: Killed (program cc1plus)&quot;</span>
+    <span class="c1"># You ran out of memory.</span>
+    <span class="c1"># Create some swap</span>
+    sudo dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/var/swap.img <span class="nv">bs</span><span class="o">=</span>1024k <span class="nv">count</span><span class="o">=</span><span class="m">4000</span>
+    sudo mkswap /var/swap.img
+    sudo swapon /var/swap.img
+    <span class="c1"># And compile again</span>
+    <span class="nv">$SUDO_WWW</span> make -j3 pyLIEF
+    sudo swapoff /var/swap.img
+    sudo rm /var/swap.img
+  <span class="k">fi</span>
 
   <span class="c1"># The following adds a PYTHONPATH to where the pyLIEF module has been compiled</span>
   <span class="nb">echo</span> /var/www/MISP/app/files/scripts/lief/build/api/python <span class="p">|</span><span class="nv">$SUDO_WWW</span> tee /var/www/MISP/venv/lib/python3.6/site-packages/lief.pth
@@ -1785,7 +1789,7 @@ prepareDB_RHEL <span class="o">()</span> <span class="o">{</span>
   sudo systemctl restart mariadb
 
   mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;CREATE DATABASE </span><span class="nv">$DBNAME</span><span class="s2">;&quot;</span>
-  mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT USAGE on *.* to </span><span class="nv">$DBUSER</span><span class="s2">@localhost IDENTIFIED by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
+  mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT USAGE on *.* to </span><span class="nv">$DBUSER_MISP</span><span class="s2">@localhost IDENTIFIED by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
   mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT ALL PRIVILEGES on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
   mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s1">&#39;FLUSH PRIVILEGES;&#39;</span>
 
@@ -2032,6 +2036,7 @@ sudo semodule -i /tmp/workerstartsh.pp
 </pre></div>
 
 <h2 id="907-misp-modules-broken-on-rhel8">9.07/ misp-modules (Broken on RHEL8)<a class="headerlink" href="#907-misp-modules-broken-on-rhel8" title="Permanent link">&para;</a></h2>
+<p>Here are CentOS 8 packages of openjpeg2-devel: <a href="https://centos.pkgs.org/8/centos-powertools-x86_64/openjpeg2-devel-2.3.0-8.el8.x86_64.rpm.html">https://centos.pkgs.org/8/centos-powertools-x86_64/openjpeg2-devel-2.3.0-8.el8.x86_64.rpm.html</a></p>
 <div class="codehilite"><pre><span></span><span class="c1"># some misp-modules dependencies</span>
 sudo yum install openjpeg2-devel -y
 
@@ -2208,7 +2213,7 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> userInit -q
 
   <span class="c1"># This makes sure all Database upgrades are done, without logging in.</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin updateDatabase
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin runUpdates
 
   <span class="c1"># The default install is Python &gt;=3.6 in a virtualenv, setting accordingly</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>

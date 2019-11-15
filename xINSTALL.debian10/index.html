@@ -391,8 +391,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-debian-10-buster" title="for Debian 10 "buster"" class="md-nav__link">
-    for Debian 10 "buster"
+  <a href="#for-debian-101-buster" title="for Debian 10.1 "buster"" class="md-nav__link">
+    for Debian 10.1 "buster"
   </a>
   
     <nav class="md-nav">
@@ -687,8 +687,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-debian-10-buster" title="for Debian 10 "buster"" class="md-nav__link">
-    for Debian 10 "buster"
+  <a href="#for-debian-101-buster" title="for Debian 10.1 "buster"" class="md-nav__link">
+    for Debian 10.1 "buster"
   </a>
   
     <nav class="md-nav">
@@ -724,13 +724,13 @@
                 
                 
                 <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h1>
-<h2 id="for-debian-10-buster">for Debian 10 "buster"<a class="headerlink" href="#for-debian-10-buster" title="Permanent link">&para;</a></h2>
+<h2 id="for-debian-101-buster">for Debian 10.1 "buster"<a class="headerlink" href="#for-debian-101-buster" title="Permanent link">&para;</a></h2>
 <h3 id="0-misp-debian-stable-install-status">0/ MISP debian stable install - Status<a class="headerlink" href="#0-misp-debian-stable-install-status" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>This is mostly the install <a href="https://twitter.com/SteveClement">@SteveClement</a> uses for testing, qc and random development.
-Maintained and tested by @SteveClement on 20190707</p>
+Maintained and tested by @SteveClement on 20191016</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1074,7 +1074,7 @@ sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
 
 <span class="c1"># install zmq needed by mispzmq</span>
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install zmq
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install zmq redis
 
 <span class="c1"># install python-magic</span>
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install python-magic
@@ -1323,7 +1323,7 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> userInit -q
 
   <span class="c1"># This makes sure all Database upgrades are done, without logging in.</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin updateDatabase
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin runUpdates
 
   <span class="c1"># The default install is Python &gt;=3.6 in a virtualenv, setting accordingly</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>

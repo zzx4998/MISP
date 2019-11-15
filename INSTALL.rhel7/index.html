@@ -1550,7 +1550,6 @@ sudo systemctl <span class="nb">enable</span> --now haveged.service
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 1_mispCoreInstall_RHEL.sh&gt;</span>
 installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Download MISP using git in the $PATH_TO_MISP directory.</span>
-  <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s2">&quot;/var/www/MISP&quot;</span>
   sudo mkdir -p <span class="k">$(</span>dirname <span class="nv">$PATH_TO_MISP</span><span class="k">)</span>
   sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="k">$(</span>dirname <span class="nv">$PATH_TO_MISP</span><span class="k">)</span>
   <span class="nb">cd</span> <span class="k">$(</span>dirname <span class="nv">$PATH_TO_MISP</span><span class="k">)</span>
@@ -1609,7 +1608,6 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># lief needs manual compilation</span>
   sudo yum install devtoolset-7 cmake3 cppcheck -y
 
-  <span class="c1"># FIXME: This does not work!</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief
   <span class="nv">$SUDO_WWW</span> mkdir build
   <span class="nb">cd</span> build
@@ -2120,7 +2118,7 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> userInit -q
 
   <span class="c1"># This makes sure all Database upgrades are done, without logging in.</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin updateDatabase
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin runUpdates
 
   <span class="c1"># The default install is Python &gt;=3.6 in a virtualenv, setting accordingly</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
