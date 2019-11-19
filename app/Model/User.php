@@ -203,7 +203,8 @@ class User extends AppModel
             'counterQuery' => ''
         ),
         'Post',
-        'UserSetting'
+        'UserSetting',
+        'Authkey'
     );
 
     public $actsAs = array(
@@ -395,7 +396,7 @@ class User extends AppModel
 
     public function generateAuthKey()
     {
-        return (new RandomTool())->random_str(true, 40);
+        return $this->Authkey->generateAuthkey();
     }
 
     /**
@@ -1460,5 +1461,19 @@ class User extends AppModel
         );
 
         return new Crypt_GPG($options);
+    }
+
+    public function extractAuthkeys()
+    {
+        $users = $this->find('all', array(
+            'recursive' => -1,
+            'fields' => array('User.id', 'User.authkey', 'User.disabled'),
+            'contain' => array('Authkey')
+        ));
+        foreach ($users as $k => $user) {
+            if (empty($user['Authkey'])) {
+                $this->Authkey->convertKey($user);
+            }
+        }
     }
 }

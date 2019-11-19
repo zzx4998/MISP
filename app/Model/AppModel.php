@@ -76,7 +76,8 @@ class AppModel extends Model
         21 => false, 22 => false, 23 => false, 24 => false, 25 => false, 26 => false,
         27 => false, 28 => false, 29 => false, 30 => false, 31 => false, 32 => false,
         33 => false, 34 => false, 35 => false, 36 => false, 37 => false, 38 => false,
-        39 => false, 40 => false, 41 => false, 42 => false, 43 => false
+        39 => false, 40 => false, 41 => false, 42 => false, 43 => false, 44 => false,
+        45 => false
     );
 
     public $advanced_updates_description = array(
@@ -222,6 +223,9 @@ class AppModel extends Model
                 $dbUpdateSuccess = $this->updateDatabase($command);
                 $this->__addServerPriority();
                 break;
+            case 45:
+                $dbUpdateSuccess = $this->updateDatabase($command);
+                $dbUpdateSuccess &= $this->__extractAuthkeys();
             default:
                 $dbUpdateSuccess = $this->updateDatabase($command);
                 break;
@@ -234,6 +238,12 @@ class AppModel extends Model
         $this->Server = ClassRegistry::init('Server');
         $this->Server->reprioritise();
         return true;
+    }
+
+    private function __extractAuthkeys()
+    {
+        $this->User = ClassRegistry::init('User');
+        return $this->User->extractAuthkeys();
     }
 
     private function __addNewFeeds($feeds)
@@ -1300,7 +1310,20 @@ class AppModel extends Model
                 break;
             case 44:
                 $sqlArray[] = "ALTER TABLE object_template_elements CHANGE `disable_correlation` `disable_correlation` tinyint(1);";
-
+                break;
+            case 45:
+                $sqlArray[] = "CREATE TABLE IF NOT EXISTS authkeys (
+                    `id` int(11) NOT NULL AUTO_INCREMENT,
+                    `user_id` varchar(255) NOT NULL,
+                    `disabled` tinyint(1) NOT NULL DEFAULT 0,
+                    `description` text,
+                    `authkey` varchar(40) COLLATE utf8_bin NOT NULL,
+                    `expiry` int(11),
+                    PRIMARY KEY (id),
+                    INDEX `user_id` (`user_id`),
+                    INDEX `expiry` (`expiry`),
+                    INDEX `authkey` (`authkey`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
                 break;
             case 'fixNonEmptySharingGroupID':
                 $sqlArray[] = 'UPDATE `events` SET `sharing_group_id` = 0 WHERE `distribution` != 4;';
