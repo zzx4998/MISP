@@ -2125,8 +2125,10 @@ dashboardCAKE <span class="o">()</span> <span class="o">{</span>
 <h4 id="install-viper-framework-with-a-virtualenv">Install viper framework (with a virtualenv)<a class="headerlink" href="#install-viper-framework-with-a-virtualenv" title="Permanent link">&para;</a></h4>
 <hr />
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 6_viper.sh&gt;</span>
+<span class="c1"># viper-web is broken ATM</span>
 <span class="c1"># Main Viper install function</span>
 viper <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/home/misp/.local/bin
   debug <span class="s2">&quot;Installing Viper dependencies&quot;</span>
   <span class="nb">cd</span> /usr/local/src/
   sudo apt-get install <span class="se">\</span>
@@ -2139,29 +2141,25 @@ viper <span class="o">()</span> <span class="o">{</span>
   <span class="k">fi</span>
   <span class="nb">echo</span> <span class="s2">&quot;Cloning Viper&quot;</span>
   <span class="nv">$SUDO_USER</span> git clone https://github.com/viper-framework/viper.git
+  <span class="nv">$SUDO_USER</span> git clone https://github.com/viper-framework/viper-web.git
   sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper
+  sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper-web
   <span class="nb">cd</span> viper
   <span class="nb">echo</span> <span class="s2">&quot;Creating virtualenv&quot;</span>
   <span class="nv">$SUDO_USER</span> virtualenv -p python3 venv
   <span class="nb">echo</span> <span class="s2">&quot;Submodule update&quot;</span>
   <span class="c1"># TODO: Check for current user install permissions</span>
   <span class="nv">$SUDO_USER</span> git submodule update --init --recursive
-  <span class="c1">##$SUDO git submodule update --init --recursive</span>
-  <span class="nb">echo</span> <span class="s2">&quot;Pip install deps&quot;</span>
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install SQLAlchemy PrettyTable python-magic
-  <span class="nb">echo</span> <span class="s2">&quot;pip install scrapy&quot;</span>
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install scrapy
-  <span class="nb">echo</span> <span class="s2">&quot;install lief&quot;</span>
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
-  <span class="nb">echo</span> <span class="s2">&quot;pip install reqs&quot;</span>
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install -r requirements.txt
-  <span class="nv">$SUDO_USER</span> sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-cli
+  <span class="nb">echo</span> <span class="s2">&quot;pip install deps&quot;</span>
+  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install pefile olefile jbxapi Crypto pypdns pypssl r2pipe pdftools virustotal-api SQLAlchemy PrettyTable python-magic scrapy https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install .
+  <span class="nb">echo</span> <span class="s1">&#39;update-modules&#39;</span> <span class="p">|</span>/usr/local/src/viper/venv/bin/viper
+  <span class="nb">cd</span> /usr/local/src/viper-web
   <span class="nv">$SUDO_USER</span> sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-web
-  <span class="nb">echo</span> <span class="s2">&quot;Launching viper-cli&quot;</span>
-  <span class="nv">$SUDO_USER</span> /usr/local/src/viper/viper-cli -h &gt; /dev/null
+  <span class="nv">$SUDO_USER</span> /usr/local/src/viper/venv/bin/pip install -r requirements.txt
   <span class="nb">echo</span> <span class="s2">&quot;Launching viper-web&quot;</span>
-  <span class="nv">$SUDO_USER</span> /usr/local/src/viper/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
-  <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/environment
+  <span class="nv">$SUDO_USER</span> /usr/local/src/viper-web/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
+  <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/home/misp/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/environment
   <span class="nb">echo</span> <span class="s2">&quot;. /etc/environment&quot;</span> &gt;&gt; /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/.profile
 
   <span class="c1"># TODO: Perms, MISP_USER_HOME, nasty hack cuz Kali on R00t</span>

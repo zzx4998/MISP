@@ -8793,6 +8793,37 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[doc] Support request template (#5420) [Steve Clement]</li>
+</ul>
+<p>new: [doc] Support request template
+- [doc] Support request template. [Steve Clement]
+- [deprecation] Added a new library to handle deprecations. [iglocska]</p>
+<ul>
+<li>send X-Deprecation-Warning via the API</li>
+<li>set new Warning flash messages via the UI</li>
+<li>
+<p>counting the use of these functionalities / API endpoint and / user</p>
+<ul>
+<li>added a diagnsitic tool to view the outcome of the collection</li>
+<li>sharing of these collections with the MISP-Project will be optionally available in the future</li>
+</ul>
+</li>
+<li>
+<p>two modes of operation:</p>
+<ul>
+<li>hard deprecation (functions certainly to be removed, reported to the users via API/UI)</li>
+<li>soft deprecation (gauging interest for the continued use of these functions)</li>
+</ul>
+</li>
+<li>
+<p>[sql diagnostics] Started work on a system to automatically generate
+  scripts to fix issues. [iglocska]</p>
+</li>
+<li>
+<p>currently somewhat limited</p>
+</li>
+<li>requires additional input to generate correct queries, needs an update for the default schemas</li>
+<li>generated, but not exposed for now</li>
 <li>
 <p>[sync] view remote user tool added to the server index. [iglocska]</p>
 </li>
@@ -8822,6 +8853,21 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[installer] Installer checksum updates. [Steve Clement]</li>
+<li>[doc] Updated viper-framework (-web is broken) and updated… (#5425)
+  [Steve Clement]</li>
+</ul>
+<p>chg: [doc] Updated viper-framework (-web is broken) and updated Debian 10 (minor)
+- [doc] Minor note on composer update. [Steve Clement]
+- [doc] Tried to fix viper. Is semi-fixed viper-web broken. [Steve
+  Clement]
+- [doc] Better wording. [Steve Clement]
+- [doc] Added 2 templates with automatic labelling. [Steve Clement]
+- [internal] switch intval to (int) [iglocska]
+- [internal] Renamed log action name for db worker issues to be &lt;= 20
+  characters in length. [iglocska]</p>
+<ul>
+<li>it was a restriction based on the db schema of the log table from before</li>
 <li>[API] described how to add attachments to /attributes/add and
   /attributes/edit. [iglocska]</li>
 <li>[diagnostic:dbSchema] Whitelist columns to ignore and highlight
@@ -8864,6 +8910,40 @@
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[doc] composer update missing. [Steve Clement]</li>
+<li>[ACL] added missing function. [Andras Iklody]</li>
+<li>[user view] server issues fixed. [iglocska]</li>
+<li>
+<p>[API] bro deprecation message was premature. [iglocska]</p>
+</li>
+<li>
+<p>needs to be added to restsearch first</p>
+</li>
+<li>[deprecation] Added missing component. [iglocska]</li>
+<li>[attribute:massEdit] Allow removal of non exportable tags. Fix #5408.
+  [mokaddem]</li>
+<li>[API] fixed notice errors for compact() in PHP 7.3+ [iglocska]</li>
+<li>[stix2 export] Exporting stix2-pattern objects as pattern. [chrisr3d]</li>
+</ul>
+<p>... Instead of failing and being exported as custom object
+- [indextable] Fixed the link field. [iglocska]
+- [stix2 import] Avoids importing an object_relation value for single
+  attributes. [chrisr3d]
+- [stix2 import] Importing stix2-pattern object only if the pattern
+  parsing failed. [chrisr3d]</p>
+<ul>
+<li>Also adding the uuid of the stix2-pattern object</li>
+<li>It avoids patterns to be exported twice if we
+    export the misp event created from the import
+    afterwards</li>
+<li>[internal] site admins should not have to be host org users to see
+  server correlations. [iglocska]</li>
+<li>
+<p>[API] adding objects now has better validation errors. [iglocska]</p>
+</li>
+<li>
+<p>instead of silently dropping attributes in certain cases</p>
+</li>
 <li>[tagging] Events will be unpublished when a local tag is removed
   #5363. [iglocska]</li>
 <li>[attribute:massTagging] Check for POST data in <code>post</code> code path. Fix
@@ -8908,14 +8988,27 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
-<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]</li>
-<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
-<li>Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into 2.4.
-  [chrisr3d]</li>
-<li>Revert "Revert "Merge pull request #5304 from JakubOnderka/version-
-  loading"" [iglocska]</li>
+<li>Merge pull request #5417 from StefanKelm/2.4. [Andras Iklody]</li>
 </ul>
+<p>Update AdminShell.php
+- Update AdminShell.php. [StefanKelm]</p>
+<p>Adding "wwwrun" as a user since it is common under SUSE Linux
+- Merge pull request #5416 from SteveClement/ISSUE_TEMPLATE. [Alexandre
+  Dulaunoy]</p>
+<p>chg: [doc] Added 2 templates with automatic labelling
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into 2.4.
+  [chrisr3d]
+- Revert "Revert "Merge pull request #5304 from JakubOnderka/version-
+  loading"" [iglocska]</p>
 <p>This reverts commit 623bb20cb09a79da83d31eed8ae0993bca07db13.
 - Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
 - Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into 2.4.
