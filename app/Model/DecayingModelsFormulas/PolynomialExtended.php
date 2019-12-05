@@ -34,11 +34,14 @@ class PolynomialExtended extends Polynomial
         $tags = $temp['tags'];
         foreach ($tags as $tag) {
             $tagname = $tag['Tag']['name'];
+            $is_perpetual = $tagname == 'retention:perpetual';
             if (isset($this->retention_taxonomy[$tagname])) {
                 $timestamp = intval($attribute['timestamp']);
                 $now = time();
                 $eol_time = $this->retention_taxonomy[$tagname] * 24 * 60 * 60; // `retention` taxonomy numerical_value are in seconds
-                if (($now - $timestamp) > $eol_time) {
+                if ($is_perpetual) {
+                    return $base_score;
+                } elseif (($now - $timestamp) > $eol_time) {
                     return 0;
                 }
             }
