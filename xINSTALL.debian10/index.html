@@ -1085,7 +1085,7 @@ sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
 
 <span class="c1"># install lief</span>
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install lief
 
 <span class="c1"># install zmq needed by mispzmq</span>
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install zmq redis
@@ -1392,6 +1392,7 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_policy&quot;</span> <span class="m">0</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_anonymise&quot;</span> <span class="nb">false</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_range&quot;</span> <span class="m">365</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_sighting_db_enable&quot;</span> <span class="nb">false</span>
 
   <span class="c1"># Plugin CustomAuth tuneable</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.CustomAuth_disable_logout&quot;</span> <span class="nb">false</span>
@@ -1434,6 +1435,7 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_event_alert_tag&quot;</span> <span class="s2">&quot;no-alerts=\&quot;true\&quot;&quot;</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert&quot;</span> <span class="nb">false</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert_age&quot;</span> <span class="s2">&quot;&quot;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert_by_date&quot;</span> <span class="s2">&quot;&quot;</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.incoming_tags_disabled_by_default&quot;</span> <span class="nb">false</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.maintenance_message&quot;</span> <span class="s2">&quot;Great things are happening! MISP is undergoing maintenance, but will return shortly. You can contact the administration at \$email.&quot;</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.footermidleft&quot;</span> <span class="s2">&quot;This is an initial install&quot;</span>
@@ -1451,6 +1453,10 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Force defaults to make MISP Server Settings less GREEN</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.password_policy_length&quot;</span> <span class="m">12</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.password_policy_complexity&quot;</span> <span class="s1">&#39;/^((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$|.{16,}/&#39;</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.self_registration_message&quot;</span> <span class="s2">&quot;If you would like to send us a registration request, please fill out the form below. Make sure you fill out as much information as possible in order to ease the task of the administrators.&quot;</span>
+
+  <span class="c1"># It is possible to updateMISP too, only here for reference how to to that on the CLI.</span>
+  <span class="c1">## $SUDO_WWW $RUN_PHP -- $CAKE Admin updateMISP</span>
 
   <span class="c1"># Set MISP Live</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Live <span class="nv">$MISP_LIVE</span>
@@ -1770,7 +1776,7 @@ viper <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># TODO: Check for current user install permissions</span>
   <span class="nv">$SUDO_CMD</span> git submodule update --init --recursive
   <span class="nb">echo</span> <span class="s2">&quot;pip install deps&quot;</span>
-  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install pefile olefile jbxapi Crypto pypdns pypssl r2pipe pdftools virustotal-api SQLAlchemy PrettyTable python-magic scrapy https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install pefile olefile jbxapi Crypto pypdns pypssl r2pipe pdftools virustotal-api SQLAlchemy PrettyTable python-magic scrapy lief
   <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install .
   <span class="nb">echo</span> <span class="s1">&#39;update-modules&#39;</span> <span class="p">|</span>/usr/local/src/viper/venv/bin/viper
   <span class="nb">cd</span> /usr/local/src/viper-web
@@ -1862,7 +1868,7 @@ mail2misp <span class="o">()</span> <span class="o">{</span>
   sudo ldconfig
   <span class="nb">cd</span> ../../mail_to_misp
   <span class="nv">$SUDO_CMD</span> virtualenv -p python3 venv
-  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install lief
   <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install -r requirements.txt
   <span class="nv">$SUDO_CMD</span> cp mail_to_misp_config.py-example mail_to_misp_config.py
   <span class="c1">##$SUDO cp mail_to_misp_config.py-example mail_to_misp_config.py</span>

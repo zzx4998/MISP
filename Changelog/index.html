@@ -825,7 +825,12 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[doc] Small CLI hint. [Steve Clement]</li>
+<li>[doc] Minor updates. [Steve Clement]</li>
+<li>[PyMISP] Bump. [Raphaël Vinot]</li>
 <li>[doc] Added preliminary 20.04 files. [Steve Clement]</li>
+<li>[decaying:restSearch] Always includes computed base_score in the
+  response. [mokaddem]</li>
 <li>[i18n] More fr-updates. [Steve Clement]</li>
 <li>[i18n] Updated: de, dk, fr, it, jp, no, ru, zh-s. [Steve Clement]</li>
 <li>[i18n] Full jpn translation as of 2 months ago. [Steve Clement]</li>
@@ -905,6 +910,15 @@
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[doc] MISP expects lief 0.10.1. [Steve Clement]</li>
+<li>[cake] more new defaults as per
+  <a href="https://github.com/MISP/MISP/issues/5803">https://github.com/MISP/MISP/issues/5803</a>. [Steve Clement]</li>
+<li>[Console:Server] Added <code>configLoad</code> task. Fix #5793. [mokaddem]</li>
+<li>[galaxyCluster:index] Restored search functionality. [mokaddem]</li>
+<li>[feed:add] Do not override <code>new_event_at_each_pull</code> value. Fix #5815.
+  [mokaddem]</li>
+<li>[attribute:restSearch] Make sure to always pass all tags to Decaying's
+  computation function. [mokaddem]</li>
 <li>[internal] HTML code in view_event_distribution_graph. [Jakub Onderka]</li>
 <li>Correct flash message when sending e-mail. [Jakub Onderka]</li>
 <li>[misp-wipe] bring wiping up to date with MYSQL.sql. [Richard van den
@@ -1019,8 +1033,15 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #5823 from SteveClement/guides. [Steve Clement]</li>
+<li>Merge pull request #5824 from SteveClement/guides. [Steve Clement]</li>
 </ul>
+<p>fix: [py] Updated lief to a recent known working version
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge pull request #5821 from Cooper-Dale/patch-1. [Andras Iklody]</p>
+<p>bugfix in Suricata export template
+- Bugfix in Suricata export template. [Cooper Dale]</p>
+<p>PR for reported bug <a href="https://github.com/MISP/MISP/issues/5766">https://github.com/MISP/MISP/issues/5766</a> based on suggestion @stacsirt, tested on my instance and it is working great
+- Merge pull request #5823 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [doc] Added preliminary 20.04 files
 - Merge pull request #5822 from SteveClement/tools. [Steve Clement]</p>
 <p>new: [installer] updated template to prepare grounds for 20.04 (php7.4)

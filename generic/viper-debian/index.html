@@ -698,7 +698,7 @@ viper <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># TODO: Check for current user install permissions</span>
   <span class="nv">$SUDO_CMD</span> git submodule update --init --recursive
   <span class="nb">echo</span> <span class="s2">&quot;pip install deps&quot;</span>
-  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install pefile olefile jbxapi Crypto pypdns pypssl r2pipe pdftools virustotal-api SQLAlchemy PrettyTable python-magic scrapy https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install pefile olefile jbxapi Crypto pypdns pypssl r2pipe pdftools virustotal-api SQLAlchemy PrettyTable python-magic scrapy lief
   <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install .
   <span class="nb">echo</span> <span class="s1">&#39;update-modules&#39;</span> <span class="p">|</span>/usr/local/src/viper/venv/bin/viper
   <span class="nb">cd</span> /usr/local/src/viper-web
