@@ -278,6 +278,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../INSTALL.ubuntu2004/" title="Ubuntu 20.04" class="md-nav__link">
+      Ubuntu 20.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -374,8 +386,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
-      Debian 9.9
+    <a href="../../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
     </a>
   </li>
 
@@ -410,8 +422,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
-      OpenBSD 6.5
+    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
+      OpenBSD 6.6
     </a>
   </li>
 
@@ -675,26 +687,26 @@ viper <span class="o">()</span> <span class="o">{</span>
     <span class="k">fi</span>
   <span class="k">fi</span>
   <span class="nb">echo</span> <span class="s2">&quot;Cloning Viper&quot;</span>
-  <span class="nv">$SUDO_USER</span> git clone https://github.com/viper-framework/viper.git
-  <span class="nv">$SUDO_USER</span> git clone https://github.com/viper-framework/viper-web.git
+  <span class="nv">$SUDO_CMD</span> git clone https://github.com/viper-framework/viper.git
+  <span class="nv">$SUDO_CMD</span> git clone https://github.com/viper-framework/viper-web.git
   sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper
   sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper-web
   <span class="nb">cd</span> viper
   <span class="nb">echo</span> <span class="s2">&quot;Creating virtualenv&quot;</span>
-  <span class="nv">$SUDO_USER</span> virtualenv -p python3 venv
+  <span class="nv">$SUDO_CMD</span> virtualenv -p python3 venv
   <span class="nb">echo</span> <span class="s2">&quot;Submodule update&quot;</span>
   <span class="c1"># TODO: Check for current user install permissions</span>
-  <span class="nv">$SUDO_USER</span> git submodule update --init --recursive
+  <span class="nv">$SUDO_CMD</span> git submodule update --init --recursive
   <span class="nb">echo</span> <span class="s2">&quot;pip install deps&quot;</span>
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install pefile olefile jbxapi Crypto pypdns pypssl r2pipe pdftools virustotal-api SQLAlchemy PrettyTable python-magic scrapy https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install .
+  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install pefile olefile jbxapi Crypto pypdns pypssl r2pipe pdftools virustotal-api SQLAlchemy PrettyTable python-magic scrapy https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install .
   <span class="nb">echo</span> <span class="s1">&#39;update-modules&#39;</span> <span class="p">|</span>/usr/local/src/viper/venv/bin/viper
   <span class="nb">cd</span> /usr/local/src/viper-web
-  <span class="nv">$SUDO_USER</span> sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-web
-  <span class="nv">$SUDO_USER</span> /usr/local/src/viper/venv/bin/pip install -r requirements.txt
+  <span class="nv">$SUDO_CMD</span> sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-web
+  <span class="nv">$SUDO_CMD</span> /usr/local/src/viper/venv/bin/pip install -r requirements.txt
   <span class="nb">echo</span> <span class="s2">&quot;Launching viper-web&quot;</span>
-  <span class="nv">$SUDO_USER</span> /usr/local/src/viper-web/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
-  <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/home/misp/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/environment
+  <span class="nv">$SUDO_CMD</span> /usr/local/src/viper-web/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
+  <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/home/misp/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console&quot;&#39;</span> <span class="p">|</span>sudo tee -a /etc/environment
   <span class="nb">echo</span> <span class="s2">&quot;. /etc/environment&quot;</span> &gt;&gt; /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/.profile
 
   <span class="c1"># TODO: Perms, MISP_USER_HOME, nasty hack cuz Kali on R00t</span>
@@ -705,8 +717,8 @@ viper <span class="o">()</span> <span class="o">{</span>
   <span class="k">fi</span>
 
   <span class="nb">echo</span> <span class="s2">&quot;Setting misp_url/misp_key&quot;</span>
-  <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_url\ =/misp_url\ =\ http:\/\/localhost/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
-  <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="nv">$AUTH_KEY</span><span class="s2">/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
+  <span class="nv">$SUDO_CMD</span> sed -i <span class="s2">&quot;s/^misp_url\ =/misp_url\ =\ http:\/\/localhost/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
+  <span class="nv">$SUDO_CMD</span> sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="nv">$AUTH_KEY</span><span class="s2">/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
   <span class="c1"># Reset admin password to: admin/Password1234</span>
   <span class="nb">echo</span> <span class="s2">&quot;Fixing admin.db with default password&quot;</span>
   <span class="nv">VIPER_COUNT</span><span class="o">=</span><span class="m">0</span>
@@ -749,7 +761,7 @@ viper <span class="o">()</span> <span class="o">{</span>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2019 MISP Project
+            Copyright &copy; 2020 MISP Project
           </div>
         
         powered by

@@ -278,6 +278,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../INSTALL.ubuntu2004/" title="Ubuntu 20.04" class="md-nav__link">
+      Ubuntu 20.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -427,8 +439,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
-      Debian 9.9
+    <a href="../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
     </a>
   </li>
 
@@ -463,8 +475,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
-      OpenBSD 6.5
+    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
+      OpenBSD 6.6
     </a>
   </li>
 
@@ -829,9 +841,9 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># sudo config to run $LUSER commands</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>groups <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> <span class="p">|</span>grep -o <span class="s1">&#39;staff&#39;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;staff&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
+    <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
   <span class="k">else</span>
-    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="k">fi</span>
   <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
 
@@ -1059,6 +1071,8 @@ sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-maec
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="c1"># FIXME: Remove once stix-fixed</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -I antlr4-python3-runtime<span class="o">==</span><span class="m">4</span>.7.2
 <span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
 <span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/cti-python-stix2
 <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
@@ -1098,7 +1112,7 @@ Follow the guide and manually install a new composer.phar and keep using PHP-7.3
 sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.composer
 <span class="c1"># Update composer.phar</span>
 <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-<span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
+<span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;baf1608c33254d00611ac1705c1d9958c817a1a33bce370c0595974b342601bd80b92a3f46067da89e3b06bff421f182&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
 <span class="nv">$SUDO_WWW</span> php composer-setup.php
 <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
 <span class="nv">$SUDO_WWW</span> php composer.phar install
@@ -1479,7 +1493,7 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> /usr/local/src/
   <span class="c1">## TODO: checkUsrLocalSrc in main doc</span>
   debug <span class="s2">&quot;Cloning misp-modules&quot;</span>
-  <span class="nv">$SUDO_USER</span> git clone https://github.com/MISP/misp-modules.git
+  <span class="nv">$SUDO_CMD</span> git clone https://github.com/MISP/misp-modules.git
   <span class="nb">cd</span> misp-modules
   <span class="c1"># some misp-modules dependencies</span>
   sudo apt install libpq5 libjpeg-dev tesseract-ocr libpoppler-cpp-dev imagemagick libopencv-dev zbar-tools libzbar0 libzbar-dev libfuzzy-dev -y
@@ -1629,6 +1643,10 @@ sudo service apache2 restart
 
 <h4 id="misp-dashboard">MISP Dashboard<a class="headerlink" href="#misp-dashboard" title="Permanent link">&para;</a></h4>
 <hr />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Currently defunct due to upstream dependency changes</p>
+</div>
 <div class="codehilite"><pre><span></span><span class="c1"># &lt;snippet-begin 4_misp-dashboard.sh&gt;</span>
 <span class="c1"># Main MISP Dashboard install function</span>
 mispDashboard <span class="o">()</span> <span class="o">{</span>
@@ -1741,26 +1759,26 @@ viper <span class="o">()</span> <span class="o">{</span>
     <span class="k">fi</span>
   <span class="k">fi</span>
   <span class="nb">echo</span> <span class="s2">&quot;Cloning Viper&quot;</span>
-  <span class="nv">$SUDO_USER</span> git clone https://github.com/viper-framework/viper.git
-  <span class="nv">$SUDO_USER</span> git clone https://github.com/viper-framework/viper-web.git
+  <span class="nv">$SUDO_CMD</span> git clone https://github.com/viper-framework/viper.git
+  <span class="nv">$SUDO_CMD</span> git clone https://github.com/viper-framework/viper-web.git
   sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper
   sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper-web
   <span class="nb">cd</span> viper
   <span class="nb">echo</span> <span class="s2">&quot;Creating virtualenv&quot;</span>
-  <span class="nv">$SUDO_USER</span> virtualenv -p python3 venv
+  <span class="nv">$SUDO_CMD</span> virtualenv -p python3 venv
   <span class="nb">echo</span> <span class="s2">&quot;Submodule update&quot;</span>
   <span class="c1"># TODO: Check for current user install permissions</span>
-  <span class="nv">$SUDO_USER</span> git submodule update --init --recursive
+  <span class="nv">$SUDO_CMD</span> git submodule update --init --recursive
   <span class="nb">echo</span> <span class="s2">&quot;pip install deps&quot;</span>
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install pefile olefile jbxapi Crypto pypdns pypssl r2pipe pdftools virustotal-api SQLAlchemy PrettyTable python-magic scrapy https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install .
+  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install pefile olefile jbxapi Crypto pypdns pypssl r2pipe pdftools virustotal-api SQLAlchemy PrettyTable python-magic scrapy https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install .
   <span class="nb">echo</span> <span class="s1">&#39;update-modules&#39;</span> <span class="p">|</span>/usr/local/src/viper/venv/bin/viper
   <span class="nb">cd</span> /usr/local/src/viper-web
-  <span class="nv">$SUDO_USER</span> sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-web
-  <span class="nv">$SUDO_USER</span> /usr/local/src/viper/venv/bin/pip install -r requirements.txt
+  <span class="nv">$SUDO_CMD</span> sed -i <span class="s1">&#39;1 s/^.*$/\#!\/usr\/local\/src\/viper\/venv\/bin\/python/&#39;</span> viper-web
+  <span class="nv">$SUDO_CMD</span> /usr/local/src/viper/venv/bin/pip install -r requirements.txt
   <span class="nb">echo</span> <span class="s2">&quot;Launching viper-web&quot;</span>
-  <span class="nv">$SUDO_USER</span> /usr/local/src/viper-web/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
-  <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/home/misp/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/environment
+  <span class="nv">$SUDO_CMD</span> /usr/local/src/viper-web/viper-web -p <span class="m">8888</span> -H <span class="m">0</span>.0.0.0 <span class="p">&amp;</span>
+  <span class="nb">echo</span> <span class="s1">&#39;PATH=&quot;/home/misp/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console&quot;&#39;</span> <span class="p">|</span>sudo tee -a /etc/environment
   <span class="nb">echo</span> <span class="s2">&quot;. /etc/environment&quot;</span> &gt;&gt; /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/.profile
 
   <span class="c1"># TODO: Perms, MISP_USER_HOME, nasty hack cuz Kali on R00t</span>
@@ -1771,8 +1789,8 @@ viper <span class="o">()</span> <span class="o">{</span>
   <span class="k">fi</span>
 
   <span class="nb">echo</span> <span class="s2">&quot;Setting misp_url/misp_key&quot;</span>
-  <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_url\ =/misp_url\ =\ http:\/\/localhost/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
-  <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="nv">$AUTH_KEY</span><span class="s2">/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
+  <span class="nv">$SUDO_CMD</span> sed -i <span class="s2">&quot;s/^misp_url\ =/misp_url\ =\ http:\/\/localhost/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
+  <span class="nv">$SUDO_CMD</span> sed -i <span class="s2">&quot;s/^misp_key\ =/misp_key\ =\ </span><span class="nv">$AUTH_KEY</span><span class="s2">/g&quot;</span> <span class="si">${</span><span class="nv">VIPER_HOME</span><span class="si">}</span>/viper.conf
   <span class="c1"># Reset admin password to: admin/Password1234</span>
   <span class="nb">echo</span> <span class="s2">&quot;Fixing admin.db with default password&quot;</span>
   <span class="nv">VIPER_COUNT</span><span class="o">=</span><span class="m">0</span>
@@ -1800,11 +1818,11 @@ viper <span class="o">()</span> <span class="o">{</span>
 ssdeep <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Install ssdeep 2.14.1&quot;</span>
   <span class="nb">cd</span> /usr/local/src
-  <span class="nv">$SUDO_USER</span> wget https://github.com/ssdeep-project/ssdeep/releases/download/release-2.14.1/ssdeep-2.14.1.tar.gz
-  <span class="nv">$SUDO_USER</span> tar zxvf ssdeep-2.14.1.tar.gz
+  <span class="nv">$SUDO_CMD</span> wget https://github.com/ssdeep-project/ssdeep/releases/download/release-2.14.1/ssdeep-2.14.1.tar.gz
+  <span class="nv">$SUDO_CMD</span> tar zxvf ssdeep-2.14.1.tar.gz
   <span class="nb">cd</span> ssdeep-2.14.1
-  <span class="nv">$SUDO_USER</span> ./configure --datadir<span class="o">=</span>/usr --prefix<span class="o">=</span>/usr --localstatedir<span class="o">=</span>/var --sysconfdir<span class="o">=</span>/etc
-  <span class="nv">$SUDO_USER</span> make
+  <span class="nv">$SUDO_CMD</span> ./configure --datadir<span class="o">=</span>/usr --prefix<span class="o">=</span>/usr --localstatedir<span class="o">=</span>/var --sysconfdir<span class="o">=</span>/etc
+  <span class="nv">$SUDO_CMD</span> make
   sudo make install
 
   <span class="c1">#installing ssdeep_php</span>
@@ -1827,29 +1845,29 @@ mail2misp <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Installing Mail2</span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="nb">cd</span> /usr/local/src/
   sudo apt-get install cmake libcaca-dev liblua5.3-dev -y
-  <span class="nv">$SUDO_USER</span> git clone https://github.com/MISP/mail_to_misp.git
-  <span class="nv">$SUDO_USER</span> git clone git://github.com/stricaud/faup.git faup
-  <span class="nv">$SUDO_USER</span> git clone git://github.com/stricaud/gtcaca.git gtcaca
+  <span class="nv">$SUDO_CMD</span> git clone https://github.com/MISP/mail_to_misp.git
+  <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/faup.git faup
+  <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/gtcaca.git gtcaca
   sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup mail_to_misp gtcaca
   <span class="nb">cd</span> gtcaca
-  <span class="nv">$SUDO_USER</span> mkdir -p build
+  <span class="nv">$SUDO_CMD</span> mkdir -p build
   <span class="nb">cd</span> build
-  <span class="nv">$SUDO_USER</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_USER</span> make
+  <span class="nv">$SUDO_CMD</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> make
   sudo make install
   <span class="nb">cd</span> ../../faup
-  <span class="nv">$SUDO_USER</span> mkdir -p build
+  <span class="nv">$SUDO_CMD</span> mkdir -p build
   <span class="nb">cd</span> build
-  <span class="nv">$SUDO_USER</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_USER</span> make
+  <span class="nv">$SUDO_CMD</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> make
   sudo make install
   sudo ldconfig
   <span class="nb">cd</span> ../../mail_to_misp
-  <span class="nv">$SUDO_USER</span> virtualenv -p python3 venv
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install -r requirements.txt
-  <span class="nv">$SUDO_USER</span> cp mail_to_misp_config.py-example mail_to_misp_config.py
+  <span class="nv">$SUDO_CMD</span> virtualenv -p python3 venv
+  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install -r requirements.txt
+  <span class="nv">$SUDO_CMD</span> cp mail_to_misp_config.py-example mail_to_misp_config.py
   <span class="c1">##$SUDO cp mail_to_misp_config.py-example mail_to_misp_config.py</span>
-  <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_url\ =\ &#39;YOUR_MISP_URL&#39;/misp_url\ =\ &#39;https:\/\/localhost&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
-  <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+  <span class="nv">$SUDO_CMD</span> sed -i <span class="s2">&quot;s/^misp_url\ =\ &#39;YOUR_MISP_URL&#39;/misp_url\ =\ &#39;https:\/\/localhost&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+  <span class="nv">$SUDO_CMD</span> sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 5_mail_to_misp.sh&gt;</span>
 </pre></div>
@@ -2033,13 +2051,13 @@ index f9f69d4..2e8fd78 100644
           </a>
         
         
-          <a href="../xINSTALL.debian9/" title="Debian 9.9" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../xINSTALL.debian9/" title="Debian 9" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Debian 9.9
+                Debian 9
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -2055,7 +2073,7 @@ index f9f69d4..2e8fd78 100644
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2019 MISP Project
+            Copyright &copy; 2020 MISP Project
           </div>
         
         powered by

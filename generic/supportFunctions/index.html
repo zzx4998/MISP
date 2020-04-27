@@ -274,6 +274,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../INSTALL.ubuntu2004/" title="Ubuntu 20.04" class="md-nav__link">
+      Ubuntu 20.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -370,8 +382,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
-      Debian 9.9
+    <a href="../../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
     </a>
   </li>
 
@@ -406,8 +418,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
-      OpenBSD 6.5
+    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
+      OpenBSD 6.6
     </a>
   </li>
 
@@ -650,8 +662,10 @@ usage <span class="o">()</span> <span class="o">{</span>
   space
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">SCRIPT_NAME</span><span class="si">}</span><span class="s2"> -c | Install ONLY </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> Core&quot;</span>                   <span class="c1"># core</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;                -M | </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> modules&quot;</span>        <span class="c1"># modules</span>
-  <span class="nb">echo</span> -e <span class="s2">&quot;                -D | </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> dashboard&quot;</span>      <span class="c1"># dashboard</span>
-  <span class="nb">echo</span> -e <span class="s2">&quot;                -V | Viper&quot;</span>                            <span class="c1"># viper</span>
+  <span class="c1">## FIXME: The current state of misp-dashboard is broken, disabling any use.</span>
+  <span class="c1">##echo -e &quot;                -D | ${LBLUE}MISP${NC} dashboard&quot;      # dashboard</span>
+  <span class="c1">## FIXME: The current state of Viper is broken, disabling any use.</span>
+  <span class="c1">##echo -e &quot;                -V | Viper&quot;                            # viper</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;                -m | Mail 2 </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>         <span class="c1"># mail2</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;                -S | Experimental ssdeep correlations&quot;</span> <span class="c1"># ssdeep</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;                -A | Install </span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="s2">all</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> of the above&quot;</span> <span class="c1"># all</span>
@@ -662,7 +676,7 @@ usage <span class="o">()</span> <span class="o">{</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">       -U | Attempt and upgrade of selected item</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>         <span class="c1"># UPGRADE</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">       -N | Nuke this MISP Instance</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>                      <span class="c1"># NUKE</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">HIDDEN</span><span class="si">}</span><span class="s2">       -f | Force test install on current Ubuntu LTS schim, add -B for 18.04 -&gt; 18.10, or -BB 18.10 -&gt; 19.10)</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># FORCE</span>
-  <span class="nb">echo</span> -e <span class="s2">&quot;Options can be combined: </span><span class="si">${</span><span class="nv">SCRIPT_NAME</span><span class="si">}</span><span class="s2"> -c -V -D # Will install Core+Viper+Dashboard&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;Options can be combined: </span><span class="si">${</span><span class="nv">SCRIPT_NAME</span><span class="si">}</span><span class="s2"> -c -D # Will install Core+Dashboard&quot;</span>
   space
   <span class="nb">echo</span> -e <span class="s2">&quot;Recommended is either a barebone MISP install (ideal for syncing from other instances) or&quot;</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;MISP + modules - </span><span class="si">${</span><span class="nv">SCRIPT_NAME</span><span class="si">}</span><span class="s2"> -c -M&quot;</span>
@@ -760,16 +774,17 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
     centos<span class="o">)</span>
       <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -r /etc/os-release <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
         <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
+        <span class="nv">dist_version</span><span class="o">=</span><span class="si">${</span><span class="nv">dist_version</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span>
       <span class="k">fi</span>
-      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2"> not supported at the moment&quot;</span>
-      <span class="nb">exit</span> <span class="m">1</span>
+      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2"> support is experimental at the moment&quot;</span>
     <span class="p">;;</span>
     rhel<span class="p">|</span>ol<span class="p">|</span>sles<span class="o">)</span>
       <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -r /etc/os-release <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
         <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
+    <span class="nv">dist_version</span><span class="o">=</span><span class="si">${</span><span class="nv">dist_version</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span>  <span class="c1"># Only interested about major version</span>
       <span class="k">fi</span>
-      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2"> not supported at the moment&quot;</span>
-      <span class="nb">exit</span> <span class="m">1</span>
+      <span class="c1"># Only tested for RHEL 7 so far </span>
+      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2"> support is experimental at the moment&quot;</span>
     <span class="p">;;</span>
     *<span class="o">)</span>
       <span class="k">if</span> command_exists lsb_release<span class="p">;</span> <span class="k">then</span>
@@ -837,25 +852,38 @@ check_forked <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 
 checkInstaller <span class="o">()</span> <span class="o">{</span>
-  <span class="c1"># TODO: Implement $FLAVOUR checks and install depending on the platform we are on</span>
-  <span class="k">if</span> <span class="o">[[</span> <span class="k">$(</span>which shasum &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> !<span class="o">=</span> <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-    sudo apt install libdigest-sha-perl -qyy
-  <span class="k">fi</span>
-  <span class="c1"># SHAsums to be computed, not the -- notatiation is for ease of use with rhash</span>
-  <span class="nv">SHA_SUMS</span><span class="o">=</span><span class="s2">&quot;--sha1 --sha256 --sha384 --sha512&quot;</span>
-  <span class="k">for</span> sum in <span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">SHA_SUMS</span><span class="si">}</span> <span class="p">|</span>sed <span class="s1">&#39;s/--sha//g&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
-    /usr/bin/wget --no-cache -q -O /tmp/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span> https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span>
-    <span class="nv">INSTsum</span><span class="o">=</span><span class="k">$(</span>shasum -a <span class="si">${</span><span class="nv">sum</span><span class="si">}</span> <span class="si">${</span><span class="nv">0</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
-    <span class="nv">chsum</span><span class="o">=</span><span class="k">$(</span>cat /tmp/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
-
+  <span class="c1"># Workaround: shasum is not available on RHEL, only checking sha512</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$FLAVOUR</span> <span class="o">==</span> <span class="s2">&quot;rhel&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="nv">$FLAVOUR</span> <span class="o">==</span> <span class="s2">&quot;centos&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">INSTsum</span><span class="o">=</span><span class="k">$(</span>sha512sum <span class="si">${</span><span class="nv">0</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
+    /usr/bin/wget --no-cache -q -O /tmp/INSTALL.sh.sha512 https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh.sha512
+        <span class="nv">chsum</span><span class="o">=</span><span class="k">$(</span>cat /tmp/INSTALL.sh.sha512<span class="k">)</span>
     <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">chsum</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">INSTsum</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-      <span class="nb">echo</span> <span class="s2">&quot;sha</span><span class="si">${</span><span class="nv">sum</span><span class="si">}</span><span class="s2"> matches&quot;</span>
+        <span class="nb">echo</span> <span class="s2">&quot;SHA512 matches&quot;</span>
     <span class="k">else</span>
-      <span class="nb">echo</span> <span class="s2">&quot;sha</span><span class="si">${</span><span class="nv">sum</span><span class="si">}</span><span class="s2">: </span><span class="si">${</span><span class="nv">chsum</span><span class="si">}</span><span class="s2"> does not match the installer sum of: </span><span class="si">${</span><span class="nv">INSTsum</span><span class="si">}</span><span class="s2">&quot;</span>
-      <span class="nb">echo</span> <span class="s2">&quot;Delete installer, re-download and please run again.&quot;</span>
-      <span class="nb">exit</span> <span class="m">1</span>
+        <span class="nb">echo</span> <span class="s2">&quot;SHA512: </span><span class="si">${</span><span class="nv">chsum</span><span class="si">}</span><span class="s2"> does not match the installer sum of: </span><span class="si">${</span><span class="nv">INSTsum</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="c1"># exit 1 # uncomment when/if PR is merged</span>
     <span class="k">fi</span>
-  <span class="k">done</span>
+  <span class="k">else</span>
+    <span class="c1"># TODO: Implement $FLAVOUR checks and install depending on the platform we are on</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="k">$(</span>which shasum &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> !<span class="o">=</span> <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      sudo apt install libdigest-sha-perl -qyy
+    <span class="k">fi</span>
+    <span class="c1"># SHAsums to be computed, not the -- notatiation is for ease of use with rhash</span>
+    <span class="nv">SHA_SUMS</span><span class="o">=</span><span class="s2">&quot;--sha1 --sha256 --sha384 --sha512&quot;</span>
+    <span class="k">for</span> sum in <span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">SHA_SUMS</span><span class="si">}</span> <span class="p">|</span>sed <span class="s1">&#39;s/--sha//g&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+      /usr/bin/wget --no-cache -q -O /tmp/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span> https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span>
+      <span class="nv">INSTsum</span><span class="o">=</span><span class="k">$(</span>shasum -a <span class="si">${</span><span class="nv">sum</span><span class="si">}</span> <span class="si">${</span><span class="nv">0</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
+      <span class="nv">chsum</span><span class="o">=</span><span class="k">$(</span>cat /tmp/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
+
+      <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">chsum</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">INSTsum</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&quot;sha</span><span class="si">${</span><span class="nv">sum</span><span class="si">}</span><span class="s2"> matches&quot;</span>
+      <span class="k">else</span>
+        <span class="nb">echo</span> <span class="s2">&quot;sha</span><span class="si">${</span><span class="nv">sum</span><span class="si">}</span><span class="s2">: </span><span class="si">${</span><span class="nv">chsum</span><span class="si">}</span><span class="s2"> does not match the installer sum of: </span><span class="si">${</span><span class="nv">INSTsum</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">echo</span> <span class="s2">&quot;Delete installer, re-download and please run again.&quot;</span>
+        <span class="nb">exit</span> <span class="m">1</span>
+      <span class="k">fi</span>
+    <span class="k">done</span>
+  <span class="k">fi</span>
 <span class="o">}</span>
 
 <span class="c1"># Extract manufacturer</span>
@@ -1010,12 +1038,12 @@ checkID <span class="o">()</span> <span class="o">{</span>
     sudo adduser <span class="nv">$MISP_USER</span> <span class="nv">$WWW_USER</span>
   <span class="k">fi</span>
 
-  <span class="c1"># FIXME: the below SUDO_USER check is a duplicate from global variables, try to have just one check</span>
+  <span class="c1"># FIXME: the below SUDO_CMD check is a duplicate from global variables, try to have just one check</span>
   <span class="c1"># sudo config to run $LUSER commands</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>groups <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> <span class="p">|</span>grep -o <span class="s1">&#39;staff&#39;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;staff&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
+    <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
   <span class="k">else</span>
-    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="k">fi</span>
 
 <span class="o">}</span>
@@ -1423,7 +1451,8 @@ composer73 <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Update composer.phar</span>
   <span class="c1"># If hash changes, check here: https://getcomposer.org/download/ and replace with the correct one</span>
   <span class="c1"># Current Sum for: v1.8.3</span>
-  <span class="nv">SHA384_SUM</span><span class="o">=</span><span class="s1">&#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;</span>
+  <span class="nv">SHA384_SUM</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>wget -q -O - https://composer.github.io/installer.sig<span class="k">)</span><span class="s2">&quot;</span>
+php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
   <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
   <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;</span><span class="nv">$SHA384_SUM</span><span class="s2">&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); exit(137); } echo PHP_EOL;&quot;</span>
   checkFail <span class="s2">&quot;composer.phar checksum failed, please investigate manually. &quot;</span> <span class="nv">$?</span>
@@ -1455,13 +1484,12 @@ genRCLOCAL <span class="o">()</span> <span class="o">{</span>
 
 <span class="c1"># Run PyMISP tests</span>
 runTests <span class="o">()</span> <span class="o">{</span>
-  <span class="nb">echo</span> <span class="s2">&quot;url = &#39;</span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">&#39;</span>
-<span class="s2">key = &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="p">|</span>sudo tee <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/PyMISP/tests/keys.py
+  <span class="nb">echo</span> <span class="s2">&quot;url = \&quot;</span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">\&quot;</span>
+<span class="s2">key = \&quot;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">\&quot;&quot;</span> <span class="p">|</span>sudo tee <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/PyMISP/tests/keys.py
   sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP/
 
   sudo -H -u <span class="nv">$WWW_USER</span> sh -c <span class="s2">&quot;cd </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/PyMISP &amp;&amp; git submodule foreach git pull origin master&quot;</span>
   sudo -H -u <span class="nv">$WWW_USER</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -e <span class="nv">$PATH_TO_MISP</span>/PyMISP/.<span class="o">[</span>fileobjects,neo,openioc,virustotal,pdfexport<span class="o">]</span>
-  sudo -H -u <span class="nv">$WWW_USER</span> git clone https://github.com/viper-framework/viper-test-files.git <span class="nv">$PATH_TO_MISP</span>/PyMISP/tests/viper-test-files
   sudo -H -u <span class="nv">$WWW_USER</span> sh -c <span class="s2">&quot;cd </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/PyMISP &amp;&amp; </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python tests/testlive_comprehensive.py&quot;</span>
 <span class="o">}</span>
 
@@ -1478,25 +1506,26 @@ nuke <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># Final function to let the user know what happened</span>
 theEnd <span class="o">()</span> <span class="o">{</span>
   space
-  <span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span> <span class="p">|</span><span class="nv">$SUDO_USER</span> tee /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/mysql.txt
-  <span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>  <span class="p">|</span><span class="nv">$SUDO_USER</span> tee -a /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/mysql.txt
-  <span class="nb">echo</span> <span class="s2">&quot;Authkey: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> <span class="p">|</span><span class="nv">$SUDO_USER</span> tee -a /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/MISP-authkey.txt
+  <span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span> <span class="p">|</span><span class="nv">$SUDO_CMD</span> tee /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/mysql.txt
+  <span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>  <span class="p">|</span><span class="nv">$SUDO_CMD</span> tee -a /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/mysql.txt
+  <span class="nb">echo</span> <span class="s2">&quot;Authkey: </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> <span class="p">|</span><span class="nv">$SUDO_CMD</span> tee -a /home/<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>/MISP-authkey.txt
 
-  clear
+  <span class="c1"># Commenting out, see: https://github.com/MISP/MISP/issues/5368</span>
+  <span class="c1"># clear -x</span>
   space
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> Installed, access here: </span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="nb">echo</span>
   <span class="nb">echo</span> <span class="s2">&quot;User: admin@admin.test&quot;</span>
   <span class="nb">echo</span> <span class="s2">&quot;Password: admin&quot;</span>
   space
-  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$DASHBOARD</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> Dashboard, access here: </span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">:8001&quot;</span>
-  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$DASHBOARD</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> space
-  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$VIPER</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s2">&quot;viper-web installed, access here: </span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">:8888&quot;</span>
-  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$VIPER</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s2">&quot;viper-cli configured with your </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Site Admin Auth Key</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
-  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$VIPER</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span>
-  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$VIPER</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;User: admin&quot;</span>
-  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$VIPER</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;Password: Password1234&quot;</span>
-  <span class="o">[[</span> -n <span class="nv">$KALI</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$VIPER</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> -n <span class="nv">$ALL</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> space
+  <span class="c1">##[[ -n $KALI ]] || [[ -n $DASHBOARD ]] || [[ -n $ALL ]] &amp;&amp; echo -e &quot;${LBLUE}MISP${NC} Dashboard, access here: ${MISP_BASEURL}:8001&quot;</span>
+  <span class="c1">##[[ -n $KALI ]] || [[ -n $DASHBOARD ]] || [[ -n $ALL ]] &amp;&amp; space</span>
+  <span class="c1">##[[ -n $KALI ]] || [[ -n $VIPER ]] || [[ -n $ALL ]] &amp;&amp; echo -e &quot;viper-web installed, access here: ${MISP_BASEURL}:8888&quot;</span>
+  <span class="c1">##[[ -n $KALI ]] || [[ -n $VIPER ]] || [[ -n $ALL ]] &amp;&amp; echo -e &quot;viper-cli configured with your ${LBLUE}MISP${NC} ${RED}Site Admin Auth Key${NC}&quot;</span>
+  <span class="c1">##[[ -n $KALI ]] || [[ -n $VIPER ]] || [[ -n $ALL ]] &amp;&amp; echo</span>
+  <span class="c1">##[[ -n $KALI ]] || [[ -n $VIPER ]] || [[ -n $ALL ]] &amp;&amp; echo &quot;User: admin&quot;</span>
+  <span class="c1">##[[ -n $KALI ]] || [[ -n $VIPER ]] || [[ -n $ALL ]] &amp;&amp; echo &quot;Password: Password1234&quot;</span>
+  <span class="c1">##[[ -n $KALI ]] || [[ -n $VIPER ]] || [[ -n $ALL ]] &amp;&amp; space</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;The following files were created and need either </span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">protection or removal</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> (</span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="s2">shred</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> on the CLI)&quot;</span>
   <span class="nb">echo</span> <span class="s2">&quot;/home/</span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">/mysql.txt&quot;</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Contents:</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -1559,7 +1588,7 @@ theEnd <span class="o">()</span> <span class="o">{</span>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2019 MISP Project
+            Copyright &copy; 2020 MISP Project
           </div>
         
         powered by

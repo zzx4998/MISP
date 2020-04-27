@@ -278,6 +278,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../INSTALL.ubuntu2004/" title="Ubuntu 20.04" class="md-nav__link">
+      Ubuntu 20.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -374,8 +386,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
-      Debian 9.9
+    <a href="../../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
     </a>
   </li>
 
@@ -410,8 +422,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
-      OpenBSD 6.5
+    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
+      OpenBSD 6.6
     </a>
   </li>
 
@@ -676,11 +688,11 @@
 ssdeep <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Install ssdeep 2.14.1&quot;</span>
   <span class="nb">cd</span> /usr/local/src
-  <span class="nv">$SUDO_USER</span> wget https://github.com/ssdeep-project/ssdeep/releases/download/release-2.14.1/ssdeep-2.14.1.tar.gz
-  <span class="nv">$SUDO_USER</span> tar zxvf ssdeep-2.14.1.tar.gz
+  <span class="nv">$SUDO_CMD</span> wget https://github.com/ssdeep-project/ssdeep/releases/download/release-2.14.1/ssdeep-2.14.1.tar.gz
+  <span class="nv">$SUDO_CMD</span> tar zxvf ssdeep-2.14.1.tar.gz
   <span class="nb">cd</span> ssdeep-2.14.1
-  <span class="nv">$SUDO_USER</span> ./configure --datadir<span class="o">=</span>/usr --prefix<span class="o">=</span>/usr --localstatedir<span class="o">=</span>/var --sysconfdir<span class="o">=</span>/etc
-  <span class="nv">$SUDO_USER</span> make
+  <span class="nv">$SUDO_CMD</span> ./configure --datadir<span class="o">=</span>/usr --prefix<span class="o">=</span>/usr --localstatedir<span class="o">=</span>/var --sysconfdir<span class="o">=</span>/etc
+  <span class="nv">$SUDO_CMD</span> make
   sudo make install
 
   <span class="c1">#installing ssdeep_php</span>
@@ -716,7 +728,7 @@ ssdeep <span class="o">()</span> <span class="o">{</span>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2019 MISP Project
+            Copyright &copy; 2020 MISP Project
           </div>
         
         powered by

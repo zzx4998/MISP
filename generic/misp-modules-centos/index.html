@@ -278,6 +278,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../INSTALL.ubuntu2004/" title="Ubuntu 20.04" class="md-nav__link">
+      Ubuntu 20.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -374,8 +386,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
-      Debian 9.9
+    <a href="../../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
     </a>
   </li>
 
@@ -410,8 +422,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
-      OpenBSD 6.5
+    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
+      OpenBSD 6.6
     </a>
   </li>
 
@@ -679,8 +691,8 @@ mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
 
 <span class="s2">  [Service]</span>
 <span class="s2">  Type=simple</span>
-<span class="s2">  User=apache</span>
-<span class="s2">  Group=apache</span>
+<span class="s2">  User=</span><span class="nv">$WWW_USER</span><span class="s2"></span>
+<span class="s2">  Group=</span><span class="nv">$WWW_USER</span><span class="s2"></span>
 <span class="s2">  WorkingDirectory=/usr/local/src/misp-modules</span>
 <span class="s2">  Environment=&quot;</span><span class="nv">PATH</span><span class="o">=</span>/var/www/MISP/venv/bin<span class="s2">&quot;</span>
 <span class="s2">  ExecStart=\&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/misp-modules -l 127.0.0.1 -s\&quot;</span>
@@ -759,7 +771,7 @@ mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2019 MISP Project
+            Copyright &copy; 2020 MISP Project
           </div>
         
         powered by

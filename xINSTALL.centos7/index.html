@@ -278,6 +278,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../INSTALL.ubuntu2004/" title="Ubuntu 20.04" class="md-nav__link">
+      Ubuntu 20.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -374,8 +386,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
-      Debian 9.9
+    <a href="../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
     </a>
   </li>
 
@@ -410,8 +422,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
-      OpenBSD 6.5
+    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
+      OpenBSD 6.6
     </a>
   </li>
 
@@ -952,9 +964,9 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># sudo config to run $LUSER commands</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>groups <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> <span class="p">|</span>grep -o <span class="s1">&#39;staff&#39;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;staff&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
+    <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
   <span class="k">else</span>
-    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="k">fi</span>
   <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
 
@@ -1115,6 +1127,9 @@ sudo make install
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mixbox
 <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
 
+<span class="c1"># FIXME: Remove once stix-fixed</span>
+<span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -I antlr4-python3-runtime<span class="o">==</span><span class="m">4</span>.7.2
+
 <span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/cti-python-stix2
 <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
@@ -1141,8 +1156,9 @@ sudo mkdir /usr/share/httpd/.composer
 sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> /usr/share/httpd/.composer
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
 <span class="c1"># Update composer.phar (optional)</span>
+<span class="c1">#EXPECTED_SIGNATURE=&quot;$(wget -q -O - https://composer.github.io/installer.sig)&quot;</span>
 <span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-<span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
+<span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;$EXPECTED_SIGNATURE&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
 <span class="c1">#$SUDO_WWW $RUN_PHP &quot;php composer-setup.php&quot;</span>
 <span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
 <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;php composer.phar install&quot;</span>
@@ -1299,6 +1315,7 @@ sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/
 sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/*.py
 sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/*/*.py
 sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief/build/api/python/lief.so
+sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/Vendor/pear/crypt_gpg/scripts/crypt-gpg-pinentry
 <span class="c1"># Only run these if you want to be able to update MISP from the web interface</span>
 sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/.git
 sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/tmp
@@ -1477,6 +1494,10 @@ sudo sed -i -e <span class="s1">&#39;$i \sudo -u apache $PATH_TO_MISP/venv/bin/m
 
 <h4 id="misp-dashboard-on-centos">MISP Dashboard on CentOS<a class="headerlink" href="#misp-dashboard-on-centos" title="Permanent link">&para;</a></h4>
 <hr />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Currently defunct due to upstream dependency changes</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Does not work on RHEL 8</p>
@@ -1844,7 +1865,7 @@ index f9f69d4..2e8fd78 100644
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2019 MISP Project
+            Copyright &copy; 2020 MISP Project
           </div>
         
         powered by

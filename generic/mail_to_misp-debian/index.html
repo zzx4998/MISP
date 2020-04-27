@@ -278,6 +278,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../INSTALL.ubuntu2004/" title="Ubuntu 20.04" class="md-nav__link">
+      Ubuntu 20.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -374,8 +386,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
-      Debian 9.9
+    <a href="../../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
     </a>
   </li>
 
@@ -410,8 +422,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
-      OpenBSD 6.5
+    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
+      OpenBSD 6.6
     </a>
   </li>
 
@@ -665,29 +677,29 @@ mail2misp <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Installing Mail2</span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="nb">cd</span> /usr/local/src/
   sudo apt-get install cmake libcaca-dev liblua5.3-dev -y
-  <span class="nv">$SUDO_USER</span> git clone https://github.com/MISP/mail_to_misp.git
-  <span class="nv">$SUDO_USER</span> git clone git://github.com/stricaud/faup.git faup
-  <span class="nv">$SUDO_USER</span> git clone git://github.com/stricaud/gtcaca.git gtcaca
+  <span class="nv">$SUDO_CMD</span> git clone https://github.com/MISP/mail_to_misp.git
+  <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/faup.git faup
+  <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/gtcaca.git gtcaca
   sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup mail_to_misp gtcaca
   <span class="nb">cd</span> gtcaca
-  <span class="nv">$SUDO_USER</span> mkdir -p build
+  <span class="nv">$SUDO_CMD</span> mkdir -p build
   <span class="nb">cd</span> build
-  <span class="nv">$SUDO_USER</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_USER</span> make
+  <span class="nv">$SUDO_CMD</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> make
   sudo make install
   <span class="nb">cd</span> ../../faup
-  <span class="nv">$SUDO_USER</span> mkdir -p build
+  <span class="nv">$SUDO_CMD</span> mkdir -p build
   <span class="nb">cd</span> build
-  <span class="nv">$SUDO_USER</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_USER</span> make
+  <span class="nv">$SUDO_CMD</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> make
   sudo make install
   sudo ldconfig
   <span class="nb">cd</span> ../../mail_to_misp
-  <span class="nv">$SUDO_USER</span> virtualenv -p python3 venv
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
-  <span class="nv">$SUDO_USER</span> ./venv/bin/pip install -r requirements.txt
-  <span class="nv">$SUDO_USER</span> cp mail_to_misp_config.py-example mail_to_misp_config.py
+  <span class="nv">$SUDO_CMD</span> virtualenv -p python3 venv
+  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip
+  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install -r requirements.txt
+  <span class="nv">$SUDO_CMD</span> cp mail_to_misp_config.py-example mail_to_misp_config.py
   <span class="c1">##$SUDO cp mail_to_misp_config.py-example mail_to_misp_config.py</span>
-  <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_url\ =\ &#39;YOUR_MISP_URL&#39;/misp_url\ =\ &#39;https:\/\/localhost&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
-  <span class="nv">$SUDO_USER</span> sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+  <span class="nv">$SUDO_CMD</span> sed -i <span class="s2">&quot;s/^misp_url\ =\ &#39;YOUR_MISP_URL&#39;/misp_url\ =\ &#39;https:\/\/localhost&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+  <span class="nv">$SUDO_CMD</span> sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 5_mail_to_misp.sh&gt;</span>
 </pre></div>
@@ -713,7 +725,7 @@ mail2misp <span class="o">()</span> <span class="o">{</span>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2019 MISP Project
+            Copyright &copy; 2020 MISP Project
           </div>
         
         powered by

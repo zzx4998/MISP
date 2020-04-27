@@ -278,6 +278,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../INSTALL.ubuntu2004/" title="Ubuntu 20.04" class="md-nav__link">
+      Ubuntu 20.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -376,8 +388,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
-      Debian 9.9
+    <a href="../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
     </a>
   </li>
 
@@ -450,8 +462,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
-      OpenBSD 6.5
+    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
+      OpenBSD 6.6
     </a>
   </li>
 
@@ -1414,9 +1426,9 @@ echo &quot;&amp;lt;?php
   sed -i '1 s/^.</em></script></span>/#!\/usr\/local\/src\/viper\/venv\/bin\/python/' viper-web
   $SUDO /usr/local/src/viper/viper-cli -h &gt; /dev/null
   <span><span class="MathJax_Preview">SUDO /usr/local/src/viper/viper-web -p 8888 -H 0.0.0.0 &amp;
-  echo 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console"' |tee /etc/environment
+  echo 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console"' |tee -a /etc/environment
   echo ". /etc/environment" &gt;&gt; /home/</span><script type="math/tex">SUDO /usr/local/src/viper/viper-web -p 8888 -H 0.0.0.0 &
-  echo 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console"' |tee /etc/environment
+  echo 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/src/viper:/var/www/MISP/app/Console"' |tee -a /etc/environment
   echo ". /etc/environment" >> /home/</script></span>{MISP_USER}/.profile
   <span><span class="MathJax_Preview">SUDO sed -i "s/^misp_url\ =/misp_url\ =\ http:\/\/localhost/g" /home/</span><script type="math/tex">SUDO sed -i "s/^misp_url\ =/misp_url\ =\ http:\/\/localhost/g" /home/</script></span>{MISP_USER}/.viper/viper.conf
   $SUDO sed -i "s/^misp_key =/misp_key = <span><span class="MathJax_Preview">AUTH_KEY/g" /home/</span><script type="math/tex">AUTH_KEY/g" /home/</script></span>{MISP_USER}/.viper/viper.conf</p>
@@ -1440,25 +1452,25 @@ echo &quot;&amp;lt;?php
   git clone git://github.com/stricaud/gtcaca.git gtcaca
   chown -R <span><span class="MathJax_Preview">{MISP_USER}:</span><script type="math/tex">{MISP_USER}:</script></span>{MISP_USER} faup mail_to_misp gtcaca
   cd gtcaca
-  $SUDO_USER mkdir -p build
+  $SUDO_CMD mkdir -p build
   cd build
-  $SUDO_USER cmake .. &amp;&amp; $SUDO_USER make
+  $SUDO_CMD cmake .. &amp;&amp; $SUDO_CMD make
   sudo make install
   cd ../../faup
-  $SUDO_USER mkdir -p build
+  $SUDO_CMD mkdir -p build
   cd build
-  $SUDO_USER cmake .. &amp;&amp; $SUDO_USER make
+  $SUDO_CMD cmake .. &amp;&amp; $SUDO_CMD make
   sudo make install
   sudo ldconfig
   cd ../../mail_to_misp
-  $SUDO_USER virtualenv -p python3 venv
-  $SUDO_USER ./venv/bin/pip install <a href="https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip">https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip</a>
-  $SUDO_USER ./venv/bin/pip install -r requirements.txt
-  <span><span class="MathJax_Preview">SUDO_USER cp mail_to_misp_config.py-example mail_to_misp_config.py
-  ##</span><script type="math/tex">SUDO_USER cp mail_to_misp_config.py-example mail_to_misp_config.py
+  $SUDO_CMD virtualenv -p python3 venv
+  $SUDO_CMD ./venv/bin/pip install <a href="https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip">https://github.com/lief-project/packages/raw/lief-master-latest/pylief-0.9.0.dev.zip</a>
+  $SUDO_CMD ./venv/bin/pip install -r requirements.txt
+  <span><span class="MathJax_Preview">SUDO_CMD cp mail_to_misp_config.py-example mail_to_misp_config.py
+  ##</span><script type="math/tex">SUDO_CMD cp mail_to_misp_config.py-example mail_to_misp_config.py
   ##</script></span>SUDO cp mail_to_misp_config.py-example mail_to_misp_config.py
-  $SUDO_USER sed -i "s/^misp_url = 'YOUR_MISP_URL'/misp_url = 'https:\/\/localhost'/g" /usr/local/src/mail_to_misp/mail_to_misp_config.py
-  <span><span class="MathJax_Preview">SUDO_USER sed -i "s/^misp_key\ =\ 'YOUR_KEY_HERE'/misp_key\ =\ '</span><script type="math/tex">SUDO_USER sed -i "s/^misp_key\ =\ 'YOUR_KEY_HERE'/misp_key\ =\ '</script></span>{AUTH_KEY}'/g" /usr/local/src/mail_to_misp/mail_to_misp_config.py
+  $SUDO_CMD sed -i "s/^misp_url = 'YOUR_MISP_URL'/misp_url = 'https:\/\/localhost'/g" /usr/local/src/mail_to_misp/mail_to_misp_config.py
+  <span><span class="MathJax_Preview">SUDO_CMD sed -i "s/^misp_key\ =\ 'YOUR_KEY_HERE'/misp_key\ =\ '</span><script type="math/tex">SUDO_CMD sed -i "s/^misp_key\ =\ 'YOUR_KEY_HERE'/misp_key\ =\ '</script></span>{AUTH_KEY}'/g" /usr/local/src/mail_to_misp/mail_to_misp_config.py
   echo ""
   echo "Admin (root) DB Password: <span><span class="MathJax_Preview">DBPASSWORD_ADMIN" &gt; /home/</span><script type="math/tex">DBPASSWORD_ADMIN" > /home/</script></span>{MISP_USER}/mysql.txt
   echo "User  (misp) DB Password: <span><span class="MathJax_Preview">DBPASSWORD_MISP" &gt;&gt; /home/</span><script type="math/tex">DBPASSWORD_MISP" >> /home/</script></span>{MISP_USER}/mysql.txt
@@ -1529,13 +1541,13 @@ installMISPonTsurugi</p>
           </a>
         
         
-          <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                OpenBSD 6.5
+                OpenBSD 6.6
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -1551,7 +1563,7 @@ installMISPonTsurugi</p>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2019 MISP Project
+            Copyright &copy; 2020 MISP Project
           </div>
         
         powered by

@@ -280,6 +280,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../INSTALL.ubuntu2004/" title="Ubuntu 20.04" class="md-nav__link">
+      Ubuntu 20.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -700,8 +712,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
-      Debian 9.9
+    <a href="../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
     </a>
   </li>
 
@@ -736,8 +748,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
-      OpenBSD 6.5
+    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
+      OpenBSD 6.6
     </a>
   </li>
 
@@ -1397,9 +1409,9 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># sudo config to run $LUSER commands</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>groups <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> <span class="p">|</span>grep -o <span class="s1">&#39;staff&#39;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;staff&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
+    <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
   <span class="k">else</span>
-    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="k">fi</span>
   <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
 
@@ -1570,7 +1582,7 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># Create a python3 virtualenv</span>
   sudo pip3 install virtualenv
-  <span class="nv">$SUDO_WWW</span> python3 -- virtualenv -p python3 <span class="nv">$PATH_TO_MISP</span>/venv
+  <span class="nv">$SUDO_WWW</span> python3 -m venv <span class="nv">$PATH_TO_MISP</span>/venv
   sudo mkdir /usr/share/httpd/.cache
   sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /usr/share/httpd/.cache
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U pip setuptools
@@ -1581,16 +1593,22 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> git clone --branch master --single-branch https://github.com/lief-project/LIEF.git lief
   <span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/mixbox.git
 
-  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-cybox
   <span class="c1"># If you umask is has been changed from the default, it is a good idea to reset it to 0022 before installing python modules</span>
   <span class="nv">UMASK</span><span class="o">=</span><span class="k">$(</span><span class="nb">umask</span><span class="k">)</span>
   <span class="nb">umask</span> <span class="m">0022</span>
+
+  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-cybox
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
+
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-stix
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
 
   <span class="c1"># install mixbox to accommodate the new STIX dependencies:</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mixbox
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install .
+
+  <span class="c1"># FIXME: Remove once stix-fixed</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -I antlr4-python3-runtime<span class="o">==</span><span class="m">4</span>.7.2
 
   <span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/cti-python-stix2
@@ -1606,7 +1624,7 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U redis
 
   <span class="c1"># lief needs manual compilation</span>
-  sudo yum install devtoolset-7 cmake3 cppcheck -y
+  sudo yum install devtoolset-7 cmake3 cppcheck libcxx-devel -y
 
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief
   <span class="nv">$SUDO_WWW</span> mkdir build
@@ -1668,8 +1686,9 @@ installCake_RHEL <span class="o">()</span>
   sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /usr/share/httpd/.composer
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
   <span class="c1"># Update composer.phar (optional)</span>
+  <span class="c1">#EXPECTED_SIGNATURE=&quot;$(wget -q -O - https://composer.github.io/installer.sig)&quot;</span>
   <span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-  <span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
+  <span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;$EXPECTED_SIGNATURE&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
   <span class="c1">#$SUDO_WWW $RUN_PHP &quot;php composer-setup.php&quot;</span>
   <span class="c1">#$SUDO_WWW $RUN_PHP -- php -r &quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> <span class="s2">&quot;php composer.phar install&quot;</span>
@@ -1678,6 +1697,10 @@ installCake_RHEL <span class="o">()</span>
   sudo scl <span class="nb">enable</span> rh-php72 <span class="s1">&#39;pecl channel-update pecl.php.net&#39;</span>
   sudo scl <span class="nb">enable</span> rh-php72 <span class="s1">&#39;yes no|pecl install redis&#39;</span>
   <span class="nb">echo</span> <span class="s2">&quot;extension=redis.so&quot;</span> <span class="p">|</span>sudo tee /etc/opt/rh/rh-php72/php.d/99-redis.ini
+
+  sudo ln -s /usr/lib64/libfuzzy.so /usr/lib/libfuzzy.so
+  sudo scl <span class="nb">enable</span> rh-php72 <span class="s1">&#39;pecl install ssdeep&#39;</span>
+  <span class="nb">echo</span> <span class="s2">&quot;extension=ssdeep.so&quot;</span> <span class="p">|</span>sudo tee /etc/opt/rh/rh-php72/php.d/99-ssdeep.ini
 
   <span class="c1"># Install gnupg extension</span>
   sudo yum install gpgme-devel -y
@@ -1702,7 +1725,7 @@ installCake_RHEL <span class="o">()</span>
   <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
   sudo cp -fa <span class="nv">$PATH_TO_MISP</span>/INSTALL/setup/config.php <span class="nv">$PATH_TO_MISP</span>/app/Plugin/CakeResque/Config/config.php
 <span class="o">}</span>
-<span class="c1"># &lt;snippet-begin 1_installCake_RHEL.sh&gt;</span>
+<span class="c1"># &lt;snippet-end 1_installCake_RHEL.sh&gt;</span>
 </pre></div>
 
 <h3 id="5-set-file-permissions">5/ Set file permissions<a class="headerlink" href="#5-set-file-permissions" title="Permanent link">&para;</a></h3>
@@ -1748,17 +1771,25 @@ prepareDB_RHEL <span class="o">()</span> <span class="o">{</span>
   <span class="c1">## The following needs some thoughts about scl enable foo</span>
   <span class="c1">#if [[ ! -e /var/opt/rh/rh-mariadb102/lib/mysql/misp/users.ibd ]]; then</span>
 
-  <span class="c1"># Add your credentials if needed, if sudo has NOPASS, comment out the relevant lines</span>
-  <span class="nv">pw</span><span class="o">=</span><span class="s2">&quot;Password1234&quot;</span>
+  <span class="c1"># We ask interactively your password if not run as root</span>
+  <span class="nv">pw</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$EUID</span><span class="s2">&quot;</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">read</span> -s -p <span class="s2">&quot;Enter sudo password: &quot;</span> pw
+  <span class="k">fi</span>
 
   expect -f - <span class="s">&lt;&lt;-EOF</span>
 <span class="s">    set timeout 10</span>
 
 <span class="s">    spawn sudo scl enable rh-mariadb102 mysql_secure_installation</span>
-<span class="s">    expect &quot;*?assword*&quot;</span>
-<span class="s">    send -- &quot;$pw\r&quot;</span>
-<span class="s">    expect &quot;Enter current password for root (enter for none):&quot;</span>
-<span class="s">    send -- &quot;\r&quot;</span>
+<span class="s">    expect {</span>
+<span class="s">      &quot;*sudo*&quot; {</span>
+<span class="s">        send &quot;$pw\r&quot;</span>
+<span class="s">        exp_continue</span>
+<span class="s">      }</span>
+<span class="s">      &quot;Enter current password for root (enter for none):&quot; {</span>
+<span class="s">        send -- &quot;\r&quot;</span>
+<span class="s">      }</span>
+<span class="s">    }</span>
 <span class="s">    expect &quot;Set root password?&quot;</span>
 <span class="s">    send -- &quot;y\r&quot;</span>
 <span class="s">    expect &quot;New password:&quot;</span>
@@ -1822,7 +1853,7 @@ apacheConfig_RHEL <span class="o">()</span> <span class="o">{</span>
   sudo openssl req -new -subj <span class="s2">&quot;/C=</span><span class="si">${</span><span class="nv">OPENSSL_C</span><span class="si">}</span><span class="s2">/ST=</span><span class="si">${</span><span class="nv">OPENSSL_ST</span><span class="si">}</span><span class="s2">/L=</span><span class="si">${</span><span class="nv">OPENSSL_L</span><span class="si">}</span><span class="s2">/O=</span><span class="si">${</span><span class="nv">OPENSSL_O</span><span class="si">}</span><span class="s2">/OU=</span><span class="si">${</span><span class="nv">OPENSSL_OU</span><span class="si">}</span><span class="s2">/CN=</span><span class="si">${</span><span class="nv">OPENSSL_CN</span><span class="si">}</span><span class="s2">/emailAddress=</span><span class="si">${</span><span class="nv">OPENSSL_EMAILADDRESS</span><span class="si">}</span><span class="s2">&quot;</span> -key /etc/pki/tls/private/misp.local.key -out /etc/pki/tls/certs/misp.local.csr
   sudo openssl x509 -req -days <span class="m">365</span> -in /etc/pki/tls/certs/misp.local.csr -signkey /etc/pki/tls/private/misp.local.key -out /etc/pki/tls/certs/misp.local.crt
   sudo ln -s /etc/pki/tls/certs/misp.local.csr /etc/pki/tls/certs/misp-chain.crt
-  cat /etc/pki/tls/certs/dhparam.pem <span class="p">|</span>sudo tee -a /etc/pki/tls/certs/misp.local.crt 
+  cat /etc/pki/tls/certs/dhparam.pem <span class="p">|</span>sudo tee -a /etc/pki/tls/certs/misp.local.crt
 
   sudo systemctl restart httpd.service
 
@@ -1836,6 +1867,7 @@ apacheConfig_RHEL <span class="o">()</span> <span class="o">{</span>
   sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/*.py
   sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/*/*.py
   sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief/build/api/python/lief.so
+  sudo chcon -t httpd_sys_script_exec_t <span class="nv">$PATH_TO_MISP</span>/app/Vendor/pear/crypt_gpg/scripts/crypt-gpg-pinentry
   sudo chcon -R -t bin_t <span class="nv">$PATH_TO_MISP</span>/venv/bin/*
   find <span class="nv">$PATH_TO_MISP</span>/venv -type f -name <span class="s2">&quot;*.so*&quot;</span> -or -name <span class="s2">&quot;*.so.*&quot;</span> <span class="p">|</span> xargs sudo chcon -t lib_t
   <span class="c1"># Only run these if you want to be able to update MISP from the web interface</span>
@@ -2046,8 +2078,8 @@ mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
 
 <span class="s2">  [Service]</span>
 <span class="s2">  Type=simple</span>
-<span class="s2">  User=apache</span>
-<span class="s2">  Group=apache</span>
+<span class="s2">  User=</span><span class="nv">$WWW_USER</span><span class="s2"></span>
+<span class="s2">  Group=</span><span class="nv">$WWW_USER</span><span class="s2"></span>
 <span class="s2">  WorkingDirectory=/usr/local/src/misp-modules</span>
 <span class="s2">  Environment=&quot;</span><span class="nv">PATH</span><span class="o">=</span>/var/www/MISP/venv/bin<span class="s2">&quot;</span>
 <span class="s2">  ExecStart=\&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/misp-modules -l 127.0.0.1 -s\&quot;</span>
@@ -2261,6 +2293,10 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
 
 <h4 id="misp-dashboard-on-centos">MISP Dashboard on CentOS<a class="headerlink" href="#misp-dashboard-on-centos" title="Permanent link">&para;</a></h4>
 <hr />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Currently defunct due to upstream dependency changes</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Does not work on RHEL 8</p>
@@ -2522,7 +2558,7 @@ index f9f69d4..2e8fd78 100644
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2019 MISP Project
+            Copyright &copy; 2020 MISP Project
           </div>
         
         powered by

@@ -278,6 +278,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../INSTALL.ubuntu2004/" title="Ubuntu 20.04" class="md-nav__link">
+      Ubuntu 20.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../INSTALL.kali/" title="Kali Linux" class="md-nav__link">
       Kali Linux
     </a>
@@ -374,8 +386,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.debian9/" title="Debian 9.9" class="md-nav__link">
-      Debian 9.9
+    <a href="../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
     </a>
   </li>
 
@@ -410,8 +422,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.5" class="md-nav__link">
-      OpenBSD 6.5
+    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
+      OpenBSD 6.6
     </a>
   </li>
 
@@ -1027,9 +1039,9 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># sudo config to run $LUSER commands</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>groups <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> <span class="p">|</span>grep -o <span class="s1">&#39;staff&#39;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;staff&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
+    <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> -g staff&quot;</span>
   <span class="k">else</span>
-    <span class="nv">SUDO_USER</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="k">fi</span>
   <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
 
@@ -1232,7 +1244,7 @@ sudo -u www <span class="nv">HOME</span><span class="o">=</span>/tmp <span class
 <span class="c1"># Install CakeResque along with its dependencies if you intend to use the built in background jobs:</span>
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
 sudo -u www php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-sudo -u www php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink</span>
+sudo -u www php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;baf1608c33254d00611ac1705c1d9958c817a1a33bce370c0595974b342601bd80b92a3f46067da89e3b06bff421f182&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink</span>
 <span class="s2">(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
 sudo -u www env <span class="nv">HOME</span><span class="o">=</span>/tmp php composer-setup.php
 sudo -u www php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
@@ -1873,7 +1885,7 @@ index f9f69d4..2e8fd78 100644
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2019 MISP Project
+            Copyright &copy; 2020 MISP Project
           </div>
         
         powered by
