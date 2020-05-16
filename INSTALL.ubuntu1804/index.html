@@ -1255,7 +1255,6 @@ Enjoy installing MISP. For any issues see <a href="https://github.com/MISP/MISP/
 aptUpgrade <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Upgrading system&quot;</span>
   checkAptLock
-  sudo apt-get update
 
   <span class="c1"># If we run in non-interactive mode, make sure we do not stop all of a sudden</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PACKER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">||</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">UNATTENDED</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
@@ -1500,7 +1499,7 @@ installDepsPhp72 <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Installing PHP 7.2 dependencies&quot;</span>
   <span class="nv">PHP_ETC_BASE</span><span class="o">=</span>/etc/php/7.2
   <span class="nv">PHP_INI</span><span class="o">=</span><span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/apache2/php.ini
-  sudo apt update
+  checkAptLock
   sudo apt install -qy <span class="se">\</span>
   libapache2-mod-php <span class="se">\</span>
   php php-cli <span class="se">\</span>
@@ -2637,7 +2636,7 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
     <span class="nv">FLAVOUR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$ID</span><span class="s2">&quot;</span><span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
   <span class="k">fi</span>
 
-  <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2">&quot;</span> in
+  <span class="k">case</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> in
     ubuntu<span class="o">)</span>
       <span class="k">if</span> command_exists lsb_release<span class="p">;</span> <span class="k">then</span>
         <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>lsb_release --codename <span class="p">|</span> cut -f2<span class="k">)</span><span class="s2">&quot;</span>
@@ -2662,7 +2661,7 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
         <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
         <span class="nv">dist_version</span><span class="o">=</span><span class="si">${</span><span class="nv">dist_version</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span>
       <span class="k">fi</span>
-      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2"> support is experimental at the moment&quot;</span>
+      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2"> support is experimental at the moment&quot;</span>
     <span class="p">;;</span>
     rhel<span class="p">|</span>ol<span class="p">|</span>sles<span class="o">)</span>
       <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -r /etc/os-release <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
@@ -2670,7 +2669,7 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
     <span class="nv">dist_version</span><span class="o">=</span><span class="si">${</span><span class="nv">dist_version</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span>  <span class="c1"># Only interested about major version</span>
       <span class="k">fi</span>
       <span class="c1"># Only tested for RHEL 7 so far </span>
-      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2"> support is experimental at the moment&quot;</span>
+      <span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2"> support is experimental at the moment&quot;</span>
     <span class="p">;;</span>
     *<span class="o">)</span>
       <span class="k">if</span> command_exists lsb_release<span class="p">;</span> <span class="k">then</span>
@@ -2683,7 +2682,7 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
   <span class="k">esac</span>
 
   <span class="c1"># FIXME: The below want to be refactored</span>
-  <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;ubuntu&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;ubuntu&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">RELEASE</span><span class="o">=</span><span class="k">$(</span>lsb_release -s -r<span class="k">)</span>
     debug <span class="s2">&quot;We detected the following Linux flavour: </span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="k">$(</span>tr <span class="s1">&#39;[:lower:]&#39;</span> <span class="s1">&#39;[:upper:]&#39;</span> <span class="o">&lt;&lt;&lt;</span> <span class="si">${</span><span class="nv">FLAVOUR</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span><span class="k">)</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">RELEASE</span><span class="si">}${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="k">else</span>
@@ -2706,7 +2705,7 @@ check_forked <span class="o">()</span> <span class="o">{</span>
     <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$lsb_release_exit_code</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
       <span class="c1"># Print info about current distro</span>
       cat <span class="s">&lt;&lt;-EOF</span>
-<span class="s">      You&#39;re using &#39;$FLAVOUR&#39; version &#39;$dist_version&#39;.</span>
+<span class="s">      You&#39;re using &#39;${FLAVOUR}&#39; version &#39;${dist_version}&#39;.</span>
 <span class="s">EOF</span>
       <span class="c1"># Get the upstream release info</span>
       <span class="nv">FLAVOUR</span><span class="o">=</span><span class="k">$(</span>lsb_release -a -u <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span> <span class="p">|</span> grep -E <span class="s1">&#39;id&#39;</span> <span class="p">|</span> cut -d <span class="s1">&#39;:&#39;</span> -f <span class="m">2</span> <span class="p">|</span> tr -d <span class="s1">&#39;[:space:]&#39;</span><span class="k">)</span>
@@ -2714,10 +2713,10 @@ check_forked <span class="o">()</span> <span class="o">{</span>
 
       <span class="c1"># Print info about upstream distro</span>
       cat <span class="s">&lt;&lt;-EOF</span>
-<span class="s">      Upstream release is &#39;$FLAVOUR&#39; version &#39;$dist_version&#39;.</span>
+<span class="s">      Upstream release is &#39;${FLAVOUR}&#39; version &#39;$dist_version&#39;.</span>
 <span class="s">EOF</span>
     <span class="k">else</span>
-      <span class="k">if</span> <span class="o">[</span> -r /etc/debian_version <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;ubuntu&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$FLAVOUR</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;raspbian&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="k">if</span> <span class="o">[[</span> -r /etc/debian_version <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;ubuntu&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;raspbian&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
         <span class="c1"># We&#39;re Debian and don&#39;t even know it!</span>
         <span class="nv">FLAVOUR</span><span class="o">=</span>debian
         <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>sed <span class="s1">&#39;s/\/.*//&#39;</span> /etc/debian_version <span class="p">|</span> sed <span class="s1">&#39;s/\..*//&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
@@ -2739,7 +2738,7 @@ check_forked <span class="o">()</span> <span class="o">{</span>
 
 checkInstaller <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Workaround: shasum is not available on RHEL, only checking sha512</span>
-  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$FLAVOUR</span> <span class="o">==</span> <span class="s2">&quot;rhel&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="nv">$FLAVOUR</span> <span class="o">==</span> <span class="s2">&quot;centos&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;rhel&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;centos&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
   <span class="nv">INSTsum</span><span class="o">=</span><span class="k">$(</span>sha512sum <span class="si">${</span><span class="nv">0</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
   /usr/bin/wget --no-cache -q -O /tmp/INSTALL.sh.sha512 https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh.sha512
         <span class="nv">chsum</span><span class="o">=</span><span class="k">$(</span>cat /tmp/INSTALL.sh.sha512<span class="k">)</span>
@@ -2751,8 +2750,8 @@ checkInstaller <span class="o">()</span> <span class="o">{</span>
   <span class="k">fi</span>
   <span class="k">else</span>
     <span class="c1"># TODO: Implement $FLAVOUR checks and install depending on the platform we are on</span>
-    <span class="k">if</span> <span class="o">[[</span> <span class="k">$(</span>which shasum &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> !<span class="o">=</span> <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-      sudo apt update
+    <span class="k">if</span> <span class="o">[[</span> <span class="k">$(</span>which shasum &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+      checkAptLock
       sudo apt install libdigest-sha-perl -qyy
     <span class="k">fi</span>
     <span class="c1"># SHAsums to be computed, not the -- notatiation is for ease of use with rhash</span>
@@ -2775,12 +2774,12 @@ checkInstaller <span class="o">()</span> <span class="o">{</span>
 
 <span class="c1"># Extract manufacturer</span>
 checkManufacturer <span class="o">()</span> <span class="o">{</span>
-  <span class="k">if</span> <span class="o">[</span> -z <span class="k">$(</span>which dmidecode<span class="k">)</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> -z <span class="k">$(</span>which dmidecode<span class="k">)</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     checkAptLock
     sudo apt install dmidecode -qy
   <span class="k">fi</span>
   <span class="nv">MANUFACTURER</span><span class="o">=</span><span class="k">$(</span>sudo dmidecode -s system-manufacturer<span class="k">)</span>
-  <span class="nb">echo</span> <span class="nv">$MANUFACTURER</span>
+  debug <span class="si">${</span><span class="nv">MANUFACTURER</span><span class="si">}</span>
 <span class="o">}</span>
 
 <span class="c1"># Dynamic horizontal spacer if needed, for autonomeous an no progress bar install, we are static.</span>
@@ -2842,7 +2841,7 @@ progress <span class="o">()</span> <span class="o">{</span>
 checkLocale <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Checking Locale&quot;</span>
   <span class="c1"># If locale is missing, generate and install a common UTF-8</span>
-  <span class="k">if</span> <span class="o">[[</span> ! -f /etc/default/locale <span class="o">||</span> <span class="k">$(</span>wc -l /etc/default/locale<span class="p">|</span> cut -f <span class="m">1</span> -d<span class="se">\ </span><span class="k">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> ! -f /etc/default/locale <span class="o">||</span> <span class="k">$(</span>wc -l /etc/default/locale<span class="p">|</span> cut -f <span class="m">1</span> -d<span class="se">\ </span><span class="k">)</span> -eq <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     checkAptLock
     sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt install locales -qy
     sudo sed -i -e <span class="s1">&#39;s/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g&#39;</span> /etc/locale.gen
@@ -2853,6 +2852,7 @@ checkLocale <span class="o">()</span> <span class="o">{</span>
 
 <span class="c1"># Simple function to check command exit code</span>
 checkFail <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># &#39;-ne&#39; checks for numerical differences, &#39;==&#39; used for strings</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="nv">$2</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nb">echo</span> <span class="s2">&quot;iAmError: </span><span class="nv">$1</span><span class="s2">&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;The last command exited with error code: </span><span class="nv">$2</span><span class="s2">&quot;</span>
@@ -2889,7 +2889,7 @@ clean <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># Check if misp user is present and if run as root</span>
 checkID <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Checking if run as root and </span><span class="nv">$MISP_USER</span><span class="s2"> is present&quot;</span>
-  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$EUID</span> <span class="o">==</span> <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$EUID</span> -eq <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nb">echo</span> <span class="s2">&quot;This script cannot be run as a root&quot;</span>
     clean &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
     <span class="nb">exit</span> <span class="m">1</span>
@@ -3017,14 +3017,25 @@ kaliSpaceSaver <span class="o">()</span> <span class="o">{</span>
   <span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Not implement</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="o">}</span>
 
-<span class="c1"># Because Kali is l33t we make sure we run as root</span>
-kaliOnRootR0ckz <span class="o">()</span> <span class="o">{</span>
-  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$EUID</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-   <span class="nb">echo</span> <span class="s2">&quot;This script must be run as root&quot;</span>
-   <span class="nb">exit</span> <span class="m">1</span>
-  <span class="k">elif</span> <span class="o">[[</span> <span class="k">$(</span>id <span class="nv">$MISP_USER</span> &gt;/dev/null<span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-    useradd -s /bin/bash -m -G adm,cdrom,sudo,dip,plugdev,www-data,staff <span class="nv">$MISP_USER</span>
-    <span class="nb">echo</span> <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_PASSWORD</span> <span class="p">|</span> chpasswd
+<span class="c1"># Because Kali is l33t we make sure we DO NOT run as root</span>
+kaliOnTheR0ckz <span class="o">()</span> <span class="o">{</span>
+  <span class="nv">totalRoot</span><span class="o">=</span><span class="k">$(</span>df -k <span class="p">|</span> grep /$ <span class="p">|</span>awk <span class="s1">&#39;{ print $2 }&#39;</span><span class="k">)</span>
+  <span class="nv">totalMem</span><span class="o">=</span><span class="k">$(</span>cat /proc/meminfo<span class="p">|</span>grep MemTotal <span class="p">|</span>grep -Eo <span class="s1">&#39;[0-9]{1,}&#39;</span><span class="k">)</span>
+  <span class="nv">overlay</span><span class="o">=</span><span class="k">$(</span>df -kh <span class="p">|</span>grep overlay<span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> <span class="c1"># if 1 overlay NOT present</span>
+
+  <span class="k">if</span> <span class="o">[[</span> <span class="si">${</span><span class="nv">totalRoot</span><span class="si">}</span> -lt <span class="m">3059034</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;(If?) You run Kali in LiveCD mode and we need more overlay disk space.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;This is defined by the total memory, you have: </span><span class="si">${</span><span class="nv">totalMem</span><span class="si">}</span><span class="s2">kB which is not enough.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;6-8Gb should be fine. (need &gt;3Gb overlayFS)&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+  <span class="k">fi</span>
+
+  <span class="k">if</span> <span class="o">[[</span> <span class="si">${</span><span class="nv">EUID</span><span class="si">}</span> -eq <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;This script must NOT be run as root&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+  <span class="k">elif</span> <span class="o">[[</span> <span class="k">$(</span>id <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> &gt;/dev/null<span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    sudo useradd -s /bin/bash -m -G adm,cdrom,sudo,dip,plugdev,www-data,staff <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>
+    <span class="nb">echo</span> <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_PASSWORD</span><span class="si">}</span> <span class="p">|</span> sudo chpasswd
   <span class="k">else</span>
     <span class="c1"># TODO: Make sure we consider this further down the road</span>
     <span class="nb">echo</span> <span class="s2">&quot;User </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2"> exists, skipping creation&quot;</span>
@@ -3033,20 +3044,25 @@ kaliOnRootR0ckz <span class="o">()</span> <span class="o">{</span>
 
 setBaseURL <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Setting Base URL&quot;</span>
+
   <span class="nv">CONN</span><span class="o">=</span><span class="k">$(</span>ip -br -o -4 a <span class="p">|</span>grep UP <span class="p">|</span>head -1 <span class="p">|</span>tr -d <span class="s2">&quot;UP&quot;</span><span class="k">)</span>
-  <span class="nv">IFACE</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$CONN</span> <span class="p">|</span>awk <span class="o">{</span><span class="s1">&#39;print $1&#39;</span><span class="o">}</span><span class="sb">`</span>
-  <span class="nv">IP</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$CONN</span> <span class="p">|</span>awk <span class="o">{</span><span class="s1">&#39;print $2&#39;</span><span class="o">}</span><span class="p">|</span> cut -f1 -d/<span class="sb">`</span>
-  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>checkManufacturer<span class="k">)</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;innotek GmbH&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>checkManufacturer<span class="k">)</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;VMware, Inc.&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>checkManufacturer<span class="k">)</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;QEMU&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-    debug <span class="s2">&quot;We guess that this is a physical machine and cannot possibly guess what the MISP_BASEURL might be.&quot;</span>
-    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
+  <span class="nv">IFACE</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$CONN</span> <span class="p">|</span>awk <span class="o">{</span><span class="s1">&#39;print $1&#39;</span><span class="o">}</span><span class="k">)</span>
+  <span class="nv">IP</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$CONN</span> <span class="p">|</span>awk <span class="o">{</span><span class="s1">&#39;print $2&#39;</span><span class="o">}</span><span class="p">|</span> cut -f1 -d/<span class="k">)</span>
+
+  <span class="o">[[</span> -n <span class="si">${</span><span class="nv">MANUFACTURER</span><span class="si">}</span> <span class="o">]]</span> <span class="o">||</span> checkManufacturer
+
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">MANUFACTURER</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;innotek GmbH&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$MANUFACTURER</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;VMware, Inc.&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$MANUFACTURER</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;QEMU&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    debug <span class="s2">&quot;We guess that this is a physical machine and cannot reliably guess what the MISP_BASEURL might be.&quot;</span>
+
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">UNATTENDED</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
       <span class="nb">echo</span> <span class="s2">&quot;You can now enter your own MISP_BASEURL, if you wish to NOT do that, the MISP_BASEURL will be empty, which will work, but ideally you configure it afterwards.&quot;</span>
       <span class="nb">echo</span> <span class="s2">&quot;Do you want to change it now? (y/n) &quot;</span>
       <span class="nb">read</span> ANSWER
-      <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
-      <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$ANSWER</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="k">if</span> <span class="o">[[</span> ! -z <span class="nv">$IP</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-          <span class="nb">echo</span> <span class="s2">&quot;It seems you have an interface called </span><span class="nv">$IFACE</span><span class="s2"> UP with the following IP: </span><span class="nv">$IP</span><span class="s2"> - FYI&quot;</span>
-          <span class="nb">echo</span> <span class="s2">&quot;Thus your Base URL could be: https://</span><span class="nv">$IP</span><span class="s2">&quot;</span>
+      <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">ANSWER</span><span class="si">}</span> <span class="p">|</span>tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
+      <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ANSWER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="k">if</span> <span class="o">[[</span> ! -z <span class="si">${</span><span class="nv">IP</span><span class="si">}</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+          <span class="nb">echo</span> <span class="s2">&quot;It seems you have an interface called </span><span class="si">${</span><span class="nv">IFACE</span><span class="si">}</span><span class="s2"> UP with the following IP: </span><span class="si">${</span><span class="nv">IP</span><span class="si">}</span><span class="s2"> - FYI&quot;</span>
+          <span class="nb">echo</span> <span class="s2">&quot;Thus your Base URL could be: https://</span><span class="si">${</span><span class="nv">IP</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">fi</span>
         <span class="nb">echo</span> <span class="s2">&quot;Please enter the Base URL, e.g: &#39;https://example.org&#39;&quot;</span>
         <span class="nb">echo</span> <span class="s2">&quot;&quot;</span>
@@ -3060,17 +3076,17 @@ setBaseURL <span class="o">()</span> <span class="o">{</span>
         <span class="c1"># Webserver configuration</span>
         <span class="nv">FQDN</span><span class="o">=</span><span class="s1">&#39;misp.local&#39;</span>
     <span class="k">fi</span>
-  <span class="k">elif</span> <span class="o">[[</span> <span class="nv">$KALI</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">KALI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s2">&quot;https://misp.local&quot;</span>
     <span class="c1"># Webserver configuration</span>
     <span class="nv">FQDN</span><span class="o">=</span><span class="s1">&#39;misp.local&#39;</span>
-  <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>checkManufacturer<span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;innotek GmbH&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">MANUFACTURER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;innotek GmbH&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;https://localhost:8443&#39;</span>
     <span class="nv">IP</span><span class="o">=</span><span class="k">$(</span>ip addr show <span class="p">|</span> awk <span class="s1">&#39;$1 == &quot;inet&quot; {gsub(/\/.*$/, &quot;&quot;, $2); print $2}&#39;</span> <span class="p">|</span>grep -v <span class="s2">&quot;127.0.0.1&quot;</span> <span class="p">|</span>tail -1<span class="k">)</span>
     sudo iptables -t nat -A OUTPUT -p tcp --dport <span class="m">8443</span> -j DNAT --to <span class="si">${</span><span class="nv">IP</span><span class="si">}</span>:443
     <span class="c1"># Webserver configuration</span>
     <span class="nv">FQDN</span><span class="o">=</span><span class="s1">&#39;localhost.localdomain&#39;</span>
-  <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>checkManufacturer<span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;VMware, Inc.&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">MANUFACTURER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;VMware, Inc.&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;&quot;&quot;&#39;</span>
     <span class="c1"># Webserver configuration</span>
     <span class="nv">FQDN</span><span class="o">=</span><span class="s1">&#39;misp.local&#39;</span>
@@ -3101,7 +3117,6 @@ installRNG <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># Kali upgrade</span>
 kaliUpgrade <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Running various Kali upgrade tasks&quot;</span>
-  sudo apt update
   checkAptLock
   sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt install --only-upgrade bash libc6 -y
   sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt autoremove -y
@@ -3131,6 +3146,9 @@ disableSleep <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># Simple function to make sure APT is not locked</span>
 checkAptLock <span class="o">()</span> <span class="o">{</span>
   <span class="nv">SLEEP</span><span class="o">=</span><span class="m">3</span>
+  <span class="k">if</span> <span class="o">[[</span> -n <span class="si">${</span><span class="nv">APT_UPDATED</span><span class="si">}</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    sudo apt update <span class="o">&amp;&amp;</span> <span class="nv">APT_UPDATED</span><span class="o">=</span><span class="m">1</span>
+  <span class="k">fi</span>
   <span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$DONE</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
     sudo apt-get check <span class="m">2</span>&gt; /dev/null &gt; /dev/null <span class="o">&amp;&amp;</span> <span class="nv">DONE</span><span class="o">=</span><span class="m">0</span>
     <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">apt</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> is maybe </span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">locked</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">, waiting </span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="nv">$SLEEP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> seconds.&quot;</span> &gt; /dev/tty
@@ -3146,7 +3164,7 @@ installDepsPhp70 <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Installing PHP 7.0 dependencies&quot;</span>
   <span class="nv">PHP_ETC_BASE</span><span class="o">=</span>/etc/php/7.0
   <span class="nv">PHP_INI</span><span class="o">=</span><span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/apache2/php.ini
-  sudo apt update
+  checkAptLock
   sudo apt install -qy <span class="se">\</span>
   libapache2-mod-php <span class="se">\</span>
   php php-cli <span class="se">\</span>
@@ -3168,15 +3186,30 @@ installDepsPhp73 <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Installing PHP 7.3 dependencies&quot;</span>
   <span class="nv">PHP_ETC_BASE</span><span class="o">=</span>/etc/php/7.3
   <span class="nv">PHP_INI</span><span class="o">=</span><span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/apache2/php.ini
-  sudo apt update
   checkAptLock
-  sudo apt install -qy <span class="se">\</span>
-  libapache2-mod-php7.3 <span class="se">\</span>
-  php7.3 php7.3-cli <span class="se">\</span>
-  php7.3-dev <span class="se">\</span>
-  php7.3-json php7.3-xml php7.3-mysql php7.3-opcache php7.3-readline php7.3-mbstring <span class="se">\</span>
-  php-redis php-gnupg <span class="se">\</span>
-  php-gd
+  <span class="k">if</span> <span class="o">[[</span> ! -n <span class="si">${</span><span class="nv">KALI</span><span class="si">}</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    sudo apt install -qy <span class="se">\</span>
+      libapache2-mod-php7.3 <span class="se">\</span>
+      php7.3 php7.3-cli <span class="se">\</span>
+      php7.3-dev <span class="se">\</span>
+      php7.3-json php7.3-xml php7.3-mysql php7.3-opcache php7.3-readline php7.3-mbstring <span class="se">\</span>
+      php-redis php-gnupg <span class="se">\</span>
+      php-gd
+  <span class="k">else</span>
+      sudo apt install -qy <span class="se">\</span>
+        libapache2-mod-php7.3 <span class="se">\</span>
+        libgpgme-dev <span class="se">\</span>
+        php7.3 php7.3-cli <span class="se">\</span>
+        php7.3-dev <span class="se">\</span>
+        php7.3-json php7.3-xml php7.3-mysql php7.3-opcache php7.3-readline php7.3-mbstring <span class="se">\</span>
+        php7.3-gd
+      sudo pecl channel-update pecl.php.net
+      <span class="c1">#sudo pear config-set php_ini ${PHP_INI}</span>
+      <span class="nb">echo</span> <span class="s2">&quot;&quot;</span> <span class="p">|</span>sudo pecl install redis
+      sudo pecl install gnupg
+      <span class="nb">echo</span> <span class="nv">extension</span><span class="o">=</span>gnupg.so <span class="p">|</span> sudo tee <span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/mods-available/gnupg.ini
+      <span class="nb">echo</span> <span class="nv">extension</span><span class="o">=</span>redis.so <span class="p">|</span> sudo tee <span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/mods-available/redis.ini
+  <span class="k">fi</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_installDepsPhp73.sh&gt;</span>
 
@@ -3184,7 +3217,6 @@ installDepsPhp73 <span class="o">()</span> <span class="o">{</span>
 installDeps <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Installing core dependencies&quot;</span>
   checkAptLock
-  sudo apt update
   sudo apt install -qy etckeeper
   <span class="c1"># Skip dist-upgrade for now, pulls in 500+ updated packages</span>
   <span class="c1">#sudo apt -y dist-upgrade</span>
@@ -3316,64 +3348,55 @@ genApacheConf <span class="o">()</span> <span class="o">{</span>
 <span class="s2">          ServerSignature Off</span>
 <span class="s2">          Header set X-Content-Type-Options nosniff</span>
 <span class="s2">          Header set X-Frame-Options DENY</span>
-<span class="s2">  &lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> tee /etc/apache2/sites-available/misp-ssl.conf
+<span class="s2">  &lt;/VirtualHost&gt;&quot;</span> <span class="p">|</span> sudo tee /etc/apache2/sites-available/misp-ssl.conf
 <span class="o">}</span>
 
 <span class="c1"># Add git pull update mechanism to rc.local - TODO: Make this better</span>
 gitPullAllRCLOCAL <span class="o">()</span> <span class="o">{</span>
-  sed -i -e <span class="s1">&#39;$i \git_dirs=&quot;/usr/local/src/misp-modules/ /var/www/misp-dashboard /usr/local/src/faup /usr/local/src/mail_to_misp /usr/local/src/misp-modules /usr/local/src/viper /var/www/misp-dashboard&quot;\n&#39;</span> /etc/rc.local
-  sed -i -e <span class="s1">&#39;$i \for d in $git_dirs; do\n&#39;</span> /etc/rc.local
-  sed -i -e <span class="s1">&#39;$i \    echo &quot;Updating ${d}&quot;\n&#39;</span> /etc/rc.local
-  sed -i -e <span class="s1">&#39;$i \    cd $d &amp;&amp; sudo git pull &amp;\n&#39;</span> /etc/rc.local
-  sed -i -e <span class="s1">&#39;$i \done\n&#39;</span> /etc/rc.local
+  sudo sed -i -e <span class="s1">&#39;$i \git_dirs=&quot;/usr/local/src/misp-modules /var/www/misp-dashboard /usr/local/src/faup /usr/local/src/mail_to_misp /usr/local/src/misp-modules /usr/local/src/viper /var/www/misp-dashboard&quot;\n&#39;</span> /etc/rc.local
+  sudo sed -i -e <span class="s1">&#39;$i \for d in $git_dirs; do\n&#39;</span> /etc/rc.local
+  sudo sed -i -e <span class="s1">&#39;$i \    echo &quot;Updating ${d}&quot;\n&#39;</span> /etc/rc.local
+  sudo sed -i -e <span class="s1">&#39;$i \    cd $d &amp;&amp; sudo git pull &amp;\n&#39;</span> /etc/rc.local
+  sudo sed -i -e <span class="s1">&#39;$i \done\n&#39;</span> /etc/rc.local
+<span class="o">}</span>
+
+<span class="c1"># Main composer function</span>
+composer <span class="o">()</span> <span class="o">{</span>
+  sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> /var/www/.composer
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> sh -c <span class="s1">&#39;cd ${PATH_TO_MISP}/app ; php composer.phar install&#39;</span>
 <span class="o">}</span>
 
 <span class="c1"># Composer on php 7.0 does not need any special treatment the provided phar works well</span>
-<span class="nb">alias</span> <span class="nv">composer70</span><span class="o">=</span><span class="s1">&#39;composer72&#39;</span>
+<span class="nb">alias</span> <span class="nv">composer70</span><span class="o">=</span>composer
 
 <span class="c1"># Composer on php 7.2 does not need any special treatment the provided phar works well</span>
-composer72 <span class="o">()</span> <span class="o">{</span>
-  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
-  mkdir /var/www/.composer <span class="p">;</span> chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.composer
-  <span class="nv">$SUDO_WWW</span> php composer.phar install
-<span class="o">}</span>
+<span class="nb">alias</span> <span class="nv">composer72</span><span class="o">=</span>composer
 
-<span class="c1"># Composer on php 7.3 needs a recent version of composer.phar</span>
-composer73 <span class="o">()</span> <span class="o">{</span>
-  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
-  mkdir /var/www/.composer <span class="p">;</span> chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.composer
-  <span class="c1"># Update composer.phar</span>
-  <span class="c1"># If hash changes, check here: https://getcomposer.org/download/ and replace with the correct one</span>
-  <span class="c1"># Current Sum for: v1.8.3</span>
-  <span class="nv">SHA384_SUM</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>wget -q -O - https://composer.github.io/installer.sig<span class="k">)</span><span class="s2">&quot;</span>
-php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-  <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-  <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;</span><span class="nv">$SHA384_SUM</span><span class="s2">&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); exit(137); } echo PHP_EOL;&quot;</span>
-  checkFail <span class="s2">&quot;composer.phar checksum failed, please investigate manually. &quot;</span> <span class="nv">$?</span>
-  <span class="nv">$SUDO_WWW</span> php composer-setup.php
-  <span class="nv">$SUDO_WWW</span> php -r <span class="s2">&quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
-  <span class="nv">$SUDO_WWW</span> php composer.phar install
-<span class="o">}</span>
+<span class="c1"># Composer on php 7.3 does not need any special treatment the provided phar works well</span>
+<span class="nb">alias</span> <span class="nv">composer73</span><span class="o">=</span>composer
 
+<span class="c1"># TODO: this is probably a useless function</span>
 <span class="c1"># Enable various core services</span>
 enableServices <span class="o">()</span> <span class="o">{</span>
-    update-rc.d mysql <span class="nb">enable</span>
-    update-rc.d apache2 <span class="nb">enable</span>
-    update-rc.d redis-server <span class="nb">enable</span>
+    sudo systemctl daemon-reload
+    sudo systemctl <span class="nb">enable</span> --now  mysql
+    sudo systemctl <span class="nb">enable</span> --now  apache2
+    sudo systemctl <span class="nb">enable</span> --now  redis-server
 <span class="o">}</span>
 
+<span class="c1"># TODO: check if this makes sense</span>
 <span class="c1"># Generate rc.local</span>
 genRCLOCAL <span class="o">()</span> <span class="o">{</span>
-  <span class="k">if</span> <span class="o">[</span> ! -e /etc/rc.local <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> ! -e /etc/rc.local <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
       <span class="nb">echo</span> <span class="s1">&#39;#!/bin/sh -e&#39;</span> <span class="p">|</span> tee -a /etc/rc.local
-      <span class="nb">echo</span> <span class="s1">&#39;exit 0&#39;</span> <span class="p">|</span> tee -a /etc/rc.local
+      <span class="nb">echo</span> <span class="s1">&#39;exit 0&#39;</span> <span class="p">|</span> sudo tee -a /etc/rc.local
       chmod u+x /etc/rc.local
   <span class="k">fi</span>
 
-  sed -i -e <span class="s1">&#39;$i \echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled\n&#39;</span> /etc/rc.local
-  sed -i -e <span class="s1">&#39;$i \echo 1024 &gt; /proc/sys/net/core/somaxconn\n&#39;</span> /etc/rc.local
-  sed -i -e <span class="s1">&#39;$i \sysctl vm.overcommit_memory=1\n&#39;</span> /etc/rc.local
-  sed -i -e <span class="s1">&#39;$i \[ -f /etc/init.d/firstBoot ] &amp;&amp; bash /etc/init.d/firstBoot\n&#39;</span> /etc/rc.local
+  sudo sed -i -e <span class="s1">&#39;$i \echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled\n&#39;</span> /etc/rc.local
+  sudo sed -i -e <span class="s1">&#39;$i \echo 1024 &gt; /proc/sys/net/core/somaxconn\n&#39;</span> /etc/rc.local
+  sudo sed -i -e <span class="s1">&#39;$i \sysctl vm.overcommit_memory=1\n&#39;</span> /etc/rc.local
+  sudo sed -i -e <span class="s1">&#39;$i \[ -f /etc/init.d/firstBoot ] &amp;&amp; bash /etc/init.d/firstBoot\n&#39;</span> /etc/rc.local
 <span class="o">}</span>
 
 <span class="c1"># Run PyMISP tests</span>
@@ -3382,9 +3405,9 @@ runTests <span class="o">()</span> <span class="o">{</span>
 <span class="s2">key = \&quot;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">\&quot;&quot;</span> <span class="p">|</span>sudo tee <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/PyMISP/tests/keys.py
   sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP/
 
-  sudo -H -u <span class="nv">$WWW_USER</span> sh -c <span class="s2">&quot;cd </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/PyMISP &amp;&amp; git submodule foreach git pull origin master&quot;</span>
-  sudo -H -u <span class="nv">$WWW_USER</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -e <span class="nv">$PATH_TO_MISP</span>/PyMISP/.<span class="o">[</span>fileobjects,neo,openioc,virustotal,pdfexport<span class="o">]</span>
-  sudo -H -u <span class="nv">$WWW_USER</span> sh -c <span class="s2">&quot;cd </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/PyMISP &amp;&amp; </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python tests/testlive_comprehensive.py&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> sh -c <span class="s2">&quot;cd </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/PyMISP &amp;&amp; git submodule foreach git pull origin master&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -e <span class="nv">$PATH_TO_MISP</span>/PyMISP/.<span class="o">[</span>fileobjects,neo,openioc,virustotal,pdfexport<span class="o">]</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> sh -c <span class="s2">&quot;cd </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/PyMISP &amp;&amp; </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python tests/testlive_comprehensive.py&quot;</span>
 <span class="o">}</span>
 
 <span class="c1"># Nuke the install, meaning remove all MISP data but no packages, this makes testing the installer faster</span>

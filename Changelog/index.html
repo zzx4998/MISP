@@ -796,6 +796,35 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[pubsub] Show info about processed messages. [Jakub Onderka]</li>
+<li>[UI] Make clear that the textarea under event is discussion. [Jakub
+  Onderka]</li>
+<li>
+<p>[sync] (for now) undocumented force pull added. [iglocska]</p>
+</li>
+<li>
+<p>can only be triggered via the CLI for now</p>
+</li>
+<li>
+<p>usage: /var/www/MISP/app/Console/cake Server pull [user_id] [server_id] [technique] [force]</p>
+<ul>
+<li>the force flag has to be passed as 'force' to avoid accidentally triggering it</li>
+</ul>
+</li>
+<li>
+<p>What it does:</p>
+<ul>
+<li>pulls ignoring the timetamp differences</li>
+<li>this means that even older states of events, attributes, objects are ingested</li>
+<li>useful for when wanting to reset an event / all events to align with an upstream server</li>
+</ul>
+</li>
+<li>Caveats:<ul>
+<li>attributes added on the low side are maintained</li>
+<li>tags added on the low side are maintained</li>
+<li>keep in mind this WILL override attributes that are soft deleted</li>
+</ul>
+</li>
 <li>
 <p>[restsearch] object restsearch now has the metadata flag. [iglocska]</p>
 </li>
@@ -807,6 +836,49 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[installer] Update after Kali Linux fix. [Steve Clement]</li>
+<li>[kali] More fixes, perhaps installing cake is useful?! 200QI. [Steve
+  Clement]</li>
+<li>[kali] More kali fixes and do not udpate apt all the time. [Steve
+  Clement]</li>
+<li>[kali] Added more kali tweaks, remove 2019.x compat. [Steve Clement]</li>
+<li>[kali] Some more tweaks and a check if enough space available. [Steve
+  Clement]</li>
+<li>[installer] Version bump. [Steve Clement]</li>
+<li>[PyMISP] Bump. [Raphaël Vinot]</li>
+<li>[opendata] Bumped latest misp-opendata submodule version. [chrisr3d]</li>
+<li>[PyMISP] Bump. [Raphaël Vinot]</li>
+<li>[server:dbSchema] Added support of mysql's <code>extra</code> column. Fix #5860.
+  [mokaddem]</li>
+<li>[pubsub] Refactored PubSub tool. [Jakub Onderka]</li>
+<li>[feed] Use https when fetching DGAs feed. [Jakub Onderka]</li>
+<li>[feed] Modify value when checking if value exists in current event.
+  [Jakub Onderka]</li>
+<li>[internal] Do not call Configure method for every attribute. [Jakub
+  Onderka]</li>
+<li>[correlations] Faster inserting data to Redis. [Jakub Onderka]</li>
+<li>[correlations] Use faster algorithm for IPv6 correlations. [Jakub
+  Onderka]</li>
+<li>
+<p>[restSearch] Option to skip fetching attributes/events when only the
+  metadata is wanted. [chrisr3d]</p>
+</li>
+<li>
+<p>As for the opendata export we do not need to get
+    the attributes or event, and are only interested
+    in using the metadata, a parameter to skip
+    fetching the actual data collection has been
+    added, and we avoid iterating through the entire
+    data collection.</p>
+</li>
+<li>[opendata] Bumped latest misp-opendata updates. [chrisr3d]</li>
+<li>[opendata export] Checking opendata setup and raising exception in
+  case of error. [chrisr3d]</li>
+<li>[opendata] Bumped the latest updates on the opendata python script.
+  [chrisr3d]</li>
+<li>[bash] various bash specific enhances
+  (<a href="https://stackoverflow.com/questions/3427872/whats-the-difference-">https://stackoverflow.com/questions/3427872/whats-the-difference-</a>
+  between-and-in-bash) [Steve Clement]</li>
 <li>[installer] Installer bump. [Steve Clement]</li>
 <li>[doc] Various install guide updates. [Steve Clement]</li>
 <li>[internal] Faster saving attributes. [Jakub Onderka]</li>
@@ -826,6 +898,73 @@
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[bash] Alias functions need a function and not a string... [Steve
+  Clement]</li>
+<li>[kali] More fixes to make sure composer install correctly. [Steve
+  Clement]</li>
+<li>[kali] More kali fixes. [Steve Clement]</li>
+<li>[installler] Little bug, code would never detect a VM... [Steve
+  Clement]</li>
+<li>[kali] When it's ugly, it looks like this. [Steve Clement]</li>
+<li>
+<p>[opendata export] Using external_baseurl if set, before baseurl.
+  [chrisr3d]</p>
+</li>
+<li>
+<p>If external_baseurl is not set, baseurl is used</p>
+</li>
+<li>[opendata export] Internalization of the error messages. [chrisr3d]</li>
+<li>[opendata export] Less confusing variable name for the parameter to
+  only skip exporting the data and keep only the header. [chrisr3d]</li>
+<li>[stix2 export] Fixed CustomObject creation for MISP objects.
+  [chrisr3d]</li>
+<li>[stix2 export] Fixed custom objects export from misp objects.
+  [chrisr3d]</li>
+<li>[stix1 import] Fixed ttps list attribute name for STIX document
+  created with MISP. [chrisr3d]</li>
+<li>[feed:edit] Do not override feed settings if not provided via the API.
+  Fix #5896. [mokaddem]</li>
+<li>[indexTable:quickFulltextSearch] Encode additional characters enabling
+  more search possibilities. Fix #5890. [mokaddem]</li>
+<li>[sightingdbs:model] Added default value for <code>timestamp</code>. Fix #5887.
+  [mokaddem]</li>
+<li>
+<p>[attribute:simpleAddMalwareSample] Typo in loading <code>Object</code> class. Fix
+  #5864. [mokaddem]</p>
+</li>
+<li>
+<p>Was not spotted before because the fixed line was if fact doing
+  nothing as the class's key was already used</p>
+</li>
+<li>[correlations] Do not check all attributes when cache is empty. [Jakub
+  Onderka]</li>
+<li>[correlations] Correlate ShadowAttribute just if exists. [Jakub
+  Onderka]</li>
+<li>[correlations] Do not correlate CIDR with CIDR. [Jakub Onderka]</li>
+<li>[attribute] modifyBeforeValidation fix for <code>domain|ip</code> type. [Jakub
+  Onderka]</li>
+<li>[correlations] Return just unique values for CIDR list. [Jakub
+  Onderka]</li>
+<li>[correlations] IPv6 CIDR correlations works. [Jakub Onderka]</li>
+<li>[correlations] Removed unnecessary Redis call. [Jakub Onderka]</li>
+<li>[correlations] Remove references to not exists type 'domain-ip' [Jakub
+  Onderka]</li>
+<li>[diagnostic] Updated required version for the stix python library.
+  [chrisr3d]</li>
+<li>[gitmodules] Using https instead of ssh to avoid permission denied
+  error. [chrisr3d]</li>
+<li>
+<p>[opendata export] No longer using the returnFormat field as the
+  dataset resource format. [chrisr3d]</p>
+</li>
+<li>
+<p>The resource format can be defined with a
+    'format' field within the resource field in the
+    setup filter</p>
+</li>
+<li>[doc] mkdocs needs to be kept below a certain version. [Steve Clement]</li>
+<li>[kali] Kali installer fixes. [Steve Clement]</li>
+<li>[kali] Kali is now 2020.x need to fix. [Steve Clement]</li>
 <li>
 <p>[stix1 import] Fixed uuids parsing. [chrisr3d]</p>
 </li>
@@ -889,6 +1028,56 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
+<li>Merge pull request #5913 from SteveClement/guides. [Steve Clement]</li>
+<li>Merge branch 'guides' of github.com:SteveClement/MISP into guides.
+  [Steve Clement]</li>
+<li>Merge remote-tracking branch 'upstream/2.4' into guides. [Steve
+  Clement]</li>
+<li>Merge pull request #5912 from SteveClement/guides. [Steve Clement]</li>
+<li>Merge pull request #5891 from MISP/opendata. [Christian Studer]</li>
+</ul>
+<p>Opendata export via restSearch
+- Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into opendata.
+  [chrisr3d]
+- Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into opendata.
+  [chrisr3d]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [mokaddem]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [chrisr3d]
+- Merge pull request #5876 from JakubOnderka/pubsub. [Andras Iklody]</p>
+<p>chg: [pubsub] Refactored PubSub tool
+- Merge pull request #5863 from JakubOnderka/discussion-header. [Andras
+  Iklody]</p>
+<p>new: [UI] Make clear that the textarea under event is discussion
+- Merge pull request #5895 from JakubOnderka/patch-98. [Andras Iklody]</p>
+<p>chg: [feed] Use https when fetching DGAs feed
+- Merge pull request #5897 from
+  JakubOnderka/fixed_event_freetext_feed_speedup. [Andras Iklody]</p>
+<p>chg: [feed] Modify value when checking if value exists in current event
+- Merge pull request #5904 from stricaud/2.4. [Andras Iklody]</p>
+<p>Few improvements to misp-config
+- Few improvements: put the help print in a function. Make sure all the
+  things we update are commented and do not push commented
+  configuration. [Sebastien Tricaud]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #5903 from JakubOnderka/correlation-speedup.
+  [Andras Iklody]</p>
+<p>Correlation speedup
+- Merge pull request #5889 from JakubOnderka/attribute_correlation.
+  [Andras Iklody]</p>
+<p>IPv6 CIDR correlations
+- Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into opendata.
+  [chrisr3d]
+- Merge branch '2.4' of <a href="https://github.com/MISP/MISP">https://github.com/MISP/MISP</a> into opendata.
+  [chrisr3d]
+- Add: [opendata export] Support of the deleting abilities. [chrisr3d]</p>
+<ul>
+<li>Deleting a dataset or its resource(s) is now
+    available from the restSearch side as it already
+    is with the python script</li>
+<li>Merge branch '2.4' of github.com:MISP/MISP into opendata. [chrisr3d]</li>
+<li>Add: [restSearch] OpenData export module. [chrisr3d]</li>
+<li>Add: [restSearch] Added opendata to the valid formats. [chrisr3d]</li>
+<li>Add: [opendata] Submoduling misp-opendata. [chrisr3d]</li>
 <li>Merge pull request #5870 from SteveClement/guides. [Steve Clement]</li>
 <li>Merge pull request #5892 from
   JakubOnderka/fixed_event_freetext_feed_speedup. [Andras Iklody]</li>
