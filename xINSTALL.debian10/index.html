@@ -347,18 +347,6 @@
           
           
 
-
-  <li class="md-nav__item">
-    <a href="../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
-      Centos 6
-    </a>
-  </li>
-
-        
-          
-          
-          
-
   
 
 
@@ -424,18 +412,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
-      Debian 9
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../xINSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-nav__link">
       Ubuntu 18.04 \w webmin
     </a>
@@ -460,8 +436,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
-      OpenBSD 6.6
+    <a href="../xINSTALL.OpenBSD/" title="OpenBSD 6.7" class="md-nav__link">
+      OpenBSD 6.7
     </a>
   </li>
 
@@ -594,6 +570,30 @@
   <li class="md-nav__item">
     <a href="../archive/INSTALL.ubuntu1604/" title="Ubuntu 16.04" class="md-nav__link">
       Ubuntu 16.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
+      Centos 6
     </a>
   </li>
 
@@ -753,27 +753,33 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># RHEL/CentOS</span>
   <span class="k">if</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/redhat-release&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">WWW_USER</span><span class="o">=</span><span class="s1">&#39;apache&#39;</span>
+    <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
   <span class="c1"># Debian flavoured</span>
   <span class="k">elif</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/debian_version&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+    <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
   <span class="c1"># OpenBSD</span>
   <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>uname -s<span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;OpenBSD&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www&quot;</span>
     <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s2">&quot;/var/www/htdocs/MISP&quot;</span>
+    <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;doas -u www &quot;</span>
+    <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;doas &quot;</span>
   <span class="c1"># NetBSD</span>
   <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>uname -s<span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;NetBSD&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www&quot;</span>
     <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s2">&quot;/usr/pkg/share/httpd/htdocs/MISP&quot;</span>
+    <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
   <span class="k">else</span>
     <span class="c1"># I am feeling lucky</span>
     <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+    <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
   <span class="k">fi</span>
 
-  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$FQDN</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FQDN</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">FQDN</span><span class="o">=</span><span class="s2">&quot;misp.local&quot;</span>
   <span class="k">fi</span>
 
-  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$MISP_BASEURL</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;&quot;&quot;&#39;</span>
   <span class="k">fi</span>
 
@@ -788,13 +794,13 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="nv">DBPASSWORD_MISP</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
 
   <span class="c1"># OpenSSL configuration</span>
-  <span class="nv">OPENSSL_CN</span><span class="o">=</span><span class="nv">$FQDN</span>
+  <span class="nv">OPENSSL_CN</span><span class="o">=</span><span class="si">${</span><span class="nv">FQDN</span><span class="si">}</span>
   <span class="nv">OPENSSL_C</span><span class="o">=</span><span class="s1">&#39;LU&#39;</span>
   <span class="nv">OPENSSL_ST</span><span class="o">=</span><span class="s1">&#39;State&#39;</span>
   <span class="nv">OPENSSL_L</span><span class="o">=</span><span class="s1">&#39;Location&#39;</span>
   <span class="nv">OPENSSL_O</span><span class="o">=</span><span class="s1">&#39;Organization&#39;</span>
   <span class="nv">OPENSSL_OU</span><span class="o">=</span><span class="s1">&#39;Organizational Unit&#39;</span>
-  <span class="nv">OPENSSL_EMAILADDRESS</span><span class="o">=</span><span class="s2">&quot;info@</span><span class="nv">$FQDN</span><span class="s2">&quot;</span>
+  <span class="nv">OPENSSL_EMAILADDRESS</span><span class="o">=</span><span class="s2">&quot;info@</span><span class="si">${</span><span class="nv">FQDN</span><span class="si">}</span><span class="s2">&quot;</span>
 
   <span class="c1"># GPG configuration</span>
   <span class="nv">GPG_REAL_NAME</span><span class="o">=</span><span class="s1">&#39;Autogenerated Key&#39;</span>
@@ -817,7 +823,7 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="nv">max_execution_time</span><span class="o">=</span><span class="m">300</span>
   <span class="nv">memory_limit</span><span class="o">=</span>2048M
 
-  <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
+  <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/app/Console/cake&quot;</span>
 
   <span class="c1"># sudo config to run $LUSER commands</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>groups <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> <span class="p">|</span>grep -o <span class="s1">&#39;staff&#39;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;staff&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
@@ -825,7 +831,6 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="k">else</span>
     <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="k">fi</span>
-  <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
 
   <span class="nb">echo</span> <span class="s2">&quot;The following DB Passwords were generated...&quot;</span>
   <span class="nb">echo</span> <span class="s2">&quot;Admin (</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">) DB Password: </span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -935,9 +940,9 @@ OR on Ubuntu 19.04 (yay for changing this every 5 commits... #n00bs)
 <div class="highlight"><pre><span></span><code>sudo sed -i &quot;s/enp0s3/eth0/&quot; /etc/netplan/01-netcfg.yaml
 </code></pre></div></p>
 </div>
-<h4 id="add-misp_user-to-staff-and-www_user">Add $MISP_USER to staff and $WWW_USER<a class="headerlink" href="#add-misp_user-to-staff-and-www_user" title="Permanent link">&para;</a></h4>
+<h4 id="add-misp_user-to-staff-and-www_user">Add $MISP_USER to staff and ${WWW_USER}<a class="headerlink" href="#add-misp_user-to-staff-and-www_user" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo adduser <span class="nv">$MISP_USER</span> staff
-sudo adduser <span class="nv">$MISP_USER</span> <span class="nv">$WWW_USER</span>
+sudo adduser <span class="nv">$MISP_USER</span> <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>
 </code></pre></div>
 
 <h4 id="make-sure-your-system-is-up2date-and-curl-installed">Make sure your system is up2date and curl installed<a class="headerlink" href="#make-sure-your-system-is-up2date-and-curl-installed" title="Permanent link">&para;</a></h4>
@@ -1019,45 +1024,45 @@ sudo a2ensite default-ssl
 <h3 id="3-misp-code">3/ MISP code<a class="headerlink" href="#3-misp-code" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Download MISP using git in the /var/www/ directory.</span>
-sudo mkdir <span class="nv">$PATH_TO_MISP</span>
-sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>
-<span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/MISP.git <span class="nv">$PATH_TO_MISP</span>
-<span class="nv">$SUDO_WWW</span> git submodule update --init --recursive
+sudo mkdir <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
+sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/MISP/MISP.git <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git submodule update --init --recursive
 <span class="c1"># Make git ignore filesystem permission differences for submodules</span>
-<span class="nv">$SUDO_WWW</span> git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
 
 <span class="c1"># Make git ignore filesystem permission differences</span>
-<span class="nv">$SUDO_WWW</span> git config core.filemode <span class="nb">false</span>
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git config core.filemode <span class="nb">false</span>
 
 <span class="c1"># Create a python3 virtualenv</span>
-<span class="nv">$SUDO_WWW</span> virtualenv -p python3 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> virtualenv -p python3 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
 
 <span class="c1"># make pip happy</span>
 sudo mkdir /var/www/.cache/
-sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.cache
+sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> /var/www/.cache
 
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts
-<span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/python-cybox.git
-<span class="nv">$SUDO_WWW</span> git clone https://github.com/STIXProject/python-stix.git
-<span class="nv">$SUDO_WWW</span> git clone https://github.com/MAECProject/python-maec.git
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/CybOXProject/python-cybox.git
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/STIXProject/python-stix.git
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/MAECProject/python-maec.git
 <span class="c1"># install mixbox to accommodate the new STIX dependencies:</span>
-<span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/mixbox.git
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mixbox
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-cybox
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-stix
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-maec
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/CybOXProject/mixbox.git
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts/mixbox
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts/python-cybox
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts/python-stix
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts/python-maec
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
 <span class="c1"># install STIX2.0 library to support STIX 2.0 export:</span>
 <span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/cti-python-stix2
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
 
 <span class="c1"># install PyMISP</span>
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/PyMISP
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install .
 <span class="c1"># FIXME: Remove libfaup etc once the egg has the library baked-in</span>
 sudo apt-get install cmake libcaca-dev liblua5.3-dev -y
 <span class="nb">cd</span> /tmp
@@ -1077,19 +1082,19 @@ sudo make install
 sudo ldconfig
 
 <span class="c1"># install pydeep</span>
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install git+https://github.com/kbandla/pydeep.git
 
 <span class="c1"># install lief</span>
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install lief
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install lief
 
 <span class="c1"># install zmq needed by mispzmq</span>
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install zmq redis
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install zmq redis
 
 <span class="c1"># install python-magic</span>
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install python-magic
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install python-magic
 
 <span class="c1"># install plyara</span>
-<span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install plyara
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install plyara
 </code></pre></div>
 
 <h3 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h3>
@@ -1102,34 +1107,34 @@ This probably means you installed the package <strong>php-redis</strong> which p
 Follow the guide and manually install a new composer.phar and keep using PHP-7.3RC4</p>
 </div>
 <div class="highlight"><pre><span></span><code><span class="c1"># Install CakeResque along with its dependencies if you intend to use the built in background jobs:</span>
-<span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app
 <span class="c1"># Make composer cache happy</span>
-sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/.composer
+sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> /var/www/.composer
 <span class="c1"># Update composer.phar</span>
-<span class="c1">#$SUDO_WWW php -r &quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-<span class="c1">#$SUDO_WWW php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;baf1608c33254d00611ac1705c1d9958c817a1a33bce370c0595974b342601bd80b92a3f46067da89e3b06bff421f182&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
-<span class="c1">#$SUDO_WWW php composer-setup.php</span>
-<span class="c1">#$SUDO_WWW php -r &quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
-<span class="nv">$SUDO_WWW</span> php composer.phar install
+<span class="c1">#${SUDO_WWW} php -r &quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
+<span class="c1">#${SUDO_WWW} php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;baf1608c33254d00611ac1705c1d9958c817a1a33bce370c0595974b342601bd80b92a3f46067da89e3b06bff421f182&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
+<span class="c1">#${SUDO_WWW} php composer-setup.php</span>
+<span class="c1">#${SUDO_WWW} php -r &quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> php composer.phar install
 <span class="c1"># The following is potentially not needed, but just here in case of Keyboard/Chair failures</span>
-<span class="nv">$SUDO_WWW</span> php composer.phar update
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> php composer.phar update
 
 <span class="c1"># Enable CakeResque with php-redis</span>
 sudo phpenmod redis
 sudo phpenmod gnupg
 
 <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
-<span class="nv">$SUDO_WWW</span> cp -fa <span class="nv">$PATH_TO_MISP</span>/INSTALL/setup/config.php <span class="nv">$PATH_TO_MISP</span>/app/Plugin/CakeResque/Config/config.php
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> cp -fa <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/setup/config.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Plugin/CakeResque/Config/config.php
 </code></pre></div>
 
 <h3 id="5-set-the-permissions">5/ Set the permissions<a class="headerlink" href="#5-set-the-permissions" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Check if the permissions are set correctly using the following commands:</span>
-sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>
-sudo chmod -R <span class="m">750</span> <span class="nv">$PATH_TO_MISP</span>
-sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/tmp
-sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/files
-sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/tmp
+sudo chown -R <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
+sudo chmod -R <span class="m">750</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>
+sudo chmod -R g+ws <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/tmp
+sudo chmod -R g+ws <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files
+sudo chmod -R g+ws <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts/tmp
 </code></pre></div>
 
 <h3 id="6-create-a-database-and-user">6/ Create a database and user<a class="headerlink" href="#6-create-a-database-and-user" title="Permanent link">&para;</a></h3>
@@ -1153,15 +1158,15 @@ sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWO
 </code></pre></div>
 
 <h4 id="import-the-empty-misp-database-from-mysqlsql">Import the empty MISP database from MYSQL.sql<a class="headerlink" href="#import-the-empty-misp-database-from-mysqlsql" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nv">$SUDO_WWW</span> cat <span class="nv">$PATH_TO_MISP</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
+<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> cat <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
 </code></pre></div>
 
 <h3 id="7-apache-configuration">7/ Apache configuration<a class="headerlink" href="#7-apache-configuration" title="Permanent link">&para;</a></h3>
 <hr />
-<div class="highlight"><pre><span></span><code><span class="c1"># Now configure your Apache webserver with the DocumentRoot $PATH_TO_MISP/app/webroot/</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Now configure your Apache webserver with the DocumentRoot ${PATH_TO_MISP}/app/webroot/</span>
 
 <span class="c1"># If the apache version is 2.4:</span>
-sudo cp <span class="nv">$PATH_TO_MISP</span>/INSTALL/apache.24.misp.ssl /etc/apache2/sites-available/misp-ssl.conf
+sudo cp <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/apache.24.misp.ssl /etc/apache2/sites-available/misp-ssl.conf
 
 <span class="c1"># Be aware that the configuration files for apache 2.4 and up have changed.</span>
 <span class="c1"># The configuration file has to have the .conf extension in the sites-available directory</span>
@@ -1191,8 +1196,8 @@ sudo openssl req -newkey rsa:4096 -days <span class="m">365</span> -nodes -x509 
 &lt;VirtualHost _default_:443&gt;
         ServerAdmin admin@&lt;your.FQDN.here&gt;
         ServerName &lt;your.FQDN.here&gt;
-        DocumentRoot $PATH_TO_MISP/app/webroot
-        &lt;Directory $PATH_TO_MISP/app/webroot&gt;
+        DocumentRoot ${PATH_TO_MISP}/app/webroot
+        &lt;Directory ${PATH_TO_MISP}/app/webroot&gt;
                 Options -Indexes
                 AllowOverride all
                 Require all granted
@@ -1233,20 +1238,20 @@ sudo systemctl restart apache2
 
 <h3 id="8-log-rotation">8/ Log rotation<a class="headerlink" href="#8-log-rotation" title="Permanent link">&para;</a></h3>
 <hr />
-<div class="highlight"><pre><span></span><code><span class="c1"># MISP saves the stdout and stderr of its workers in $PATH_TO_MISP/app/tmp/logs</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># MISP saves the stdout and stderr of its workers in ${PATH_TO_MISP}/app/tmp/logs</span>
 <span class="c1"># To rotate these logs install the supplied logrotate script:</span>
 
-sudo cp <span class="nv">$PATH_TO_MISP</span>/INSTALL/misp.logrotate /etc/logrotate.d/misp
+sudo cp <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/misp.logrotate /etc/logrotate.d/misp
 sudo chmod <span class="m">0640</span> /etc/logrotate.d/misp
 </code></pre></div>
 
 <h3 id="9-misp-configuration">9/ MISP configuration<a class="headerlink" href="#9-misp-configuration" title="Permanent link">&para;</a></h3>
 <hr />
-<div class="highlight"><pre><span></span><code><span class="c1"># There are 4 sample configuration files in $PATH_TO_MISP/app/Config that need to be copied</span>
-<span class="nv">$SUDO_WWW</span> cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/bootstrap.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/bootstrap.php
-<span class="nv">$SUDO_WWW</span> cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/database.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
-<span class="nv">$SUDO_WWW</span> cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/core.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/core.php
-<span class="nv">$SUDO_WWW</span> cp -a <span class="nv">$PATH_TO_MISP</span>/app/Config/config.default.php <span class="nv">$PATH_TO_MISP</span>/app/Config/config.php
+<div class="highlight"><pre><span></span><code><span class="c1"># There are 4 sample configuration files in ${PATH_TO_MISP}/app/Config that need to be copied</span>
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/bootstrap.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/bootstrap.php
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/database.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/database.php
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/core.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/core.php
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> cp -a <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/config.default.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/config.php
 
 
 <span class="nb">echo</span> <span class="s2">&quot;&lt;?php</span>
@@ -1264,11 +1269,11 @@ sudo chmod <span class="m">0640</span> /etc/logrotate.d/misp
 <span class="s2">                &#39;prefix&#39; =&gt; &#39;&#39;,</span>
 <span class="s2">                &#39;encoding&#39; =&gt; &#39;utf8&#39;,</span>
 <span class="s2">        );</span>
-<span class="s2">}&quot;</span> <span class="p">|</span> <span class="nv">$SUDO_WWW</span> tee <span class="nv">$PATH_TO_MISP</span>/app/Config/database.php
+<span class="s2">}&quot;</span> <span class="p">|</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> tee <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config/database.php
 
 <span class="c1"># and make sure the file permissions are still OK</span>
-sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/Config
-sudo chmod -R <span class="m">750</span> <span class="nv">$PATH_TO_MISP</span>/app/Config
+sudo chown -R <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config
+sudo chmod -R <span class="m">750</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Config
 
 <span class="c1"># Generate a GPG encryption key.</span>
 
@@ -1287,14 +1292,14 @@ cat &gt;/tmp/gen-key-script <span class="s">&lt;&lt;EOF</span>
 <span class="s">    %echo done</span>
 <span class="s">EOF</span>
 
-<span class="nv">$SUDO_WWW</span> gpg --homedir <span class="nv">$PATH_TO_MISP</span>/.gnupg --batch --gen-key /tmp/gen-key-script
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> gpg --homedir <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/.gnupg --batch --gen-key /tmp/gen-key-script
 <span class="c1"># The email address should match the one set in the config.php / set in the configuration menu in the administration menu configuration file</span>
 
 <span class="c1"># And export the public key to the webroot</span>
-<span class="nv">$SUDO_WWW</span> sh -c <span class="s2">&quot;gpg --homedir </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.gnupg --export --armor </span><span class="nv">$GPG_EMAIL_ADDRESS</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="nv">$SUDO_WWW</span> tee <span class="nv">$PATH_TO_MISP</span>/app/webroot/gpg.asc
+<span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> sh -c <span class="s2">&quot;gpg --homedir </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/.gnupg --export --armor </span><span class="nv">$GPG_EMAIL_ADDRESS</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> tee <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/webroot/gpg.asc
 
 <span class="c1"># To make the background workers start on boot</span>
-sudo chmod +x <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
+sudo chmod +x <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Console/worker/start.sh
 
 <span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
 <span class="s2">Description=MISP background workers</span>
@@ -1302,9 +1307,9 @@ sudo chmod +x <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
 
 <span class="s2">[Service]</span>
 <span class="s2">Type=forking</span>
-<span class="s2">User=</span><span class="nv">$WWW_USER</span><span class="s2"></span>
-<span class="s2">Group=</span><span class="nv">$WWW_USER</span><span class="s2"></span>
-<span class="s2">ExecStart=</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/worker/start.sh</span>
+<span class="s2">User=</span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">Group=</span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">ExecStart=</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/app/Console/worker/start.sh</span>
 <span class="s2">Restart=always</span>
 <span class="s2">RestartSec=10</span>
 
@@ -1481,7 +1486,7 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># &lt;snippet-end 2_core-cake.sh&gt;</span>
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="c1"># Add the following lines before the last line (exit 0). Make sure that you replace $WWW_USER with your apache user:</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Add the following lines before the last line (exit 0). Make sure that you replace ${WWW_USER} with your apache user:</span>
 sudo sed -i -e <span class="s1">&#39;$i \echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled\n&#39;</span> /etc/rc.local
 sudo sed -i -e <span class="s1">&#39;$i \echo 1024 &gt; /proc/sys/net/core/somaxconn\n&#39;</span> /etc/rc.local
 sudo sed -i -e <span class="s1">&#39;$i \sysctl vm.overcommit_memory=1\n&#39;</span> /etc/rc.local
@@ -1495,9 +1500,9 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
   sudo apt-get install cmake libcaca-dev liblua5.3-dev -y
   <span class="c1">## TODO: checkUsrLocalSrc in main doc</span>
   debug <span class="s2">&quot;Cloning misp-modules&quot;</span>
-  <span class="nv">$SUDO_CMD</span> git clone https://github.com/MISP/misp-modules.git
-  <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/gtcaca.git
-  <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/faup.git
+  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/MISP/misp-modules.git<span class="p">;</span> <span class="k">done</span>
+  <span class="o">[[</span> ! -d <span class="s2">&quot;faup&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/faup.git faup<span class="p">;</span> <span class="k">done</span>
+  <span class="o">[[</span> ! -d <span class="s2">&quot;gtcaca&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/gtcaca.git gtcaca<span class="p">;</span> <span class="k">done</span>
   sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup gtcaca
   <span class="c1"># Install gtcaca</span>
   <span class="nb">cd</span> gtcaca
@@ -1647,7 +1652,7 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 </code></pre></div></p>
 </div>
 <h4 id="misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-commands">MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyzmq
+<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyzmq
 </code></pre></div>
 
 <h4 id="misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands">MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
@@ -1676,7 +1681,7 @@ mispDashboard <span class="o">()</span> <span class="o">{</span>
   sudo mkdir misp-dashboard
   sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> misp-dashboard
 
-  <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git
+  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git<span class="p">;</span> <span class="k">done</span>
   <span class="nb">cd</span> misp-dashboard
   sudo -H /var/www/misp-dashboard/install_dependencies.sh
   sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
@@ -1777,8 +1782,8 @@ viper <span class="o">()</span> <span class="o">{</span>
     <span class="k">fi</span>
   <span class="k">fi</span>
   <span class="nb">echo</span> <span class="s2">&quot;Cloning Viper&quot;</span>
-  <span class="nv">$SUDO_CMD</span> git clone https://github.com/viper-framework/viper.git
-  <span class="nv">$SUDO_CMD</span> git clone https://github.com/viper-framework/viper-web.git
+  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/viper-framework/viper.git<span class="p">;</span> <span class="k">done</span>
+  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/viper-framework/viper-web.git<span class="p">;</span> <span class="k">done</span>
   sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper
   sudo chown -R <span class="nv">$MISP_USER</span>:<span class="nv">$MISP_USER</span> viper-web
   <span class="nb">cd</span> viper
@@ -1863,9 +1868,9 @@ mail2misp <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Installing Mail2</span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="nb">cd</span> /usr/local/src/
   sudo apt-get install cmake libcaca-dev liblua5.3-dev -y
-  <span class="nv">$SUDO_CMD</span> git clone https://github.com/MISP/mail_to_misp.git
-  <span class="o">[[</span> ! -d <span class="s2">&quot;faup&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/faup.git faup
-  <span class="o">[[</span> ! -d <span class="s2">&quot;gtcaca&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/gtcaca.git gtcaca
+  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/MISP/mail_to_misp.git<span class="p">;</span> <span class="k">done</span>
+  <span class="o">[[</span> ! -d <span class="s2">&quot;faup&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/faup.git faup<span class="p">;</span> <span class="k">done</span>
+  <span class="o">[[</span> ! -d <span class="s2">&quot;gtcaca&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/gtcaca.git gtcaca<span class="p">;</span> <span class="k">done</span>
   sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup mail_to_misp gtcaca
   <span class="nb">cd</span> gtcaca
   <span class="nv">$SUDO_CMD</span> mkdir -p build
@@ -2055,7 +2060,7 @@ index f9f69d4..2e8fd78 100644
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../xINSTALL.centos6/" title="Centos 6" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../xINSTALL/" title="Warning" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -2064,19 +2069,19 @@ index f9f69d4..2e8fd78 100644
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Centos 6
+                Warning
               </span>
             </div>
           </a>
         
         
-          <a href="../xINSTALL.debian9/" title="Debian 9" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../xINSTALL.ubuntu1804.with.webmin/" title="Ubuntu 18.04 \w webmin" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Debian 9
+                Ubuntu 18.04 \w webmin
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

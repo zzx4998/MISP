@@ -343,32 +343,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
-      Centos 6
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../../xINSTALL.debian10/" title="Debian 10" class="md-nav__link">
       Debian 10
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
-      Debian 9
     </a>
   </li>
 
@@ -403,8 +379,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
-      OpenBSD 6.6
+    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.7" class="md-nav__link">
+      OpenBSD 6.7
     </a>
   </li>
 
@@ -537,6 +513,30 @@
   <li class="md-nav__item">
     <a href="../../archive/INSTALL.ubuntu1604/" title="Ubuntu 16.04" class="md-nav__link">
       Ubuntu 16.04
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
+      Centos 6
     </a>
   </li>
 
@@ -1460,18 +1460,19 @@ gitPullAllRCLOCAL <span class="o">()</span> <span class="o">{</span>
   sudo sed -i -e <span class="s1">&#39;$i \done\n&#39;</span> /etc/rc.local
 <span class="o">}</span>
 
+
 <span class="c1"># Main composer function</span>
 composer <span class="o">()</span> <span class="o">{</span>
   sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> /var/www/.composer
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> sh -c <span class="s1">&#39;cd ${PATH_TO_MISP}/app ; php composer.phar install&#39;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> sh -c <span class="s2">&quot;cd </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/app ; php composer.phar install&quot;</span>
 <span class="o">}</span>
 
+
+<span class="c1"># TODO: FIX somehow the alias of the function does not work</span>
 <span class="c1"># Composer on php 7.0 does not need any special treatment the provided phar works well</span>
 <span class="nb">alias</span> <span class="nv">composer70</span><span class="o">=</span>composer
-
 <span class="c1"># Composer on php 7.2 does not need any special treatment the provided phar works well</span>
 <span class="nb">alias</span> <span class="nv">composer72</span><span class="o">=</span>composer
-
 <span class="c1"># Composer on php 7.3 does not need any special treatment the provided phar works well</span>
 <span class="nb">alias</span> <span class="nv">composer73</span><span class="o">=</span>composer
 

@@ -42,7 +42,7 @@
     
     
       
-        <title>OpenBSD 6.6 - MISP Install Documentation</title>
+        <title>OpenBSD 6.7 - MISP Install Documentation</title>
       
     
     
@@ -109,7 +109,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                OpenBSD 6.6
+                OpenBSD 6.7
               
             </span>
           
@@ -349,32 +349,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
-      Centos 6
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../xINSTALL.debian10/" title="Debian 10" class="md-nav__link">
       Debian 10
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
-      Debian 9
     </a>
   </li>
 
@@ -418,11 +394,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        OpenBSD 6.6
+        OpenBSD 6.7
       </label>
     
-    <a href="./" title="OpenBSD 6.6" class="md-nav__link md-nav__link--active">
-      OpenBSD 6.6
+    <a href="./" title="OpenBSD 6.7" class="md-nav__link md-nav__link--active">
+      OpenBSD 6.7
     </a>
     
       
@@ -436,8 +412,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-openbsd-65-amd64" class="md-nav__link">
-    for OpenBSD 6.5-amd64
+  <a href="#for-openbsd-67-amd64" class="md-nav__link">
+    for OpenBSD 6.7-amd64
   </a>
   
     <nav class="md-nav">
@@ -618,8 +594,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#etcphp-73ini" class="md-nav__link">
-    /etc/php-7.3.ini
+  <a href="#etcphp-74ini" class="md-nav__link">
+    /etc/php-7.4.ini
   </a>
   
 </li>
@@ -921,6 +897,30 @@
 
 
   <li class="md-nav__item">
+    <a href="../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
+      Centos 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../archive/xINSTALL.FreeBSD/" title="FreeBSD" class="md-nav__link">
       FreeBSD
     </a>
@@ -1001,8 +1001,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-openbsd-65-amd64" class="md-nav__link">
-    for OpenBSD 6.5-amd64
+  <a href="#for-openbsd-67-amd64" class="md-nav__link">
+    for OpenBSD 6.7-amd64
   </a>
   
     <nav class="md-nav">
@@ -1183,8 +1183,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#etcphp-73ini" class="md-nav__link">
-    /etc/php-7.3.ini
+  <a href="#etcphp-74ini" class="md-nav__link">
+    /etc/php-7.4.ini
   </a>
   
 </li>
@@ -1355,7 +1355,7 @@
                 
                 
                 <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h1>
-<h2 id="for-openbsd-65-amd64">for OpenBSD 6.5-amd64<a class="headerlink" href="#for-openbsd-65-amd64" title="Permanent link">&para;</a></h2>
+<h2 id="for-openbsd-67-amd64">for OpenBSD 6.7-amd64<a class="headerlink" href="#for-openbsd-67-amd64" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This is not fully working yet. Mostly it is a template for our ongoing documentation efforts <img alt="🕷️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/1f577.svg" title=":spider:" />
@@ -1396,27 +1396,33 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># RHEL/CentOS</span>
   <span class="k">if</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/redhat-release&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">WWW_USER</span><span class="o">=</span><span class="s1">&#39;apache&#39;</span>
+    <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
   <span class="c1"># Debian flavoured</span>
   <span class="k">elif</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/debian_version&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+    <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
   <span class="c1"># OpenBSD</span>
   <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>uname -s<span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;OpenBSD&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www&quot;</span>
     <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s2">&quot;/var/www/htdocs/MISP&quot;</span>
+    <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;doas -u www &quot;</span>
+    <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;doas &quot;</span>
   <span class="c1"># NetBSD</span>
   <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>uname -s<span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;NetBSD&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www&quot;</span>
     <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s2">&quot;/usr/pkg/share/httpd/htdocs/MISP&quot;</span>
+    <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
   <span class="k">else</span>
     <span class="c1"># I am feeling lucky</span>
     <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;www-data&quot;</span>
+    <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
   <span class="k">fi</span>
 
-  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$FQDN</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FQDN</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">FQDN</span><span class="o">=</span><span class="s2">&quot;misp.local&quot;</span>
   <span class="k">fi</span>
 
-  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$MISP_BASEURL</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s1">&#39;&quot;&quot;&#39;</span>
   <span class="k">fi</span>
 
@@ -1431,13 +1437,13 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="nv">DBPASSWORD_MISP</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="s2">&quot;</span>
 
   <span class="c1"># OpenSSL configuration</span>
-  <span class="nv">OPENSSL_CN</span><span class="o">=</span><span class="nv">$FQDN</span>
+  <span class="nv">OPENSSL_CN</span><span class="o">=</span><span class="si">${</span><span class="nv">FQDN</span><span class="si">}</span>
   <span class="nv">OPENSSL_C</span><span class="o">=</span><span class="s1">&#39;LU&#39;</span>
   <span class="nv">OPENSSL_ST</span><span class="o">=</span><span class="s1">&#39;State&#39;</span>
   <span class="nv">OPENSSL_L</span><span class="o">=</span><span class="s1">&#39;Location&#39;</span>
   <span class="nv">OPENSSL_O</span><span class="o">=</span><span class="s1">&#39;Organization&#39;</span>
   <span class="nv">OPENSSL_OU</span><span class="o">=</span><span class="s1">&#39;Organizational Unit&#39;</span>
-  <span class="nv">OPENSSL_EMAILADDRESS</span><span class="o">=</span><span class="s2">&quot;info@</span><span class="nv">$FQDN</span><span class="s2">&quot;</span>
+  <span class="nv">OPENSSL_EMAILADDRESS</span><span class="o">=</span><span class="s2">&quot;info@</span><span class="si">${</span><span class="nv">FQDN</span><span class="si">}</span><span class="s2">&quot;</span>
 
   <span class="c1"># GPG configuration</span>
   <span class="nv">GPG_REAL_NAME</span><span class="o">=</span><span class="s1">&#39;Autogenerated Key&#39;</span>
@@ -1460,7 +1466,7 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="nv">max_execution_time</span><span class="o">=</span><span class="m">300</span>
   <span class="nv">memory_limit</span><span class="o">=</span>2048M
 
-  <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
+  <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/app/Console/cake&quot;</span>
 
   <span class="c1"># sudo config to run $LUSER commands</span>
   <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="k">$(</span>groups <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> <span class="p">|</span>grep -o <span class="s1">&#39;staff&#39;</span><span class="k">)</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;staff&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
@@ -1468,7 +1474,6 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="k">else</span>
     <span class="nv">SUDO_CMD</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="k">fi</span>
-  <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
 
   <span class="nb">echo</span> <span class="s2">&quot;The following DB Passwords were generated...&quot;</span>
   <span class="nb">echo</span> <span class="s2">&quot;Admin (</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">) DB Password: </span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -1529,16 +1534,17 @@ doas tar -xzphf /tmp/xshare<span class="k">$(</span>uname -r<span class="p">|</s
 <h4 id="install-misc-dependencies">Install misc dependencies<a class="headerlink" href="#install-misc-dependencies" title="Permanent link">&para;</a></h4>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>You need to install python 3.x when asked, option 2.
+<p>install python 3.x when asked, option 2
 autoconf wants to be version 2.69, option 16
-automake wants to be version 1.16, option 7</p>
+automake wants to be version 1.16, option 10
+unzip can be whatever</p>
 </div>
 <div class="highlight"><pre><span></span><code>doas pkg_add -v curl git python redis libmagic autoconf automake libtool unzip
 </code></pre></div>
 
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>GnuPG 2.x is best, option 3.</p>
+<p>GnuPG 2.x is best, option 2</p>
 </div>
 <div class="highlight"><pre><span></span><code>doas pkg_add -v gnupg
 doas ln -s /usr/local/bin/gpg2 /usr/local/bin/gpg
@@ -1546,7 +1552,7 @@ doas ln -s /usr/local/bin/gpg2 /usr/local/bin/gpg
 
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>When asked, the standard postfix will be enough for a basic setup, option 9.</p>
+<p>When asked, the standard postfix 3.5 will be enough for a basic setup, option 1</p>
 </div>
 <div class="highlight"><pre><span></span><code>doas pkg_add -v postfix
 doas /usr/local/sbin/postfix-enable 
@@ -1671,11 +1677,11 @@ OPENSSL_EMAILADDRESS=&#39;info@localhost&#39;
 </code></pre></div>
 
 <h4 id="install-python-virtualenv">Install Python virtualenv<a class="headerlink" href="#install-python-virtualenv" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>doas ln -sf /usr/local/bin/pip3.6 /usr/local/bin/pip
-doas ln -s /usr/local/bin/python3.6 /usr/local/bin/python
-doas pkg_add -v py-virtualenv
+<div class="highlight"><pre><span></span><code>doas pkg_add -v py3-virtualenv py3-pip
+doas ln -sf /usr/local/bin/pip3.7 /usr/local/bin/pip
+doas ln -s /usr/local/bin/python3.7 /usr/local/bin/python
 doas mkdir /usr/local/virtualenvs
-doas virtualenv -ppython3 /usr/local/virtualenvs/MISP
+doas virtualenv-3 /usr/local/virtualenvs/MISP
 </code></pre></div>
 
 <h4 id="install-ssdeep">Install ssdeep<a class="headerlink" href="#install-ssdeep" title="Permanent link">&para;</a></h4>
@@ -1691,28 +1697,28 @@ doas pkg_add -v fcgi-cgi fcgi
 <p class="admonition-title">Notice</p>
 <p>php-5.6 is marked as end-of-life starting December 2018, use php 7.0 instead.
 Option 2.
-If on OpenBSD 6.3, upgrade to 6.5 to make your life much easier.</p>
+If on OpenBSD 6.3, upgrade to 6.7 to make your life much easier.</p>
 </div>
-<div class="highlight"><pre><span></span><code>doas pkg_add -v php-mysqli php-pcntl php-pdo_mysql php-apache pecl73-redis php-gd
+<div class="highlight"><pre><span></span><code>doas pkg_add -v php-mysqli php-pcntl php-pdo_mysql php-apache pecl74-redis php-gd
 </code></pre></div>
 
-<h4 id="etcphp-73ini">/etc/php-7.3.ini<a class="headerlink" href="#etcphp-73ini" title="Permanent link">&para;</a></h4>
+<h4 id="etcphp-74ini">/etc/php-7.4.ini<a class="headerlink" href="#etcphp-74ini" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>## TODO: sed foo as .ini exists
 allow_url_fopen = On
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> /etc/php-7.3
-doas cp ../php-7.3.sample/* .
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> /etc/php-7.4
+doas cp ../php-7.4.sample/* .
 </code></pre></div>
 
 <h4 id="php-symlinks">php symlinks<a class="headerlink" href="#php-symlinks" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>doas ln -s /usr/local/bin/php-7.3 /usr/local/bin/php
-doas ln -s /usr/local/bin/phpize-7.3 /usr/local/bin/phpize
-doas ln -s /usr/local/bin/php-config-7.3 /usr/local/bin/php-config
+<div class="highlight"><pre><span></span><code>doas ln -s /usr/local/bin/php-7.4 /usr/local/bin/php
+doas ln -s /usr/local/bin/phpize-7.4 /usr/local/bin/phpize
+doas ln -s /usr/local/bin/php-config-7.4 /usr/local/bin/php-config
 </code></pre></div>
 
 <h4 id="enable-php-fpm">Enable php fpm<a class="headerlink" href="#enable-php-fpm" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>doas rcctl <span class="nb">enable</span> php73_fpm
+<div class="highlight"><pre><span></span><code>doas rcctl <span class="nb">enable</span> php74_fpm
 </code></pre></div>
 
 <h4 id="configure-fpm">Configure fpm<a class="headerlink" href="#configure-fpm" title="Permanent link">&para;</a></h4>
@@ -1741,7 +1747,7 @@ pm.min_spare_servers = 1
 pm.max_spare_servers = 3
 chroot = /var/www&quot; | doas tee /etc/php-fpm.d/default.conf
 
-doas /etc/rc.d/php73_fpm start 
+doas /etc/rc.d/php74_fpm start 
 </code></pre></div>
 
 <div class="admonition notice">
@@ -1768,22 +1774,22 @@ doas mysql_secure_installation
 doas mkdir /var/www/htdocs/MISP
 doas chown www:www /var/www/htdocs/MISP
 <span class="nb">cd</span> /var/www/htdocs/MISP
-doas -u www git clone https://github.com/MISP/MISP.git /var/www/htdocs/MISP
-doas -u www git submodule update --init --recursive
+false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/MISP/MISP.git /var/www/htdocs/MISP<span class="p">;</span> <span class="k">done</span>
+false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git submodule update --progress --init --recursive<span class="p">;</span> <span class="k">done</span>
 <span class="c1"># Make git ignore filesystem permission differences for submodules</span>
 doas -u www git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
 
 <span class="c1"># Make git ignore filesystem permission differences</span>
 doas -u www git config core.filemode <span class="nb">false</span>
 
-doas pkg_add py-pip py3-pip libxml libxslt py3-jsonschema
+doas pkg_add py3-pip libxml libxslt py3-jsonschema
 doas /usr/local/virtualenvs/MISP/bin/pip install -U pip
 
 <span class="nb">cd</span> /var/www/htdocs/MISP/app/files/scripts
-doas -u www git clone https://github.com/CybOXProject/mixbox.git
-doas -u www git clone https://github.com/CybOXProject/python-cybox.git
-doas -u www git clone https://github.com/STIXProject/python-stix.git
-doas -u www git clone https://github.com/MAECProject/python-maec.git
+false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/CybOXProject/python-cybox.git<span class="p">;</span> <span class="k">done</span>
+false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/STIXProject/python-stix.git<span class="p">;</span> <span class="k">done</span>
+false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/MAECProject/python-maec.git<span class="p">;</span> <span class="k">done</span>
+false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/CybOXProject/mixbox.git<span class="p">;</span> <span class="k">done</span>
 
 <span class="nb">cd</span> /var/www/htdocs/MISP/app/files/scripts/python-cybox
 doas /usr/local/virtualenvs/MISP/bin/python setup.py install
@@ -1817,11 +1823,6 @@ doas /usr/local/virtualenvs/MISP/bin/pip install git+https://github.com/kbandla/
 <span class="c1"># Install CakeResque along with its dependencies if you intend to use the built in background jobs:</span>
 <span class="nb">cd</span> /var/www/htdocs/MISP/app
 doas mkdir /var/www/.composer <span class="p">;</span> doas chown www:www /var/www/.composer
-<span class="c1">#EXPECTED_SIGNATURE=&quot;$(wget -q -O - https://composer.github.io/installer.sig)&quot;</span>
-<span class="c1">#doas -u www php -r &quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-<span class="c1">#doas -u www php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;$EXPECTED_SIGNATURE&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
-<span class="c1">#doas -u www env HOME=/var/www php composer-setup.php</span>
-<span class="c1">#doas -u www php -r &quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
 doas -u www env <span class="nv">HOME</span><span class="o">=</span>/var/www php composer.phar install
 
 <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
@@ -2130,7 +2131,7 @@ doas <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Sessi
 
 <span class="c1"># Enable GnuPG</span>
 doas <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.email&quot;</span> <span class="s2">&quot;admin@admin.test&quot;</span>
-doas <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.homedir&quot;</span> <span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.gnupg&quot;</span>
+doas <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.homedir&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/.gnupg&quot;</span>
 doas <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.password&quot;</span> <span class="s2">&quot;Password1234&quot;</span>
 
 <span class="c1"># Enable Enrichment set better timeouts</span>

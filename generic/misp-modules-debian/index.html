@@ -347,32 +347,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
-      Centos 6
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../../xINSTALL.debian10/" title="Debian 10" class="md-nav__link">
       Debian 10
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
-      Debian 9
     </a>
   </li>
 
@@ -407,8 +383,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
-      OpenBSD 6.6
+    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.7" class="md-nav__link">
+      OpenBSD 6.7
     </a>
   </li>
 
@@ -551,6 +527,30 @@
 
 
   <li class="md-nav__item">
+    <a href="../../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
+      Centos 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../archive/xINSTALL.FreeBSD/" title="FreeBSD" class="md-nav__link">
       FreeBSD
     </a>
@@ -662,9 +662,9 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
   sudo apt-get install cmake libcaca-dev liblua5.3-dev -y
   <span class="c1">## TODO: checkUsrLocalSrc in main doc</span>
   debug <span class="s2">&quot;Cloning misp-modules&quot;</span>
-  <span class="nv">$SUDO_CMD</span> git clone https://github.com/MISP/misp-modules.git
-  <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/gtcaca.git
-  <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/faup.git
+  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/MISP/misp-modules.git<span class="p">;</span> <span class="k">done</span>
+  <span class="o">[[</span> ! -d <span class="s2">&quot;faup&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/faup.git faup<span class="p">;</span> <span class="k">done</span>
+  <span class="o">[[</span> ! -d <span class="s2">&quot;gtcaca&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/gtcaca.git gtcaca<span class="p">;</span> <span class="k">done</span>
   sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup gtcaca
   <span class="c1"># Install gtcaca</span>
   <span class="nb">cd</span> gtcaca

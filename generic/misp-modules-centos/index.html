@@ -347,32 +347,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
-      Centos 6
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../../xINSTALL.debian10/" title="Debian 10" class="md-nav__link">
       Debian 10
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
-      Debian 9
     </a>
   </li>
 
@@ -407,8 +383,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.6" class="md-nav__link">
-      OpenBSD 6.6
+    <a href="../../xINSTALL.OpenBSD/" title="OpenBSD 6.7" class="md-nav__link">
+      OpenBSD 6.7
     </a>
   </li>
 
@@ -551,6 +527,30 @@
 
 
   <li class="md-nav__item">
+    <a href="../../xINSTALL.debian9/" title="Debian 9" class="md-nav__link">
+      Debian 9
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../xINSTALL.centos6/" title="Centos 6" class="md-nav__link">
+      Centos 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../archive/xINSTALL.FreeBSD/" title="FreeBSD" class="md-nav__link">
       FreeBSD
     </a>
@@ -663,7 +663,7 @@ mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
   sudo chmod <span class="m">2777</span> /usr/local/src
   sudo chown root:users /usr/local/src
   <span class="nb">cd</span> /usr/local/src/
-  <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-modules.git
+  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-modules.git<span class="p">;</span> <span class="k">done</span>
   <span class="nb">cd</span> misp-modules
   <span class="c1"># pip install</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U -I -r REQUIREMENTS
