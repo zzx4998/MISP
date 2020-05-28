@@ -631,8 +631,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-netbsd-81-amd64" class="md-nav__link">
-    for NetBSD 8.1-amd64
+  <a href="#for-netbsd-90-amd64" class="md-nav__link">
+    for NetBSD 9.0-amd64
   </a>
   
     <nav class="md-nav">
@@ -736,15 +736,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#misp-user-remove" class="md-nav__link">
-    misp user #REMOVE
+  <a href="#apache-php-moz-rootcerts" class="md-nav__link">
+    apache + php + moz-rootcerts
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#apache-php-moz-rootcerts" class="md-nav__link">
-    apache + php + moz-rootcerts
+  <a href="#misp-user" class="md-nav__link">
+    misp user
   </a>
   
 </li>
@@ -929,7 +929,7 @@
                 
                 
                 <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h1>
-<h2 id="for-netbsd-81-amd64">for NetBSD 8.1-amd64<a class="headerlink" href="#for-netbsd-81-amd64" title="Permanent link">&para;</a></h2>
+<h2 id="for-netbsd-90-amd64">for NetBSD 9.0-amd64<a class="headerlink" href="#for-netbsd-90-amd64" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This is not fully working yet. Mostly it is a template for our ongoing documentation efforts <img alt="🕷️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/1f577.svg" title=":spider:" />
@@ -1060,16 +1060,19 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 <li>TBD</li>
 </ul>
 <h4 id="sudo-pkgin-as-root">sudo &amp; pkgin (as root)<a class="headerlink" href="#sudo-pkgin-as-root" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>su root -c <span class="s2">&quot;pkgin install sudo gsed&quot;</span>
+<div class="highlight"><pre><span></span><code>su root -c <span class="s2">&quot;cd /usr/pkgsrc/pkg tools/pkgin/; make install clean&quot;</span>
+su root -c <span class="s2">&quot;pkgin update&quot;</span>
+su root -c <span class="s2">&quot;pkgin -y install sudo gsed&quot;</span>
 su root -c <span class="s1">&#39;gsed -i -e &quot;s/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/&quot; /usr/pkg/etc/sudoers&#39;</span>
 </code></pre></div>
 
 <h5 id="in-case-you-forgot-to-fetch-pkgsrc-optional">In case you forgot to fetch pkgsrc (optional)<a class="headerlink" href="#in-case-you-forgot-to-fetch-pkgsrc-optional" title="Permanent link">&para;</a></h5>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /usr
-env <span class="nv">CVS_RSH</span><span class="o">=</span>ssh sudo cvs -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc
+env <span class="nv">CVS_RSH</span><span class="o">=</span>ssh cvs -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc
 <span class="nb">cd</span> pkgsrc/bootstrap
-sudo ./bootstrap
-sudo /usr/pkg/sbin/pkg_admin -K /var/db/pkg fetch-pkg-vulnerabilities
+./bootstrap
+<span class="nb">cd</span> /usr/pkgsrc/pkg tools/pkgin/<span class="p">;</span> make install clean
+/usr/pkg/sbin/pkg_admin fetch-pkg-vulnerabilities
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code>You may wish to have the vulnerabilities file downloaded daily so that it
@@ -1084,45 +1087,45 @@ users crontab(5) entry. For example the entry
 </code></pre></div>
 
 <h4 id="install-bash">Install bash<a class="headerlink" href="#install-bash" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>sudo pkgin install bash
+<div class="highlight"><pre><span></span><code>sudo pkgin -y install bash
 </code></pre></div>
 
 <h4 id="mariadb-server">mariadb server<a class="headerlink" href="#mariadb-server" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>sudo pkgin install mariadb-server 
+<div class="highlight"><pre><span></span><code>sudo pkgin -y install mysql-server 
 </code></pre></div>
 
 <h4 id="install-misc-dependencies">Install misc dependencies<a class="headerlink" href="#install-misc-dependencies" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>sudo pkgin install curl git python36 py36-pip redis autoconf automake libtool magic
+<div class="highlight"><pre><span></span><code>sudo pkgin -y install curl git python37 py37-pip redis autoconf automake libtool magic
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>sudo pkgin install gnupg2
+<div class="highlight"><pre><span></span><code>sudo pkgin -y install gnupg2
 </code></pre></div>
 
 <h4 id="install-postfix-optional">Install postfix (optional)<a class="headerlink" href="#install-postfix-optional" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>sudo pkgin install postfix
+<div class="highlight"><pre><span></span><code>sudo pkgin -y install postfix
 </code></pre></div>
 
 <h4 id="vim-optional">vim (optional)<a class="headerlink" href="#vim-optional" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>sudo pkgin install vim
+<div class="highlight"><pre><span></span><code>sudo pkgin -y install vim
 sudo mv /usr/bin/vi /usr/bin/vi-<span class="sb">`</span>date +%d%m%y<span class="sb">`</span>
 sudo ln -s /usr/pkg/bin/vim /usr/bin/vi
 </code></pre></div>
 
-<h4 id="misp-user-remove">misp user #REMOVE<a class="headerlink" href="#misp-user-remove" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>sudo useradd -m -s /usr/local/bin/bash -G wheel,www misp
-</code></pre></div>
-
 <h4 id="apache-php-moz-rootcerts">apache + php + moz-rootcerts<a class="headerlink" href="#apache-php-moz-rootcerts" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>sudo pkgin install php ap24-php73 php73-fpm php73-redis3 php73-mysqli php73-pdo_mysql php73-pcntl php73-json php73-iconv php73-gd php73-mbstring php73-pear-Crypt_GPG
+<div class="highlight"><pre><span></span><code>sudo pkgin -y install php ap24-php74 php74-fpm php74-redis3 php74-mysqli php74-pdo_mysql php74-pcntl php74-json php74-iconv php74-gd php74-mbstring php74-pear-Crypt_GPG
 sudo cp /usr/share/examples/openssl/openssl.cnf /etc/openssl/
 sudo mozilla-rootcerts install
 sudo cp /usr/pkg/share/examples/rc.d/apache /etc/rc.d/
 <span class="nb">echo</span> <span class="nv">apache</span><span class="o">=</span>yes <span class="p">|</span>sudo tee /etc/rc.conf.d/apache
 </code></pre></div>
 
+<h4 id="misp-user">misp user<a class="headerlink" href="#misp-user" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>sudo useradd -m -s /usr/pkg/bin/bash -G wheel,www misp
+</code></pre></div>
+
 <h4 id="install-x11r7-post-install">Install X11R7 post-install<a class="headerlink" href="#install-x11r7-post-install" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /tmp
-wget https://ftp.netbsd.org/pub/NetBSD/NetBSD-8.1/amd64/binary/sets/xbase.tgz
+wget https://ftp.netbsd.org/pub/NetBSD/NetBSD-9.0/amd64/binary/sets/xbase.tgz
 sudo tar -C / -xzphf xbase.tgz
 rm xbase.tgz
 </code></pre></div>
@@ -1138,26 +1141,26 @@ OPENSSL_CN=&#39;Common Name&#39;
 OPENSSL_EMAILADDRESS=&#39;info@localhost&#39;
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>sudo openssl req -newkey rsa:4096 -days <span class="m">3650</span> -nodes -x509 -subj <span class="s2">&quot;/C=</span><span class="nv">$OPENSSL_C</span><span class="s2">/ST=</span><span class="nv">$OPENSSL_ST</span><span class="s2">/L=</span><span class="nv">$OPENSSL_L</span><span class="s2">/O=&lt;</span><span class="nv">$OPENSSL_O</span><span class="s2">/OU=</span><span class="nv">$OPENSSL_OU</span><span class="s2">/CN=</span><span class="nv">$OPENSSL_CN</span><span class="s2">/emailAddress=</span><span class="nv">$OPENSSL_EMAILADDRESS</span><span class="s2">&quot;</span> -keyout /etc/openssl/private/server.key -out /usr/pkg/etc/httpd/server.crt
+<div class="highlight"><pre><span></span><code>sudo openssl req -sha256 -newkey rsa:4096 -days <span class="m">3650</span> -nodes -x509 -subj <span class="s2">&quot;/C=</span><span class="nv">$OPENSSL_C</span><span class="s2">/ST=</span><span class="nv">$OPENSSL_ST</span><span class="s2">/L=</span><span class="nv">$OPENSSL_L</span><span class="s2">/O=&lt;</span><span class="nv">$OPENSSL_O</span><span class="s2">/OU=</span><span class="nv">$OPENSSL_OU</span><span class="s2">/CN=</span><span class="nv">$OPENSSL_CN</span><span class="s2">/emailAddress=</span><span class="nv">$OPENSSL_EMAILADDRESS</span><span class="s2">&quot;</span> -keyout /etc/openssl/private/server.key -out /usr/pkg/etc/httpd/server.crt
 </code></pre></div>
 
 <h4 id="install-python-virtualenv">Install Python virtualenv<a class="headerlink" href="#install-python-virtualenv" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>sudo ln -sf /usr/pkg/bin/pip3.6 /usr/pkg/bin/pip
-sudo ln -s /usr/pkg/bin/python3.6 /usr/pkg/bin/python
-sudo ln -s /usr/pkg/bin/python3.6 /usr/pkg/bin/python3
-sudo pkgin install py36-virtualenv
-sudo ln -s /usr/pkg/bin/virtualenv-3.6 /usr/pkg/bin/virtualenv
+<div class="highlight"><pre><span></span><code>sudo ln -sf /usr/pkg/bin/pip3.7 /usr/pkg/bin/pip
+sudo ln -s /usr/pkg/bin/python3.7 /usr/pkg/bin/python
+sudo ln -s /usr/pkg/bin/python3.7 /usr/pkg/bin/python3
+sudo pkgin -y install py37-virtualenv
+sudo ln -s /usr/pkg/bin/virtualenv-3.7 /usr/pkg/bin/virtualenv
 </code></pre></div>
 
 <h4 id="install-ssdeep">Install ssdeep<a class="headerlink" href="#install-ssdeep" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo mkdir -p /usr/local/src
 sudo chown misp:users /usr/local/src
 cd /usr/local/src
-git clone https://github.com/ssdeep-project/ssdeep.git
+sudo -u misp git clone https://github.com/ssdeep-project/ssdeep.git
 cd ssdeep
-./bootstrap
-./configure --prefix=/usr
-make
+sudo -u misp ./bootstrap
+sudo -u misp ./configure --prefix=/usr
+sudo -u misp make
 sudo make install
 </code></pre></div>
 
@@ -1169,10 +1172,8 @@ sudo /etc/rc.d/redis start
 </code></pre></div>
 
 <h4 id="enable-mysqld">Enable mysqld<a class="headerlink" href="#enable-mysqld" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>sudo /usr/pkg/bin/mysql_install_db
-sudo cp /usr/pkg/share/examples/rc.d/mysqld /etc/rc.d/
+<div class="highlight"><pre><span></span><code>sudo cp /usr/pkg/share/examples/rc.d/mysqld /etc/rc.d/
 <span class="nb">echo</span> <span class="nv">mysqld</span><span class="o">=</span>yes <span class="p">|</span>sudo tee /etc/rc.conf.d/mysqld
-sudo chown -R mariadb:mariadb /var/mariadb
 sudo /etc/rc.d/mysqld start
 sudo /usr/pkg/bin/mysql_secure_installation
 <span class="c1"># TODO: Figure out how to properly bind to localhost</span>
@@ -1187,15 +1188,15 @@ sudo mkdir <span class="nv">$PATH_TO_MISP</span>
 sudo chown www:www <span class="nv">$PATH_TO_MISP</span>
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>
 sudo -u www git clone https://github.com/MISP/MISP.git <span class="nv">$PATH_TO_MISP</span>
-sudo -u www git submodule update --init --recursive
+sudo -u www git submodule update --progress --init --recursive
 <span class="c1"># Make git ignore filesystem permission differences for submodules</span>
 sudo -u www git submodule foreach --recursive git config core.filemode <span class="nb">false</span>
 
 <span class="c1"># Make git ignore filesystem permission differences</span>
 sudo -u www git config core.filemode <span class="nb">false</span>
 
-<span class="c1">#sudo pkgin install py-pip py3-pip libxslt py3-jsonschema</span>
-sudo pkgin install libxslt
+<span class="c1">#sudo pkgin -y install py-pip py3-pip libxslt py3-jsonschema</span>
+sudo pkgin -y install libxslt
 <span class="c1">#sudo virtualenv -ppython3 /usr/local/virtualenvs/MISP</span>
 sudo -u www virtualenv -ppython3 <span class="nv">$PATH_TO_MISP</span>/venv
 sudo -u www <span class="nv">HOME</span><span class="o">=</span>/tmp <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U pip
@@ -1498,7 +1499,7 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 </ul>
 <h4 id="misp-modules">MISP Modules<a class="headerlink" href="#misp-modules" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>#/usr/pkgsrc/graphics/opencv2/ (needs X11)
-sudo pkgin install jpeg yara
+sudo pkgin -y install jpeg yara
 cd /usr/local/src/
 git clone https://github.com/MISP/misp-modules.git
 cd misp-modules
@@ -1682,7 +1683,7 @@ sudo -u www <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quo
 <p>MISP has a pub/sub feature, using ZeroMQ.</p>
 </div>
 <h4 id="zeromq-depends-on-the-python-client-for-redis">ZeroMQ depends on the Python client for Redis<a class="headerlink" href="#zeromq-depends-on-the-python-client-for-redis" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>sudo pkgin install zeromq
+<div class="highlight"><pre><span></span><code>sudo pkgin -y install zeromq
 sudo -u www <span class="nv">HOME</span><span class="o">=</span>/tmp <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install pyzmq
 </code></pre></div>
 

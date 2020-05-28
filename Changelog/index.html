@@ -866,11 +866,26 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[type] git-commit-id. [Raphaël Vinot]</li>
 <li>[UI] Add event ID to page table. [Jakub Onderka]</li>
 </ul>
 <p>With more tabs, navigation between tabs with different events can be pain, when all of them has the same title.</p>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[usernamehelper] cheese. [iglocska]</li>
+<li>[PyMISP] Dump. [Raphaël Vinot]</li>
+<li>[correlation] When generating correlation, just fetch attributes that
+  can correlate. [Jakub Onderka]</li>
+<li>
+<p>[correlations] Refactored correlation saving. [Jakub Onderka]</p>
+</li>
+<li>
+<p>Always show other correlating value (useful for CIDR correlations)</p>
+</li>
+<li>Make correlation saving faster (move more work to database, do not fetch not necessary fields)</li>
+<li>Fix some small bugs</li>
+<li>[doc] Updates to OpenBSD Install (which fails ATM) [Steve Clement]</li>
 <li>[doc] Variable updates. [Steve Clement]</li>
 <li>[doc] Reshuffled docs. [Steve Clement]</li>
 <li>[doc] Update to OpenBSD 6.7. [Steve Clement]</li>
@@ -894,6 +909,8 @@
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[attribute] Do not allow for IPv4 CIDR masklen bigger than 32. [Jakub
+  Onderka]</li>
 <li>[internal] Notices in PHP 7.4 for login page. [Jakub Onderka]</li>
 <li>[UI] Bootstrap 2 doesn't support auto position for popover. [Jakub
   Onderka]</li>
@@ -915,10 +932,19 @@
 - [whitelist] Correclty refresh the cached values. Fix #3772. [mokaddem]</p>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #5937 from SteveClement/guides. [Steve Clement]</li>
-<li>Merge pull request #5936 from JakubOnderka/php74-errors. [Andras
-  Iklody]</li>
+<li>Merge pull request #5941 from MISP/git-commit-id. [Raphaël Vinot]</li>
 </ul>
+<p>new: [type] git-commit-id
+- Merge pull request #5942 from JakubOnderka/correlation-saving. [Andras
+  Iklody]</p>
+<p>Correlation saving
+- Merge pull request #5906 from JakubOnderka/fix-ipv4-cidr-validation.
+  [Andras Iklody]</p>
+<p>fix: [attribute] Do not allow for IPv4 CIDR masklen bigger than 32
+- Merge pull request #5938 from SteveClement/guides. [Steve Clement]
+- Merge pull request #5937 from SteveClement/guides. [Steve Clement]
+- Merge pull request #5936 from JakubOnderka/php74-errors. [Andras
+  Iklody]</p>
 <p>fix: [internal] Notices in PHP 7.4 for login page
 - Merge pull request #5935 from JakubOnderka/patch-106. [Andras Iklody]</p>
 <p>fix: [UI] Bootstrap 2 doesn't support auto position for popover
