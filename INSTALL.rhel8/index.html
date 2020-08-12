@@ -1508,7 +1508,9 @@ yumInstallCoreDeps <span class="o">()</span> <span class="o">{</span>
                    mariadb-server <span class="se">\</span>
                    python3-devel python3-pip python3-virtualenv <span class="se">\</span>
                    python3-policycoreutils <span class="se">\</span>
-                   libxslt-devel zlib-devel ssdeep-devel -y
+                   policycoreutils-python-utils <span class="se">\</span>
+                   libxslt-devel zlib-devel -y
+  <span class="c1"># ssdeep-devel available: dnf install https://extras.getpagespeed.com/release-el8-latest.rpm</span>
   sudo alternatives --set python /usr/bin/python3
 
   <span class="c1"># Enable and start redis</span>
@@ -1522,6 +1524,7 @@ yumInstallCoreDeps <span class="o">()</span> <span class="o">{</span>
        php-bcmath <span class="se">\</span>
        php-opcache <span class="se">\</span>
        php-json <span class="se">\</span>
+       php-zip <span class="se">\</span>
        php-gd -y
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_yumInstallCoreDeps.sh&gt;</span>
@@ -1540,14 +1543,7 @@ This guide installs PHP 7.2</p>
 <div class="highlight"><pre><span></span><code>sudo systemctl <span class="nb">enable</span> --now php-fpm.service
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_yumInstallHaveged.sh&gt;</span>
-<span class="c1"># GPG needs lots of entropy, haveged provides entropy</span>
-<span class="c1"># /!\ Only do this if you&#39;re not running rngd to provide randomness and your kernel randomness is not sufficient.</span>
-sudo yum install haveged -y
-sudo systemctl <span class="nb">enable</span> --now haveged.service
-<span class="c1"># &lt;snippet-end 0_yumInstallHaveged.sh&gt;</span>
-</code></pre></div>
-
+<p>TODO: Add a CentOS/RHEL rng thing, à la haveged (not in base anymore) or similar.</p>
 <h3 id="3-misp-code">3/ MISP code<a class="headerlink" href="#3-misp-code" title="Permanent link">&para;</a></h3>
 <h2 id="301-download-misp-code-using-git-in-varwww-directory">3.01/ Download MISP code using git in /var/www/ directory<a class="headerlink" href="#301-download-misp-code-using-git-in-varwww-directory" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 1_mispCoreInstall_RHEL.sh&gt;</span>
@@ -1640,7 +1636,8 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="nb">echo</span> /var/www/MISP/app/files/scripts/lief/build/api/python <span class="p">|</span><span class="nv">$SUDO_WWW</span> tee /var/www/MISP/venv/lib/python3.6/site-packages/lief.pth
 
   <span class="c1"># install magic, pydeep</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U python-magic git+https://github.com/kbandla/pydeep.git plyara
+<span class="c1">##$SUDO_WWW $PATH_TO_MISP/venv/bin/pip install -U python-magic git+https://github.com/kbandla/pydeep.git plyara</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U python-magic plyara
 
   <span class="c1"># install PyMISP</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP
@@ -2049,7 +2046,7 @@ Make sure that you use the same settings in the MISP Server Settings tool</p>
 <p>Make the workers' script executable and reload the systemd units :
 <div class="highlight"><pre><span></span><code>sudo chmod +x /var/www/MISP/app/Console/worker/start.sh
 sudo systemctl daemon-reload
-sudo checkmodule -M -m -o /tmp/workerstartsh.mod <span class="nv">$PATH_TO_MISP</span>/INSTALL/worker/startsh.te
+sudo checkmodule -M -m -o /tmp/workerstartsh.mod <span class="nv">$PATH_TO_MISP</span>/INSTALL/workerstartsh.te
 sudo semodule_package -o /tmp/workerstartsh.pp -m /tmp/workerstartsh.mod
 sudo semodule -i /tmp/workerstartsh.pp
 </code></pre></div></p>
