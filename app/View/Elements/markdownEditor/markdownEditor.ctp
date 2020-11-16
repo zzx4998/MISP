@@ -19,6 +19,7 @@
             }
         }
         echo $this->element('markdownEditor/markdownEditorHelpModal', ['additionalMarkdownHelpModalElements' => $additionalMarkdownHelpModalElements]);
+        echo $this->element('markdownEditor/markdownEditorOptionsModal');
     }
 ?>
 
@@ -104,11 +105,19 @@
             </a>
         <?php endif; ?>
     </div>
-    <?php if ($canEdit && !$insideModal): ?>
-        <button type="button" class="btn btn-primary" onclick="showHelp()">
-            <i class="<?= $this->FontAwesome->getClass('question-circle') ?> fa-question-circle"></i>
-            <?= __('Help') ?>
-        </button>
+    <?php if (!$insideModal): ?>
+        <div class="btn-group">
+            <?php if ($canEdit): ?>
+                <button type="button" class="btn btn-primary" onclick="showHelp()">
+                    <i class="<?= $this->FontAwesome->getClass('question-circle') ?>"></i>
+                    <?= __('Help') ?>
+                </button>
+            <?php endif; ?>
+            <button type="button" class="btn btn-primary" onclick="showOptions()">
+                <i class="<?= $this->FontAwesome->getClass('cog') ?>"></i>
+                <?= __('Options') ?>
+            </button>
+        </div>
     <?php endif; ?>
 </div>
 

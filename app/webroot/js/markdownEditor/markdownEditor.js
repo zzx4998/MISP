@@ -468,6 +468,10 @@ function showHelp() {
     $('#genericModal.markdown-modal-helper').modal();
 }
 
+function showOptions() {
+    $('#genericModal.markdown-modal-options').modal();
+}
+
 function renderMarkdown() {
     var toRender = getEditorData()
     var result = md.render(toRender)
