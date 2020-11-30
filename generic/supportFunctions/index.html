@@ -665,6 +665,19 @@ usage <span class="o">()</span> <span class="o">{</span>
   space
   <span class="nb">echo</span> -e <span class="s2">&quot;Recommended is either a barebone MISP install (ideal for syncing from other instances) or&quot;</span>
   <span class="nb">echo</span> -e <span class="s2">&quot;MISP + modules - </span><span class="si">${</span><span class="nv">SCRIPT_NAME</span><span class="si">}</span><span class="s2"> -c -M&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;Interesting environment variables that get considered are:&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;MISP_USER/MISP_PASSWORD # Local username on machine, default: misp/opensslGeneratedPassword&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;PATH_TO_MISP # Where MISP will be installed, default: /var/www/MISP (recommended)&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;DBHOST/DBNAME # database hostname, MISP database name, default: localhost/misp&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;DBUSER_ADMIN/DBPASSWORD_ADMIN # MySQL admin user, default: root/opensslGeneratedPassword&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;DBUSER_MISP/DBPASSWORD_MISP # MISP database user, default: misp/opensslGeneratedPassword&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;&quot;</span>
+  <span class="nb">echo</span> -e <span class="s2">&quot;You need to export the variable(s) to be taken into account. (or specified in-line when invoking INSTALL.sh)&quot;</span>
   space
 <span class="o">}</span>
 
@@ -995,10 +1008,11 @@ checkID <span class="o">()</span> <span class="o">{</span>
     clean &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
     <span class="nb">exit</span> <span class="m">1</span>
   <span class="k">elif</span> <span class="o">[[</span> <span class="k">$(</span>id <span class="nv">$MISP_USER</span> &gt;/dev/null<span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$UNATTENDED</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
       <span class="nb">echo</span> <span class="s2">&quot;There is NO user called &#39;</span><span class="nv">$MISP_USER</span><span class="s2">&#39; create a user &#39;</span><span class="nv">$MISP_USER</span><span class="s2">&#39; (y) or continue as </span><span class="nv">$USER</span><span class="s2"> (n)? (y/n) &quot;</span>
       <span class="nb">read</span> ANSWER
       <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ANSWER</span> <span class="p">|</span>tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
+      <span class="nv">INSTALL_USER</span><span class="o">=</span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span>
     <span class="k">else</span>
       <span class="nv">ANSWER</span><span class="o">=</span><span class="s2">&quot;y&quot;</span>
     <span class="k">fi</span>
