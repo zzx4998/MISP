@@ -1093,7 +1093,7 @@ upgrade <span class="o">()</span> <span class="o">{</span>
   <span class="nv">Autho</span><span class="o">=</span><span class="s2">&quot;Authorization:&quot;</span>
   <span class="nv">CT</span><span class="o">=</span><span class="s2">&quot;Content-Type:&quot;</span>
   <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s2">&quot;https://127.0.0.1&quot;</span>
-  <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app <span class="p">;</span> <span class="nv">$SUDO_WWW</span> php composer.phar update <span class="nv">$SUDO_WWW</span> php composer.phar self-update
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> sh -c <span class="s2">&quot;cd </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/app ; php composer.phar update ; php composer.phar self-update&quot;</span>
 
   <span class="k">for</span> URN in <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;galaxies warninglists noticelists objectTemplates taxonomies&quot;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
     curl --header <span class="s2">&quot;</span><span class="nv">$Autho</span><span class="s2"> </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;</span><span class="nv">$Acc</span><span class="s2"> </span><span class="nv">$headerJSON</span><span class="s2">&quot;</span> --header <span class="s2">&quot;</span><span class="nv">$CT</span><span class="s2"> </span><span class="nv">$headerJSON</span><span class="s2">&quot;</span> -k -X POST <span class="nv">$MISP_BASEURL</span>/<span class="nv">$URN</span>/update
@@ -1352,7 +1352,7 @@ installDeps <span class="o">()</span> <span class="o">{</span>
   mariadb-server <span class="se">\</span>
   apache2 apache2-doc apache2-utils <span class="se">\</span>
   python3-dev python3-pip libpq5 libjpeg-dev libfuzzy-dev ruby asciidoctor <span class="se">\</span>
-  libxml2-dev libxslt1-dev zlib1g-dev python3-setuptools expect
+  libxml2-dev libxslt1-dev zlib1g-dev python3-setuptools
 
   installRNG
 <span class="o">}</span>
@@ -1478,7 +1478,7 @@ gitPullAllRCLOCAL <span class="o">()</span> <span class="o">{</span>
 
 <span class="c1"># Main composer function</span>
 composer <span class="o">()</span> <span class="o">{</span>
-  sudo mkdir /var/www/.composer <span class="p">;</span> sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> /var/www/.composer
+  sudo mkdir -p /var/www/.composer <span class="p">;</span> sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> /var/www/.composer
   <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> sh -c <span class="s2">&quot;cd </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/app ; php composer.phar install&quot;</span>
 <span class="o">}</span>
 

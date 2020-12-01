@@ -1482,6 +1482,7 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[auth] Allow to enforce auth plugin authentication. [Jakub Onderka]</li>
 <li>[shibb] Test for organisation UUID HTTP header. [Jakub Onderka]</li>
 <li>[shibb] Allow to get organisation UUID from HTTP headers. [Jakub
   Onderka]</li>
@@ -1494,6 +1495,10 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[installer] Leveled installer out. [Steve Clement]</li>
+<li>[installer] Update to latest. [Steve Clement]</li>
+<li>[installer] More fixes to replayability. [Steve Clement]</li>
+<li>[UI] Normalize date format to match rest of MISP. [Jakub Onderka]</li>
 <li>[installer] Update to latest. [Steve Clement]</li>
 <li>[installer] misp-modules install refactor. [Steve Clement]</li>
 <li>[installer] Refactor the core MISP checkout. [Steve Clement]</li>
@@ -1551,6 +1556,8 @@
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[sightings] Support mysql in sql_mode=only_full_group_by. [Jakub
+  Onderka]</li>
 <li><img alt="🔒" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/1f512.svg" title=":lock:" /> Remove hashed advanced keys from response. [Jakub Onderka]</li>
 <li>
 <p>[bindmodel] added reset = false to the linking of users to authkeys.
@@ -1584,10 +1591,27 @@
 <p>S/MIME label misaligned</p>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #6668 from SteveClement/guides. [Steve Clement]</li>
-<li>Merge pull request #6665 from JakubOnderka/remove-hashed-keys. [Jakub
-  Onderka]</li>
+<li>Merge pull request #6675 from SteveClement/guides. [Steve Clement]</li>
 </ul>
+<p>chg: [installer] Leveled installer out
+- Merge pull request #6674 from SteveClement/guides. [Steve Clement]</p>
+<p>chg: [installer] More fixes to replayability.
+- Merge pull request #6673 from JakubOnderka/news-date-format-change.
+  [Jakub Onderka]</p>
+<p>chg: [UI] Normalize date format to match rest of MISP
+- Merge pull request #6672 from JakubOnderka/fix-full-group. [Jakub
+  Onderka]</p>
+<p>fix: [sightings] Support mysql in sql_mode=only_full_group_by
+- Merge pull request #6656 from JakubOnderka/auth-plugin-enforce. [Jakub
+  Onderka]</p>
+<p>new: [auth] Allow to enforce auth plugin authentication
+- Merge pull request #6669 from StefanKelm/2.4. [Andras Iklody]</p>
+<p>Update event-timeline.js
+- Update event-timeline.js. [StefanKelm]</p>
+<p>Few typos...
+- Merge pull request #6668 from SteveClement/guides. [Steve Clement]
+- Merge pull request #6665 from JakubOnderka/remove-hashed-keys. [Jakub
+  Onderka]</p>
 <p>fix: <img alt="🔒" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/1f512.svg" title=":lock:" /> Remove hashed advanced keys from response
 - Merge pull request #6664 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [fmt] Make it look better
