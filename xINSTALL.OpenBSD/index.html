@@ -412,8 +412,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-openbsd-67-amd64" class="md-nav__link">
-    for OpenBSD 6.7-amd64
+  <a href="#for-openbsd-68-amd64" class="md-nav__link">
+    for OpenBSD 6.8-amd64
   </a>
   
     <nav class="md-nav">
@@ -596,6 +596,13 @@
           <li class="md-nav__item">
   <a href="#apache2-only" class="md-nav__link">
     Apache2 only
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#php7-ports" class="md-nav__link">
+    php7 ports
   </a>
   
 </li>
@@ -1008,8 +1015,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#for-openbsd-67-amd64" class="md-nav__link">
-    for OpenBSD 6.7-amd64
+  <a href="#for-openbsd-68-amd64" class="md-nav__link">
+    for OpenBSD 6.8-amd64
   </a>
   
     <nav class="md-nav">
@@ -1197,6 +1204,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#php7-ports" class="md-nav__link">
+    php7 ports
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#etcphp-74ini" class="md-nav__link">
     /etc/php-7.4.ini
   </a>
@@ -1369,7 +1383,7 @@
                 
                 
                 <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h1>
-<h2 id="for-openbsd-67-amd64">for OpenBSD 6.7-amd64<a class="headerlink" href="#for-openbsd-67-amd64" title="Permanent link">&para;</a></h2>
+<h2 id="for-openbsd-68-amd64">for OpenBSD 6.8-amd64<a class="headerlink" href="#for-openbsd-68-amd64" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This is not fully working yet. Mostly it is a template for our ongoing documentation efforts <img alt="🕷️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/1f577.svg" title=":spider:" />
@@ -1544,7 +1558,7 @@ doas tar -xzphf /tmp/xshare<span class="k">$(</span>uname -r<span class="p">|</s
 </code></pre></div>
 
 <h4 id="install-misc-dependencies">Install misc dependencies<a class="headerlink" href="#install-misc-dependencies" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>doas pkg_add -v curl git python--%3.7 redis libmagic autoconf--%2.69 automake--%1.16 libtool unzip--iconv
+<div class="highlight"><pre><span></span><code>doas pkg_add -v curl git python--%3.8 redis libmagic autoconf--%2.69 automake--%1.16 libtool unzip--iconv
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code>doas pkg_add -v gnupg--%gnupg2
@@ -1672,8 +1686,8 @@ OPENSSL_EMAILADDRESS=&#39;info@localhost&#39;
 
 <h4 id="install-python-virtualenv">Install Python virtualenv<a class="headerlink" href="#install-python-virtualenv" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>doas pkg_add -v py3-virtualenv py3-pip
-doas ln -sf /usr/local/bin/pip3.7 /usr/local/bin/pip
-doas ln -s /usr/local/bin/python3.7 /usr/local/bin/python
+doas ln -sf /usr/local/bin/pip3.8 /usr/local/bin/pip
+doas ln -s /usr/local/bin/python3.8 /usr/local/bin/python
 doas mkdir /usr/local/virtualenvs
 doas virtualenv-3 /usr/local/virtualenvs/MISP
 </code></pre></div>
@@ -1687,13 +1701,8 @@ doas virtualenv-3 /usr/local/virtualenvs/MISP
 doas pkg_add -v fcgi-cgi fcgi
 </code></pre></div>
 
-<div class="admonition notice">
-<p class="admonition-title">Notice</p>
-<p>php-5.6 is marked as end-of-life starting December 2018, use php 7.0 instead.
-Option 2.
-If on OpenBSD 6.3, upgrade to 6.7 to make your life much easier.</p>
-</div>
-<div class="highlight"><pre><span></span><code>doas pkg_add -v php-mysqli--%7.4 php-pcntl--%7.4 php-pdo_mysql--%7.4 php-apache--%7.4 pecl74-redis php-gd--%7.4 php-zip--%7.4
+<h4 id="php7-ports">php7 ports<a class="headerlink" href="#php7-ports" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>doas pkg_add -v php-mysqli--%7.4 php-pcntl--%7.4 php-pdo_mysql--%7.4 php-apache--%7.4 pecl74-redis php-gd--%7.4 php-zip--%7.4 php-bcmath--%7.4 php-intl--%7.4
 </code></pre></div>
 
 <h4 id="etcphp-74ini">/etc/php-7.4.ini<a class="headerlink" href="#etcphp-74ini" title="Permanent link">&para;</a></h4>
