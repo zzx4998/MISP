@@ -1655,8 +1655,8 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># BROKEN: This needs to be tested on RHEL/CentOS</span>
   <span class="c1">##sudo apt-get install cmake libcaca-dev liblua5.3-dev -y</span>
   <span class="nb">cd</span> /tmp
-  <span class="o">[[</span> ! -d <span class="s2">&quot;faup&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/faup.git faup
-  <span class="o">[[</span> ! -d <span class="s2">&quot;gtcaca&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/gtcaca.git gtcaca
+  <span class="o">[[</span> ! -d <span class="s2">&quot;faup&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/stricaud/faup.git faup
+  <span class="o">[[</span> ! -d <span class="s2">&quot;gtcaca&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/stricaud/gtcaca.git gtcaca
   sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup gtcaca
   <span class="nb">cd</span> gtcaca
   <span class="nv">$SUDO_CMD</span> mkdir -p build

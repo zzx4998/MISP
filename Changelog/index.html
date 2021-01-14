@@ -1552,6 +1552,10 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[doc] Added doc about how to change the installer generator. [Steve
+  Clement]</li>
+<li>[type] favicon-mmh3 is the murmur3 hash of a favicon as used in
+  Shodan. [Alexandre Dulaunoy]</li>
 <li>
 <p>[Statistics shell] Added new statistics shell. [iglocska]</p>
 </li>
@@ -1564,6 +1568,24 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[installer] Update to latest. [Steve Clement]</li>
+<li>[git] Made the checkouts more proxy friendly. [Steve Clement]</li>
+<li>[misp-galaxy] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[taxonomies] updated. [Alexandre Dulaunoy]</li>
+<li>[misp-objects] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[PyMISP] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[warning-lists] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[debug] cleanup. [iglocska]</li>
+<li>[misp-galaxy] updated. [Alexandre Dulaunoy]</li>
+<li>[misp-objects] updated. [Alexandre Dulaunoy]</li>
+<li>[taxonomies] updated. [Alexandre Dulaunoy]</li>
+<li>[misp-objects] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[PyMISP] updated. [Alexandre Dulaunoy]</li>
+<li>[PyMISP] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[warning-list] updated to the latest version. [Alexandre Dulaunoy]</li>
+<li>[doc] From Travis to GH action. [Alexandre Dulaunoy]</li>
+<li>[veracode] removed. [Alexandre Dulaunoy]</li>
+<li>[installer] Latest update. [Steve Clement]</li>
 <li>[misp-objects] updated to the latest version. [Alexandre Dulaunoy]</li>
 <li>[installer] update to latest. [Steve Clement]</li>
 <li>[fix] typo. [Steve Clement]</li>
@@ -1573,18 +1595,35 @@
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[installer] Typo. [Steve Clement]</li>
-<li>[statistics] Local org flag fixed to show the correct count.
-  [iglocska]</li>
-<li>[mistake in a comment fixed] [iglocska]</li>
-<li>[internal] sharing_group graph missing org_ids - throwing notices.
-  [iglocska]</li>
 <li>
-<p>[internal] further promises removed from the galaxy model. [iglocska]</p>
+<p>[S/MIME] don't sign e-mails if no signing key is set. [iglocska]</p>
 </li>
 <li>
-<p>easier than getting people to stop using EOL software</p>
+<p>fixes e-mails not going out on instances where no signing key was provided</p>
 </li>
+<li>[objects] breakonduplicate fixed. [iglocska]</li>
+<li>MIssing dependency. [Raphaël Vinot]</li>
+<li>Call the security test suite properly. [Raphaël Vinot]</li>
+<li>Remove call to python script out of the virtenv. [Raphaël Vinot]</li>
+<li>[sighting] Order must contain group for some mysql servers. [Jakub
+  Onderka]</li>
+<li>[stix2 import] Checking if attack-pattern, course-of-action and
+  vulnerability names are known galaxies before importing them as MISP
+  object. [chrisr3d]</li>
+<li>[tags] truncate tag names that are too long. [Andras Iklody]</li>
+</ul>
+<p>Otherwise we run into issues on the DB level anyway. For the future, perhaps change the field length.
+- [installer] Typo. [Steve Clement]
+- [search] don't append the same quicksearch value more than once in the
+  URL. [iglocska]
+- [statistics] Local org flag fixed to show the correct count.
+  [iglocska]
+- [mistake in a comment fixed] [iglocska]
+- [internal] sharing_group graph missing org_ids - throwing notices.
+  [iglocska]
+- [internal] further promises removed from the galaxy model. [iglocska]</p>
+<ul>
+<li>easier than getting people to stop using EOL software</li>
 <li>[installer] type in php-bcmath package. [Steve Clement]</li>
 <li>[installer] forgot to add sfv. [Steve Clement]</li>
 <li>
@@ -1597,10 +1636,58 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]</li>
-<li>Merge pull request #6767 from SteveClement/guides. [Steve Clement]</li>
-<li>Merge pull request #6764 from Natsec/patch-1. [Andras Iklody]</li>
+<li>Merge pull request #6858 from SteveClement/guides. [Steve Clement]</li>
 </ul>
+<p>new: [doc] Added doc about how to change the installer generator
+- Merge pull request #6835 from MISP/dependabot/pip/lxml-4.6.2.
+  [Alexandre Dulaunoy]</p>
+<p>build(deps): bump lxml from 4.3.3 to 4.6.2
+- Build(deps): bump lxml from 4.3.3 to 4.6.2. [dependabot[bot]]</p>
+<p>Bumps <a href="https://github.com/lxml/lxml">lxml</a> from 4.3.3 to 4.6.2.
+  - <a href="https://github.com/lxml/lxml/releases">Release notes</a>
+  - <a href="https://github.com/lxml/lxml/blob/master/CHANGES.txt">Changelog</a>
+  - <a href="https://github.com/lxml/lxml/compare/lxml-4.3.3...lxml-4.6.2">Commits</a>
+- Merge pull request #6825 from StefanKelm/2.4. [Alexandre Dulaunoy]</p>
+<p>Update index.ctp
+- Update index.ctp. [StefanKelm]</p>
+<p>Tinies of typos...
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #6826 from SteveClement/guides. [Steve Clement]</p>
+<p>chg: [git] Made the checkouts more proxy friendly
+- Fix git urls to https (users behind proxy) [Alexandre Dulaunoy]</p>
+<p>Fix git urls to https (users behind proxy)
+- Merge pull request #6820 from MISP/Rafiot-patch-6. [Raphaël Vinot]</p>
+<p>[Test] Run the security suite from the virtualenv
+- [Test] Run the security suite from the virtualenv. [Raphaël Vinot]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [Alexandre
+  Dulaunoy]
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #6747 from legoguy1000/ja3_zeek_intel_rules.
+  [Alexandre Dulaunoy]</p>
+<p>Create JA3 Hash Zeek Intel Rules
+- JA3 Zeek Intel Rules. [Alex Resnick]
+- Merge pull request #6799 from simonflood/patch-1. [Alexandre Dulaunoy]</p>
+<p>INSTALL.rhel8.md - update EoL for CentOS 8
+- INSTALL.rhel8.md - update EoL for CentOS 8. [Simon Flood]</p>
+<p>Maintenance for CentOS 8 will now end on 31 December 2021
+- Merge pull request #6795 from sdenel/patch-2. [Alexandre Dulaunoy]</p>
+<p>Typo in Server.php: currenty -&gt; currently
+- Typo in Server.php. [Simon DENEL]
+- Veracode added. [Alexandre Dulaunoy]
+- CodeQL added. [Alexandre Dulaunoy]
+- HandlerSSL should be true. [Alexandre Dulaunoy]
+- Merge pull request #6785 from StefanKelm/2.4. [Alexandre Dulaunoy]</p>
+<p>Typos
+- Update indexForEvent.ctp. [StefanKelm]
+- Update importReportFromUrl.ctp. [StefanKelm]
+- Merge pull request #6783 from FafnerKeyZee/patch-1. [Alexandre
+  Dulaunoy]</p>
+<p>Add the possibility to have a '-' in the baseurl
+- Add the possibility to have a '-' in the baseurl. [Fafner [<em>KeyZee</em>]]</p>
+<p>With the actual regex in testBaseURL, we can not have a '-' inside the BaseURL, I did a quick fix
+- Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
+- Merge pull request #6767 from SteveClement/guides. [Steve Clement]
+- Merge pull request #6764 from Natsec/patch-1. [Andras Iklody]</p>
 <p>Typo caused fail of dependency installation
 - Typo caused fail of dependency installation. [Kamil]</p>
 <p>Hello,</p>

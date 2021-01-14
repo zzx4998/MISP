@@ -1068,8 +1068,8 @@ sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class
 <span class="c1"># FIXME: Remove libfaup etc once the egg has the library baked-in</span>
 sudo apt-get install cmake libcaca-dev liblua5.3-dev -y
 <span class="nb">cd</span> /tmp
-<span class="o">[[</span> ! -d <span class="s2">&quot;faup&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/faup.git faup
-<span class="o">[[</span> ! -d <span class="s2">&quot;gtcaca&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/gtcaca.git gtcaca
+<span class="o">[[</span> ! -d <span class="s2">&quot;faup&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/stricaud/faup.git faup
+<span class="o">[[</span> ! -d <span class="s2">&quot;gtcaca&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/stricaud/gtcaca.git gtcaca
 sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup gtcaca
 <span class="nb">cd</span> gtcaca
 <span class="nv">$SUDO_CMD</span> mkdir -p build
@@ -1516,8 +1516,8 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
   <span class="k">fi</span>
 
   <span class="c1"># Install faup/gtcaca</span>
-  <span class="o">[[</span> ! -d <span class="s2">&quot;faup&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/faup.git faup<span class="p">;</span> <span class="k">done</span>
-  <span class="o">[[</span> ! -d <span class="s2">&quot;gtcaca&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone git://github.com/stricaud/gtcaca.git gtcaca<span class="p">;</span> <span class="k">done</span>
+  <span class="o">[[</span> ! -d <span class="s2">&quot;faup&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/stricaud/faup.git faup<span class="p">;</span> <span class="k">done</span>
+  <span class="o">[[</span> ! -d <span class="s2">&quot;gtcaca&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/stricaud/gtcaca.git gtcaca<span class="p">;</span> <span class="k">done</span>
   sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup gtcaca
   <span class="c1"># Install gtcaca</span>
   <span class="nb">cd</span> gtcaca
@@ -1886,8 +1886,8 @@ mail2misp <span class="o">()</span> <span class="o">{</span>
   sudo apt-get install cmake libcaca-dev liblua5.3-dev -y
   false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/MISP/mail_to_misp.git<span class="p">;</span> <span class="k">done</span>
   <span class="c1">## TODO: The below fails miserably (obviously) if faup/gtcac dirs exist, let&#39;s just make the dangerous assumption (for the sake of the installer, that they exist)</span>
-  <span class="c1">##[[ ! -d &quot;faup&quot; ]] &amp;&amp; false; while [[ $? -ne 0 ]]; do $SUDO_CMD git clone git://github.com/stricaud/faup.git faup; done</span>
-  <span class="c1">##[[ ! -d &quot;gtcaca&quot; ]] &amp;&amp; false; while [[ $? -ne 0 ]]; do $SUDO_CMD git clone git://github.com/stricaud/gtcaca.git gtcaca; done</span>
+  <span class="c1">##[[ ! -d &quot;faup&quot; ]] &amp;&amp; false; while [[ $? -ne 0 ]]; do $SUDO_CMD git clone https://github.com/stricaud/faup.git faup; done</span>
+  <span class="c1">##[[ ! -d &quot;gtcaca&quot; ]] &amp;&amp; false; while [[ $? -ne 0 ]]; do $SUDO_CMD git clone https://github.com/stricaud/gtcaca.git gtcaca; done</span>
   sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup mail_to_misp gtcaca
   <span class="nb">cd</span> gtcaca
   <span class="nv">$SUDO_CMD</span> mkdir -p build

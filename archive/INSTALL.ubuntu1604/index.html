@@ -2245,8 +2245,8 @@ mail2misp <span class="o">()</span> <span class="o">{</span>
   sudo apt-get install cmake libcaca-dev liblua5.3-dev -y
   false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/MISP/mail_to_misp.git<span class="p">;</span> <span class="k">done</span>
   <span class="c1">## TODO: The below fails miserably (obviously) if faup/gtcac dirs exist, let&#39;s just make the dangerous assumption (for the sake of the installer, that they exist)</span>
-  <span class="c1">##[[ ! -d &quot;faup&quot; ]] &amp;&amp; false; while [[ $? -ne 0 ]]; do $SUDO_CMD git clone git://github.com/stricaud/faup.git faup; done</span>
-  <span class="c1">##[[ ! -d &quot;gtcaca&quot; ]] &amp;&amp; false; while [[ $? -ne 0 ]]; do $SUDO_CMD git clone git://github.com/stricaud/gtcaca.git gtcaca; done</span>
+  <span class="c1">##[[ ! -d &quot;faup&quot; ]] &amp;&amp; false; while [[ $? -ne 0 ]]; do $SUDO_CMD git clone https://github.com/stricaud/faup.git faup; done</span>
+  <span class="c1">##[[ ! -d &quot;gtcaca&quot; ]] &amp;&amp; false; while [[ $? -ne 0 ]]; do $SUDO_CMD git clone https://github.com/stricaud/gtcaca.git gtcaca; done</span>
   sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup mail_to_misp gtcaca
   <span class="nb">cd</span> gtcaca
   <span class="nv">$SUDO_CMD</span> mkdir -p build
