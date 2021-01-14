@@ -26,6 +26,7 @@ class GpgTool
             'homedir' => $homedir,
             'gpgconf' => Configure::read('GnuPG.gpgconf'),
             'binary' => Configure::read('GnuPG.binary') ?: '/usr/bin/gpg',
+            'debug' => 1
         );
 
         return new CryptGpgExtended($options);
