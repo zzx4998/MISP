@@ -406,6 +406,7 @@ class SendEmail
 
                 $signed = true;
             } catch (Exception $e) {
+                file_put_contents(APP . 'tmp/logs/hacky_debug.log', $e->getMessage(), FILE_APPEND);
                 throw new SendEmailException("The message could not be signed by GPG.", 0, $e);
             }
         }
