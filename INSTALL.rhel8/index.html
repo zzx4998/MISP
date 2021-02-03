@@ -1808,12 +1808,12 @@ prepareDB_RHEL <span class="o">()</span> <span class="o">{</span>
 
   sudo systemctl restart mariadb
 
-  mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;CREATE DATABASE </span><span class="nv">$DBNAME</span><span class="s2">;&quot;</span>
-  mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT USAGE on *.* to </span><span class="nv">$DBUSER_MISP</span><span class="s2">@localhost IDENTIFIED by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
-  mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT ALL PRIVILEGES on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
-  mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s1">&#39;FLUSH PRIVILEGES;&#39;</span>
+  mysql -h <span class="nv">$DBHOST</span> -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;CREATE DATABASE </span><span class="nv">$DBNAME</span><span class="s2">;&quot;</span>
+  mysql -h <span class="nv">$DBHOST</span> -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT USAGE on *.* to </span><span class="nv">$DBUSER_MISP</span><span class="s2">@localhost IDENTIFIED by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
+  mysql -h <span class="nv">$DBHOST</span> -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;GRANT ALL PRIVILEGES on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
+  mysql -h <span class="nv">$DBHOST</span> -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s1">&#39;FLUSH PRIVILEGES;&#39;</span>
 
-  <span class="nv">$SUDO_WWW</span> cat <span class="nv">$PATH_TO_MISP</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
+  <span class="nv">$SUDO_WWW</span> cat <span class="nv">$PATH_TO_MISP</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -h <span class="nv">$DBHOST</span> -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 1_prepareDB_RHEL.sh&gt;</span>
 </code></pre></div>
@@ -2290,6 +2290,7 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Various plugin sightings settings</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_policy&quot;</span> <span class="m">0</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_anonymise&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_anonymise_as&quot;</span> <span class="m">1</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_range&quot;</span> <span class="m">365</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_sighting_db_enable&quot;</span> <span class="nb">false</span>
 
@@ -2372,7 +2373,7 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
 updateGOWNT <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># AUTH_KEY Place holder in case we need to **curl** somehing in the future</span>
   <span class="c1"># </span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_MYSQL</span> -- mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1 &gt; /tmp/auth.key
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_MYSQL</span> -- mysql -h <span class="nv">$DBHOST</span> -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1 &gt; /tmp/auth.key
   <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>cat /tmp/auth.key<span class="k">)</span>
   rm /tmp/auth.key
 

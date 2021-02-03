@@ -1077,7 +1077,7 @@ preInstall <span class="o">()</span> <span class="o">{</span>
   <span class="nv">DBPASSWORD_MISP</span><span class="o">=</span><span class="k">$(</span>cat database.php <span class="p">|</span>grep -v // <span class="p">|</span>grep -e password <span class="p">|</span>tr -d <span class="se">\&#39;</span> <span class="p">|</span>tr -d <span class="se">\ </span><span class="p">|</span>tr -d , <span class="p">|</span>tr -d <span class="se">\&gt;</span> <span class="p">|</span>cut -f <span class="m">2</span> -d<span class="o">=</span><span class="k">)</span>
   <span class="nv">DBUSER_MISP</span><span class="o">=</span><span class="k">$(</span>cat database.php <span class="p">|</span>grep -v // <span class="p">|</span>grep -e login <span class="p">|</span>tr -d <span class="se">\&#39;</span> <span class="p">|</span>tr -d <span class="se">\ </span><span class="p">|</span>tr -d , <span class="p">|</span>tr -d <span class="se">\&gt;</span> <span class="p">|</span>cut -f <span class="m">2</span> -d<span class="o">=</span><span class="k">)</span>
   <span class="nv">DBNAME</span><span class="o">=</span><span class="k">$(</span>cat database.php <span class="p">|</span>grep -v // <span class="p">|</span>grep -e database <span class="p">|</span>tr -d <span class="se">\&#39;</span> <span class="p">|</span>tr -d <span class="se">\ </span><span class="p">|</span>tr -d , <span class="p">|</span>tr -d <span class="se">\&gt;</span> <span class="p">|</span>cut -f <span class="m">2</span> -d<span class="o">=</span><span class="k">)</span>
-  <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql --disable-column-names -B  -u <span class="nv">$DBUSER_MISP</span> -p<span class="s2">&quot;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span> <span class="nv">$DBNAME</span> -e <span class="s1">&#39;SELECT authkey FROM users WHERE role_id=1 LIMIT 1&#39;</span><span class="k">)</span>
+  <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql -h <span class="nv">$DBHOST</span> --disable-column-names -B  -u <span class="nv">$DBUSER_MISP</span> -p<span class="s2">&quot;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span> <span class="nv">$DBNAME</span> -e <span class="s1">&#39;SELECT authkey FROM users WHERE role_id=1 LIMIT 1&#39;</span><span class="k">)</span>
 
   <span class="c1"># Check if db exists</span>
   <span class="o">[[</span> -d <span class="s2">&quot;/var/lib/mysql/</span><span class="nv">$DBNAME</span><span class="s2">&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">MISP_DB_DIR_EXISTS</span><span class="o">=</span><span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;/var/lib/mysql/</span><span class="nv">$DBNAME</span><span class="s2"> exists&quot;</span>
@@ -1233,6 +1233,7 @@ installRNG <span class="o">()</span> <span class="o">{</span>
 kaliUpgrade <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Running various Kali upgrade tasks&quot;</span>
   checkAptLock
+  sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt update
   sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt install --only-upgrade bash libc6 -y
   sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt autoremove -y
 <span class="o">}</span>
@@ -1532,8 +1533,8 @@ nuke <span class="o">()</span> <span class="o">{</span>
   sleep <span class="m">10</span>
   sudo rm -rvf /usr/local/src/<span class="o">{</span>misp-modules,viper,mail_to_misp,LIEF,faup<span class="o">}</span>
   sudo rm -rvf /var/www/MISP
-  sudo mysqladmin drop misp
-  sudo mysql -e <span class="s2">&quot;DROP USER misp@localhost&quot;</span>
+  sudo mysqladmin -h <span class="nv">$DBHOST</span> drop misp
+  sudo mysql -h <span class="nv">$DBHOST</span> -e <span class="s2">&quot;DROP USER misp@localhost&quot;</span>
 <span class="o">}</span>
 
 <span class="c1"># Final function to let the user know what happened</span>

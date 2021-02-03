@@ -1505,7 +1505,7 @@ installDepsPhp74 <span class="o">()</span> <span class="o">{</span>
   libapache2-mod-php <span class="se">\</span>
   php php-cli <span class="se">\</span>
   php-dev <span class="se">\</span>
-  php-json php-xml php-mysql php-opcache php-readline php-mbstring php-zip <span class="se">\</span>
+  php-json php-xml php-mysql php7.4-opcache php-readline php-mbstring php-zip <span class="se">\</span>
   php-redis php-gnupg <span class="se">\</span>
   php-intl php-bcmath <span class="se">\</span>
   php-gd
@@ -1660,25 +1660,25 @@ prepareDB <span class="o">()</span> <span class="o">{</span>
 
     debug <span class="s2">&quot;Setting up database&quot;</span>
     <span class="c1"># Kill the anonymous users</span>
-    sudo mysql -e <span class="s2">&quot;DROP USER IF EXISTS &#39;&#39;@&#39;localhost&#39;&quot;</span>
+    sudo mysql -h <span class="nv">$DBHOST</span> -e <span class="s2">&quot;DROP USER IF EXISTS &#39;&#39;@&#39;localhost&#39;&quot;</span>
     <span class="c1"># Because our hostname varies we&#39;ll use some Bash magic here.</span>
-    sudo mysql -e <span class="s2">&quot;DROP USER IF EXISTS &#39;&#39;@&#39;</span><span class="k">$(</span>hostname<span class="k">)</span><span class="s2">&#39;&quot;</span>
+    sudo mysql -h <span class="nv">$DBHOST</span> -e <span class="s2">&quot;DROP USER IF EXISTS &#39;&#39;@&#39;</span><span class="k">$(</span>hostname<span class="k">)</span><span class="s2">&#39;&quot;</span>
     <span class="c1"># Kill off the demo database</span>
-    sudo mysql -e <span class="s2">&quot;DROP DATABASE IF EXISTS test&quot;</span>
+    sudo mysql -h <span class="nv">$DBHOST</span> -e <span class="s2">&quot;DROP DATABASE IF EXISTS test&quot;</span>
     <span class="c1"># No root remote logins</span>
-    sudo mysql -e <span class="s2">&quot;DELETE FROM mysql.user WHERE User=&#39;root&#39; AND Host NOT IN (&#39;localhost&#39;, &#39;127.0.0.1&#39;, &#39;::1&#39;)&quot;</span>
+    sudo mysql -h <span class="nv">$DBHOST</span> -e <span class="s2">&quot;DELETE FROM mysql.user WHERE User=&#39;root&#39; AND Host NOT IN (&#39;localhost&#39;, &#39;127.0.0.1&#39;, &#39;::1&#39;)&quot;</span>
     <span class="c1"># Make sure that NOBODY can access the server without a password</span>
-    sudo mysqladmin -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> password <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span>
+    sudo mysqladmin -h <span class="nv">$DBHOST</span> -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> password <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="c1"># Make our changes take effect</span>
-    sudo mysql -e <span class="s2">&quot;FLUSH PRIVILEGES&quot;</span>
+    sudo mysql -h <span class="nv">$DBHOST</span> -e <span class="s2">&quot;FLUSH PRIVILEGES&quot;</span>
 
-    sudo mysql -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -p<span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -e <span class="s2">&quot;CREATE DATABASE </span><span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span><span class="s2">;&quot;</span>
-    sudo mysql -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -p<span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -e <span class="s2">&quot;CREATE USER &#39;</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;</span><span class="si">${</span><span class="nv">DBPASSWORD_MISP</span><span class="si">}</span><span class="s2">&#39;;&quot;</span>
-    sudo mysql -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -p<span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -e <span class="s2">&quot;GRANT USAGE ON *.* to &#39;</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
-    sudo mysql -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -p<span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -e <span class="s2">&quot;GRANT ALL PRIVILEGES on </span><span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span><span class="s2">.* to &#39;</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
-    sudo mysql -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -p<span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -e <span class="s2">&quot;FLUSH PRIVILEGES;&quot;</span>
+    sudo mysql -h <span class="nv">$DBHOST</span> -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -p<span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -e <span class="s2">&quot;CREATE DATABASE </span><span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span><span class="s2">;&quot;</span>
+    sudo mysql -h <span class="nv">$DBHOST</span> -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -p<span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -e <span class="s2">&quot;CREATE USER &#39;</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;</span><span class="si">${</span><span class="nv">DBPASSWORD_MISP</span><span class="si">}</span><span class="s2">&#39;;&quot;</span>
+    sudo mysql -h <span class="nv">$DBHOST</span> -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -p<span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -e <span class="s2">&quot;GRANT USAGE ON *.* to &#39;</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
+    sudo mysql -h <span class="nv">$DBHOST</span> -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -p<span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -e <span class="s2">&quot;GRANT ALL PRIVILEGES on </span><span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span><span class="s2">.* to &#39;</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
+    sudo mysql -h <span class="nv">$DBHOST</span> -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -p<span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_ADMIN</span><span class="si">}</span><span class="s2">&quot;</span> -e <span class="s2">&quot;FLUSH PRIVILEGES;&quot;</span>
     <span class="c1"># Import the empty MISP database from MYSQL.sql</span>
-    <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> cat <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">&quot;</span> -p<span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_MISP</span><span class="si">}</span><span class="s2">&quot;</span> <span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span>
+    <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> cat <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -h <span class="nv">$DBHOST</span> -u <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span><span class="s2">&quot;</span> -p<span class="s2">&quot;</span><span class="si">${</span><span class="nv">DBPASSWORD_MISP</span><span class="si">}</span><span class="s2">&quot;</span> <span class="si">${</span><span class="nv">DBNAME</span><span class="si">}</span>
   <span class="k">fi</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 1_prepareDB.sh&gt;</span>
@@ -1970,6 +1970,7 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Various plugin sightings settings</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_policy&quot;</span> <span class="m">0</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_anonymise&quot;</span> <span class="nb">false</span>
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_anonymise_as&quot;</span> <span class="m">1</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_range&quot;</span> <span class="m">365</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_sighting_db_enable&quot;</span> <span class="nb">false</span>
 
@@ -2052,7 +2053,7 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
 updateGOWNT <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># AUTH_KEY Place holder in case we need to **curl** somehing in the future</span>
   <span class="c1"># </span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_MYSQL</span> -- mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1 &gt; /tmp/auth.key
+  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_MYSQL</span> -- mysql -h <span class="nv">$DBHOST</span> -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1 &gt; /tmp/auth.key
   <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>cat /tmp/auth.key<span class="k">)</span>
   rm /tmp/auth.key
 
@@ -2984,7 +2985,7 @@ preInstall <span class="o">()</span> <span class="o">{</span>
   <span class="nv">DBPASSWORD_MISP</span><span class="o">=</span><span class="k">$(</span>cat database.php <span class="p">|</span>grep -v // <span class="p">|</span>grep -e password <span class="p">|</span>tr -d <span class="se">\&#39;</span> <span class="p">|</span>tr -d <span class="se">\ </span><span class="p">|</span>tr -d , <span class="p">|</span>tr -d <span class="se">\&gt;</span> <span class="p">|</span>cut -f <span class="m">2</span> -d<span class="o">=</span><span class="k">)</span>
   <span class="nv">DBUSER_MISP</span><span class="o">=</span><span class="k">$(</span>cat database.php <span class="p">|</span>grep -v // <span class="p">|</span>grep -e login <span class="p">|</span>tr -d <span class="se">\&#39;</span> <span class="p">|</span>tr -d <span class="se">\ </span><span class="p">|</span>tr -d , <span class="p">|</span>tr -d <span class="se">\&gt;</span> <span class="p">|</span>cut -f <span class="m">2</span> -d<span class="o">=</span><span class="k">)</span>
   <span class="nv">DBNAME</span><span class="o">=</span><span class="k">$(</span>cat database.php <span class="p">|</span>grep -v // <span class="p">|</span>grep -e database <span class="p">|</span>tr -d <span class="se">\&#39;</span> <span class="p">|</span>tr -d <span class="se">\ </span><span class="p">|</span>tr -d , <span class="p">|</span>tr -d <span class="se">\&gt;</span> <span class="p">|</span>cut -f <span class="m">2</span> -d<span class="o">=</span><span class="k">)</span>
-  <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql --disable-column-names -B  -u <span class="nv">$DBUSER_MISP</span> -p<span class="s2">&quot;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span> <span class="nv">$DBNAME</span> -e <span class="s1">&#39;SELECT authkey FROM users WHERE role_id=1 LIMIT 1&#39;</span><span class="k">)</span>
+  <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>mysql -h <span class="nv">$DBHOST</span> --disable-column-names -B  -u <span class="nv">$DBUSER_MISP</span> -p<span class="s2">&quot;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span> <span class="nv">$DBNAME</span> -e <span class="s1">&#39;SELECT authkey FROM users WHERE role_id=1 LIMIT 1&#39;</span><span class="k">)</span>
 
   <span class="c1"># Check if db exists</span>
   <span class="o">[[</span> -d <span class="s2">&quot;/var/lib/mysql/</span><span class="nv">$DBNAME</span><span class="s2">&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">MISP_DB_DIR_EXISTS</span><span class="o">=</span><span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;/var/lib/mysql/</span><span class="nv">$DBNAME</span><span class="s2"> exists&quot;</span>
@@ -3140,6 +3141,7 @@ installRNG <span class="o">()</span> <span class="o">{</span>
 kaliUpgrade <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Running various Kali upgrade tasks&quot;</span>
   checkAptLock
+  sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt update
   sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt install --only-upgrade bash libc6 -y
   sudo <span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive apt autoremove -y
 <span class="o">}</span>
@@ -3439,8 +3441,8 @@ nuke <span class="o">()</span> <span class="o">{</span>
   sleep <span class="m">10</span>
   sudo rm -rvf /usr/local/src/<span class="o">{</span>misp-modules,viper,mail_to_misp,LIEF,faup<span class="o">}</span>
   sudo rm -rvf /var/www/MISP
-  sudo mysqladmin drop misp
-  sudo mysql -e <span class="s2">&quot;DROP USER misp@localhost&quot;</span>
+  sudo mysqladmin -h <span class="nv">$DBHOST</span> drop misp
+  sudo mysql -h <span class="nv">$DBHOST</span> -e <span class="s2">&quot;DROP USER misp@localhost&quot;</span>
 <span class="o">}</span>
 
 <span class="c1"># Final function to let the user know what happened</span>
