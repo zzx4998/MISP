@@ -1622,63 +1622,32 @@
 <h2 id="v24-aka-24-for-ever-current-changelog">v2.4 aka 2.4 for ever (current changelog)<a class="headerlink" href="#v24-aka-24-for-ever-current-changelog" title="Permanent link">&para;</a></h2>
 <h2 id="new">New<a class="headerlink" href="#new" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[test] Update github actions build to Ubuntu 20.04. [Jakub Onderka]</li>
-<li>[internal] Cidr tool for faster checking CIDR ranges. [Jakub Onderka]</li>
 <li>
 <p>[PHP] version notification. [iglocska]</p>
 </li>
 <li>
 <p>8.0 is not supported, let users know in a more obvious way</p>
 </li>
-<li>[objectTemplate] Allow fetching the raw template stored on disk by
-  UUID or name. [mokaddem]</li>
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[installer] fixes to misp-modules. [Steve Clement]</li>
+<li>[misp-modules] some reqs are not in sync, fixing manually. [Steve
+  Clement]</li>
 <li>[installer] Update to latest installer. [Steve Clement]</li>
 <li>[misp-objects] updated to the latest. [Alexandre Dulaunoy]</li>
 <li>[misp-objects] updated to the latest version. [Alexandre Dulaunoy]</li>
-<li>[cake] Make misp-after-installer less yellow. [Steve Clement]</li>
-<li>[internal] Cache warninglist for eight hours. [Jakub Onderka]</li>
-<li>[UI] Make toggle buttons nicer. [Jakub Onderka]</li>
-<li>[internal] Optimise correlation exclusion. [Jakub Onderka]</li>
-<li>[internal] Optimise CidrTool. [Jakub Onderka]</li>
-<li>[PyMISP] Bump, update deps (reportlab release removed) [Raphaël Vinot]</li>
-<li>Bump PyMISP. [Raphaël Vinot]</li>
 <li>[misp-galaxy] updated (RSIT galaxy added) [Alexandre Dulaunoy]</li>
-<li>[objecTemplate:getRaw] Refactored and optimized feature. [mokaddem]</li>
-<li>[eventReports:delete] Make delete/restore call consistent with other
-  models. [mokaddem]</li>
 <li>[misp-objects] updated to the latest version. [Alexandre Dulaunoy]</li>
-<li>[internal] Raise memory limit for TmptFileTool to 5 MB. [Jakub
-  Onderka]</li>
-<li>[internal] Generate event to TmpFile. [Jakub Onderka]</li>
-<li>[eventReports:delete] Accept hard flag to be passed in POST body.
-  [mokaddem]</li>
 <li>Bumped queryversion. [mokaddem]</li>
 <li>[objects:delete] Support of hard flag in posted body. Fix #6689.
   [mokaddem]</li>
 <li>Bumped queryversion. [mokaddem]</li>
-<li>[eventReports] Improved manual extraction layout. [mokaddem]</li>
-<li>[export:csv] Added support of decaying model. Fix #6734. [mokaddem]</li>
-<li>[console:admin] Improved feedback when updating object templates. Fix
-  #6715. [mokaddem]</li>
-<li>[objects:delete] Support of hard flag in posted body. Fix #6689.
-  [mokaddem]</li>
+<li>[cake] Make misp-after-installer less yellow. [Steve Clement]</li>
 </ul>
 <h2 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h2>
 <ul>
-<li>[kali] Fixed Kali installer, now only works on 2020.4 and higher.
-  [Steve Clement]</li>
-<li>[internal] Bump CakePHP to 2.10.24. [Jakub Onderka]</li>
-<li>[internal] Bump PyMISP. [Jakub Onderka]</li>
-<li>[UI] Nicer forms. [Jakub Onderka]</li>
-<li>[internal] Fix some warnings. [Jakub Onderka]</li>
-<li>[log] Allow to filter logs by org name. [Jakub Onderka]</li>
 <li>[UI] Allow to sort feeds by name. [Jakub Onderka]</li>
-<li>[logs:event] Added missing line breaks. [mokaddem]</li>
-<li>[acl] Added missing ACL entry. [mokaddem]</li>
-<li>[objectTemplate:update] Typo instance variable. [mokaddem]</li>
 <li>
 <p>[eventReport:edit] Editing event via /events/edit should work as
   expected. [mokaddem]</p>
@@ -1689,17 +1658,6 @@
 <li>Force local ID to match provided UUID</li>
 <li>[dashboards] saving the dashboard state failed due to uninitialised
   model. [Andras Iklody]</li>
-<li>[shadowAttributes:viewPicture] Allows shadow attribute's pictures to
-  be displayed. [mokaddem]</li>
-<li>[attributes:viewPicture] Allow viewing pictures of deleted attributes.
-  [mokaddem]</li>
-<li>
-<p>[events:eventGraph] Deleted object reference are no longer shown in
-  the graph. [mokaddem]</p>
-</li>
-<li>
-<p>Fix #6487</p>
-</li>
 <li>
 <p>[events:eventTimeline] Correctly restore elements after changing
   context or group. [mokaddem]</p>
@@ -1732,117 +1690,20 @@
 </li>
 <li>Only update query builder when its displayed</li>
 <li>[warninglists:index] Fixed URL for ID. [mokaddem]</li>
-<li>[UI] Allow to download attachments from attribute index. [Jakub
-  Onderka]</li>
-<li>[internal] Remove compact method call that do nothing. [Jakub Onderka]</li>
-<li>
-<p>[eventReport:getProxyElement] Prevent crash if viewing a report for an
-  extended event. [mokaddem]</p>
-</li>
-<li>
-<p>Make sure merging array happens in existing keys</p>
-</li>
 <li>[diagnostics] complain about PHP &gt;= 8.0. [iglocska]</li>
-<li>
-<p>[server:recoveyQuery] Only add <code>unsigned</code> when applicable. Fix #6762.
-  [mokaddem]</p>
-</li>
-<li>
-<p>Correctly compare return value of strpos</p>
-</li>
-<li>[UI] Show proper unit for diagnostics. [Jakub Onderka]</li>
-<li>
-<p>[servers:rest] Speed up rest client and improved reactivity.
-  [mokaddem]</p>
-</li>
-<li>
-<p>Added debounce when typing</p>
-</li>
-<li>Only update query builder when its displayed</li>
-<li>[warninglists:index] Fixed URL for ID. [mokaddem]</li>
-<li>[UI] Remote event preview. [Jakub Onderka]</li>
+<li>[kali] Fixed Kali installer, now only works on 2020.4 and higher.
+  [Steve Clement]</li>
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge branch '2.4' into develop. [Steve Clement]</li>
-<li>Merge pull request #6952 from SteveClement/guides. [Steve Clement]</li>
-<li>Merge remote-tracking branch 'upstream/2.4' into guides. [Steve
-  Clement]</li>
-<li>Merge pull request #6950 from JakubOnderka/bump-cakephp. [Jakub
-  Onderka]</li>
+<li>Merge pull request #6953 from SteveClement/guides. [Steve Clement]</li>
 </ul>
-<p>fix: [internal] Bump CakePHP to 2.10.24
-- Merge pull request #6949 from JakubOnderka/bump-pymisp-v2. [Jakub
-  Onderka]</p>
-<p>fix: [internal] Bump PyMISP
-- Merge pull request #6944 from JakubOnderka/warninglist-cache-raise.
-  [Jakub Onderka]</p>
-<p>chg: [internal] Cache warninglist for eight hours
-- Merge pull request #6935 from JakubOnderka/event-toggle-buttons.
-  [Jakub Onderka]</p>
-<p>chg: [UI] Make toggle buttons nicer
-- Merge pull request #6894 from JakubOnderka/github-actions-os. [Jakub
-  Onderka]</p>
-<p>new: [test] Update github actions build to Ubuntu 20.04
-- Merge pull request #6888 from JakubOnderka/form-ui-fixes. [Jakub
-  Onderka]</p>
-<p>fix: [UI] Nicer forms
-- Merge pull request #6927 from JakubOnderka/correlation-exclusion-
-  optimise. [Jakub Onderka]</p>
-<p>chg: [internal] Optimise correlation exclusion
-- Merge pull request #6926 from JakubOnderka/faster-cidr-tool. [Jakub
-  Onderka]</p>
-<p>chg: [internal] Optimise CidrTool
-- Merge pull request #6899 from marjatech/smime-signature. [Andras
-  Iklody]</p>
-<p>fix: generate S/MIME Signature in DETACHED mode
-- Switch S/MIME Signature generation to DETACHED mode. [marjatech]
-- Merge branch 'develop' of github.com:MISP/MISP into develop.
-  [mokaddem]
-- Merge pull request #6924 from JakubOnderka/cidr-tool. [Jakub Onderka]</p>
-<p>new: [internal] Cidr tool for faster checking CIDR ranges
-- Merge pull request #6922 from JakubOnderka/warnings-fixes. [Jakub
-  Onderka]</p>
-<p>fix: [internal] Fix some warnings
-- Merge branch 'develop' of github.com:MISP/MISP into develop.
-  [Alexandre Dulaunoy]
-- Merge branch '2.4' into develop. [iglocska]
-- Merge pull request #6889 from JakubOnderka/log-org-filter. [Jakub
-  Onderka]</p>
-<p>fix: [log] Allow to filter logs by org name
-- Merge branch '2.4' into develop. [Alexandre Dulaunoy]
+<p>chg: [misp-modules] some reqs are not in sync, fixing manually.
+- Merge pull request #6952 from SteveClement/guides. [Steve Clement]
+- Merge remote-tracking branch 'upstream/2.4' into guides. [Steve
+  Clement]
 - Merge pull request #6916 from JakubOnderka/feed-sort. [Jakub Onderka]</p>
-<p>fix: [UI] Allow to sort feeds by name
-- Merge branch 'feature-getRawObjectTemplate' into develop. [mokaddem]
-- Merge branch 'develop' of github.com:MISP/MISP into feature-
-  getRawObjectTemplate. [mokaddem]
-- Merge remote-tracking branch 'origin/2.4' into develop. [mokaddem]
-- Merge branch 'develop' of github.com:MISP/MISP into develop.
-  [mokaddem]
-- Merge branch '2.4' into develop. [Alexandre Dulaunoy]
-- Merge pull request #6873 from JakubOnderka/event-output. [Jakub
-  Onderka]</p>
-<p>Event output
-- Merge remote-tracking branch 'origin/2.4' into develop. [mokaddem]
-- Merge branch '2.4' into develop. [mokaddem]
-- Merge pull request #6900 from JakubOnderka/attribute-index-attachment-
-  download. [Jakub Onderka]</p>
-<p>fix: [UI] Allow to download attachments from attribute index
-- Merge pull request #6737 from JakubOnderka/remove-compat. [Andras
-  Iklody]</p>
-<p>fix: [internal] Remove compact method call that do nothing
-- Merge branch 'develop' of github.com:MISP/MISP into develop.
-  [mokaddem]
-- Merge branch '2.4' into develop. [iglocska]
-- Merge branch 'develop' of github.com:MISP/MISP into develop.
-  [mokaddem]
-- Merge pull request #6890 from JakubOnderka/php-diagnostics-unit.
-  [Jakub Onderka]</p>
-<p>fix: [UI] Show proper unit for diagnostics
-- Merge remote-tracking branch 'origin/2.4' into develop. [mokaddem]
-- Merge pull request #6881 from JakubOnderka/remote-event-preview-fix.
-  [Jakub Onderka]</p>
-<p>fix: [UI] Remote event preview</p>
+<p>fix: [UI] Allow to sort feeds by name</p>
 <h2 id="v24137-2021-01-21">v2.4.137 (2021-01-21)<a class="headerlink" href="#v24137-2021-01-21" title="Permanent link">&para;</a></h2>
 <h2 id="new_1">New<a class="headerlink" href="#new_1" title="Permanent link">&para;</a></h2>
 <ul>

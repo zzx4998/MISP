@@ -2114,6 +2114,7 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I -r REQUIREMENTS
   sudo chgrp staff .
   <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -I .
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install censys pyfaup
 
   <span class="c1"># Start misp-modules as a service</span>
   sudo cp /usr/local/src/misp-modules/etc/systemd/system/misp-modules.service /etc/systemd/system/
@@ -3040,6 +3041,7 @@ kaliSpaceSaver <span class="o">()</span> <span class="o">{</span>
   <span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">Not implement</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="o">}</span>
 
+<span class="c1"># FIXME: Kali now uses kali/kali instead of root/toor</span>
 <span class="c1"># Because Kali is l33t we make sure we DO NOT run as root</span>
 kaliOnTheR0ckz <span class="o">()</span> <span class="o">{</span>
   <span class="nv">totalRoot</span><span class="o">=</span><span class="k">$(</span>df -k <span class="p">|</span> grep /$ <span class="p">|</span>awk <span class="s1">&#39;{ print $2 }&#39;</span><span class="k">)</span>
