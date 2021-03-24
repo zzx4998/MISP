@@ -1625,13 +1625,15 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
     <span class="c1"># In case you get &quot;internal compiler error: Killed (program cc1plus)&quot;</span>
     <span class="c1"># You ran out of memory.</span>
     <span class="c1"># Create some swap</span>
-    sudo dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>/var/swap.img <span class="nv">bs</span><span class="o">=</span>1024k <span class="nv">count</span><span class="o">=</span><span class="m">4000</span>
-    sudo mkswap /var/swap.img
-    sudo swapon /var/swap.img
+    <span class="nv">TEMP_DIR</span><span class="o">=</span><span class="k">$(</span>mktemp -d<span class="k">)</span>
+    <span class="nv">TEMP_SWAP</span><span class="o">=</span><span class="si">${</span><span class="nv">TEMP_DIR</span><span class="si">}</span>/swap.img
+    sudo dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span><span class="si">${</span><span class="nv">TEMP_SWAP</span><span class="si">}</span> <span class="nv">bs</span><span class="o">=</span>1024k <span class="nv">count</span><span class="o">=</span><span class="m">4000</span>
+    sudo mkswap <span class="si">${</span><span class="nv">TEMP_SWAP</span><span class="si">}</span>
+    sudo swapon <span class="si">${</span><span class="nv">TEMP_SWAP</span><span class="si">}</span>
     <span class="c1"># And compile again</span>
-    <span class="nv">$SUDO_WWW</span> make -j3 pyLIEF
-    sudo swapoff /var/swap.img
-    sudo rm /var/swap.img
+    <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> make -j3 pyLIEF
+    sudo swapoff <span class="si">${</span><span class="nv">TEMP_SWAP</span><span class="si">}</span>
+    sudo rm -r <span class="si">${</span><span class="nv">TEMP_DIR</span><span class="si">}</span>
   <span class="k">fi</span>
 
   <span class="c1"># The following adds a PYTHONPATH to where the pyLIEF module has been compiled</span>
