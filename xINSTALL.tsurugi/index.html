@@ -1100,10 +1100,12 @@ echo &quot;&lt;?php
 <p>a2dissite default-ssl
   a2ensite misp-ssl
   a2ensite misp-dashboard</p>
-<p>for key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit session.sid_length session.use_strict_mode
+<p>for key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
   do
-      sed -i "s/^<span><span class="MathJax_Preview">$key</span><script type="math/tex">$key</script></span>.*/\1 = <span><span class="MathJax_Preview">(eval echo \${</span><script type="math/tex">(eval echo \${</script></span>key})/" $PHP_INI
-  done</p>
+      sed -i "s/^<span><span class="MathJax_Preview">$key</span><script type="math/tex">$key</script></span>.<em>/\1 = <span><span class="MathJax_Preview">(eval echo \${</span><script type="math/tex">(eval echo \${</script></span>key})/" $PHP_INI
+  done
+  sudo sed -i "s/^<span><span class="MathJax_Preview">session.sid_length</span><script type="math/tex">session.sid_length</script></span>.</em>/\1 = $(eval echo ${session0sid_length})/" $PHP_INI
+  sudo sed -i "s/^<span><span class="MathJax_Preview">session.use_strict_mode</span><script type="math/tex">session.use_strict_mode</script></span>.*/\1 = $(eval echo ${session0use_strict_mode})/" $PHP_INI</p>
 <p>systemctl restart apache2</p>
 <p>cp ${PATH_TO_MISP}/INSTALL/misp.logrotate /etc/logrotate.d/misp
   chmod 0640 /etc/logrotate.d/misp</p>
