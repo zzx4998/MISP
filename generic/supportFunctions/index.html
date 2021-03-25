@@ -1290,7 +1290,7 @@ installDepsPhp70 <span class="o">()</span> <span class="o">{</span>
   php-redis php-gnupg <span class="se">\</span>
   php-gd
 
-  <span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
+  <span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit session.sid_length session.use_strict_mode
   <span class="k">do</span>
       sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
   <span class="k">done</span>

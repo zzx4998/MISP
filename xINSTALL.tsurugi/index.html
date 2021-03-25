@@ -798,7 +798,9 @@ MISP_PASSWORD='Password1234'</p>
   post_max_size=50M
   max_execution_time=300
   memory_limit=2048M
-  PHP_INI=/etc/php/7.0/apache2/php.ini</p>
+  session.sid_length=32
+  session.use_strict_mode=1</p>
+<p>PHP_INI=/etc/php/7.0/apache2/php.ini</p>
 <p># apt config
   export DEBIAN_FRONTEND=noninteractive</p>
 <p># sudo config to run $LUSER commands
@@ -1098,7 +1100,7 @@ echo &quot;&lt;?php
 <p>a2dissite default-ssl
   a2ensite misp-ssl
   a2ensite misp-dashboard</p>
-<p>for key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
+<p>for key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit session.sid_length session.use_strict_mode
   do
       sed -i "s/^<span><span class="MathJax_Preview">$key</span><script type="math/tex">$key</script></span>.*/\1 = <span><span class="MathJax_Preview">(eval echo \${</span><script type="math/tex">(eval echo \${</script></span>key})/" $PHP_INI
   done</p>
