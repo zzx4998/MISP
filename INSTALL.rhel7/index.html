@@ -2014,8 +2014,11 @@ configWorkersRHEL <span class="o">()</span> <span class="o">{</span>
 <h2 id="907-misp-modules">9.07/ misp-modules<a class="headerlink" href="#907-misp-modules" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 3_misp-modules_RHEL.sh&gt;</span>
 mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
-  <span class="c1"># some misp-modules dependencies</span>
+  <span class="c1"># some misp-modules dependencies for RHEL&lt;8</span>
   sudo yum install openjpeg-devel gcc-c++ poppler-cpp-devel pkgconfig python-devel redhat-rpm-config -y
+
+  <span class="c1"># some misp-modules dependencies for RHEL8</span>
+  sudo yum install openjpeg2-devel gcc-c++ poppler-cpp-devel pkgconfig python2-devel redhat-rpm-config -y
 
   sudo chmod <span class="m">2777</span> /usr/local/src
   sudo chown root:users /usr/local/src
@@ -2026,7 +2029,11 @@ mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U -I -r REQUIREMENTS
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U .
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install pyfaup censys
+  <span class="c1"># some misp-modules dependencies for RHEL&lt;8</span>
   sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-devel -y
+  <span class="c1"># some misp-modules dependencies for RHEL8</span>
+  sudo dnf install https://packages.endpoint.com/rhel/8/main/x86_64/endpoint-repo-8-1.ep8.noarch.rpm
+  sudo yum install zbar-devel opencv-devel -y
 
   <span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
 <span class="s2">  Description=MISP modules</span>

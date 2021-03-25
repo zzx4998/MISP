@@ -1422,6 +1422,8 @@ sudo subscription-manager register --auto-attach <span class="c1"># register you
 <h2 id="14-rhel-enable-the-optional-repos-obsolete-in-v8">1.4/ <strong>[RHEL]</strong> Enable the optional repos (obsolete in v8)<a class="headerlink" href="#14-rhel-enable-the-optional-repos-obsolete-in-v8" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_RHEL_SCL.sh&gt;</span>
 sudo subscription-manager refresh 
+<span class="c1"># The following is needed for -devel repos and ONLY for misp-modules, ignore if not needed</span>
+sudo subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms
 <span class="c1"># Software Collections is available for Red Hat Enterprise Linux 7 and previous supported releases. Starting with Red Hat Enterprise Linux 8, the content traditionally consumed via Software Collections is now part of Application Streams. Please see the Application Streams Life Cycle documentation for that release. Source: https://access.redhat.com/support/policy/updates/rhscl</span>
 <span class="c1"># &lt;snippet-end 0_RHEL_SCL.sh&gt;</span>
 </code></pre></div>
@@ -1444,6 +1446,7 @@ enableEPEL <span class="o">()</span> <span class="o">{</span>
   sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
   sudo yum install http://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
   sudo yum install yum-utils -y
+  sudo dnf module <span class="nb">enable</span> php:remi-7.4 -y
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_RHEL_EPEL.sh&gt;</span>
 </code></pre></div>
@@ -1471,8 +1474,7 @@ yumInstallCoreDeps <span class="o">()</span> <span class="o">{</span>
                    python3-devel python3-pip python3-virtualenv <span class="se">\</span>
                    python3-policycoreutils <span class="se">\</span>
                    policycoreutils-python-utils <span class="se">\</span>
-                   libxslt-devel zlib-devel -y
-  <span class="c1"># ssdeep-devel available: dnf install https://extras.getpagespeed.com/release-el8-latest.rpm</span>
+                   libxslt-devel zlib-devel ssdeep-devel -y
   sudo alternatives --set python /usr/bin/python3
 
   <span class="c1"># Enable and start redis</span>
@@ -1480,19 +1482,19 @@ yumInstallCoreDeps <span class="o">()</span> <span class="o">{</span>
 
   <span class="nv">PHP_INI</span><span class="o">=</span><span class="s2">&quot;/etc/opt/remi/php74/php.ini&quot;</span>
   <span class="c1"># Install PHP 7.4 from Remi&#39;s repo, see https://rpms.remirepo.net/enterprise/8/php74/x86_64/repoview/</span>
-  sudo yum install php74 php74-php-fpm php74-php-devel <span class="se">\</span>
-                   php74-php-mysqlnd <span class="se">\</span>
-                   php74-php-mbstring <span class="se">\</span>
-                   php74-php-xml <span class="se">\</span>
-                   php74-php-bcmath <span class="se">\</span>
-                   php74-php-opcache <span class="se">\</span>
-                   php74-php-zip <span class="se">\</span>
-                   php74-php-pear <span class="se">\</span>
-                   php74-php-brotli <span class="se">\</span>
-                   php74-php-intl <span class="se">\</span>
-                   php74-php-gd -y
+  sudo yum install php php-fpm php-devel <span class="se">\</span>
+                   php-mysqlnd <span class="se">\</span>
+                   php-mbstring <span class="se">\</span>
+                   php-xml <span class="se">\</span>
+                   php-bcmath <span class="se">\</span>
+                   php-opcache <span class="se">\</span>
+                   php-zip <span class="se">\</span>
+                   php-pear <span class="se">\</span>
+                   php-brotli <span class="se">\</span>
+                   php-intl <span class="se">\</span>
+                   php-gd -y
 
-  <span class="c1"># cake has php baked in, thus we link to it</span>
+  <span class="c1"># cake has php baked in, thus we link to it, ignore if this fails or exists.</span>
   sudo ln -s /usr/bin/php74 /usr/bin/php
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_yumInstallCoreDeps.sh&gt;</span>
@@ -1512,7 +1514,7 @@ sudo systemctl <span class="nb">enable</span> --now haveged.service
 This guide installs PHP 7.4</p>
 </div>
 <h2 id="205-start-the-php-fpm-service-and-enable-to-start-on-boot">2.05/ Start the PHP FPM service and enable to start on boot<a class="headerlink" href="#205-start-the-php-fpm-service-and-enable-to-start-on-boot" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>sudo systemctl <span class="nb">enable</span> --now php74-php-fpm.service
+<div class="highlight"><pre><span></span><code>sudo systemctl <span class="nb">enable</span> --now php-fpm.service
 </code></pre></div>
 
 <p>TODO: Add a CentOS/RHEL rng thing, à la haveged (not in base anymore) or similar.</p>
@@ -1645,6 +1647,8 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="nb">echo</span> <span class="s2">&quot;env[PATH] = /usr/local/bin:/usr/bin:/bin&quot;</span> <span class="p">|</span>sudo tee -a /etc/opt/remi/php74/php-fpm.d/www.conf
   sudo sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> /etc/opt/remi/php74/php-fpm.d/www.conf
   sudo systemctl restart php74-php-fpm.service
+  <span class="c1"># TODO investigate: listen = 127.0.0.1:9000</span>
+
   <span class="nb">umask</span> <span class="nv">$UMASK</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 1_mispCoreInstall_RHEL.sh&gt;</span>
@@ -1670,9 +1674,9 @@ installCake_RHEL <span class="o">()</span>
   <span class="c1">#$SUDO_WWW php -r &quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
   <span class="nv">$SUDO_WWW</span> php composer.phar install
 
-  sudo yum install php74-php-pecl-redis php74-php-pecl-ssdeep php74-php-pecl-gnupg -y
+  sudo yum install php-pecl-redis php-pecl-ssdeep php-pecl-gnupg -y
 
-  sudo systemctl restart php74-php-fpm.service
+  sudo systemctl restart php-fpm.service
 
   <span class="c1"># If you have not yet set a timezone in php.ini</span>
   <span class="nb">echo</span> <span class="s1">&#39;date.timezone = &quot;Asia/Tokyo&quot;&#39;</span> <span class="p">|</span>sudo tee /etc/php-fpm.d/timezone.ini
@@ -1689,7 +1693,7 @@ installCake_RHEL <span class="o">()</span>
   <span class="k">done</span>
   sudo sed -i <span class="s2">&quot;s/^\(session.sid_length\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span>session0sid_length<span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
   sudo sed -i <span class="s2">&quot;s/^\(session.use_strict_mode\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span>session0use_strict_mode<span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
-  sudo systemctl restart php74-php-fpm.service
+  sudo systemctl restart php-fpm.service
 
   <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
   sudo cp -fa <span class="nv">$PATH_TO_MISP</span>/INSTALL/setup/config.php <span class="nv">$PATH_TO_MISP</span>/app/Plugin/CakeResque/Config/config.php
@@ -1974,7 +1978,7 @@ Make sure that you use the same settings in the MISP Server Settings tool</p>
 configWorkersRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
 <span class="s2">  Description=MISP background workers</span>
-<span class="s2">  After=mariadb.service redis.service php74-php-fpm.service</span>
+<span class="s2">  After=mariadb.service redis.service php-fpm.service</span>
 
 <span class="s2">  [Service]</span>
 <span class="s2">  Type=forking</span>
@@ -1998,8 +2002,11 @@ configWorkersRHEL <span class="o">()</span> <span class="o">{</span>
 <h2 id="907-misp-modules">9.07/ misp-modules<a class="headerlink" href="#907-misp-modules" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 3_misp-modules_RHEL.sh&gt;</span>
 mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
-  <span class="c1"># some misp-modules dependencies</span>
+  <span class="c1"># some misp-modules dependencies for RHEL&lt;8</span>
   sudo yum install openjpeg-devel gcc-c++ poppler-cpp-devel pkgconfig python-devel redhat-rpm-config -y
+
+  <span class="c1"># some misp-modules dependencies for RHEL8</span>
+  sudo yum install openjpeg2-devel gcc-c++ poppler-cpp-devel pkgconfig python2-devel redhat-rpm-config -y
 
   sudo chmod <span class="m">2777</span> /usr/local/src
   sudo chown root:users /usr/local/src
@@ -2010,7 +2017,11 @@ mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U -I -r REQUIREMENTS
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U .
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install pyfaup censys
+  <span class="c1"># some misp-modules dependencies for RHEL&lt;8</span>
   sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-devel -y
+  <span class="c1"># some misp-modules dependencies for RHEL8</span>
+  sudo dnf install https://packages.endpoint.com/rhel/8/main/x86_64/endpoint-repo-8-1.ep8.noarch.rpm
+  sudo yum install zbar-devel opencv-devel -y
 
   <span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
 <span class="s2">  Description=MISP modules</span>
