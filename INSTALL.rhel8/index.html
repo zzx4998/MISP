@@ -83,7 +83,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#installation-instructions-for-rhel-8x-and-partially-fedora-server-30" tabindex="0" class="md-skip">
+      <a href="#installation-instructions-for-rhel-8x-centos8stream" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -392,8 +392,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#16-rhel-install-the-epel-and-remi-repo" class="md-nav__link">
-    1.6/ [RHEL] Install the EPEL and remi repo
+  <a href="#16-install-the-epel-and-remi-repo" class="md-nav__link">
+    1.6/ Install the EPEL and remi repo
   </a>
   
     <nav class="md-nav">
@@ -1019,8 +1019,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#16-rhel-install-the-epel-and-remi-repo" class="md-nav__link">
-    1.6/ [RHEL] Install the EPEL and remi repo
+  <a href="#16-install-the-epel-and-remi-repo" class="md-nav__link">
+    1.6/ Install the EPEL and remi repo
   </a>
   
     <nav class="md-nav">
@@ -1238,7 +1238,7 @@
               
                 
                 
-                <h1 id="installation-instructions-for-rhel-8x-and-partially-fedora-server-30">INSTALLATION INSTRUCTIONS for RHEL 8.x and partially Fedora Server 30<a class="headerlink" href="#installation-instructions-for-rhel-8x-and-partially-fedora-server-30" title="Permanent link">&para;</a></h1>
+                <h1 id="installation-instructions-for-rhel-8x-centos8stream">INSTALLATION INSTRUCTIONS for RHEL 8.x, CentOS8/Stream<a class="headerlink" href="#installation-instructions-for-rhel-8x-centos8stream" title="Permanent link">&para;</a></h1>
 <hr />
 <h3 id="-1-installer-and-manual-install-instructions">-1/ Installer and Manual install instructions<a class="headerlink" href="#-1-installer-and-manual-install-instructions" title="Permanent link">&para;</a></h3>
 <p>Make sure you are reading the parsed version of this Document. When in doubt <a href="https://misp.github.io/MISP/INSTALL.rhel8/">click here</a>.</p>
@@ -1301,6 +1301,19 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Local non-root MISP user</span>
   <span class="nv">MISP_USER</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">MISP_USER</span><span class="k">:-</span><span class="nv">misp</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="nv">MISP_PASSWORD</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">MISP_PASSWORD</span><span class="k">:-$(</span>openssl rand -hex <span class="m">32</span><span class="k">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
+  <span class="c1"># Cheap distribution detector</span>
+  <span class="nv">FLAVOUR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$ID</span><span class="s2">&quot;</span><span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
+  <span class="nv">STREAM</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$NAME</span><span class="s2">&quot;</span><span class="p">|</span> grep -o -i stream <span class="p">|</span>tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
+  <span class="nv">DIST_VER</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
+  <span class="nv">DISTRI</span><span class="o">=</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}${</span><span class="nv">DIST_VER</span><span class="si">}${</span><span class="nv">STREAM</span><span class="si">}</span>
+
+  <span class="c1"># Assess the php.ini location</span>
+  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;rhel&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">PHP_INI</span><span class="o">=</span><span class="s2">&quot;/etc/opt/remi/php74/php.ini&quot;</span> <span class="o">&amp;&amp;</span> <span class="nv">PHP_BASE</span><span class="o">=</span>/etc/opt/remi/php74/
+  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;centos8&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">PHP_INI</span><span class="o">=</span><span class="s2">&quot;/etc/php.ini&quot;</span> <span class="o">&amp;&amp;</span> <span class="nv">PHP_BASE</span><span class="o">=</span>/etc/
+  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;centos8stream&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">PHP_INI</span><span class="o">=</span><span class="s2">&quot;/etc/php.ini&quot;</span> <span class="o">&amp;&amp;</span> <span class="nv">PHP_BASE</span><span class="o">=</span>/etc/
+  <span class="c1"># default to /etc/php/*/php.ini</span>
+  <span class="nv">PHP_INI</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PHP_INI</span><span class="k">:-</span><span class="p">/etc/php/*/apache2/php.ini</span><span class="si">}</span><span class="s2">&quot;</span>
 
   <span class="c1"># The web server user</span>
   <span class="c1"># RHEL/CentOS</span>
@@ -1440,15 +1453,17 @@ yumUpdate <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># &lt;snippet-end 0_yum-update.sh&gt;</span>
 </code></pre></div>
 
-<h2 id="16-rhel-install-the-epel-and-remi-repo">1.6/ <strong>[RHEL]</strong> Install the EPEL and remi repo<a class="headerlink" href="#16-rhel-install-the-epel-and-remi-repo" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_RHEL_EPEL.sh&gt;</span>
-enableEPEL <span class="o">()</span> <span class="o">{</span>
+<h2 id="16-install-the-epel-and-remi-repo">1.6/ Install the EPEL and remi repo<a class="headerlink" href="#16-install-the-epel-and-remi-repo" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_EPEL_REMI.sh&gt;</span>
+enableEPEL_REMI <span class="o">()</span> <span class="o">{</span>
   sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
   sudo yum install http://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
   sudo yum install yum-utils -y
   sudo dnf module <span class="nb">enable</span> php:remi-7.4 -y
+  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s2">&quot;centos8stream&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span>sudo dnf config-manager --set-enabled powertools
+  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s2">&quot;centos8&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span>sudo dnf config-manager --set-enabled powertools
 <span class="o">}</span>
-<span class="c1"># &lt;snippet-end 0_RHEL_EPEL.sh&gt;</span>
+<span class="c1"># &lt;snippet-end 0_EPEL_REMI.sh&gt;</span>
 </code></pre></div>
 
 <h3 id="2-dependencies">2/ Dependencies<a class="headerlink" href="#2-dependencies" title="Permanent link">&para;</a></h3>
@@ -1480,7 +1495,6 @@ yumInstallCoreDeps <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Enable and start redis</span>
   sudo systemctl <span class="nb">enable</span> --now redis.service
 
-  <span class="nv">PHP_INI</span><span class="o">=</span><span class="s2">&quot;/etc/opt/remi/php74/php.ini&quot;</span>
   <span class="c1"># Install PHP 7.4 from Remi&#39;s repo, see https://rpms.remirepo.net/enterprise/8/php74/x86_64/repoview/</span>
   sudo yum install php php-fpm php-devel <span class="se">\</span>
                    php-mysqlnd <span class="se">\</span>
@@ -1494,8 +1508,8 @@ yumInstallCoreDeps <span class="o">()</span> <span class="o">{</span>
                    php-intl <span class="se">\</span>
                    php-gd -y
 
-  <span class="c1"># cake has php baked in, thus we link to it, ignore if this fails or exists.</span>
-  sudo ln -s /usr/bin/php74 /usr/bin/php
+  <span class="c1"># cake has php baked in, thus we link to it if necessary.</span>
+  <span class="o">[[</span> ! -e <span class="s2">&quot;/usr/bin/php&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo ln -s /usr/bin/php74 /usr/bin/php
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_yumInstallCoreDeps.sh&gt;</span>
 </code></pre></div>
@@ -1582,13 +1596,15 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># lief needs manual compilation</span>
   sudo yum groupinstall <span class="s2">&quot;Development Tools&quot;</span> -y
-  sudo yum install cmake3 -y
+  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;rhel&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install cmake3 -y <span class="o">&amp;&amp;</span> <span class="nv">CMAKE_BIN</span><span class="o">=</span><span class="s1">&#39;cmake3&#39;</span>
+  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;centos8stream&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install cmake -y <span class="o">&amp;&amp;</span> <span class="nv">CMAKE_BIN</span><span class="o">=</span><span class="s1">&#39;cmake&#39;</span>
+  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;centos&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install cmake -y <span class="o">&amp;&amp;</span> <span class="nv">CMAKE_BIN</span><span class="o">=</span><span class="s1">&#39;cmake&#39;</span>
 
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/lief
   <span class="nv">$SUDO_WWW</span> git config core.filemode <span class="nb">false</span>
   <span class="nv">$SUDO_WWW</span> mkdir build
   <span class="nb">cd</span> build
-  <span class="nv">$SUDO_WWW</span> cmake3 <span class="se">\</span>
+  <span class="nv">$SUDO_WWW</span> <span class="si">${</span><span class="nv">CMAKE_BIN</span><span class="si">}</span> <span class="se">\</span>
   -DLIEF_PYTHON_API<span class="o">=</span>on <span class="se">\</span>
   -DPYTHON_VERSION<span class="o">=</span><span class="m">3</span>.6 <span class="se">\</span>
   -DPYTHON_EXECUTABLE<span class="o">=</span><span class="nv">$PATH_TO_MISP</span>/venv/bin/python <span class="se">\</span>
@@ -1625,7 +1641,7 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># FIXME: Remove libfaup etc once the egg has the library baked-in</span>
   <span class="c1"># BROKEN: This needs to be tested on RHEL/CentOS</span>
-  sudo yum install libcaca-devel cmake3 -y
+  sudo yum install libcaca-devel -y
   <span class="nb">cd</span> /tmp
   <span class="o">[[</span> ! -d <span class="s2">&quot;faup&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/stricaud/faup.git faup
   <span class="o">[[</span> ! -d <span class="s2">&quot;gtcaca&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/stricaud/gtcaca.git gtcaca
@@ -1633,21 +1649,22 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> gtcaca
   <span class="nv">$SUDO_CMD</span> mkdir -p build
   <span class="nb">cd</span> build
-  <span class="nv">$SUDO_CMD</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> make
+  <span class="nv">$SUDO_CMD</span> <span class="si">${</span><span class="nv">CMAKE_BIN</span><span class="si">}</span> .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> make
   sudo make install
   <span class="nb">cd</span> ../../faup
   <span class="nv">$SUDO_CMD</span> mkdir -p build
   <span class="nb">cd</span> build
-  <span class="nv">$SUDO_CMD</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> make
+  <span class="nv">$SUDO_CMD</span> <span class="si">${</span><span class="nv">CMAKE_BIN</span><span class="si">}</span> .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> make
   sudo make install
   sudo ldconfig
 
   <span class="c1"># Enable dependencies detection in the diagnostics page</span>
   <span class="c1"># This allows MISP to detect GnuPG, the Python modules&#39; versions and to read the PHP settings.</span>
-  <span class="nb">echo</span> <span class="s2">&quot;env[PATH] = /usr/local/bin:/usr/bin:/bin&quot;</span> <span class="p">|</span>sudo tee -a /etc/opt/remi/php74/php-fpm.d/www.conf
-  sudo sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> /etc/opt/remi/php74/php-fpm.d/www.conf
-  sudo systemctl restart php74-php-fpm.service
-  <span class="c1"># TODO investigate: listen = 127.0.0.1:9000</span>
+  <span class="nb">echo</span> <span class="s2">&quot;env[PATH] = /usr/local/bin:/usr/bin:/bin&quot;</span> <span class="p">|</span>sudo tee -a <span class="si">${</span><span class="nv">PHP_BASE</span><span class="si">}</span>/php-fpm.d/www.conf
+  sudo sed -i.org -e <span class="s1">&#39;s/^;\(clear_env = no\)/\1/&#39;</span> <span class="si">${</span><span class="nv">PHP_BASE</span><span class="si">}</span>/php-fpm.d/www.conf  <span class="c1"># TODO check if below is different on RHEL8 php74-php-fpm.service also dbl check paths</span>
+  sudo sed -i.org -e <span class="s1">&#39;s/^\(listen =\) \/run\/php-fpm\/www\.sock/\1 127.0.0.1:9000/&#39;</span> <span class="si">${</span><span class="nv">PHP_BASE</span><span class="si">}</span>/php-fpm.d/www.conf
+
+  sudo systemctl restart php-fpm.service
 
   <span class="nb">umask</span> <span class="nv">$UMASK</span>
 <span class="o">}</span>
@@ -2020,7 +2037,7 @@ mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># some misp-modules dependencies for RHEL&lt;8</span>
   sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-devel -y
   <span class="c1"># some misp-modules dependencies for RHEL8</span>
-  sudo dnf install https://packages.endpoint.com/rhel/8/main/x86_64/endpoint-repo-8-1.ep8.noarch.rpm
+  sudo dnf install https://packages.endpoint.com/rhel/8/main/x86_64/endpoint-repo-8-1.ep8.noarch.rpm -y
   sudo yum install zbar-devel opencv-devel -y
 
   <span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
