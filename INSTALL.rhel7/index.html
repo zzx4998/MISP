@@ -1268,8 +1268,17 @@
                 
                 <h1 id="installation-instructions-for-rhel-7x-and-centos-7x">INSTALLATION INSTRUCTIONS for RHEL 7.x and CentOS 7.x<a class="headerlink" href="#installation-instructions-for-rhel-7x-and-centos-7x" title="Permanent link">&para;</a></h1>
 <hr />
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>MISP-core and misp-modules Tested working by <a href="https://twitter.com/SteveClement">@SteveClement</a> on 20210326</p>
+</div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>This document also serves as a source for the <a href="https://github.com/MISP/MISP/blob/2.4/INSTALL/INSTALL.sh">INSTALL-misp.sh</a> script.
+Which explains why you will see the use of shell <em>functions</em> in various steps.
+Henceforth the document will also follow a more logical flow. In the sense that all the dependencies are installed first then config files are generated, etc...</p>
+</div>
 <h3 id="-1-installer-and-manual-install-instructions">-1/ Installer and Manual install instructions<a class="headerlink" href="#-1-installer-and-manual-install-instructions" title="Permanent link">&para;</a></h3>
-<p>Make sure you are reading the parsed version of this Document. When in doubt <a href="https://misp.github.io/MISP/INSTALL.rhel7/">click here</a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>In the <strong>future</strong>, to install MISP on a fresh RHEL 7 install all you need to do is:</p>
@@ -1283,12 +1292,16 @@ bash /tmp/INSTALL.sh -c
 </code></pre></div>
 <strong>The above does NOT work yet</strong></p>
 </div>
-<h3 id="0-overview-and-assumptions">0/ Overview and Assumptions<a class="headerlink" href="#0-overview-and-assumptions" title="Permanent link">&para;</a></h3>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>If the next line is <code>[!generic/community.md!]()</code> <a href="https://misp.github.io/MISP/INSTALL.rhel7/">click here</a>.</p>
+</div>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>Maintained and tested by the community.<br />
 Parts of the installation procedures can also be found in the automatic VM generator script <a href="https://github.com/MISP/misp-packer/blob/18.04/scripts/bootstrap.sh">bootstrap.sh</a> of misp-packer.</p>
 </div>
+<h3 id="0-overview-and-assumptions">0/ Overview and Assumptions<a class="headerlink" href="#0-overview-and-assumptions" title="Permanent link">&para;</a></h3>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>There are technically only minor differences between CentOS and RHEL.<br />
@@ -1335,13 +1348,6 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="nv">STREAM</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$NAME</span><span class="s2">&quot;</span><span class="p">|</span> grep -o -i stream <span class="p">|</span>tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
   <span class="nv">DIST_VER</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
   <span class="nv">DISTRI</span><span class="o">=</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}${</span><span class="nv">DIST_VER</span><span class="si">}${</span><span class="nv">STREAM</span><span class="si">}</span>
-
-  <span class="c1"># Assess the php.ini location</span>
-  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;rhel&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">PHP_INI</span><span class="o">=</span><span class="s2">&quot;/etc/opt/remi/php74/php.ini&quot;</span> <span class="o">&amp;&amp;</span> <span class="nv">PHP_BASE</span><span class="o">=</span>/etc/opt/remi/php74/
-  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;centos8&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">PHP_INI</span><span class="o">=</span><span class="s2">&quot;/etc/php.ini&quot;</span> <span class="o">&amp;&amp;</span> <span class="nv">PHP_BASE</span><span class="o">=</span>/etc/
-  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;centos8stream&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">PHP_INI</span><span class="o">=</span><span class="s2">&quot;/etc/php.ini&quot;</span> <span class="o">&amp;&amp;</span> <span class="nv">PHP_BASE</span><span class="o">=</span>/etc/
-  <span class="c1"># default to /etc/php/*/php.ini</span>
-  <span class="nv">PHP_INI</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PHP_INI</span><span class="k">:-</span><span class="p">/etc/php/*/apache2/php.ini</span><span class="si">}</span><span class="s2">&quot;</span>
 
   <span class="c1"># The web server user</span>
   <span class="c1"># RHEL/CentOS</span>
