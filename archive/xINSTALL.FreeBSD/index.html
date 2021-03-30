@@ -743,7 +743,7 @@
 </div>
 <h4 id="misp-configuration-variables">MISP configuration variables<a class="headerlink" href="#misp-configuration-variables" title="Permanent link">&para;</a></h4>
 <p>If you are doing a manual install, copy and pasting from this document, please do the following before starting:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md <span class="p">|</span> grep -v <span class="se">\`\`\`</span><span class="k">)</span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md <span class="p">|</span> grep -A31337 -m1 -e <span class="s1">&#39;snippet-begin&#39;</span> <span class="p">|</span> grep -v <span class="se">\`\`\`</span><span class="k">)</span><span class="s2">&quot;</span>
 MISPvars
 </code></pre></div>
 <div class="admonition notice">
@@ -752,7 +752,7 @@ MISPvars
 Consider using a mux like <a href="https://superuser.com/questions/423310/byobu-vs-gnu-screen-vs-tmux-usefulness-and-transferability-of-skills">screen or tmux</a>.</p>
 </div>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_global-vars.sh&gt;</span>
-<span class="c1"># $ eval &quot;$(curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md | grep -v \`\`\`)&quot;</span>
+<span class="c1"># $ eval &quot;$(curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md | grep -A31337 -m1 -e &#39;snippet-begin&#39; | grep -v \`\`\`)&quot;</span>
 <span class="c1"># $ MISPvars</span>
 MISPvars <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Setting generic </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> variables shared by all flavours&quot;</span> <span class="m">2</span>&gt; /dev/null
