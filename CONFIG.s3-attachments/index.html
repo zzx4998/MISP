@@ -667,7 +667,6 @@ to allow for a stateless MISP setup (i.e for containerisation)</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /var/www/MISP/app
 sudo -u www-data php composer.phar require aws/aws-sdk-php
 </code></pre></div>
-
 <h2 id="1-creating-an-s3-bucket">1. Creating an S3 bucket<a class="headerlink" href="#1-creating-an-s3-bucket" title="Permanent link">&para;</a></h2>
 <p>Go to <a href="https://s3.console.aws.amazon.com/s3/home">https://s3.console.aws.amazon.com/s3/home</a></p>
 <p>And create a bucket. It has to have a globally unique name, and
@@ -692,7 +691,6 @@ by right-clicking and selecting "Instance Settings -&gt; Attach/Replace IAM role
   <span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h2 id="2b-using-aws-access-keys">2b. Using AWS access keys<a class="headerlink" href="#2b-using-aws-access-keys" title="Permanent link">&para;</a></h2>
 <p>This is not recommended, but it works I think.</p>
 <p>Create a new programmatic access user via IAM and apply the same
@@ -703,7 +701,6 @@ policy outlined above.</p>
 <div class="codehilite"><pre><span></span><code>Set MISP.attachments_dir to &quot;s3://&quot;
 </code></pre></div>
 
-
 <p>In Administration -&gt; Server Settings &amp; Maintenance -&gt; Plugin Settings -&gt; S3</p>
 <div class="codehilite"><pre><span></span><code>Set S3_enable to True
 Set S3_bucket-name to the bucket you created earlier
@@ -712,7 +709,6 @@ Set S3_region to your region
 ONLY IF YOU DID NOT USE THE EC2 METHOD
     Set aws_access_key and aws_secret_key to the ones you created in 2b
 </code></pre></div>
-
 
 <p>Now theoretically it should work.</p>
 <h1 id="addendum">Addendum<a class="headerlink" href="#addendum" title="Permanent link">&para;</a></h1>

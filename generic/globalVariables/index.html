@@ -655,6 +655,15 @@
                   <h1>globalVariables</h1>
                 
                 <h4 id="misp-configuration-variables">MISP configuration variables<a class="headerlink" href="#misp-configuration-variables" title="Permanent link">&para;</a></h4>
+<p>If you are doing a manual install, copy and pasting from this document, please do the following before starting:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md <span class="p">|</span> grep -v <span class="se">\`\`\`</span><span class="k">)</span><span class="s2">&quot;</span>
+MISPvars
+</code></pre></div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Do NOT leave your session after this mid-install as some initial passwords have been generated and thus would be lost.
+Consider using a mux like <a href="https://superuser.com/questions/423310/byobu-vs-gnu-screen-vs-tmux-usefulness-and-transferability-of-skills">screen or tmux</a>.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_global-vars.sh&gt;</span>
 <span class="c1"># $ eval &quot;$(curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md | grep -v \`\`\`)&quot;</span>
 <span class="c1"># $ MISPvars</span>
@@ -673,6 +682,7 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># The web server user</span>
   <span class="c1"># RHEL/CentOS</span>
   <span class="k">if</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/redhat-release&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">SE_LINUX</span><span class="o">=</span><span class="k">$(</span>sestatus  -v -b <span class="p">|</span>grep <span class="s2">&quot;^SELinux status&quot;</span><span class="p">|</span> grep enabled <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span>
     <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;apache&quot;</span>
     <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
   <span class="c1"># Debian flavoured</span>

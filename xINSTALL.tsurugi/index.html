@@ -708,14 +708,12 @@ sudo update-rc.d -f ssh defaults
 sudo dpkg-reconfigure openssh-server
 sudo systemctl restart ssh
 </code></pre></div>
-
 <p>If you installed Tsurugi to your disk, the locale is a little all over the place.
 We assume <strong>en_US</strong> to be default unless you know what you're doing, go with that default.</p>
 <div class="highlight"><pre><span></span><code>sudo sed -i <span class="s1">&#39;s/ja_JP/en_US/g&#39;</span> /etc/default/locale
 sudo sed -i <span class="s1">&#39;s/ja_JP.UTF/# ja_JP.UTF/g&#39;</span> /etc/locale.gen
 sudo dpkg-reconfigure locales
 </code></pre></div>
-
 <p>To install MISP on Tsurugi copy paste this in your r00t shell:
 <div class="highlight"><pre><span></span><code>wget -O /tmp/misp-tsurugi.sh https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/xINSTALL.tsurugi.txt <span class="o">&amp;&amp;</span> bash /tmp/misp-tsurugi.sh
 </code></pre></div></p>
@@ -929,7 +927,6 @@ ${SUDO_WWW} cat ${PATH_TO_MISP}/INSTALL/MYSQL.sql | mysql -u $DBUSER_MISP -p$DBP
 echo &quot;&lt;?php
 </code></pre></div>
 
-
 <p>class DATABASE_CONFIG {
           public $default = array(
                   'datasource' =&gt; 'Database/Mysql',
@@ -1025,7 +1022,6 @@ echo &quot;&lt;?php
       ServerSignature Off
 </code></pre></div>
 
-
 <p></VirtualHost></p>
 <p><VirtualHost _default_:443>
           ServerAdmin <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#108;&#111;&#99;&#97;&#108;&#104;&#111;&#115;&#116;&#46;&#108;&#117;">&#97;&#100;&#109;&#105;&#110;&#64;&#108;&#111;&#99;&#97;&#108;&#104;&#111;&#115;&#116;&#46;&#108;&#117;</a>
@@ -1044,7 +1040,6 @@ echo &quot;&lt;?php
       SSLCertificateKeyFile /etc/ssl/private/misp.local.key
 </code></pre></div>
 
-
 <p>#        SSLCertificateChainFile /etc/ssl/private/misp-chain.crt</p>
 <div class="codehilite"><pre><span></span><code>      LogLevel warn
       ErrorLog /var/log/apache2/misp.local_error.log
@@ -1053,7 +1048,6 @@ echo &quot;&lt;?php
       Header set X-Content-Type-Options nosniff
       Header set X-Frame-Options DENY
 </code></pre></div>
-
 
 <p></VirtualHost>" | tee /etc/apache2/sites-available/misp-ssl.conf</p>
 <p>echo "127.0.0.1 misp.local" | tee -a /etc/hosts</p>
@@ -1094,7 +1088,6 @@ echo &quot;&lt;?php
   CustomLog /var/log/apache2/misp-dashboard.local_access.log combined
   ServerSignature Off
 </code></pre></div>
-
 
 <p></VirtualHost>" | tee /etc/apache2/sites-available/misp-dashboard.conf</p>
 <p>a2dissite default-ssl

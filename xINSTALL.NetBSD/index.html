@@ -839,6 +839,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#7-log-rotation-needs-to-be-adapted-to-openbsd-newsyslog-does-this-for-you" class="md-nav__link">
+    7/ Log rotation (needs to be adapted to OpenBSD, newsyslog does this for you
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#8-misp-configuration" class="md-nav__link">
     8/ MISP configuration
   </a>
@@ -940,6 +947,15 @@ misp-modules are broken because of the python-opencv dependency.</p>
 <h3 id="0-wip-you-are-warned-this-does-only-partially-work">0/ WIP! You are warned, this does only partially work!<a class="headerlink" href="#0-wip-you-are-warned-this-does-only-partially-work" title="Permanent link">&para;</a></h3>
 <hr />
 <h4 id="misp-configuration-variables">MISP configuration variables<a class="headerlink" href="#misp-configuration-variables" title="Permanent link">&para;</a></h4>
+<p>If you are doing a manual install, copy and pasting from this document, please do the following before starting:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md <span class="p">|</span> grep -v <span class="se">\`\`\`</span><span class="k">)</span><span class="s2">&quot;</span>
+MISPvars
+</code></pre></div>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Do NOT leave your session after this mid-install as some initial passwords have been generated and thus would be lost.
+Consider using a mux like <a href="https://superuser.com/questions/423310/byobu-vs-gnu-screen-vs-tmux-usefulness-and-transferability-of-skills">screen or tmux</a>.</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_global-vars.sh&gt;</span>
 <span class="c1"># $ eval &quot;$(curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md | grep -v \`\`\`)&quot;</span>
 <span class="c1"># $ MISPvars</span>
@@ -958,6 +974,7 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># The web server user</span>
   <span class="c1"># RHEL/CentOS</span>
   <span class="k">if</span> <span class="o">[[</span> -f <span class="s2">&quot;/etc/redhat-release&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">SE_LINUX</span><span class="o">=</span><span class="k">$(</span>sestatus  -v -b <span class="p">|</span>grep <span class="s2">&quot;^SELinux status&quot;</span><span class="p">|</span> grep enabled <span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span><span class="k">)</span>
     <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;apache&quot;</span>
     <span class="nv">SUDO_WWW</span><span class="o">=</span><span class="s2">&quot;sudo -H -u </span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"> &quot;</span>
   <span class="c1"># Debian flavoured</span>
@@ -1047,11 +1064,9 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_global-vars.sh&gt;</span>
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">AUTOMAKE_VERSION</span><span class="o">=</span><span class="m">1</span>.16
 <span class="nb">export</span> <span class="nv">AUTOCONF_VERSION</span><span class="o">=</span><span class="m">2</span>.69
 </code></pre></div>
-
 <h3 id="1-minimal-openbsd-install">1/ Minimal OpenBSD install<a class="headerlink" href="#1-minimal-openbsd-install" title="Permanent link">&para;</a></h3>
 <hr />
 <h4 id="install-standard-netbsd-amd64-without-x11">Install standard NetBSD-amd64 without X11<a class="headerlink" href="#install-standard-netbsd-amd64-without-x11" title="Permanent link">&para;</a></h4>
@@ -1071,7 +1086,6 @@ su root -c <span class="s2">&quot;pkgin update&quot;</span>
 su root -c <span class="s2">&quot;pkgin -y install sudo gsed&quot;</span>
 su root -c <span class="s1">&#39;gsed -i -e &quot;s/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/&quot; /usr/pkg/etc/sudoers&#39;</span>
 </code></pre></div>
-
 <h5 id="in-case-you-forgot-to-fetch-pkgsrc-optional">In case you forgot to fetch pkgsrc (optional)<a class="headerlink" href="#in-case-you-forgot-to-fetch-pkgsrc-optional" title="Permanent link">&para;</a></h5>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /usr
 env <span class="nv">CVS_RSH</span><span class="o">=</span>ssh cvs -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc
@@ -1080,7 +1094,6 @@ env <span class="nv">CVS_RSH</span><span class="o">=</span>ssh cvs -d anoncvs@an
 <span class="nb">cd</span> /usr/pkgsrc/pkg tools/pkgin/<span class="p">;</span> make install clean
 /usr/pkg/sbin/pkg_admin fetch-pkg-vulnerabilities
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code>You may wish to have the vulnerabilities file downloaded daily so that it
 remains current. This may be done by adding an appropriate entry to the root
 users crontab(5) entry. For example the entry
@@ -1091,32 +1104,25 @@ users crontab(5) entry. For example the entry
 9 3 * * * /usr/pkg/sbin/pkg_admin audit |mail -s &quot;Installed package audit result&quot; \
             root &gt;/dev/null 2&gt;&amp;1
 </code></pre></div>
-
 <h4 id="install-bash">Install bash<a class="headerlink" href="#install-bash" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo pkgin -y install bash
 </code></pre></div>
-
 <h4 id="mariadb-server">mariadb server<a class="headerlink" href="#mariadb-server" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo pkgin -y install mysql-server 
 </code></pre></div>
-
 <h4 id="install-misc-dependencies">Install misc dependencies<a class="headerlink" href="#install-misc-dependencies" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo pkgin -y install curl git python37 py37-pip redis autoconf automake libtool magic
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code>sudo pkgin -y install gnupg2
 </code></pre></div>
-
 <h4 id="install-postfix-optional">Install postfix (optional)<a class="headerlink" href="#install-postfix-optional" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo pkgin -y install postfix
 </code></pre></div>
-
 <h4 id="vim-optional">vim (optional)<a class="headerlink" href="#vim-optional" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo pkgin -y install vim
 sudo mv /usr/bin/vi /usr/bin/vi-<span class="sb">`</span>date +%d%m%y<span class="sb">`</span>
 sudo ln -s /usr/pkg/bin/vim /usr/bin/vi
 </code></pre></div>
-
 <h4 id="apache-php-moz-rootcerts">apache + php + moz-rootcerts<a class="headerlink" href="#apache-php-moz-rootcerts" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo pkgin -y install php ap24-php74 php74-fpm php74-redis3 php74-mysqli php74-pdo_mysql php74-pcntl php74-json php74-iconv php74-gd php74-mbstring php74-pear-Crypt_GPG
 sudo cp /usr/share/examples/openssl/openssl.cnf /etc/openssl/
@@ -1124,18 +1130,15 @@ sudo mozilla-rootcerts install
 sudo cp /usr/pkg/share/examples/rc.d/apache /etc/rc.d/
 <span class="nb">echo</span> <span class="nv">apache</span><span class="o">=</span>yes <span class="p">|</span>sudo tee /etc/rc.conf.d/apache
 </code></pre></div>
-
 <h4 id="misp-user">misp user<a class="headerlink" href="#misp-user" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo useradd -m -s /usr/pkg/bin/bash -G wheel,www misp
 </code></pre></div>
-
 <h4 id="install-x11r7-post-install">Install X11R7 post-install<a class="headerlink" href="#install-x11r7-post-install" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /tmp
 wget https://ftp.netbsd.org/pub/NetBSD/NetBSD-9.0/amd64/binary/sets/xbase.tgz
 sudo tar -C / -xzphf xbase.tgz
 rm xbase.tgz
 </code></pre></div>
-
 <h4 id="if-a-valid-ssl-certificate-is-not-already-created-for-the-server-create-a-self-signed-certificate">If a valid SSL certificate is not already created for the server, create a self-signed certificate:<a class="headerlink" href="#if-a-valid-ssl-certificate-is-not-already-created-for-the-server-create-a-self-signed-certificate" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code># OpenSSL configuration
 OPENSSL_C=&#39;LU&#39;
@@ -1146,10 +1149,8 @@ OPENSSL_OU=&#39;Organizational Unit&#39;
 OPENSSL_CN=&#39;Common Name&#39;
 OPENSSL_EMAILADDRESS=&#39;info@localhost&#39;
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code>sudo openssl req -sha256 -newkey rsa:4096 -days <span class="m">3650</span> -nodes -x509 -subj <span class="s2">&quot;/C=</span><span class="nv">$OPENSSL_C</span><span class="s2">/ST=</span><span class="nv">$OPENSSL_ST</span><span class="s2">/L=</span><span class="nv">$OPENSSL_L</span><span class="s2">/O=&lt;</span><span class="nv">$OPENSSL_O</span><span class="s2">/OU=</span><span class="nv">$OPENSSL_OU</span><span class="s2">/CN=</span><span class="nv">$OPENSSL_CN</span><span class="s2">/emailAddress=</span><span class="nv">$OPENSSL_EMAILADDRESS</span><span class="s2">&quot;</span> -keyout /etc/openssl/private/server.key -out /usr/pkg/etc/httpd/server.crt
 </code></pre></div>
-
 <h4 id="install-python-virtualenv">Install Python virtualenv<a class="headerlink" href="#install-python-virtualenv" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo ln -sf /usr/pkg/bin/pip3.7 /usr/pkg/bin/pip
 sudo ln -s /usr/pkg/bin/python3.7 /usr/pkg/bin/python
@@ -1157,7 +1158,6 @@ sudo ln -s /usr/pkg/bin/python3.7 /usr/pkg/bin/python3
 sudo pkgin -y install py37-virtualenv
 sudo ln -s /usr/pkg/bin/virtualenv-3.7 /usr/pkg/bin/virtualenv
 </code></pre></div>
-
 <h4 id="install-ssdeep">Install ssdeep<a class="headerlink" href="#install-ssdeep" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo mkdir -p /usr/local/src
 sudo chown misp:users /usr/local/src
@@ -1169,14 +1169,12 @@ sudo -u misp ./configure --prefix=/usr
 sudo -u misp make
 sudo make install
 </code></pre></div>
-
 <h4 id="usrpkgetcphpini">/usr/pkg/etc/php.ini<a class="headerlink" href="#usrpkgetcphpini" title="Permanent link">&para;</a></h4>
 <h4 id="enable-redis">Enable redis<a class="headerlink" href="#enable-redis" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo cp /usr/pkg/share/examples/rc.d/redis /etc/rc.d
 <span class="nb">echo</span> <span class="nv">redis</span><span class="o">=</span>yes <span class="p">|</span>sudo tee /etc/rc.conf.d/redis
 sudo /etc/rc.d/redis start
 </code></pre></div>
-
 <h4 id="enable-mysqld">Enable mysqld<a class="headerlink" href="#enable-mysqld" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo cp /usr/pkg/share/examples/rc.d/mysqld /etc/rc.d/
 <span class="nb">echo</span> <span class="nv">mysqld</span><span class="o">=</span>yes <span class="p">|</span>sudo tee /etc/rc.conf.d/mysqld
@@ -1185,7 +1183,6 @@ sudo /usr/pkg/bin/mysql_secure_installation
 <span class="c1"># TODO: Figure out how to properly bind to localhost</span>
 <span class="c1">##doas rcctl set mysqld flags --bind-address=127.0.0.1</span>
 </code></pre></div>
-
 <h3 id="2-misp-code">2/ MISP code<a class="headerlink" href="#2-misp-code" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Download MISP using git in the /usr/local/www/ directory.</span>
@@ -1234,7 +1231,6 @@ sudo -u www <span class="nv">HOME</span><span class="o">=</span>/tmp <span class
 sudo -u www <span class="nv">HOME</span><span class="o">=</span>/tmp <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install maec
 sudo -u www <span class="nv">HOME</span><span class="o">=</span>/tmp <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install plyara
 </code></pre></div>
-
 <h3 id="3-cakephp">3/ CakePHP<a class="headerlink" href="#3-cakephp" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># CakePHP is included as a submodule of MISP and has been fetched earlier.</span>
@@ -1250,7 +1246,6 @@ sudo -u www <span class="nv">HOME</span><span class="o">=</span>/tmp php compose
 <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
 sudo -u www cp -f <span class="nv">$PATH_TO_MISP</span>/INSTALL/setup/config.php <span class="nv">$PATH_TO_MISP</span>/app/Plugin/CakeResque/Config/config.php
 </code></pre></div>
-
 <h3 id="4-set-the-permissions">4/ Set the permissions<a class="headerlink" href="#4-set-the-permissions" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Check if the permissions are set correctly using the following commands:</span>
@@ -1260,25 +1255,21 @@ sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/tmp
 sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/files
 sudo chmod -R g+ws <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/tmp
 </code></pre></div>
-
 <h3 id="5-create-a-database-and-user">5/ Create a database and user<a class="headerlink" href="#5-create-a-database-and-user" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Enter the mysql shell</span>
 sudo mysql -u root -p
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code>MariaDB [(none)]&gt; create database misp;
 MariaDB [(none)]&gt; grant usage on *.* to misp@localhost identified by &#39;XXXXdbpasswordhereXXXXX&#39;;
 MariaDB [(none)]&gt; grant all privileges on misp.* to misp@localhost;
 MariaDB [(none)]&gt; flush privileges;
 MariaDB [(none)]&gt; exit
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code><span class="c1"># Import the empty MISP database from MYSQL.sql</span>
 sudo -u www sh -c <span class="s2">&quot;mysql -u misp -pmisp &lt; /var/www/htdocs/MISP/INSTALL/MYSQL.sql&quot;</span>
 <span class="c1"># enter the password you set previously</span>
 </code></pre></div>
-
 <h3 id="6-apache-configuration">6/ Apache configuration<a class="headerlink" href="#6-apache-configuration" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Now configure your Apache webserver with the DocumentRoot /var/www/htdocs/MISP/app/webroot/</span>
@@ -1300,7 +1291,6 @@ sudo openssl req -newkey rsa:4096 -days <span class="m">3650</span> -nodes -x509
 -keyout /etc/ssl/private/server.key -out /etc/openssl/server.crt
 <span class="c1"># Otherwise, copy the SSLCertificateFile, SSLCertificateKeyFile, and SSLCertificateChainFile to /etc/openssl/private/. (Modify path and config to fit your environment)</span>
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code>============================================= Begin sample working SSL config for MISP
 &lt;VirtualHost &lt;IP, FQDN, or *&gt;:80&gt;
         ServerName &lt;your.FQDN.here&gt;
@@ -1336,7 +1326,6 @@ sudo openssl req -newkey rsa:4096 -days <span class="m">3650</span> -nodes -x509
 &lt;/VirtualHost&gt;
 ============================================= End sample working SSL config for MISP
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code><span class="c1"># activate new vhost</span>
 <span class="nb">cd</span> /etc/apache2/sites-enabled/
 doas ln -s ../sites-available/misp-ssl.conf
@@ -1344,7 +1333,6 @@ doas ln -s ../sites-available/misp-ssl.conf
 
 doas vi /etc/apache2/httpd2.conf
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code>/!\ Enable mod_rewrite in httpd2.conf /!\
 LoadModule rewrite_module /usr/local/lib/apache2/mod_rewrite.so
 LoadModule ssl_module /usr/local/lib/apache2/mod_ssl.so
@@ -1361,12 +1349,12 @@ AddType application/x-httpd-php .php
 DirectoryIndex index.html index.php
 /usr/pkg/share/httpd/htdocs
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code>doas ln -sf /var/www/conf/modules.sample/php-7.0.conf /var/www/conf/modules/php.conf
 <span class="c1"># Restart apache</span>
 doas /etc/rc.d/apache2 restart
 </code></pre></div>
-
+<h3 id="7-log-rotation-needs-to-be-adapted-to-openbsd-newsyslog-does-this-for-you">7/ Log rotation (needs to be adapted to OpenBSD, newsyslog does this for you<a class="headerlink" href="#7-log-rotation-needs-to-be-adapted-to-openbsd-newsyslog-does-this-for-you" title="Permanent link">&para;</a></h3>
+<hr />
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>MISP saves the stdout and stderr of its workers in /var/www/htdocs/MISP/app/tmp/logs</p>
@@ -1448,7 +1436,6 @@ sudo vi /etc/rc.local
 # Add the following line before the last line (exit 0). Make sure that you replace www with your apache user:
 sudo -u www bash $PATH_TO_MISP/app/Console/worker/start.sh
 </code></pre></div>
-
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>If you have installed the recommended Python 3 virtualenv to the recommended place of <strong>${PATH_TO_MISP}/venv</strong> set the following MISP configurable
@@ -1519,7 +1506,6 @@ sudo $PATH_TO_MISP/venv/bin/pip install wand
 sudo -u www $PATH_TO_MISP/venv/bin/misp-modules -l 0.0.0.0 -s &amp;
 echo &quot;sudo -u www $PATH_TO_MISP/venv/bin/misp-modules -l 0.0.0.0 -s &amp;&quot; |doas tee -a /etc/rc.local
 </code></pre></div>
-
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>Make sure that the STIX libraries and GnuPG work as intended, if not, refer to INSTALL.txt's paragraphs dealing with these two items</p>
@@ -1667,7 +1653,6 @@ sudo -u www <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quo
 sudo -u www <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.timeout&quot;</span> <span class="m">600</span>
 sudo -u www <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.cookie_timeout&quot;</span> <span class="m">3600</span>
 </code></pre></div>
-
 <h3 id="recommended-actions_1">Recommended actions<a class="headerlink" href="#recommended-actions_1" title="Permanent link">&para;</a></h3>
 <hr />
 <ul>
@@ -1692,7 +1677,6 @@ sudo -u www <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quo
 <div class="highlight"><pre><span></span><code>sudo pkgin -y install zeromq
 sudo -u www <span class="nv">HOME</span><span class="o">=</span>/tmp <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install pyzmq
 </code></pre></div>
-
 <h4 id="misp-dashboard">misp-dashboard<a class="headerlink" href="#misp-dashboard" title="Permanent link">&para;</a></h4>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
@@ -1729,7 +1713,6 @@ sudo -u www <span class="nv">HOME</span><span class="o">=</span>/tmp <span class
 
  pip3 install -U pip argparse redis zmq geoip2 flask phonenumbers pycountry
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code>cd /var/www
 doas mkdir misp-dashboard
 doas chown www:www misp-dashboard
@@ -1786,7 +1769,6 @@ echo &quot;&lt;VirtualHost *:8001&gt;
 
 doas ln -s /etc/apache2/sites-available/misp-dashboard.conf /etc/apache2/sites-enabled/misp-dashboard.conf
 </code></pre></div>
-
 <p>Add this to /etc/httpd2.conf
 <div class="highlight"><pre><span></span><code>LoadModule wsgi_module /usr/local/lib/apache2/mod_wsgi.so
 Listen 8001
@@ -1808,7 +1790,6 @@ sudo -u www $CAKE Admin setSetting &quot;Plugin.ZeroMQ_include_attachments&quot;
 sudo -u www $CAKE Admin setSetting &quot;Plugin.ZeroMQ_tag_notifications_enable&quot; false
 sudo -u www $CAKE Admin setSetting &quot;Plugin.ZeroMQ_audit_notifications_enable&quot; false
 </code></pre></div>
-
 <h1 id="hardening-a-base-system">Hardening a base system<a class="headerlink" href="#hardening-a-base-system" title="Permanent link">&para;</a></h1>
 <h2 id="intro">Intro<a class="headerlink" href="#intro" title="Permanent link">&para;</a></h2>
 <p>MISP is a web-based <strong>information sharing platform</strong>, by design it is kept rather simple and hardening can be done by following the common best practices.</p>
@@ -1853,7 +1834,6 @@ index f9f69d4..2e8fd78 100644
  #
  # Allow TRACE method
 </code></pre></div>
-
 <h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.ncsc.nl/english/current-topics/factsheets/it-security-guidelines-for-transport-layer-security-tls.html">IT Security Guidelines for TLS by NCSC.nl</a></p>
 <p><a href="https://weakdh.org/sysadmin.html">Weak Diffie-Hellman and the Logjam Attack</a></p>

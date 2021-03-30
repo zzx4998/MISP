@@ -736,14 +736,12 @@ The preferred way is to go into the Web UI "Server Settings &amp; Maintenance" -
 sudo -H -u www-data git pull origin <span class="m">2</span>.4
 sudo -H -u www-data git submodule update --init --recursive
 </code></pre></div>
-
 <p>If the above fails, your permissons might be wrong. <a href="https://misp.github.io/MISP/INSTALL.ubuntu1804/#5-set-the-permissions">Click here for the fix the permissions guide</a>.</p>
 <h5 id="misp-dependencies">MISP Dependencies<a class="headerlink" href="#misp-dependencies" title="Permanent link">&para;</a></h5>
 <div class="highlight"><pre><span></span><code><span class="c1"># MISP configuration variables</span>
 <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s1">&#39;/var/www/MISP&#39;</span>
 <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
 </code></pre></div>
-
 <h6 id="virtualenv">virtualenv<a class="headerlink" href="#virtualenv" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code>sudo -H -u www-data virtualenv -p python3 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-cybox
@@ -767,7 +765,6 @@ sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</spa
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP
 sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U .
 </code></pre></div>
-
 <h6 id="misp-modules">misp-modules<a class="headerlink" href="#misp-modules" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /usr/local/src/misp-modules
 git pull
@@ -778,17 +775,14 @@ sudo gem update asciidoctor-pdf --pre
 sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U maec lief python-magic pathlib
 sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U git+https://github.com/kbandla/pydeep.git
 </code></pre></div>
-
 <h6 id="pyzmq">pyzmq<a class="headerlink" href="#pyzmq" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code>sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U pyzmq
 </code></pre></div>
-
 <h6 id="misp-dashboard">misp-dashboard<a class="headerlink" href="#misp-dashboard" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /var/www/misp-dashboard
 sudo -H -u www-data git pull
 sudo -H /var/www/misp-dashboard/install_dependencies.sh
 </code></pre></div>
-
 <h6 id="viper">viper<a class="headerlink" href="#viper" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /usr/local/src/viper
 git pull
@@ -798,7 +792,6 @@ git submodule update --init --recursive
 ./venv/bin/pip install -U -r requirements.txt
 /usr/local/src/viper/viper-cli -h
 </code></pre></div>
-
 <h6 id="mail-to-misp">mail-to-misp<a class="headerlink" href="#mail-to-misp" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /usr/local/src/faup
 git pull

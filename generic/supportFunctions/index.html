@@ -625,7 +625,7 @@
 <span class="c1"># Leave empty for NO debug messages, if run with set -x or bash -x it will enable DEBUG by default</span>
 <span class="nv">DEBUG</span><span class="o">=</span>
 
-<span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$-</span><span class="s2">&quot;</span> in
+<span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$-</span><span class="s2">&quot;</span> <span class="k">in</span>
   *x*<span class="o">)</span>  <span class="nv">NO_PROGRESS</span><span class="o">=</span><span class="m">1</span><span class="p">;</span> <span class="nv">DEBUG</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
   *<span class="o">)</span>    <span class="nv">NO_PROGRESS</span><span class="o">=</span><span class="m">0</span> <span class="p">;;</span>
 <span class="k">esac</span>
@@ -696,8 +696,8 @@ checkOpt <span class="o">()</span> <span class="o">{</span>
 
 setOpt <span class="o">()</span> <span class="o">{</span>
   <span class="nv">options</span><span class="o">=()</span>
-  <span class="k">for</span> o in <span class="nv">$@</span><span class="p">;</span> <span class="k">do</span> 
-    <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$o</span><span class="s2">&quot;</span> in
+  <span class="k">for</span> o <span class="k">in</span> <span class="nv">$@</span><span class="p">;</span> <span class="k">do</span> 
+    <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$o</span><span class="s2">&quot;</span> <span class="k">in</span>
       <span class="o">(</span><span class="s2">&quot;-c&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;core&quot;</span><span class="p">;</span> <span class="nv">CORE</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
       <span class="o">(</span><span class="s2">&quot;-V&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;viper&quot;</span><span class="p">;</span> <span class="nv">VIPER</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
       <span class="o">(</span><span class="s2">&quot;-M&quot;</span><span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;modules&quot;</span><span class="p">;</span> <span class="nv">MODULES</span><span class="o">=</span><span class="m">1</span> <span class="p">;;</span>
@@ -750,7 +750,7 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
     <span class="nv">FLAVOUR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$ID</span><span class="s2">&quot;</span><span class="p">|</span> tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
   <span class="k">fi</span>
 
-  <span class="k">case</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> in
+  <span class="k">case</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">in</span>
     ubuntu<span class="o">)</span>
       <span class="k">if</span> command_exists lsb_release<span class="p">;</span> <span class="k">then</span>
         <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>lsb_release --codename <span class="p">|</span> cut -f2<span class="k">)</span><span class="s2">&quot;</span>
@@ -761,7 +761,7 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
     <span class="p">;;</span>
     debian<span class="p">|</span>raspbian<span class="o">)</span>
       <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>sed <span class="s1">&#39;s/\/.*//&#39;</span> /etc/debian_version <span class="p">|</span> sed <span class="s1">&#39;s/\..*//&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
-      <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> in
+      <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> <span class="k">in</span>
         <span class="m">10</span><span class="o">)</span>
           <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;buster&quot;</span>
         <span class="p">;;</span>
@@ -834,7 +834,7 @@ check_forked <span class="o">()</span> <span class="o">{</span>
         <span class="c1"># We&#39;re Debian and don&#39;t even know it!</span>
         <span class="nv">FLAVOUR</span><span class="o">=</span>debian
         <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>sed <span class="s1">&#39;s/\/.*//&#39;</span> /etc/debian_version <span class="p">|</span> sed <span class="s1">&#39;s/\..*//&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
-        <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> in
+        <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> <span class="k">in</span>
           <span class="m">10</span><span class="o">)</span>
             <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;buster&quot;</span>
           <span class="p">;;</span>
@@ -870,7 +870,7 @@ checkInstaller <span class="o">()</span> <span class="o">{</span>
     <span class="k">fi</span>
     <span class="c1"># SHAsums to be computed, not the -- notatiation is for ease of use with rhash</span>
     <span class="nv">SHA_SUMS</span><span class="o">=</span><span class="s2">&quot;--sha1 --sha256 --sha384 --sha512&quot;</span>
-    <span class="k">for</span> sum in <span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">SHA_SUMS</span><span class="si">}</span> <span class="p">|</span>sed <span class="s1">&#39;s/--sha//g&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+    <span class="k">for</span> sum <span class="k">in</span> <span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">SHA_SUMS</span><span class="si">}</span> <span class="p">|</span>sed <span class="s1">&#39;s/--sha//g&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
       /usr/bin/wget --no-cache -q -O /tmp/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span> https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span>
       <span class="nv">INSTsum</span><span class="o">=</span><span class="k">$(</span>shasum -a <span class="si">${</span><span class="nv">sum</span><span class="si">}</span> <span class="si">${</span><span class="nv">0</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
       <span class="nv">chsum</span><span class="o">=</span><span class="k">$(</span>cat /tmp/INSTALL.sh.sha<span class="si">${</span><span class="nv">sum</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
@@ -904,7 +904,7 @@ space <span class="o">()</span> <span class="o">{</span>
   <span class="k">fi</span>
   <span class="c1"># Check terminal width</span>
   <span class="nv">num</span><span class="o">=</span><span class="sb">`</span>tput cols<span class="sb">`</span>
-  <span class="k">for</span> i in <span class="sb">`</span>seq <span class="m">1</span> <span class="nv">$num</span><span class="sb">`</span><span class="p">;</span> <span class="k">do</span>
+  <span class="k">for</span> i <span class="k">in</span> <span class="sb">`</span>seq <span class="m">1</span> <span class="nv">$num</span><span class="sb">`</span><span class="p">;</span> <span class="k">do</span>
     <span class="nb">echo</span> -n <span class="s2">&quot;-&quot;</span>
   <span class="k">done</span>
   <span class="nb">echo</span> <span class="s2">&quot;&quot;</span>
@@ -919,7 +919,7 @@ spin<span class="o">()</span>
   <span class="nv">spinner</span><span class="o">=</span><span class="s2">&quot;/|\\-/|\\-&quot;</span>
   <span class="k">while</span> :
   <span class="k">do</span>
-    <span class="k">for</span> i in <span class="sb">`</span>seq <span class="m">0</span> <span class="m">7</span><span class="sb">`</span>
+    <span class="k">for</span> i <span class="k">in</span> <span class="sb">`</span>seq <span class="m">0</span> <span class="m">7</span><span class="sb">`</span>
     <span class="k">do</span>
       <span class="nb">echo</span> -n <span class="s2">&quot;</span><span class="si">${</span><span class="nv">spinner</span><span class="p">:</span><span class="nv">$i</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
       <span class="nb">echo</span> -en <span class="s2">&quot;\010&quot;</span>
@@ -943,7 +943,7 @@ progress <span class="o">()</span> <span class="o">{</span>
     <span class="k">return</span>
   <span class="k">fi</span>
   <span class="c1"># Display progress</span>
-  <span class="k">for</span> p in <span class="k">$(</span>seq <span class="m">1</span> <span class="nv">$progress</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+  <span class="k">for</span> p <span class="k">in</span> <span class="k">$(</span>seq <span class="m">1</span> <span class="nv">$progress</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
     <span class="nv">bar</span><span class="o">+=</span><span class="s2">&quot;#&quot;</span>
     <span class="nb">echo</span> -ne <span class="s2">&quot;</span><span class="nv">$bar</span><span class="s2">  (</span><span class="nv">$p</span><span class="s2">%)\r&quot;</span>
   <span class="k">done</span>
@@ -987,7 +987,7 @@ ask_o <span class="o">()</span> <span class="o">{</span>
   <span class="o">[</span> -z <span class="s2">&quot;</span><span class="si">${</span><span class="nv">3</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nv">OPT2</span><span class="o">=</span><span class="s2">&quot;n&quot;</span> <span class="o">||</span> <span class="nv">OPT2</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">3</span><span class="si">}</span><span class="s2">&quot;</span>
 
   <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span>
-    <span class="k">case</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ANSWER</span><span class="si">}</span><span class="s2">&quot;</span> in <span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPT1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPT2</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">)</span> <span class="nb">break</span> <span class="p">;;</span> <span class="k">esac</span>
+    <span class="k">case</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ANSWER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">in</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPT1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">OPT2</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">)</span> <span class="nb">break</span> <span class="p">;;</span> <span class="k">esac</span>
     <span class="nb">echo</span> -e -n <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2"> (</span><span class="si">${</span><span class="nv">OPT1</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">OPT2</span><span class="si">}</span><span class="s2">) &quot;</span>
     <span class="nb">read</span> ANSWER
     <span class="nv">ANSWER</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ANSWER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">|</span>  tr <span class="s1">&#39;[:upper:]&#39;</span> <span class="s1">&#39;[:lower:]&#39;</span><span class="k">)</span>
@@ -1095,7 +1095,7 @@ upgrade <span class="o">()</span> <span class="o">{</span>
   <span class="nv">MISP_BASEURL</span><span class="o">=</span><span class="s2">&quot;https://127.0.0.1&quot;</span>
   <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> sh -c <span class="s2">&quot;cd </span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/app ; php composer.phar update ; php composer.phar self-update&quot;</span>
 
-  <span class="k">for</span> URN in <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;galaxies warninglists noticelists objectTemplates taxonomies&quot;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+  <span class="k">for</span> URN <span class="k">in</span> <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;galaxies warninglists noticelists objectTemplates taxonomies&quot;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
     curl --header <span class="s2">&quot;</span><span class="nv">$Autho</span><span class="s2"> </span><span class="nv">$AUTH_KEY</span><span class="s2">&quot;</span> --header <span class="s2">&quot;</span><span class="nv">$Acc</span><span class="s2"> </span><span class="nv">$headerJSON</span><span class="s2">&quot;</span> --header <span class="s2">&quot;</span><span class="nv">$CT</span><span class="s2"> </span><span class="nv">$headerJSON</span><span class="s2">&quot;</span> -k -X POST <span class="nv">$MISP_BASEURL</span>/<span class="nv">$URN</span>/update
   <span class="k">done</span>
 
@@ -1290,7 +1290,7 @@ installDepsPhp70 <span class="o">()</span> <span class="o">{</span>
   php-redis php-gnupg <span class="se">\</span>
   php-gd
 
-  <span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
+  <span class="k">for</span> key <span class="k">in</span> upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
   <span class="k">do</span>
       sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
   <span class="k">done</span>
