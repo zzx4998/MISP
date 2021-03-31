@@ -483,81 +483,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#recommended-actions" class="md-nav__link">
-    Recommended actions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#optional-features" class="md-nav__link">
-    Optional features
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-command" class="md-nav__link">
-    MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following command
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" class="md-nav__link">
-    MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#misp-dashboard" class="md-nav__link">
-    MISP Dashboard
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#install-viper-framework-with-a-virtualenv" class="md-nav__link">
-    Install viper framework (with a virtualenv)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#experimental-ssdeep-correlations" class="md-nav__link">
-    Experimental ssdeep correlations
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#installing-ssdeep" class="md-nav__link">
-    installing ssdeep
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#install-mail-to-misp" class="md-nav__link">
-    Install mail to misp
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1118,81 +1043,6 @@
           <li class="md-nav__item">
   <a href="#install-misp-modules-optional" class="md-nav__link">
     Install misp-modules (optional)
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#recommended-actions" class="md-nav__link">
-    Recommended actions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#optional-features" class="md-nav__link">
-    Optional features
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-command" class="md-nav__link">
-    MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following command
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" class="md-nav__link">
-    MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#misp-dashboard" class="md-nav__link">
-    MISP Dashboard
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#install-viper-framework-with-a-virtualenv" class="md-nav__link">
-    Install viper framework (with a virtualenv)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#experimental-ssdeep-correlations" class="md-nav__link">
-    Experimental ssdeep correlations
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#installing-ssdeep" class="md-nav__link">
-    installing ssdeep
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#install-mail-to-misp" class="md-nav__link">
-    Install mail to misp
   </a>
   
 </li>
@@ -2156,50 +2006,53 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># Sleep 9 seconds to give misp-modules a chance to spawn</span>
   sleep <span class="m">9</span>
-
-  <span class="c1"># Enable Enrichment, set better timeouts</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_popover_only&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_timeout&quot;</span> <span class="m">300</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_timeout&quot;</span> <span class="m">150</span>
-  <span class="c1"># TODO:&quot;Investigate why the next one fails&quot;</span>
-  <span class="c1">#$SUDO_WWW $CAKE Admin setSetting &quot;Plugin.Enrichment_asn_history_enabled&quot; true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_cve_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_dns_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_btc_steroids_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_ipasn_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_yara_syntax_validator_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_yara_query_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_pdf_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_docx_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_xlsx_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_pptx_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_ods_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_odt_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_port&quot;</span> <span class="m">6666</span>
-
-  <span class="c1"># Enable Import modules, set better timeout</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_port&quot;</span> <span class="m">6666</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_timeout&quot;</span> <span class="m">300</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_ocr_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_mispjson_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_openiocimport_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_threatanalyzer_import_enabled&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Import_csvimport_enabled&quot;</span> <span class="nb">true</span>
-
-  <span class="c1"># Enable Export modules, set better timeout</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_port&quot;</span> <span class="m">6666</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_timeout&quot;</span> <span class="m">300</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Export_pdfexport_enabled&quot;</span> <span class="nb">true</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 3_misp-modules.sh&gt;</span>
 </code></pre></div>
+<h1 id="_1"><snippet-begin 3_misp-modules-cake.sh><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>modulesCAKE () {
+  # Enable Enrichment, set better timeouts
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_services_enable" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_hover_enable" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_hover_popover_only" false
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_hover_timeout" 150
+  ${SUDO_WWW} ${RUN_PHP} -- <span><span class="MathJax_Preview">{CAKE} Admin setSetting "Plugin.Enrichment_timeout" 300
+  # TODO:"Investigate why the next one fails"
+  #</span><script type="math/tex">{CAKE} Admin setSetting "Plugin.Enrichment_timeout" 300
+  # TODO:"Investigate why the next one fails"
+  #</script></span>{SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_asn_history_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_cve_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_dns_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_btc_steroids_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_ipasn_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_yara_syntax_validator_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_yara_query_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_pdf_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_docx_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_xlsx_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_pptx_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_ods_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_odt_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_services_url" "<a href="http://127.0.0.1">http://127.0.0.1</a>"
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_services_port" 6666</p>
+<p># Enable Import modules, set better timeout
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_services_enable" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_services_url" "<a href="http://127.0.0.1">http://127.0.0.1</a>"
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_services_port" 6666
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_timeout" 300
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_ocr_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_mispjson_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_openiocimport_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_threatanalyzer_import_enabled" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_csvimport_enabled" true</p>
+<p># Enable Export modules, set better timeout
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Export_services_enable" true
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Export_services_url" "<a href="http://127.0.0.1">http://127.0.0.1</a>"
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Export_services_port" 6666
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Export_timeout" 300
+  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Export_pdfexport_enabled" true
+}</p>
+<h1 id="_2"><snippet-end 3_misp-modules-cake.sh><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>If you have installed the recommended Python 3 virtualenv to the recommended place of <strong>${PATH_TO_MISP}/venv</strong> set the following MISP configurable
@@ -2275,7 +2128,7 @@ installKafka <span class="o">()</span> <span class="o">{</span>
 <hr />
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Currently defunct due to upstream dependency changes</p>
+<p>A valid MaxMind DB key is required.</p>
 </div>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 4_misp-dashboard.sh&gt;</span>
 <span class="c1"># Main MISP Dashboard install function</span>
@@ -2351,28 +2204,30 @@ mispDashboard <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># &lt;snippet-begin 4_misp-dashboard-cake.sh&gt;</span>
 dashboardCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Enable ZeroMQ for misp-dashboard</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_event_notifications_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_notifications_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_reference_notifications_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_attribute_notifications_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_sighting_notifications_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_user_notifications_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_organisation_notifications_enable&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_port&quot;</span> <span class="m">50000</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_host&quot;</span> <span class="s2">&quot;localhost&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_port&quot;</span> <span class="m">6379</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_database&quot;</span> <span class="m">1</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_namespace&quot;</span> <span class="s2">&quot;mispq&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_include_attachments&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_tag_notifications_enable&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_audit_notifications_enable&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_event_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_reference_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_attribute_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_sighting_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_user_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_organisation_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_port&quot;</span> <span class="m">50000</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_host&quot;</span> <span class="s2">&quot;localhost&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_port&quot;</span> <span class="m">6379</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_database&quot;</span> <span class="m">1</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_namespace&quot;</span> <span class="s2">&quot;mispq&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_include_attachments&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_tag_notifications_enable&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_audit_notifications_enable&quot;</span> <span class="nb">false</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 4_misp-dashboard-cake.sh&gt;</span>
-</code></pre></div>
-<h4 id="install-viper-framework-with-a-virtualenv">Install viper framework (with a virtualenv)<a class="headerlink" href="#install-viper-framework-with-a-virtualenv" title="Permanent link">&para;</a></h4>
-<hr />
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 6_viper.sh&gt;</span>
+
+<span class="c1">#### Install viper framework (with a virtualenv)</span>
+-----------------------
+
+<span class="sb">```</span>bash
+<span class="c1"># &lt;snippet-begin 6_viper.sh&gt;</span>
 <span class="c1"># viper-web is broken ATM</span>
 <span class="c1"># Main Viper install function</span>
 viper <span class="o">()</span> <span class="o">{</span>
