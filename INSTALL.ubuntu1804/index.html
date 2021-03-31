@@ -2728,12 +2728,13 @@ checkFlavour <span class="o">()</span> <span class="o">{</span>
       <span class="k">fi</span>
       <span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2"> support is experimental at the moment&quot;</span>
     <span class="p">;;</span>
-    rhel<span class="p">|</span>ol<span class="p">|</span>sles<span class="o">)</span>
+    rhel<span class="p">|</span>ol<span class="p">|</span>sles<span class="p">|</span>fedora<span class="o">)</span>
       <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$dist_version</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> -r /etc/os-release <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="c1"># FIXME: On fedora the trimming fails</span>
         <span class="nv">dist_version</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
-    <span class="nv">dist_version</span><span class="o">=</span><span class="si">${</span><span class="nv">dist_version</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span>  <span class="c1"># Only interested about major version</span>
+        <span class="nv">dist_version</span><span class="o">=</span><span class="si">${</span><span class="nv">dist_version</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">1</span><span class="si">}</span>  <span class="c1"># Only interested about major version</span>
       <span class="k">fi</span>
-      <span class="c1"># Only tested for RHEL 7 so far </span>
+      <span class="c1"># FIXME: Only tested for RHEL 7 so far </span>
       <span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2"> support is experimental at the moment&quot;</span>
     <span class="p">;;</span>
     *<span class="o">)</span>
@@ -2803,7 +2804,7 @@ check_forked <span class="o">()</span> <span class="o">{</span>
 
 checkInstaller <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Workaround: shasum is not available on RHEL, only checking sha512</span>
-  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;rhel&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;centos&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;rhel&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;centos&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
   <span class="nv">INSTsum</span><span class="o">=</span><span class="k">$(</span>sha512sum <span class="si">${</span><span class="nv">0</span><span class="si">}</span> <span class="p">|</span> cut -f1 -d<span class="se">\ </span><span class="k">)</span>
   /usr/bin/wget --no-cache -q -O /tmp/INSTALL.sh.sha512 https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh.sha512
         <span class="nv">chsum</span><span class="o">=</span><span class="k">$(</span>cat /tmp/INSTALL.sh.sha512<span class="k">)</span>

@@ -1253,7 +1253,7 @@ Henceforth the document will also follow a more logical flow. In the sense that 
 <h3 id="-1-installer-and-manual-install-instructions">-1/ Installer and Manual install instructions<a class="headerlink" href="#-1-installer-and-manual-install-instructions" title="Permanent link">&para;</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>In the <strong>future</strong>, to install MISP on a fresh RHEL 8 install all you need to do is:</p>
+<p>In the <strong>future</strong>, to install MISP on a fresh RHEL 8 or CentOS 8 install all you need to do is:</p>
 <p><div class="highlight"><pre><span></span><code><span class="c1"># Please check the installer options first to make the best choice for your install</span>
 wget -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
 bash /tmp/INSTALL.sh
@@ -1471,13 +1471,18 @@ yumUpdate <span class="o">()</span> <span class="o">{</span>
 
 <h2 id="16-install-the-epel-and-remi-repo">1.6/ Install the EPEL and remi repo<a class="headerlink" href="#16-install-the-epel-and-remi-repo" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_EPEL_REMI.sh&gt;</span>
-enableEPEL_REMI <span class="o">()</span> <span class="o">{</span>
+enableEPEL_REMI_8 <span class="o">()</span> <span class="o">{</span>
   sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
   sudo yum install http://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
   sudo yum install yum-utils -y
   sudo dnf module <span class="nb">enable</span> php:remi-7.4 -y
-  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s2">&quot;centos8stream&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span>sudo dnf config-manager --set-enabled powertools
-  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s2">&quot;centos8&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span>sudo dnf config-manager --set-enabled powertools
+  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s2">&quot;centos8stream&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo dnf config-manager --set-enabled powertools
+  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s2">&quot;centos8&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo dnf config-manager --set-enabled powertools
+<span class="o">}</span>
+enableREMI_f33 <span class="o">()</span> <span class="o">{</span>
+  sudo yum install http://rpms.remirepo.net/fedora/remi-release-33.rpm
+  sudo yum install yum-utils -y
+  sudo dnf module <span class="nb">enable</span> php:remi-7.4 -y
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_EPEL_REMI.sh&gt;</span>
 </code></pre></div>
@@ -1569,7 +1574,8 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> git config core.filemode <span class="nb">false</span>
 
   <span class="c1"># Create a python3 virtualenv</span>
-  <span class="nv">$SUDO_WWW</span> virtualenv-3 -p python3 <span class="nv">$PATH_TO_MISP</span>/venv
+  <span class="o">[[</span> -e <span class="k">$(</span>which virtualenv-3 <span class="m">2</span>&gt;/dev/null<span class="k">)</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_WWW</span> virtualenv-3 -p python3 <span class="nv">$PATH_TO_MISP</span>/venv
+  <span class="o">[[</span> -e <span class="k">$(</span>which virtualenv <span class="m">2</span>&gt;/dev/null<span class="k">)</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_WWW</span> virtualenv -p python3 <span class="nv">$PATH_TO_MISP</span>/venv
   sudo mkdir /usr/share/httpd/.cache
   sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /usr/share/httpd/.cache
   <span class="nv">$SUDO_WWW</span> <span class="nv">$PATH_TO_MISP</span>/venv/bin/pip install -U pip setuptools
@@ -1614,7 +1620,7 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># lief needs manual compilation</span>
   sudo yum groupinstall <span class="s2">&quot;Development Tools&quot;</span> -y
-  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;rhel8.3&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install cmake3 -y <span class="o">&amp;&amp;</span> <span class="nv">CMAKE_BIN</span><span class="o">=</span><span class="s1">&#39;cmake3&#39;</span>
+  <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;fedora33&#39;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;rhel8.3&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install cmake3 -y <span class="o">&amp;&amp;</span> <span class="nv">CMAKE_BIN</span><span class="o">=</span><span class="s1">&#39;cmake3&#39;</span>
   <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;centos8stream&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install cmake -y <span class="o">&amp;&amp;</span> <span class="nv">CMAKE_BIN</span><span class="o">=</span><span class="s1">&#39;cmake&#39;</span>
   <span class="o">[[</span> <span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span> <span class="o">==</span> <span class="s1">&#39;centos8&#39;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install cmake -y <span class="o">&amp;&amp;</span> <span class="nv">CMAKE_BIN</span><span class="o">=</span><span class="s1">&#39;cmake&#39;</span>
 
@@ -2041,7 +2047,7 @@ mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install openjpeg-devel gcc-c++ poppler-cpp-devel pkgconfig python-devel redhat-rpm-config -y
 
   <span class="c1"># some misp-modules dependencies for RHEL8</span>
-  <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install openjpeg2-devel gcc-c++ poppler-cpp-devel pkgconfig python2-devel redhat-rpm-config -y
+  <span class="o">([[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora33&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]])</span> <span class="o">&amp;&amp;</span> sudo yum install openjpeg2-devel gcc-c++ poppler-cpp-devel pkgconfig python2-devel redhat-rpm-config -y
 
   sudo chmod <span class="m">2777</span> /usr/local/src
   sudo chown root:users /usr/local/src
@@ -2053,7 +2059,7 @@ mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U .
   <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyfaup censys
   <span class="c1"># some misp-modules dependencies for RHEL&lt;8</span>
-  <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-devel -y
+  <span class="o">([[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora33&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]])</span> <span class="o">&amp;&amp;</span> sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-devel -y
   <span class="c1"># some misp-modules dependencies for RHEL8</span>
   <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo dnf install https://packages.endpoint.com/rhel/8/main/x86_64/endpoint-repo-8-1.ep8.noarch.rpm -y <span class="o">&amp;&amp;</span> sudo yum install zbar-devel opencv-devel -y
 
