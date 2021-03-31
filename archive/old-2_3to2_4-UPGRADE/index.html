@@ -83,7 +83,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#0-upgrade-procedure-from-v23-to-v24" tabindex="0" class="md-skip">
+      <a href="#1-git-pull-the-latest-version-of-misp-from-the-repo" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -649,8 +649,7 @@
               
                 
                 
-                <h1 id="0-upgrade-procedure-from-v23-to-v24">0. Upgrade procedure from v2.3 to v2.4<a class="headerlink" href="#0-upgrade-procedure-from-v23-to-v24" title="Permanent link">&para;</a></h1>
-<div class="admonition notice">
+                <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>It is assumed that the upgrade happens from an up-to-date 2.3 instance<br />
 It is a good idea to back up your MISP installation and data before upgrading to a new release.</p>
@@ -664,26 +663,31 @@ git checkout tags/$(git describe --tags `git rev-list --tags --max-count=1`)
 # the message regarding a &quot;detached HEAD state&quot; is expected behaviour
 # (you only have to create a new branch, if you want to change stuff and do a pull request for example)
 </code></pre></div>
+
 <h1 id="2-update-cakephp-to-the-latest-supported-version">2. Update CakePHP to the latest supported version<a class="headerlink" href="#2-update-cakephp-to-the-latest-supported-version" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code>cd /var/www/MISP
 rm -rf app/Lib/cakephp/
 git submodule update --init --recursive
 </code></pre></div>
+
 <h1 id="3-delete-everything-from-misps-cache-directory-to-get-rid-of-the-cached-models">3. delete everything from MISP's cache directory to get rid of the cached models<a class="headerlink" href="#3-delete-everything-from-misps-cache-directory-to-get-rid-of-the-cached-models" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code>find /var/www/MISP/app/tmp/cache/ -type f -not -name &#39;empty&#39; -delete
 </code></pre></div>
+
 <h1 id="4-clear-the-old-submodule-cached-entry-for-cakeresque">4. clear the old submodule cached entry for CakeResque<a class="headerlink" href="#4-clear-the-old-submodule-cached-entry-for-cakeresque" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code>cd /var/www/MISP
 git rm --cached app/Plugin/CakeResque/
 </code></pre></div>
+
 <h1 id="5-make-sure-that-your-database-is-backed-up">5. make sure that your database is backed up<a class="headerlink" href="#5-make-sure-that-your-database-is-backed-up" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code>mysqldump -u [misp_mysql_user] -p [misp_database] &gt; /home/[my_user]/misp_db_pre_migration.sql
 </code></pre></div>
+
 <h1 id="6-upgrade-your-database-with-the-new-tables-fields-introduced-in-24">6. upgrade your database with the new tables / fields introduced in 2.4<a class="headerlink" href="#6-upgrade-your-database-with-the-new-tables-fields-introduced-in-24" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code>cd /var/www/MISP/INSTALL
 mysql -u [misp_mysql_user] -p [misp_database] &lt; upgrade_2.4.sql
 </code></pre></div>
-<h1 id="7-run-the-upgrade-script-from-within-the-application">7. run the upgrade script from within the application<a class="headerlink" href="#7-run-the-upgrade-script-from-within-the-application" title="Permanent link">&para;</a></h1>
+
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>simply navigate to Administration -&gt; Administrative Tools -&gt; "Upgrade to 2.4"<br />

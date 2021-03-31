@@ -1912,6 +1912,7 @@
 </ul>
 <h2 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h2>
 <ul>
+<li>[doc] some cleanups. [Steve Clement]</li>
 <li>[doc] Seperated cake commands into seperate files. [Steve Clement]</li>
 <li>[doc] Automation adaption. [Steve Clement]</li>
 <li>[doc] Updated Changelog.md. [Steve Clement]</li>
@@ -1933,8 +1934,10 @@
 </ul>
 <h2 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Merge pull request #7275 from SteveClement/guides. [Steve Clement]</li>
+<li>Merge pull request #7276 from SteveClement/guides. [Steve Clement]</li>
 </ul>
+<p>chg: [doc] some cleanups
+- Merge pull request #7275 from SteveClement/guides. [Steve Clement]</p>
 <p>chg: [doc] Seperated cake commands into seperate files
 - Merge branch '2.4' of github.com:MISP/MISP into 2.4. [iglocska]
 - Merge pull request #7269 from SteveClement/guides. [Steve Clement]
@@ -15370,6 +15373,7 @@ Hint: It looks like a path. File <span class="s1">&#39;/var/www/MISP/app/files/s
                     _ -/    (_      \
                    // /       \_ / ==\
 </code></pre></div>
+
 
 <p><strong>-------___</strong>--<strong><em>--/           / _ O o)
 /                                 /   ==/
@@ -53453,16 +53457,12 @@ BODY:
 - Code standards. [noud]</p>
 <p>we emit XHTML 1.0 Transitional.
   so to check, encapsulate using:</p>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<p><html xmlns="http://www.w3.org/1999/xhtml">
-<br />
-<body>
-
-  <<actual_page>>
-
-  </body></p>
-<p></html></p>
+<p>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "<a href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd</a>"&gt;
+  <html xmlns="http://www.w3.org/1999/xhtml">
+  <body></p>
+<p>&lt;<actual_page>&gt;</p>
+<p></body></html></p>
 <p>and use <a href="http://sourceforge.net/projects/eclipsetidy/">http://sourceforge.net/projects/eclipsetidy/</a> to validate.
 - Sync. [noud]</p>
 <p>validation on server.authkey having minlenght of 40 like user.authkey.
@@ -53873,6 +53873,7 @@ BODY:
 <div class="codehilite"><pre><span></span><code>new file:   build/patches/lib_Cake_View_MediaView.php.diff
 </code></pre></div>
 
+
 <ul>
 <li>Xxx.default.php. [noud]</li>
 </ul>
@@ -53894,6 +53895,7 @@ BODY:
 renamed:    app/Config/core.php -&gt; app/Config/core.default.php
 renamed:    app/Config/database.php -&gt; app/Config/database.default.php
 </code></pre></div>
+
 
 <ul>
 <li>Merge branch 'master' into develop. [noud]</li>
@@ -54195,6 +54197,7 @@ renamed:    app/Config/database.php -&gt; app/Config/database.default.php
   (7650 tupels) (time in ms)</p>
 <div class="codehilite"><pre><span></span><code>        default     db    sql
 </code></pre></div>
+
 
 <p>all         25366  16601  15941
               24839  16604  15611

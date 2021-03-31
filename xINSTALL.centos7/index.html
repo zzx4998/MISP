@@ -783,8 +783,22 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#initialize-misp-configuration-and-set-some-defaults" class="md-nav__link">
+    Initialize MISP configuration and set some defaults
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-actions" class="md-nav__link">
+    Recommended actions
+  </a>
   
 </li>
         
@@ -855,6 +869,7 @@ CentOS 7.6-1810 <a href="http://mirror.centos.org/centos/7.6.1810/os/x86_64/">Ne
 <div class="highlight"><pre><span></span><code><span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md <span class="p">|</span> awk <span class="s1">&#39;/^# &lt;snippet-begin/,0&#39;</span> <span class="p">|</span> grep -v <span class="se">\`\`\`</span><span class="k">)</span><span class="s2">&quot;</span>
 MISPvars
 </code></pre></div>
+
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>Do NOT leave your session after this mid-install as some initial passwords have been generated and thus would be lost.
@@ -968,6 +983,7 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_global-vars.sh&gt;</span>
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_RHEL_PHP_INI.sh&gt;</span>
 <span class="c1"># RHEL/CentOS Specific</span>
 <span class="nv">WWW_USER</span><span class="o">=</span><span class="s2">&quot;apache&quot;</span>
@@ -977,6 +993,7 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 <span class="nv">PHP_INI</span><span class="o">=</span>/etc/opt/rh/rh-php72/php.ini
 <span class="c1"># &lt;snippet-end 0_RHEL_PHP_INI.sh&gt;</span>
 </code></pre></div>
+
 <h3 id="1-minimal-centos-install">1/ Minimal CentOS install<a class="headerlink" href="#1-minimal-centos-install" title="Permanent link">&para;</a></h3>
 <hr />
 <p>Install a minimal CentOS 7.x system with the software:</p>
@@ -991,6 +1008,7 @@ sudo hostnamectl set-hostname misp.local <span class="c1"># Your choice, in a pr
 <span class="c1"># Make sure your system is up2date:</span>
 sudo yum update -y
 </code></pre></div>
+
 <h3 id="2-dependencies">2/ Dependencies *<a class="headerlink" href="#2-dependencies" title="Permanent link">&para;</a></h3>
 <hr />
 <p>Once the system is installed you can perform the following steps as root or with sudo.</p>
@@ -1021,6 +1039,7 @@ sudo yum install python3 python3-devel -y
 
 sudo systemctl <span class="nb">enable</span> --now rh-php72-php-fpm.service
 </code></pre></div>
+
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>$RUN_PHP makes php available for you if using rh-php72. e.g: sudo $RUN_PHP "pear list | grep Crypt_GPG"</p>
@@ -1032,6 +1051,7 @@ sudo systemctl <span class="nb">enable</span> --now haveged.service
 <span class="c1"># Enable and start redis</span>
 sudo systemctl <span class="nb">enable</span> --now redis.service
 </code></pre></div>
+
 <h3 id="3-misp-code">3/ MISP code<a class="headerlink" href="#3-misp-code" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Download MISP using git in the /var/www/ directory.</span>
@@ -1153,6 +1173,7 @@ sudo systemctl restart rh-php72-php-fpm.service
 
 <span class="nb">umask</span> <span class="nv">$UMASK</span>
 </code></pre></div>
+
 <h3 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h3>
 <hr />
 <h4 id="cakephp-is-now-included-as-a-submodule-of-misp-and-has-been-fetch-by-a-previous-step">CakePHP is now included as a submodule of MISP and has been fetch by a previous step.<a class="headerlink" href="#cakephp-is-now-included-as-a-submodule-of-misp-and-has-been-fetch-by-a-previous-step" title="Permanent link">&para;</a></h4>
@@ -1180,7 +1201,7 @@ sudo systemctl restart rh-php72-php-fpm.service
 <span class="c1"># memory_limit = 2048M</span>
 <span class="c1"># upload_max_filesize = 50M</span>
 <span class="c1"># post_max_size = 50M</span>
-<span class="k">for</span> key <span class="k">in</span> upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
+<span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
 <span class="k">do</span>
     sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
 <span class="k">done</span>
@@ -1191,6 +1212,7 @@ sudo systemctl restart rh-php72-php-fpm.service
 <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
 sudo cp -fa <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/setup/config.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Plugin/CakeResque/Config/config.php
 </code></pre></div>
+
 <h3 id="5-set-the-permissions">5/ Set the permissions<a class="headerlink" href="#5-set-the-permissions" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Make sure the permissions are set correctly using the following commands as root:</span>
@@ -1212,6 +1234,7 @@ sudo chown -R <span class="si">${</span><span class="nv">WWW_USER</span><span cl
 sudo chown -R <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/webroot/img/orgs
 sudo chown -R <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/webroot/img/custom
 </code></pre></div>
+
 <h3 id="6-create-a-database-and-user">6/ Create a database and user<a class="headerlink" href="#6-create-a-database-and-user" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Enable, start and secure your mysql database server</span>
@@ -1254,24 +1277,29 @@ sudo yum remove tcl expect -y
 <span class="nb">echo</span> bind-address<span class="o">=</span><span class="m">127</span>.0.0.1 <span class="p">|</span>sudo tee -a /etc/my.cnf.d/bind-address.cnf
 sudo systemctl restart mariadb.service
 </code></pre></div>
+
 <h4 id="manual-procedure">Manual procedure:<a class="headerlink" href="#manual-procedure" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Enter the mysql shell</span>
 mysql -u root -p
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code>MariaDB [(none)]&gt; create database misp;
 MariaDB [(none)]&gt; grant usage on *.* to misp@localhost identified by &#39;XXXXXXXXX&#39;;
 MariaDB [(none)]&gt; grant all privileges on misp.* to misp@localhost ;
 MariaDB [(none)]&gt; exit
 </code></pre></div>
+
 <h4 id="same-as-manual-but-for-copypaste-foo">Same as Manual but for copy/paste foo:<a class="headerlink" href="#same-as-manual-but-for-copypaste-foo" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;create database </span><span class="nv">$DBNAME</span><span class="s2">;&quot;</span>
 sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant usage on *.* to </span><span class="nv">$DBNAME</span><span class="s2">@localhost identified by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
 sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant all privileges on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
 sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;flush privileges;&quot;</span>
 </code></pre></div>
+
 <h4 id="import-the-empty-mysql-database-from-mysqlsql">Import the empty MySQL database from MYSQL.sql<a class="headerlink" href="#import-the-empty-mysql-database-from-mysqlsql" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> cat <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
 </code></pre></div>
+
 <h3 id="7-apache-configuration">7/ Apache configuration<a class="headerlink" href="#7-apache-configuration" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="admonition notice">
@@ -1327,6 +1355,7 @@ sudo chcon -R -t httpd_sys_rw_content_t <span class="si">${</span><span class="n
 sudo chcon -R -t httpd_sys_rw_content_t <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/webroot/img/custom
 sudo chcon -R -t httpd_sys_rw_content_t <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts/mispzmq
 </code></pre></div>
+
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Todo: Revise all permissions so update in Web UI works.</p>
@@ -1349,6 +1378,7 @@ sudo firewall-cmd --reload
 <span class="c1"># Add SSL support by running: sudo yum install mod_ssl</span>
 <span class="c1"># Check out the apache.misp.ssl file for an example</span>
 </code></pre></div>
+
 <h3 id="8-log-rotation">8/ Log rotation<a class="headerlink" href="#8-log-rotation" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># MISP saves the stdout and stderr of its workers in ${PATH_TO_MISP}/app/tmp/logs</span>
@@ -1367,6 +1397,7 @@ sudo checkmodule -M -m -o /tmp/misplogrotate.mod <span class="si">${</span><span
 sudo semodule_package -o /tmp/misplogrotate.pp -m /tmp/misplogrotate.mod
 sudo semodule -i /tmp/misplogrotate.pp
 </code></pre></div>
+
 <h3 id="9-misp-configuration">9/ MISP configuration<a class="headerlink" href="#9-misp-configuration" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># There are 4 sample configuration files in ${PATH_TO_MISP}/app/Config that need to be copied</span>
@@ -1464,6 +1495,7 @@ sudo chmod +x /etc/rc.local
 <span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span>
 <span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code><span class="c1"># some misp-modules dependencies</span>
 sudo yum install openjpeg-devel -y
 
@@ -1489,6 +1521,7 @@ sudo yum install rubygem-rouge rubygem-asciidoctor -y
 <span class="c1"># TODO: Fix static path with PATH_TO_MISP</span>
 sudo sed -i -e <span class="s1">&#39;$i \sudo -u apache ${PATH_TO_MISP}/venv/bin/misp-modules -l 127.0.0.1 -s &amp;\n&#39;</span> /etc/rc.local
 </code></pre></div>
+
 <h4 id="misp-dashboard-on-centos">MISP Dashboard on CentOS<a class="headerlink" href="#misp-dashboard-on-centos" title="Permanent link">&para;</a></h4>
 <hr />
 <div class="admonition warning">
@@ -1562,27 +1595,30 @@ mispDashboard <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 4_misp-dashboardRHEL.sh&gt;</span>
 </code></pre></div>
-<h1 id="_1"><snippet-begin 4_misp-dashboard-cake.sh><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p>dashboardCAKE () {
-  # Enable ZeroMQ for misp-dashboard
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_enable" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_event_notifications_enable" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_object_notifications_enable" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_object_reference_notifications_enable" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_attribute_notifications_enable" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_sighting_notifications_enable" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_user_notifications_enable" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_organisation_notifications_enable" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_port" 50000
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_redis_host" "localhost"
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_redis_port" 6379
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_redis_database" 1
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_redis_namespace" "mispq"
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_include_attachments" false
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_tag_notifications_enable" false
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.ZeroMQ_audit_notifications_enable" false
-}</p>
-<h1 id="_2"><snippet-end 4_misp-dashboard-cake.sh><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 4_misp-dashboard-cake.sh&gt;</span>
+dashboardCAKE <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># Enable ZeroMQ for misp-dashboard</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_event_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_object_reference_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_attribute_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_sighting_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_user_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_organisation_notifications_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_port&quot;</span> <span class="m">50000</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_host&quot;</span> <span class="s2">&quot;localhost&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_port&quot;</span> <span class="m">6379</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_database&quot;</span> <span class="m">1</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_redis_namespace&quot;</span> <span class="s2">&quot;mispq&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_include_attachments&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_tag_notifications_enable&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_audit_notifications_enable&quot;</span> <span class="nb">false</span>
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 4_misp-dashboard-cake.sh&gt;</span>
+</code></pre></div>
+
 <h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 2_core-cake.sh&gt;</span>
 <span class="c1"># Core cake commands to tweak MISP and aleviate some of the configuration pains</span>
@@ -1766,6 +1802,7 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 2_core-cake.sh&gt;</span>
 </code></pre></div>
+
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>If you have installed the recommended Python 3 virtualenv to the recommended place of <strong>${PATH_TO_MISP}/venv</strong> set the following MISP configurable
@@ -1864,6 +1901,7 @@ index f9f69d4..2e8fd78 100644
  #
  # Allow TRACE method
 </code></pre></div>
+
 <h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.ncsc.nl/english/current-topics/factsheets/it-security-guidelines-for-transport-layer-security-tls.html">IT Security Guidelines for TLS by NCSC.nl</a></p>
 <p><a href="https://weakdh.org/sysadmin.html">Weak Diffie-Hellman and the Logjam Attack</a></p>

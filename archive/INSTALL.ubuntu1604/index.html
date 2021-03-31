@@ -552,22 +552,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#0-misp-ubuntu-1604-server-install-status" class="md-nav__link">
-    0/ MISP Ubuntu 16.04-server install - status
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#misp-configuration-variables" class="md-nav__link">
     MISP configuration variables
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -616,13 +603,6 @@
           <li class="md-nav__item">
   <a href="#make-sure-your-system-is-up2date" class="md-nav__link">
     Make sure your system is up2date
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#install-postfix-there-will-be-some-questions" class="md-nav__link">
-    install postfix, there will be some questions.
   </a>
   
 </li>
@@ -800,13 +780,6 @@
           <li class="md-nav__item">
   <a href="#install-mail-to-misp" class="md-nav__link">
     Install mail to misp
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#misp-modules-section-deprecated" class="md-nav__link">
-    misp-modules (section deprecated)
   </a>
   
 </li>
@@ -950,22 +923,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#0-misp-ubuntu-1604-server-install-status" class="md-nav__link">
-    0/ MISP Ubuntu 16.04-server install - status
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#misp-configuration-variables" class="md-nav__link">
     MISP configuration variables
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1014,13 +974,6 @@
           <li class="md-nav__item">
   <a href="#make-sure-your-system-is-up2date" class="md-nav__link">
     Make sure your system is up2date
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#install-postfix-there-will-be-some-questions" class="md-nav__link">
-    install postfix, there will be some questions.
   </a>
   
 </li>
@@ -1202,13 +1155,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#misp-modules-section-deprecated" class="md-nav__link">
-    misp-modules (section deprecated)
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1238,8 +1184,6 @@
                 
                 <h1 id="installation-instructions">INSTALLATION INSTRUCTIONS<a class="headerlink" href="#installation-instructions" title="Permanent link">&para;</a></h1>
 <h2 id="for-ubuntu-16045-server">for Ubuntu 16.04.5-server<a class="headerlink" href="#for-ubuntu-16045-server" title="Permanent link">&para;</a></h2>
-<h3 id="0-misp-ubuntu-1604-server-install-status">0/ MISP Ubuntu 16.04-server install - status<a class="headerlink" href="#0-misp-ubuntu-1604-server-install-status" title="Permanent link">&para;</a></h3>
-<hr />
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>Tested working by @SteveClement on 20181025</p>
@@ -1254,6 +1198,7 @@ Parts of the installation procedures can also be found in the automatic VM gener
 <div class="highlight"><pre><span></span><code><span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md <span class="p">|</span> awk <span class="s1">&#39;/^# &lt;snippet-begin/,0&#39;</span> <span class="p">|</span> grep -v <span class="se">\`\`\`</span><span class="k">)</span><span class="s2">&quot;</span>
 MISPvars
 </code></pre></div>
+
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>Do NOT leave your session after this mid-install as some initial passwords have been generated and thus would be lost.
@@ -1367,9 +1312,11 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_global-vars.sh&gt;</span>
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code><span class="nv">PHP_ETC_BASE</span><span class="o">=</span>/etc/php/7.0
 <span class="nv">PHP_INI</span><span class="o">=</span><span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/apache2/php.ini
 </code></pre></div>
+
 <h3 id="1-minimal-ubuntu-install">1/ Minimal Ubuntu install<a class="headerlink" href="#1-minimal-ubuntu-install" title="Permanent link">&para;</a></h3>
 <hr />
 <h4 id="install-a-minimal-ubuntu-1604-server-system-with-the-software">Install a minimal Ubuntu 16.04-server system with the software:<a class="headerlink" href="#install-a-minimal-ubuntu-1604-server-system-with-the-software" title="Permanent link">&para;</a></h4>
@@ -1400,6 +1347,7 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_sudoKeeper.sh&gt;</span>
 </code></pre></div>
+
 <h5 id="add-the-misp-user-to-staff-and-www-data-mandatory">add the misp user to staff and www-data (mandatory)<a class="headerlink" href="#add-the-misp-user-to-staff-and-www-data-mandatory" title="Permanent link">&para;</a></h5>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin add-user.sh&gt;</span>
 <span class="c1">## FIXME: This function is a duplicate included in: # &lt;snippet-begin 0_support-functions.sh&gt;</span>
@@ -1428,6 +1376,7 @@ checkUsrLocalSrc <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end add-user.sh&gt;</span>
 </code></pre></div>
+
 <h4 id="network-interface-name-salvage-optional">Network Interface Name salvage (optional)<a class="headerlink" href="#network-interface-name-salvage-optional" title="Permanent link">&para;</a></h4>
 <p>This will bring back 'ethX' e.g: eth0</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-end interfaces.sh&gt;</span>
@@ -1455,6 +1404,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo update-grub  &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
 <span class="c1"># &lt;snippet-end interfaces.sh&gt;</span>
 </code></pre></div>
+
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>On recent Ubuntu install Netplan is default and you need to change the Network name.
@@ -1470,9 +1420,7 @@ sudo add-apt-repository ppa:jonathonf/python-3.6
 sudo apt-get update
 sudo apt-get upgrade
 </code></pre></div>
-<h4 id="install-postfix-there-will-be-some-questions">install postfix, there will be some questions.<a class="headerlink" href="#install-postfix-there-will-be-some-questions" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>sudo apt-get install postfix -y
-</code></pre></div>
+
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>Postfix Configuration: Satellite system<br />
@@ -1581,6 +1529,7 @@ sudo -H -u www-data /var/www/MISP/venv/bin/pip install .
 <span class="nb">cd</span> /var/www/MISP/PyMISP
 sudo -H -u www-data /var/www/MISP/venv/bin/pip install .
 </code></pre></div>
+
 <h3 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Once done, install CakeResque along with its dependencies </span>
@@ -1601,6 +1550,7 @@ sudo -u www-data cp -fa /var/www/MISP/INSTALL/setup/config.php /var/www/MISP/app
 <span class="c1"># If you have multiple MISP instances on the same system, don&#39;t forget to have a different Redis per MISP instance for the CakeResque workers</span>
 <span class="c1"># The default Redis port can be updated in Plugin/CakeResque/Config/config.php</span>
 </code></pre></div>
+
 <h3 id="5-set-the-permissions">5/ Set the permissions<a class="headerlink" href="#5-set-the-permissions" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Check if the permissions are set correctly using the following commands:</span>
@@ -1610,36 +1560,43 @@ sudo chmod -R g+ws /var/www/MISP/app/tmp
 sudo chmod -R g+ws /var/www/MISP/app/files
 sudo chmod -R g+ws /var/www/MISP/app/files/scripts/tmp
 </code></pre></div>
+
 <h3 id="6-create-a-database-and-user">6/ Create a database and user<a class="headerlink" href="#6-create-a-database-and-user" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Enter the mysql shell</span>
 sudo mysql -u root -p
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code>MariaDB [(none)]&gt; create database misp;
 MariaDB [(none)]&gt; grant usage on *.* to misp@localhost identified by &#39;XXXXdbpasswordhereXXXXX&#39;;
 MariaDB [(none)]&gt; grant all privileges on misp.* to misp@localhost;
 MariaDB [(none)]&gt; flush privileges;
 MariaDB [(none)]&gt; exit
 </code></pre></div>
+
 <h4 id="copypaste">copy/paste:<a class="headerlink" href="#copypaste" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;create database </span><span class="nv">$DBNAME</span><span class="s2">;&quot;</span>
 sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant usage on *.* to </span><span class="nv">$DBNAME</span><span class="s2">@localhost identified by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
 sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant all privileges on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
 sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;flush privileges;&quot;</span>
 </code></pre></div>
+
 <h4 id="import-the-empty-misp-database-from-mysqlsql">Import the empty MISP database from MYSQL.sql<a class="headerlink" href="#import-the-empty-misp-database-from-mysqlsql" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Import the empty MISP database from MYSQL.sql</span>
 sudo -u www-data cat <span class="nv">$PATH_TO_MISP</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
 </code></pre></div>
+
 <h3 id="7-apache-configuration">7/ Apache configuration<a class="headerlink" href="#7-apache-configuration" title="Permanent link">&para;</a></h3>
 <hr />
 <p>Now configure your Apache webserver with the DocumentRoot /var/www/MISP/app/webroot/</p>
 <h4 id="apache-version-22-config">Apache version 2.2 config:<a class="headerlink" href="#apache-version-22-config" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo cp /var/www/MISP/INSTALL/apache.22.misp.ssl /etc/apache2/sites-available/misp-ssl.conf
 </code></pre></div>
+
 <h4 id="apache-version-24-config">Apache version 2.4 config:<a class="headerlink" href="#apache-version-24-config" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo cp /var/www/MISP/INSTALL/apache.24.misp.ssl /etc/apache2/sites-available/misp-ssl.conf
 </code></pre></div>
+
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>Be aware that the configuration files for apache 2.4 and up have changed.
@@ -1652,6 +1609,7 @@ sudo openssl req -newkey rsa:4096 -days <span class="m">365</span> -nodes -x509 
 -subj <span class="s2">&quot;/C=</span><span class="si">${</span><span class="nv">OPENSSL_C</span><span class="si">}</span><span class="s2">/ST=</span><span class="si">${</span><span class="nv">OPENSSL_ST</span><span class="si">}</span><span class="s2">/L=</span><span class="si">${</span><span class="nv">OPENSSL_L</span><span class="si">}</span><span class="s2">/O=</span><span class="si">${</span><span class="nv">OPENSSL_O</span><span class="si">}</span><span class="s2">/OU=</span><span class="si">${</span><span class="nv">OPENSSL_OU</span><span class="si">}</span><span class="s2">/CN=</span><span class="si">${</span><span class="nv">OPENSSL_CN</span><span class="si">}</span><span class="s2">/emailAddress=</span><span class="si">${</span><span class="nv">OPENSSL_EMAILADDRESS</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
 -keyout /etc/ssl/private/misp.local.key -out /etc/ssl/private/misp.local.crt
 </code></pre></div>
+
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>Please find a sample conf file for an SSL enabled conf file in-line below (alternatively use one of the samples provided in /var/www/MISP/INSTALL).<br />
@@ -1694,11 +1652,12 @@ Otherwise, copy the SSLCertificateFile, SSLCertificateKeyFile, and SSLCertificat
 &lt;/VirtualHost&gt;
 ============================================= End sample working SSL config for MISP
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code><span class="c1"># activate new vhost</span>
 sudo a2dissite default-ssl
 sudo a2ensite misp-ssl
 
-<span class="k">for</span> key <span class="k">in</span> upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
+<span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
 <span class="k">do</span>
     sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
 <span class="k">done</span>
@@ -1706,6 +1665,7 @@ sudo a2ensite misp-ssl
 <span class="c1"># Restart apache</span>
 sudo systemctl restart apache2
 </code></pre></div>
+
 <h3 id="8-log-rotation">8/ Log rotation<a class="headerlink" href="#8-log-rotation" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># MISP saves the stdout and stderr of its workers in /var/www/MISP/app/tmp/logs</span>
@@ -1714,6 +1674,7 @@ sudo systemctl restart apache2
 sudo cp /var/www/MISP/INSTALL/misp.logrotate /etc/logrotate.d/misp
 sudo chmod <span class="m">0640</span> /etc/logrotate.d/misp
 </code></pre></div>
+
 <h3 id="9-misp-configuration">9/ MISP configuration<a class="headerlink" href="#9-misp-configuration" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># There are 4 sample configuration files in /var/www/MISP/app/Config that need to be copied</span>
@@ -1772,6 +1733,7 @@ sudo -u www-data gpg --homedir <span class="nv">$PATH_TO_MISP</span>/.gnupg --ba
 <span class="c1"># And export the public key to the webroot</span>
 sudo -u www-data sh -c <span class="s2">&quot;gpg --homedir </span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.gnupg --export --armor </span><span class="nv">$GPG_EMAIL_ADDRESS</span><span class="s2">&quot;</span> <span class="p">|</span> sudo -u www-data tee <span class="nv">$PATH_TO_MISP</span>/app/webroot/gpg.asc
 </code></pre></div>
+
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>If entropy is not high enough, you can install havegd and then start the service
@@ -1788,6 +1750,7 @@ sudo chmod +x <span class="nv">$PATH_TO_MISP</span>/app/Console/worker/start.sh
     sudo chmod u+x /etc/rc.local
 <span class="k">fi</span>
 </code></pre></div>
+
 <h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 2_core-cake.sh&gt;</span>
 <span class="c1"># Core cake commands to tweak MISP and aleviate some of the configuration pains</span>
@@ -1971,6 +1934,7 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 2_core-cake.sh&gt;</span>
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code><span class="c1"># Add the following lines before the last line (exit 0). Make sure that you replace www-data with your apache user:</span>
 sudo sed -i -e <span class="s1">&#39;$i \echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled\n&#39;</span> /etc/rc.local
 sudo sed -i -e <span class="s1">&#39;$i \echo 1024 &gt; /proc/sys/net/core/somaxconn\n&#39;</span> /etc/rc.local
@@ -2008,6 +1972,7 @@ sudo -u www-data misp-modules -l <span class="m">127</span>.0.0.1 -s <span class
 <span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span>
 <span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>
 </code></pre></div>
+
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>If you have installed the recommended Python 3 virtualenv to the recommended place of <strong>${PATH_TO_MISP}/venv</strong> set the following MISP configurable
@@ -2067,11 +2032,13 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <h4 id="misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-command">MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following command<a class="headerlink" href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-command" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo -H -u www-data /var/www/MISP/venv/bin/pip install pyzmq
 </code></pre></div>
+
 <h4 id="misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands">MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>apt-get install librdkafka-dev php-dev
 pecl install rdkafka
 find /etc -name php.ini <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> f<span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s1">&#39;extension=rdkafka.so&#39;</span> <span class="p">|</span> tee -a <span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span><span class="p">;</span> <span class="k">done</span>
 </code></pre></div>
+
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>There is an issue with the apache config of misp-dashboard in Ubuntu 16.04
@@ -2243,6 +2210,7 @@ viper <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 6_viper.sh&gt;</span>
 </code></pre></div>
+
 <h4 id="experimental-ssdeep-correlations">Experimental ssdeep correlations<a class="headerlink" href="#experimental-ssdeep-correlations" title="Permanent link">&para;</a></h4>
 <h5 id="installing-ssdeep">installing ssdeep<a class="headerlink" href="#installing-ssdeep" title="Permanent link">&para;</a></h5>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 6_ssdeep.sh&gt;</span>
@@ -2267,6 +2235,7 @@ ssdeep <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 6_ssdeep.sh&gt;</span>
 </code></pre></div>
+
 <h4 id="install-mail-to-misp">Install mail to misp<a class="headerlink" href="#install-mail-to-misp" title="Permanent link">&para;</a></h4>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 5_mail_to_misp.sh&gt;</span>
@@ -2302,8 +2271,7 @@ mail2misp <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 5_mail_to_misp.sh&gt;</span>
 </code></pre></div>
-<h4 id="misp-modules-section-deprecated">misp-modules (section deprecated)<a class="headerlink" href="#misp-modules-section-deprecated" title="Permanent link">&para;</a></h4>
-<hr />
+
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>If you want to add the misp modules functionality, follow the setup procedure described in misp-modules:<br />

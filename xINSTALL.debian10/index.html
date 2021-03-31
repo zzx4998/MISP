@@ -741,6 +741,7 @@ Maintained and tested by @SteveClement on 20200405</p>
 <div class="highlight"><pre><span></span><code><span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/MISP/MISP/2.4/docs/generic/globalVariables.md <span class="p">|</span> awk <span class="s1">&#39;/^# &lt;snippet-begin/,0&#39;</span> <span class="p">|</span> grep -v <span class="se">\`\`\`</span><span class="k">)</span><span class="s2">&quot;</span>
 MISPvars
 </code></pre></div>
+
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>Do NOT leave your session after this mid-install as some initial passwords have been generated and thus would be lost.
@@ -854,9 +855,11 @@ MISPvars <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_global-vars.sh&gt;</span>
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code><span class="nv">PHP_ETC_BASE</span><span class="o">=</span>/etc/php/7.3
 <span class="nv">PHP_INI</span><span class="o">=</span><span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/apache2/php.ini
 </code></pre></div>
+
 <h3 id="1-minimal-debian-install">1/ Minimal Debian install<a class="headerlink" href="#1-minimal-debian-install" title="Permanent link">&para;</a></h3>
 <hr />
 <h4 id="install-a-minimal-debian-testing-buster-server-system-with-the-software">Install a minimal Debian testing "buster" server system with the software:<a class="headerlink" href="#install-a-minimal-debian-testing-buster-server-system-with-the-software" title="Permanent link">&para;</a></h4>
@@ -887,6 +890,7 @@ checkSudoKeeper <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_sudoKeeper.sh&gt;</span>
 </code></pre></div>
+
 <h5 id="add-the-misp-user-to-staff-and-www-data-mandatory">add the misp user to staff and www-data (mandatory)<a class="headerlink" href="#add-the-misp-user-to-staff-and-www-data-mandatory" title="Permanent link">&para;</a></h5>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin add-user.sh&gt;</span>
 <span class="c1">## FIXME: This function is a duplicate included in: # &lt;snippet-begin 0_support-functions.sh&gt;</span>
@@ -915,6 +919,7 @@ checkUsrLocalSrc <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end add-user.sh&gt;</span>
 </code></pre></div>
+
 <h4 id="network-interface-name-salvage-optional">Network Interface Name salvage (optional)<a class="headerlink" href="#network-interface-name-salvage-optional" title="Permanent link">&para;</a></h4>
 <p>This will bring back 'ethX' e.g: eth0</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-end interfaces.sh&gt;</span>
@@ -942,6 +947,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo update-grub  &gt; /dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
 <span class="c1"># &lt;snippet-end interfaces.sh&gt;</span>
 </code></pre></div>
+
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>On recent Ubuntu install Netplan is default and you need to change the Network name.
@@ -955,19 +961,23 @@ OR on Ubuntu 19.04 (yay for changing this every 5 commits... #n00bs)
 <div class="highlight"><pre><span></span><code>sudo adduser <span class="nv">$MISP_USER</span> staff
 sudo adduser <span class="nv">$MISP_USER</span> <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>
 </code></pre></div>
+
 <h4 id="make-sure-your-system-is-up2date-and-curl-installed">Make sure your system is up2date and curl installed<a class="headerlink" href="#make-sure-your-system-is-up2date-and-curl-installed" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo apt update
 sudo apt dist-upgrade -y
 sudo apt install curl -y
 </code></pre></div>
+
 <h4 id="install-postfix-there-will-be-some-questions-optional">install postfix, there will be some questions. (optional)<a class="headerlink" href="#install-postfix-there-will-be-some-questions-optional" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Postfix Configuration: Satellite system</span>
 sudo apt install -y postfix
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code><span class="c1"># change the relay server later with:</span>
 sudo postconf -e <span class="s1">&#39;relayhost = example.com&#39;</span>
 sudo postfix reload
 </code></pre></div>
+
 <h3 id="2-install-lamp-dependencies">2/ Install LAMP &amp; dependencies<a class="headerlink" href="#2-install-lamp-dependencies" title="Permanent link">&para;</a></h3>
 <hr />
 <h4 id="install-all-the-dependencies-some-might-already-be-installed">Install all the dependencies (some might already be installed)<a class="headerlink" href="#install-all-the-dependencies-some-might-already-be-installed" title="Permanent link">&para;</a></h4>
@@ -1023,9 +1033,11 @@ sudo a2enmod ssl rewrite headers
 sudo a2dissite <span class="m">000</span>-default
 sudo a2ensite default-ssl
 </code></pre></div>
+
 <h4 id="apply-all-changes">Apply all changes<a class="headerlink" href="#apply-all-changes" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo systemctl restart apache2
 </code></pre></div>
+
 <h3 id="3-misp-code">3/ MISP code<a class="headerlink" href="#3-misp-code" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Download MISP using git in the /var/www/ directory.</span>
@@ -1105,6 +1117,7 @@ sudo ldconfig
 <span class="c1"># install plyara</span>
 <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install plyara
 </code></pre></div>
+
 <h3 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h3>
 <hr />
 <h4 id="cakephp-is-included-as-a-submodule-of-misp">CakePHP is included as a submodule of MISP.<a class="headerlink" href="#cakephp-is-included-as-a-submodule-of-misp" title="Permanent link">&para;</a></h4>
@@ -1134,6 +1147,7 @@ sudo phpenmod gnupg
 <span class="c1"># To use the scheduler worker for scheduled tasks, do the following:</span>
 <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> cp -fa <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/setup/config.php <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/Plugin/CakeResque/Config/config.php
 </code></pre></div>
+
 <h3 id="5-set-the-permissions">5/ Set the permissions<a class="headerlink" href="#5-set-the-permissions" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Check if the permissions are set correctly using the following commands:</span>
@@ -1143,26 +1157,31 @@ sudo chmod -R g+ws <span class="si">${</span><span class="nv">PATH_TO_MISP</span
 sudo chmod -R g+ws <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files
 sudo chmod -R g+ws <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/app/files/scripts/tmp
 </code></pre></div>
+
 <h3 id="6-create-a-database-and-user">6/ Create a database and user<a class="headerlink" href="#6-create-a-database-and-user" title="Permanent link">&para;</a></h3>
 <hr />
 <h4 id="enter-the-mysql-shell">Enter the mysql shell<a class="headerlink" href="#enter-the-mysql-shell" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo mysql -u root -p
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code>MariaDB [(none)]&gt; create database misp;
 MariaDB [(none)]&gt; grant usage on *.* to misp@localhost identified by &#39;XXXXdbpasswordhereXXXXX&#39;;
 MariaDB [(none)]&gt; grant all privileges on misp.* to misp@localhost;
 MariaDB [(none)]&gt; flush privileges;
 MariaDB [(none)]&gt; exit
 </code></pre></div>
+
 <h4 id="copypaste">copy/paste:<a class="headerlink" href="#copypaste" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;create database </span><span class="nv">$DBNAME</span><span class="s2">;&quot;</span>
 sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant usage on *.* to </span><span class="nv">$DBNAME</span><span class="s2">@localhost identified by &#39;</span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&#39;;&quot;</span>
 sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;grant all privileges on </span><span class="nv">$DBNAME</span><span class="s2">.* to &#39;</span><span class="nv">$DBUSER_MISP</span><span class="s2">&#39;@&#39;localhost&#39;;&quot;</span>
 sudo mysql -u <span class="nv">$DBUSER_ADMIN</span> -p<span class="nv">$DBPASSWORD_ADMIN</span> -e <span class="s2">&quot;flush privileges;&quot;</span>
 </code></pre></div>
+
 <h4 id="import-the-empty-misp-database-from-mysqlsql">Import the empty MISP database from MYSQL.sql<a class="headerlink" href="#import-the-empty-misp-database-from-mysqlsql" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> cat <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/MYSQL.sql <span class="p">|</span> mysql -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> <span class="nv">$DBNAME</span>
 </code></pre></div>
+
 <h3 id="7-apache-configuration">7/ Apache configuration<a class="headerlink" href="#7-apache-configuration" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># Now configure your Apache webserver with the DocumentRoot ${PATH_TO_MISP}/app/webroot/</span>
@@ -1181,6 +1200,7 @@ sudo openssl req -newkey rsa:4096 -days <span class="m">365</span> -nodes -x509 
 
 <span class="c1"># Otherwise, copy the SSLCertificateFile, SSLCertificateKeyFile, and SSLCertificateChainFile to /etc/ssl/private/. (Modify path and config to fit your environment)</span>
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code>============================================= Begin sample working SSL config for MISP
 &lt;VirtualHost _default_:80&gt;
         ServerAdmin admin@&lt;your.FQDN.here&gt;
@@ -1218,6 +1238,7 @@ sudo openssl req -newkey rsa:4096 -days <span class="m">365</span> -nodes -x509 
 &lt;/VirtualHost&gt;
 ============================================= End sample working SSL config for MISP
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code><span class="c1"># activate new vhost</span>
 sudo a2dissite default-ssl
 sudo a2ensite misp-ssl
@@ -1227,7 +1248,7 @@ sudo a2ensite misp-ssl
 <span class="c1"># memory_limit = 2048M</span>
 <span class="c1"># upload_max_filesize = 50M</span>
 <span class="c1"># post_max_size = 50M</span>
-<span class="k">for</span> key <span class="k">in</span> upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
+<span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
 <span class="k">do</span>
     sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
 <span class="k">done</span>
@@ -1237,6 +1258,7 @@ sudo sed -i <span class="s2">&quot;s/^\(session.use_strict_mode\).*/\1 = </span>
 <span class="c1"># Restart apache</span>
 sudo systemctl restart apache2
 </code></pre></div>
+
 <h3 id="8-log-rotation">8/ Log rotation<a class="headerlink" href="#8-log-rotation" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># MISP saves the stdout and stderr of its workers in ${PATH_TO_MISP}/app/tmp/logs</span>
@@ -1245,6 +1267,7 @@ sudo systemctl restart apache2
 sudo cp <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/INSTALL/misp.logrotate /etc/logrotate.d/misp
 sudo chmod <span class="m">0640</span> /etc/logrotate.d/misp
 </code></pre></div>
+
 <h3 id="9-misp-configuration">9/ MISP configuration<a class="headerlink" href="#9-misp-configuration" title="Permanent link">&para;</a></h3>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># There are 4 sample configuration files in ${PATH_TO_MISP}/app/Config that need to be copied</span>
@@ -1325,6 +1348,7 @@ sudo systemctl <span class="nb">enable</span> --now misp-workers.service
     sudo chmod u+x /etc/rc.local
 <span class="k">fi</span>
 </code></pre></div>
+
 <h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 2_core-cake.sh&gt;</span>
 <span class="c1"># Core cake commands to tweak MISP and aleviate some of the configuration pains</span>
@@ -1508,11 +1532,13 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 2_core-cake.sh&gt;</span>
 </code></pre></div>
+
 <div class="highlight"><pre><span></span><code><span class="c1"># Add the following lines before the last line (exit 0). Make sure that you replace ${WWW_USER} with your apache user:</span>
 sudo sed -i -e <span class="s1">&#39;$i \echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled\n&#39;</span> /etc/rc.local
 sudo sed -i -e <span class="s1">&#39;$i \echo 1024 &gt; /proc/sys/net/core/somaxconn\n&#39;</span> /etc/rc.local
 sudo sed -i -e <span class="s1">&#39;$i \sysctl vm.overcommit_memory=1\n&#39;</span> /etc/rc.local
 </code></pre></div>
+
 <h4 id="install-misp-modules-optional">Install misp-modules (optional)<a class="headerlink" href="#install-misp-modules-optional" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 3_misp-modules.sh&gt;</span>
 <span class="c1"># Main MISP Modules install function</span>
@@ -1566,53 +1592,57 @@ mispmodules <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 3_misp-modules.sh&gt;</span>
 </code></pre></div>
-<h1 id="_1"><snippet-begin 3_misp-modules-cake.sh><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p>modulesCAKE () {
-  # Enable Enrichment, set better timeouts
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_services_enable" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_hover_enable" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_hover_popover_only" false
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_hover_timeout" 150
-  ${SUDO_WWW} ${RUN_PHP} -- <span><span class="MathJax_Preview">{CAKE} Admin setSetting "Plugin.Enrichment_timeout" 300
-  # TODO:"Investigate why the next one fails"
-  #</span><script type="math/tex">{CAKE} Admin setSetting "Plugin.Enrichment_timeout" 300
-  # TODO:"Investigate why the next one fails"
-  #</script></span>{SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_asn_history_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_cve_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_dns_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_btc_steroids_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_ipasn_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_yara_syntax_validator_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_yara_query_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_pdf_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_docx_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_xlsx_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_pptx_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_ods_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_odt_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_services_url" "<a href="http://127.0.0.1">http://127.0.0.1</a>"
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Enrichment_services_port" 6666</p>
-<p># Enable Import modules, set better timeout
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_services_enable" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_services_url" "<a href="http://127.0.0.1">http://127.0.0.1</a>"
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_services_port" 6666
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_timeout" 300
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_ocr_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_mispjson_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_openiocimport_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_threatanalyzer_import_enabled" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Import_csvimport_enabled" true</p>
-<p># Enable Export modules, set better timeout
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Export_services_enable" true
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Export_services_url" "<a href="http://127.0.0.1">http://127.0.0.1</a>"
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Export_services_port" 6666
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Export_timeout" 300
-  ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting "Plugin.Export_pdfexport_enabled" true
-}</p>
-<h1 id="_2"><snippet-end 3_misp-modules-cake.sh><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 3_misp-modules-cake.sh&gt;</span>
+modulesCAKE <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># Enable Enrichment, set better timeouts</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_popover_only&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_timeout&quot;</span> <span class="m">150</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_timeout&quot;</span> <span class="m">300</span>
+  <span class="c1"># TODO:&quot;Investigate why the next one fails&quot;</span>
+  <span class="c1">#${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin setSetting &quot;Plugin.Enrichment_asn_history_enabled&quot; true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_cve_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_dns_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_btc_steroids_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_ipasn_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_yara_syntax_validator_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_yara_query_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_pdf_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_docx_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_xlsx_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_pptx_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_ods_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_odt_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_port&quot;</span> <span class="m">6666</span>
+
+  <span class="c1"># Enable Import modules, set better timeout</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_port&quot;</span> <span class="m">6666</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_timeout&quot;</span> <span class="m">300</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_ocr_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_mispjson_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_openiocimport_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_threatanalyzer_import_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_csvimport_enabled&quot;</span> <span class="nb">true</span>
+
+  <span class="c1"># Enable Export modules, set better timeout</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_port&quot;</span> <span class="m">6666</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_timeout&quot;</span> <span class="m">300</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_pdfexport_enabled&quot;</span> <span class="nb">true</span>
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 3_misp-modules-cake.sh&gt;</span>
+</code></pre></div>
+
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="s2">&quot;Admin (root) DB Password: </span><span class="nv">$DBPASSWORD_ADMIN</span><span class="s2">&quot;</span>
 <span class="nb">echo</span> <span class="s2">&quot;User  (misp) DB Password: </span><span class="nv">$DBPASSWORD_MISP</span><span class="s2">&quot;</span>
 </code></pre></div>
+
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>If you have installed the recommended Python 3 virtualenv to the recommended place of <strong>${PATH_TO_MISP}/venv</strong> set the following MISP configurable
@@ -1667,8 +1697,6 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <li>Keep your software up2date (MISP, CakePHP and everything else)</li>
 <li>Log and audit</li>
 </ul>
-<h3 id="optional-features">Optional features<a class="headerlink" href="#optional-features" title="Permanent link">&para;</a></h3>
-<hr />
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You can add the following to your shell startup rc scripts to have the <em>cake</em> and <em>viper-cli</em> commands in your $PATH
@@ -1686,6 +1714,7 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <h4 id="misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-commands">MISP has a new pub/sub feature, using ZeroMQ. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-new-pubsub-feature-using-zeromq-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyzmq
 </code></pre></div>
+
 <h4 id="misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands">MISP has a feature for publishing events to Kafka. To enable it, simply run the following commands<a class="headerlink" href="#misp-has-a-feature-for-publishing-events-to-kafka-to-enable-it-simply-run-the-following-commands" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>sudo apt install librdkafka-dev php-dev
 sudo pecl channel-update pecl.php.net
@@ -1694,6 +1723,7 @@ sudo pecl install rdkafka
 sudo phpenmod rdkafka
 sudo service apache2 restart
 </code></pre></div>
+
 <h4 id="misp-dashboard">MISP Dashboard<a class="headerlink" href="#misp-dashboard" title="Permanent link">&para;</a></h4>
 <hr />
 <div class="admonition warning">
@@ -1771,6 +1801,7 @@ mispDashboard <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 4_misp-dashboard.sh&gt;</span>
 
+<span class="sb">```</span>bash
 <span class="c1"># &lt;snippet-begin 4_misp-dashboard-cake.sh&gt;</span>
 dashboardCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Enable ZeroMQ for misp-dashboard</span>
@@ -1792,12 +1823,11 @@ dashboardCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_audit_notifications_enable&quot;</span> <span class="nb">false</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 4_misp-dashboard-cake.sh&gt;</span>
+</code></pre></div>
 
-<span class="c1">#### Install viper framework (with a virtualenv)</span>
------------------------
-
-<span class="sb">```</span>bash
-<span class="c1"># &lt;snippet-begin 6_viper.sh&gt;</span>
+<h4 id="install-viper-framework-with-a-virtualenv">Install viper framework (with a virtualenv)<a class="headerlink" href="#install-viper-framework-with-a-virtualenv" title="Permanent link">&para;</a></h4>
+<hr />
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 6_viper.sh&gt;</span>
 <span class="c1"># viper-web is broken ATM</span>
 <span class="c1"># Main Viper install function</span>
 viper <span class="o">()</span> <span class="o">{</span>
@@ -1865,6 +1895,7 @@ viper <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 6_viper.sh&gt;</span>
 </code></pre></div>
+
 <h4 id="experimental-ssdeep-correlations">Experimental ssdeep correlations<a class="headerlink" href="#experimental-ssdeep-correlations" title="Permanent link">&para;</a></h4>
 <h5 id="installing-ssdeep">installing ssdeep<a class="headerlink" href="#installing-ssdeep" title="Permanent link">&para;</a></h5>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 6_ssdeep.sh&gt;</span>
@@ -1889,6 +1920,7 @@ ssdeep <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 6_ssdeep.sh&gt;</span>
 </code></pre></div>
+
 <h4 id="install-mail-to-misp">Install mail to misp<a class="headerlink" href="#install-mail-to-misp" title="Permanent link">&para;</a></h4>
 <hr />
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 5_mail_to_misp.sh&gt;</span>
@@ -1924,6 +1956,7 @@ mail2misp <span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 5_mail_to_misp.sh&gt;</span>
 </code></pre></div>
+
 <h4 id="upgrading-all-of-the-above">Upgrading all of the above<a class="headerlink" href="#upgrading-all-of-the-above" title="Permanent link">&para;</a></h4>
 <hr />
 <h5 id="misp-core">MISP core<a class="headerlink" href="#misp-core" title="Permanent link">&para;</a></h5>
@@ -1938,12 +1971,14 @@ The preferred way is to go into the Web UI "Server Settings &amp; Maintenance" -
 sudo -H -u www-data git pull origin <span class="m">2</span>.4
 sudo -H -u www-data git submodule update --init --recursive
 </code></pre></div>
+
 <p>If the above fails, your permissons might be wrong. <a href="https://misp.github.io/MISP/INSTALL.ubuntu1804/#5-set-the-permissions">Click here for the fix the permissions guide</a>.</p>
 <h5 id="misp-dependencies">MISP Dependencies<a class="headerlink" href="#misp-dependencies" title="Permanent link">&para;</a></h5>
 <div class="highlight"><pre><span></span><code><span class="c1"># MISP configuration variables</span>
 <span class="nv">PATH_TO_MISP</span><span class="o">=</span><span class="s1">&#39;/var/www/MISP&#39;</span>
 <span class="nv">CAKE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/Console/cake&quot;</span>
 </code></pre></div>
+
 <h6 id="virtualenv">virtualenv<a class="headerlink" href="#virtualenv" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code>sudo -H -u www-data virtualenv -p python3 <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/python-cybox
@@ -1967,6 +2002,7 @@ sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</spa
 <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/PyMISP
 sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U .
 </code></pre></div>
+
 <h6 id="misp-modules">misp-modules<a class="headerlink" href="#misp-modules" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /usr/local/src/misp-modules
 git pull
@@ -1977,14 +2013,17 @@ sudo gem update asciidoctor-pdf --pre
 sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U maec lief python-magic pathlib
 sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U git+https://github.com/kbandla/pydeep.git
 </code></pre></div>
+
 <h6 id="pyzmq">pyzmq<a class="headerlink" href="#pyzmq" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code>sudo -H -u www-data <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U pyzmq
 </code></pre></div>
+
 <h6 id="misp-dashboard_1">misp-dashboard<a class="headerlink" href="#misp-dashboard_1" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /var/www/misp-dashboard
 sudo -H -u www-data git pull
 sudo -H /var/www/misp-dashboard/install_dependencies.sh
 </code></pre></div>
+
 <h6 id="viper">viper<a class="headerlink" href="#viper" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /usr/local/src/viper
 git pull
@@ -1994,6 +2033,7 @@ git submodule update --init --recursive
 ./venv/bin/pip install -U -r requirements.txt
 /usr/local/src/viper/viper-cli -h
 </code></pre></div>
+
 <h6 id="mail-to-misp">mail-to-misp<a class="headerlink" href="#mail-to-misp" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> /usr/local/src/faup
 git pull
@@ -2009,6 +2049,7 @@ virtualenv -p python3.6 venv
 ./venv/bin/pip install -U -r requirements.txt
 diff -u mail_to_misp_config.py-example mail_to_misp_config.py
 </code></pre></div>
+
 <h1 id="hardening-a-base-system">Hardening a base system<a class="headerlink" href="#hardening-a-base-system" title="Permanent link">&para;</a></h1>
 <h2 id="intro">Intro<a class="headerlink" href="#intro" title="Permanent link">&para;</a></h2>
 <p>MISP is a web-based <strong>information sharing platform</strong>, by design it is kept rather simple and hardening can be done by following the common best practices.</p>
@@ -2053,6 +2094,7 @@ index f9f69d4..2e8fd78 100644
  #
  # Allow TRACE method
 </code></pre></div>
+
 <h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.ncsc.nl/english/current-topics/factsheets/it-security-guidelines-for-transport-layer-security-tls.html">IT Security Guidelines for TLS by NCSC.nl</a></p>
 <p><a href="https://weakdh.org/sysadmin.html">Weak Diffie-Hellman and the Logjam Attack</a></p>

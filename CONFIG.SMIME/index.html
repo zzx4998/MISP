@@ -806,17 +806,21 @@
 <h2 id="create-smime-directory">Create SMIME directory<a class="headerlink" href="#create-smime-directory" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>mkdir /var/www/MISP/.smime
 </code></pre></div>
+
 <h2 id="copy-your-public-x509-certificate-for-signing-in-pem-format">Copy your public x509 certificate (for signing) in PEM format<a class="headerlink" href="#copy-your-public-x509-certificate-for-signing-in-pem-format" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>cp email@address.com.pem /var/www/MISP/.smime/email@address.com.pem
 </code></pre></div>
+
 <h2 id="copy-your-private-key-for-signing-email">Copy your private key for signing email<a class="headerlink" href="#copy-your-private-key-for-signing-email" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>cp email@address.com.key /var/www/MISP/.smime/email@address.com.key
 </code></pre></div>
+
 <h3 id="set-permissions">Set permissions<a class="headerlink" href="#set-permissions" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>chown www-data:www-data /var/www/MISP/.smime
 chmod <span class="m">500</span> /var/www/MISP/.smime
 chmod <span class="m">440</span> /var/www/MISP/.smime/*
 </code></pre></div>
+
 <h2 id="export-the-public-certificate-for-encipherment-to-the-webroot">Export the public certificate (for Encipherment) to the webroot<a class="headerlink" href="#export-the-public-certificate-for-encipherment-to-the-webroot" title="Permanent link">&para;</a></h2>
 <p><div class="highlight"><pre><span></span><code>cp public_certificate.pem /var/www/MISP/app/webroot/public_certificate.pem
 </code></pre></div>
@@ -825,6 +829,7 @@ Due to this action, the MISP users will be able to download your public certific
 <div class="highlight"><pre><span></span><code>chown www-data:www-data /var/www/MISP/app/webroot/public_certificate.pem
 chmod <span class="m">440</span> /var/www/MISP/app/webroot/public_certificate.pem
 </code></pre></div>
+
 <h2 id="configure-the-section-smime-in-the-server-settings-administration-server-settings-encryption-tab">Configure the section "SMIME" in the server settings (Administration -&gt; Server settings -&gt; Encryption tab)<a class="headerlink" href="#configure-the-section-smime-in-the-server-settings-administration-server-settings-encryption-tab" title="Permanent link">&para;</a></h2>
                 
                   
