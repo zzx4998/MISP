@@ -1541,7 +1541,6 @@ mispDashboard <span class="o">()</span> <span class="o">{</span>
   false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git /var/www/misp-dashboard<span class="p">;</span> <span class="k">done</span>
   <span class="nb">cd</span> /var/www/misp-dashboard
   sudo sed -i -E <span class="s1">&#39;s/sudo apt/#sudo apt/&#39;</span> install_dependencies.sh
-  sudo sed -i -E <span class="s1">&#39;s/virtualenv -p python3 DASHENV/\/usr\/bin\/scl enable rh-python36 \&quot;virtualenv -p python3 DASHENV\&quot;/&#39;</span> install_dependencies.sh
   sudo -H /var/www/misp-dashboard/install_dependencies.sh
   sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
   sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 0.0.0.0:8001&#39;</span> /etc/httpd/conf/httpd.conf

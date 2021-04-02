@@ -2621,7 +2621,6 @@ mail2misp <span class="o">()</span> <span class="o">{</span>
   sudo ldconfig
   <span class="nb">cd</span> ../../mail_to_misp
   <span class="nv">$SUDO_CMD</span> virtualenv -p python3 venv
-  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install lief
   <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install -r requirements.txt
   <span class="nv">$SUDO_CMD</span> cp mail_to_misp_config.py-example mail_to_misp_config.py
   <span class="c1">##$SUDO cp mail_to_misp_config.py-example mail_to_misp_config.py</span>

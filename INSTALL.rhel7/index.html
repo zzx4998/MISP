@@ -563,13 +563,6 @@
     9.06/ Use MISP background workers
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#907-misp-modules" class="md-nav__link">
-    9.07/ misp-modules
-  </a>
-  
     <nav class="md-nav">
       <ul class="md-nav__list">
         
@@ -579,6 +572,19 @@
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#907-misp-modules" class="md-nav__link">
+    9.07/ misp-modules
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#misp-dashboard-on-centos" class="md-nav__link">
@@ -1192,13 +1198,6 @@
     9.06/ Use MISP background workers
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#907-misp-modules" class="md-nav__link">
-    9.07/ misp-modules
-  </a>
-  
     <nav class="md-nav">
       <ul class="md-nav__list">
         
@@ -1208,6 +1207,19 @@
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#907-misp-modules" class="md-nav__link">
+    9.07/ misp-modules
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#misp-dashboard-on-centos" class="md-nav__link">
@@ -1477,13 +1489,13 @@ sudo subscription-manager register --auto-attach <span class="c1"># register you
 </code></pre></div>
 
 <h2 id="14-rhel-enable-the-optional-extras-and-software-collections-scl-repos">1.4/ <strong>[RHEL]</strong> Enable the optional, extras and Software Collections (SCL) repos<a class="headerlink" href="#14-rhel-enable-the-optional-extras-and-software-collections-scl-repos" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_RHEL_SCL.sh&gt;</span>
-enableReposRHEL <span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_RHEL7_SCL.sh&gt;</span>
+enableReposRHEL7 <span class="o">()</span> <span class="o">{</span>
   sudo subscription-manager refresh
   sudo subscription-manager repos --enable rhel-7-server-optional-rpms
   sudo subscription-manager repos --enable rhel-7-server-extras-rpms
 <span class="o">}</span>
-<span class="c1"># &lt;snippet-end 0_RHEL_SCL.sh&gt;</span>
+<span class="c1"># &lt;snippet-end 0_RHEL7_SCL.sh&gt;</span>
 </code></pre></div>
 
 <h2 id="14c-centos-enable-epel-for-additional-dependencies">1.4c/ <strong>[CentOS]</strong> Enable EPEL for additional dependencies<a class="headerlink" href="#14c-centos-enable-epel-for-additional-dependencies" title="Permanent link">&para;</a></h2>
@@ -1527,14 +1539,14 @@ yumUpdate <span class="o">()</span> <span class="o">{</span>
 </code></pre></div>
 
 <h2 id="16-rhel-install-the-epel-and-remi-repo">1.6/ <strong>[RHEL]</strong> Install the EPEL and remi repo<a class="headerlink" href="#16-rhel-install-the-epel-and-remi-repo" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_RHEL_EPEL.sh&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_RHEL7_EPEL.sh&gt;</span>
 enableEPEL <span class="o">()</span> <span class="o">{</span>
   sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
   sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
   sudo yum install yum-utils -y
   sudo yum-config-manager --enable remi-php74
 <span class="o">}</span>
-<span class="c1"># &lt;snippet-end 0_RHEL_EPEL.sh&gt;</span>
+<span class="c1"># &lt;snippet-end 0_RHEL7_EPEL.sh&gt;</span>
 </code></pre></div>
 
 <h3 id="2-dependencies">2/ Dependencies<a class="headerlink" href="#2-dependencies" title="Permanent link">&para;</a></h3>
@@ -1602,8 +1614,8 @@ sudo systemctl <span class="nb">enable</span> --now haveged.service
 
 <h3 id="3-misp-code">3/ MISP code<a class="headerlink" href="#3-misp-code" title="Permanent link">&para;</a></h3>
 <h2 id="301-download-misp-code-using-git-in-varwww-directory">3.01/ Download MISP code using git in /var/www/ directory<a class="headerlink" href="#301-download-misp-code-using-git-in-varwww-directory" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 1_mispCoreInstall_RHEL.sh&gt;</span>
-installCoreRHEL <span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 1_mispCoreInstall_RHEL7.sh&gt;</span>
+installCoreRHEL7 <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Download MISP using git in the $PATH_TO_MISP directory.</span>
   sudo mkdir -p <span class="k">$(</span>dirname <span class="nv">$PATH_TO_MISP</span><span class="k">)</span>
   sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="k">$(</span>dirname <span class="nv">$PATH_TO_MISP</span><span class="k">)</span>
@@ -1701,7 +1713,7 @@ installCoreRHEL <span class="o">()</span> <span class="o">{</span>
   sudo systemctl restart php-fpm.service
   <span class="nb">umask</span> <span class="nv">$UMASK</span>
 <span class="o">}</span>
-<span class="c1"># &lt;snippet-end 1_mispCoreInstall_RHEL.sh&gt;</span>
+<span class="c1"># &lt;snippet-end 1_mispCoreInstall_RHEL7.sh&gt;</span>
 </code></pre></div>
 
 <h3 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h3>
@@ -1753,9 +1765,9 @@ installCake_RHEL <span class="o">()</span>
 </code></pre></div>
 
 <h3 id="5-set-file-permissions">5/ Set file permissions<a class="headerlink" href="#5-set-file-permissions" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 2_permissions_RHEL.sh&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 2_permissions_RHEL7.sh&gt;</span>
 <span class="c1"># Main function to fix permissions to something sane</span>
-permissions_RHEL <span class="o">()</span> <span class="o">{</span>
+permissions_RHEL7 <span class="o">()</span> <span class="o">{</span>
   sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>
   <span class="c1">## ? chown -R root:$WWW_USER $PATH_TO_MISP</span>
   sudo find <span class="nv">$PATH_TO_MISP</span> -type d -exec chmod <span class="nv">g</span><span class="o">=</span>rx <span class="o">{}</span> <span class="se">\;</span>
@@ -1776,7 +1788,7 @@ permissions_RHEL <span class="o">()</span> <span class="o">{</span>
   sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/orgs
   sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/custom
 <span class="o">}</span>
-<span class="c1"># &lt;snippet-end 2_permissions_RHEL.sh&gt;</span>
+<span class="c1"># &lt;snippet-end 2_permissions_RHEL7.sh&gt;</span>
 </code></pre></div>
 
 <h3 id="6-create-database-and-user">6/ Create database and user<a class="headerlink" href="#6-create-database-and-user" title="Permanent link">&para;</a></h3>
@@ -2045,121 +2057,6 @@ configWorkersRHEL <span class="o">()</span> <span class="o">{</span>
   sudo systemctl <span class="nb">enable</span> --now misp-workers.service
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 3_configWorkers_RHEL.sh&gt;</span>
-</code></pre></div>
-
-<h2 id="907-misp-modules">9.07/ misp-modules<a class="headerlink" href="#907-misp-modules" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 3_misp-modules_RHEL.sh&gt;</span>
-mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
-  <span class="c1"># some misp-modules dependencies for RHEL&lt;8</span>
-  <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install openjpeg-devel gcc-c++ poppler-cpp-devel pkgconfig python3-devel redhat-rpm-config -y
-
-  <span class="c1"># some misp-modules dependencies for RHEL8</span>
-  <span class="o">([[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora33&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]])</span> <span class="o">&amp;&amp;</span> sudo yum install openjpeg2-devel gcc-c++ poppler-cpp-devel pkgconfig python3-devel redhat-rpm-config -y
-
-  sudo chmod <span class="m">2777</span> /usr/local/src
-  sudo chown root:users /usr/local/src
-  <span class="nb">cd</span> /usr/local/src/
-  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/MISP/misp-modules.git<span class="p">;</span> <span class="k">done</span>
-  <span class="nb">cd</span> misp-modules
-  <span class="c1"># pip install</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U -I -r REQUIREMENTS
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U .
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyfaup censys
-  <span class="c1"># some misp-modules dependencies for RHEL&lt;8</span>
-  <span class="o">([[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora33&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]])</span> <span class="o">&amp;&amp;</span> sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-devel -y
-  <span class="c1"># some misp-modules dependencies for RHEL8</span>
-  <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo dnf install https://packages.endpoint.com/rhel/8/main/x86_64/endpoint-repo-8-1.ep8.noarch.rpm -y <span class="o">&amp;&amp;</span> sudo yum install zbar-devel opencv-devel -y
-
-  <span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
-<span class="s2">  Description=MISP modules</span>
-<span class="s2">  After=misp-workers.service</span>
-
-<span class="s2">  [Service]</span>
-<span class="s2">  Type=simple</span>
-<span class="s2">  User=</span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"></span>
-<span class="s2">  Group=</span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"></span>
-<span class="s2">  WorkingDirectory=/usr/local/src/misp-modules</span>
-<span class="s2">  Environment=&quot;</span><span class="nv">PATH</span><span class="o">=</span>/var/www/MISP/venv/bin<span class="s2">&quot;</span>
-<span class="s2">  ExecStart=\&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/misp-modules -l 127.0.0.1 -s\&quot;</span>
-<span class="s2">  Restart=always</span>
-<span class="s2">  RestartSec=10</span>
-
-<span class="s2">  [Install]</span>
-<span class="s2">  WantedBy=multi-user.target&quot;</span> <span class="p">|</span>sudo tee /etc/systemd/system/misp-modules.service
-
-  sudo systemctl daemon-reload
-  <span class="c1"># Test misp-modules</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/misp-modules -l <span class="m">127</span>.0.0.1 -s <span class="p">&amp;</span>
-  sudo systemctl <span class="nb">enable</span> --now misp-modules
-<span class="o">}</span>
-<span class="c1"># &lt;snippet-end 3_misp-modules_RHEL.sh&gt;</span>
-</code></pre></div>
-
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 3_misp-modules-cake.sh&gt;</span>
-modulesCAKE <span class="o">()</span> <span class="o">{</span>
-  <span class="c1"># Enable Enrichment, set better timeouts</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_enable&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_enable&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_popover_only&quot;</span> <span class="nb">false</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_timeout&quot;</span> <span class="m">150</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_timeout&quot;</span> <span class="m">300</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_bgpranking_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_countrycode_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_cve_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_cve_advanced_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_cpe_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_dns_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_eql_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_btc_steroids_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_ipasn_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_reversedns_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_yara_syntax_validator_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_yara_query_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_wiki_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_threatminer_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_threatcrowd_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hashdd_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_rbl_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_sigma_syntax_validator_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_stix2_pattern_syntax_validator_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_sigma_queries_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_dbl_spamhaus_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_btc_scam_check_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_macvendors_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_qrcode_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_ocr_enrich_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_pdf_enrich_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_docx_enrich_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_xlsx_enrich_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_pptx_enrich_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_ods_enrich_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_odt_enrich_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_urlhaus_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_malwarebazaar_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_html_to_markdown_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_socialscan_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_port&quot;</span> <span class="m">6666</span>
-
-  <span class="c1"># Enable Import modules, set better timeout</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_enable&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_port&quot;</span> <span class="m">6666</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_timeout&quot;</span> <span class="m">300</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_ocr_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_mispjson_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_openiocimport_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_threatanalyzer_import_enabled&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_csvimport_enabled&quot;</span> <span class="nb">true</span>
-
-  <span class="c1"># Enable Export modules, set better timeout</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_enable&quot;</span> <span class="nb">true</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_port&quot;</span> <span class="m">6666</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_timeout&quot;</span> <span class="m">300</span>
-  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_pdfexport_enabled&quot;</span> <span class="nb">true</span>
-<span class="o">}</span>
-<span class="c1"># &lt;snippet-end 3_misp-modules-cake.sh&gt;</span>
 </code></pre></div>
 
 <h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
@@ -2440,6 +2337,121 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># &lt;snippet-end 2_core-cake.sh&gt;</span>
 </code></pre></div>
 
+<h2 id="907-misp-modules">9.07/ misp-modules<a class="headerlink" href="#907-misp-modules" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 3_misp-modules_RHEL.sh&gt;</span>
+mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># some misp-modules dependencies for RHEL&lt;8</span>
+  <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install openjpeg-devel gcc-c++ poppler-cpp-devel pkgconfig python3-devel redhat-rpm-config -y
+
+  <span class="c1"># some misp-modules dependencies for RHEL8</span>
+  <span class="o">([[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora33&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]])</span> <span class="o">&amp;&amp;</span> sudo yum install openjpeg2-devel gcc-c++ poppler-cpp-devel pkgconfig python3-devel redhat-rpm-config -y
+
+  sudo chmod <span class="m">2777</span> /usr/local/src
+  sudo chown root:users /usr/local/src
+  <span class="nb">cd</span> /usr/local/src/
+  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/MISP/misp-modules.git<span class="p">;</span> <span class="k">done</span>
+  <span class="nb">cd</span> misp-modules
+  <span class="c1"># pip install</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U -I -r REQUIREMENTS
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U .
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyfaup censys
+  <span class="c1"># some misp-modules dependencies for RHEL&lt;8</span>
+  <span class="o">([[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora33&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]])</span> <span class="o">&amp;&amp;</span> sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-devel -y
+  <span class="c1"># some misp-modules dependencies for RHEL8</span>
+  <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo dnf install https://packages.endpoint.com/rhel/8/main/x86_64/endpoint-repo-8-1.ep8.noarch.rpm -y <span class="o">&amp;&amp;</span> sudo yum install zbar-devel opencv-devel -y
+
+  <span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
+<span class="s2">  Description=MISP modules</span>
+<span class="s2">  After=misp-workers.service</span>
+
+<span class="s2">  [Service]</span>
+<span class="s2">  Type=simple</span>
+<span class="s2">  User=</span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">  Group=</span><span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">  WorkingDirectory=/usr/local/src/misp-modules</span>
+<span class="s2">  Environment=&quot;</span><span class="nv">PATH</span><span class="o">=</span>/var/www/MISP/venv/bin<span class="s2">&quot;</span>
+<span class="s2">  ExecStart=\&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/misp-modules -l 127.0.0.1 -s\&quot;</span>
+<span class="s2">  Restart=always</span>
+<span class="s2">  RestartSec=10</span>
+
+<span class="s2">  [Install]</span>
+<span class="s2">  WantedBy=multi-user.target&quot;</span> <span class="p">|</span>sudo tee /etc/systemd/system/misp-modules.service
+
+  sudo systemctl daemon-reload
+  <span class="c1"># Test misp-modules</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/misp-modules -l <span class="m">127</span>.0.0.1 -s <span class="p">&amp;</span>
+  sudo systemctl <span class="nb">enable</span> --now misp-modules
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 3_misp-modules_RHEL.sh&gt;</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 3_misp-modules-cake.sh&gt;</span>
+modulesCAKE <span class="o">()</span> <span class="o">{</span>
+  <span class="c1"># Enable Enrichment, set better timeouts</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_popover_only&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hover_timeout&quot;</span> <span class="m">150</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_timeout&quot;</span> <span class="m">300</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_bgpranking_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_countrycode_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_cve_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_cve_advanced_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_cpe_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_dns_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_eql_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_btc_steroids_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_ipasn_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_reversedns_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_yara_syntax_validator_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_yara_query_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_wiki_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_threatminer_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_threatcrowd_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_hashdd_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_rbl_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_sigma_syntax_validator_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_stix2_pattern_syntax_validator_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_sigma_queries_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_dbl_spamhaus_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_btc_scam_check_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_macvendors_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_qrcode_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_ocr_enrich_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_pdf_enrich_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_docx_enrich_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_xlsx_enrich_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_pptx_enrich_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_ods_enrich_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_odt_enrich_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_urlhaus_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_malwarebazaar_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_html_to_markdown_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_socialscan_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Enrichment_services_port&quot;</span> <span class="m">6666</span>
+
+  <span class="c1"># Enable Import modules, set better timeout</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_services_port&quot;</span> <span class="m">6666</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_timeout&quot;</span> <span class="m">300</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_ocr_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_mispjson_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_openiocimport_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_threatanalyzer_import_enabled&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Import_csvimport_enabled&quot;</span> <span class="nb">true</span>
+
+  <span class="c1"># Enable Export modules, set better timeout</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_enable&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_services_port&quot;</span> <span class="m">6666</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_timeout&quot;</span> <span class="m">300</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Export_pdfexport_enabled&quot;</span> <span class="nb">true</span>
+<span class="o">}</span>
+<span class="c1"># &lt;snippet-end 3_misp-modules-cake.sh&gt;</span>
+</code></pre></div>
+
 <h4 id="misp-dashboard-on-centos">MISP Dashboard on CentOS<a class="headerlink" href="#misp-dashboard-on-centos" title="Permanent link">&para;</a></h4>
 <hr />
 <div class="admonition warning">
@@ -2459,7 +2471,6 @@ mispDashboard <span class="o">()</span> <span class="o">{</span>
   false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git /var/www/misp-dashboard<span class="p">;</span> <span class="k">done</span>
   <span class="nb">cd</span> /var/www/misp-dashboard
   sudo sed -i -E <span class="s1">&#39;s/sudo apt/#sudo apt/&#39;</span> install_dependencies.sh
-  sudo sed -i -E <span class="s1">&#39;s/virtualenv -p python3 DASHENV/\/usr\/bin\/scl enable rh-python36 \&quot;virtualenv -p python3 DASHENV\&quot;/&#39;</span> install_dependencies.sh
   sudo -H /var/www/misp-dashboard/install_dependencies.sh
   sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
   sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 0.0.0.0:8001&#39;</span> /etc/httpd/conf/httpd.conf
