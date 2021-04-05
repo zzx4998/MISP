@@ -1226,7 +1226,7 @@ bash /tmp/INSTALL.sh -c
 
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>Installer tested working by <a href="https://twitter.com/SteveClement">@SteveClement</a> on 20210331</p>
+<p>Installer tested working by <a href="https://twitter.com/SteveClement">@SteveClement</a> on 20210401 (works with <strong>Ubuntu 19.04/20.04/21.04</strong> too)</p>
 </div>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
@@ -1520,13 +1520,13 @@ installDepsPhp74 <span class="o">()</span> <span class="o">{</span>
   <span class="nv">PHP_INI</span><span class="o">=</span><span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/apache2/php.ini
   checkAptLock
   sudo apt install -qy <span class="se">\</span>
-  libapache2-mod-php <span class="se">\</span>
-  php php-cli <span class="se">\</span>
-  php-dev <span class="se">\</span>
-  php-json php-xml php-mysql php7.4-opcache php-readline php-mbstring php-zip <span class="se">\</span>
-  php-redis php-gnupg <span class="se">\</span>
-  php-intl php-bcmath <span class="se">\</span>
-  php-gd
+  libapache2-mod-php7.4 <span class="se">\</span>
+  php7.4 php7.4-cli <span class="se">\</span>
+  php7.4-dev <span class="se">\</span>
+  php7.4-json php7.4-xml php7.4-mysql php7.4-opcache php7.4-readline php7.4-mbstring php7.4-zip <span class="se">\</span>
+  php7.4-redis php7.4-gnupg <span class="se">\</span>
+  php7.4-intl php7.4-bcmath <span class="se">\</span>
+  php7.4-gd
 
   <span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
   <span class="k">do</span>
@@ -3667,8 +3667,32 @@ theEnd <span class="o">()</span> <span class="o">{</span>
     sudo su - <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>
   <span class="k">fi</span>
 <span class="o">}</span>
-<span class="c1">## End Function Section Nothing allowed in .md after this line ##</span>
 <span class="c1"># &lt;snippet-end 0_support-functions.sh&gt;</span>
+<span class="c1"># &lt;snippet-begin 0_installDepsPhp72.sh&gt;</span>
+<span class="c1"># Install Php 7.2 dependencies</span>
+installDepsPhp72 <span class="o">()</span> <span class="o">{</span>
+  debug <span class="s2">&quot;Installing PHP 7.2 dependencies&quot;</span>
+  <span class="nv">PHP_ETC_BASE</span><span class="o">=</span>/etc/php/7.2
+  <span class="nv">PHP_INI</span><span class="o">=</span><span class="si">${</span><span class="nv">PHP_ETC_BASE</span><span class="si">}</span>/apache2/php.ini
+  checkAptLock
+  sudo apt install -qy <span class="se">\</span>
+  libapache2-mod-php <span class="se">\</span>
+  php php-cli <span class="se">\</span>
+  php-dev <span class="se">\</span>
+  php-json php-xml php-mysql php7.2-opcache php-readline php-mbstring php-zip <span class="se">\</span>
+  php-redis php-gnupg <span class="se">\</span>
+  php-intl php-bcmath <span class="se">\</span>
+  php-gd
+
+  <span class="k">for</span> key in upload_max_filesize post_max_size max_execution_time max_input_time memory_limit
+  <span class="k">do</span>
+      sudo sed -i <span class="s2">&quot;s/^\(</span><span class="nv">$key</span><span class="s2">\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span><span class="nv">$key</span><span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
+  <span class="k">done</span>
+  sudo sed -i <span class="s2">&quot;s/^\(session.sid_length\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span>session0sid_length<span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
+  sudo sed -i <span class="s2">&quot;s/^\(session.use_strict_mode\).*/\1 = </span><span class="k">$(</span><span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="o">{</span>session0use_strict_mode<span class="o">}</span><span class="k">)</span><span class="s2">/&quot;</span> <span class="nv">$PHP_INI</span>
+<span class="o">}</span>
+<span class="c1">## End Function Section Nothing allowed in .md after this line ##</span>
+<span class="c1"># &lt;snippet-end 0_installDepsPhp72.sh&gt;</span>
 </code></pre></div>
                 
                   

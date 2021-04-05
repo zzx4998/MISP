@@ -1464,7 +1464,7 @@ registerRHEL <span class="o">()</span> <span class="o">{</span>
 <span class="c1"># &lt;snippet-end 0_RHEL_register.sh&gt;</span>
 </code></pre></div></p>
 <h2 id="14-rhel-enable-the-optional-repos-obsolete-in-v8">1.4/ <strong>[RHEL]</strong> Enable the optional repos (obsolete in v8)<a class="headerlink" href="#14-rhel-enable-the-optional-repos-obsolete-in-v8" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_RHEL_SCL.sh&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_RHEL8_SCL.sh&gt;</span>
 enableOptionalRHEL8 <span class="o">()</span> <span class="o">{</span>
   sudo subscription-manager refresh 
 
@@ -1472,7 +1472,7 @@ enableOptionalRHEL8 <span class="o">()</span> <span class="o">{</span>
   sudo subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms
   <span class="c1"># Software Collections is available for Red Hat Enterprise Linux 7 and previous supported releases. Starting with Red Hat Enterprise Linux 8, the content traditionally consumed via Software Collections is now part of Application Streams. Please see the Application Streams Life Cycle documentation for that release. Source: https://access.redhat.com/support/policy/updates/rhscl</span>
 <span class="o">}</span>
-<span class="c1"># &lt;snippet-end 0_RHEL_SCL.sh&gt;</span>
+<span class="c1"># &lt;snippet-end 0_RHEL8_SCL.sh&gt;</span>
 </code></pre></div>
 
 <h2 id="15a-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates-optional">1.5a/ Install the deltarpm package to help reduce download size when installing updates (optional)<a class="headerlink" href="#15a-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates-optional" title="Permanent link">&para;</a></h2>
