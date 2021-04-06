@@ -83,6 +83,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
+      <a href="#-1-installer-and-manual-install-instructions" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -613,6 +617,35 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#-1-installer-and-manual-install-instructions" class="md-nav__link">
+    -1/ Installer and Manual install instructions
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -624,7 +657,23 @@
                 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>This document also serves as a source for the <a href="https://github.com/MISP/MISP/blob/2.4/INSTALL/INSTALL.sh">INSTALL-misp.sh</a> script.
-You will see bash-<em>functions</em> in various steps. You can either copy between the <em>{}</em>'s or copy the entire function and just run it.</p>
+Which explains why you will see the use of shell <em>functions</em> in various steps.
+You will see bash-<em>functions</em> in various steps. You can either copy between the <em>{}</em>'s or copy the entire function and just run it.
+Henceforth the document will also follow a more logical flow. In the sense that all the dependencies are installed first then config files are generated, etc...</p>
+</div>
+<h3 id="-1-installer-and-manual-install-instructions">-1/ Installer and Manual install instructions<a class="headerlink" href="#-1-installer-and-manual-install-instructions" title="Permanent link">&para;</a></h3>
+<p>To install MISP all you need to do is the following on a clean <a href="https://misp.github.io/MISP/">supported</a> distribution.</p>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Please check the installer options first to make the best choice for your install</span>
+wget -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
+bash /tmp/INSTALL.sh
+
+<span class="c1"># This will install MISP Core</span>
+wget -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
+bash /tmp/INSTALL.sh -c
+</code></pre></div>
+
 </div>
                 
                   

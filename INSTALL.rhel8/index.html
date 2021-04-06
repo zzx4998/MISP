@@ -327,6 +327,13 @@
     0/ Overview and Assumptions
   </a>
   
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-1-installer-and-manual-install-instructions_1" class="md-nav__link">
+    -1/ Installer and Manual install instructions
+  </a>
+  
     <nav class="md-nav">
       <ul class="md-nav__list">
         
@@ -960,6 +967,13 @@
     0/ Overview and Assumptions
   </a>
   
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-1-installer-and-manual-install-instructions_1" class="md-nav__link">
+    -1/ Installer and Manual install instructions
+  </a>
+  
     <nav class="md-nav">
       <ul class="md-nav__list">
         
@@ -1261,13 +1275,14 @@ TODO: Fix SELinux permissions, <em>pull-requests welcome</em>.</p>
 <p class="admonition-title">Notice</p>
 <p>This document also serves as a source for the <a href="https://github.com/MISP/MISP/blob/2.4/INSTALL/INSTALL.sh">INSTALL-misp.sh</a> script.
 Which explains why you will see the use of shell <em>functions</em> in various steps.
+You will see bash-<em>functions</em> in various steps. You can either copy between the <em>{}</em>'s or copy the entire function and just run it.
 Henceforth the document will also follow a more logical flow. In the sense that all the dependencies are installed first then config files are generated, etc...</p>
 </div>
 <h3 id="-1-installer-and-manual-install-instructions">-1/ Installer and Manual install instructions<a class="headerlink" href="#-1-installer-and-manual-install-instructions" title="Permanent link">&para;</a></h3>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>In the <strong>future</strong>, to install MISP on a fresh RHEL 8 or CentOS 8 install all you need to do is:</p>
-<p><div class="highlight"><pre><span></span><code><span class="c1"># Please check the installer options first to make the best choice for your install</span>
+<p>To install MISP all you need to do is the following on a clean <a href="https://misp.github.io/MISP/">supported</a> distribution.</p>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Please check the installer options first to make the best choice for your install</span>
 wget -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
 bash /tmp/INSTALL.sh
 
@@ -1275,7 +1290,7 @@ bash /tmp/INSTALL.sh
 wget -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
 bash /tmp/INSTALL.sh -c
 </code></pre></div>
-<strong>The above does NOT work yet</strong></p>
+
 </div>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
@@ -1294,7 +1309,7 @@ For more information on what might differ, <a href="https://unix.stackexchange.c
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The core MISP team cannot verify if this guide is working or not. Please help us in keeping it up to date and accurate.
+<p>The core MISP team cannot easily verify if this guide is working or not. Please help us in keeping it up to date and accurate.
 Thus we also have difficulties in supporting RHEL issues but will do a best effort on a similar yet slightly different setup.</p>
 </div>
 <div class="admonition notice">
@@ -1305,7 +1320,23 @@ CentOS 8 <a href="http://mirrorlist.centos.org/?release=8&amp;arch=x86_64&amp;re
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>This document also serves as a source for the <a href="https://github.com/MISP/MISP/blob/2.4/INSTALL/INSTALL.sh">INSTALL-misp.sh</a> script.
-You will see bash-<em>functions</em> in various steps. You can either copy between the <em>{}</em>'s or copy the entire function and just run it.</p>
+Which explains why you will see the use of shell <em>functions</em> in various steps.
+You will see bash-<em>functions</em> in various steps. You can either copy between the <em>{}</em>'s or copy the entire function and just run it.
+Henceforth the document will also follow a more logical flow. In the sense that all the dependencies are installed first then config files are generated, etc...</p>
+</div>
+<h3 id="-1-installer-and-manual-install-instructions_1">-1/ Installer and Manual install instructions<a class="headerlink" href="#-1-installer-and-manual-install-instructions_1" title="Permanent link">&para;</a></h3>
+<p>To install MISP all you need to do is the following on a clean <a href="https://misp.github.io/MISP/">supported</a> distribution.</p>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Please check the installer options first to make the best choice for your install</span>
+wget -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
+bash /tmp/INSTALL.sh
+
+<span class="c1"># This will install MISP Core</span>
+wget -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
+bash /tmp/INSTALL.sh -c
+</code></pre></div>
+
 </div>
 <p>This document details the steps to install MISP on Red Hat Enterprise Linux 8.x (RHEL 8.x) and CentOS 8.x.
 At time of this writing it was tested on versions 8.0 for RHEL.
@@ -1456,13 +1487,13 @@ To quickly make sure if NetworkManager handles your network interface on boot, c
 </code></pre></div>
 
 <h2 id="13-rhel-register-the-system-for-updates-with-red-hat-subscription-manager">1.3/ <strong>[RHEL]</strong> Register the system for updates with Red Hat Subscription Manager<a class="headerlink" href="#13-rhel-register-the-system-for-updates-with-red-hat-subscription-manager" title="Permanent link">&para;</a></h2>
-<p>Can be skipped if the Machine has been registered during install phase.
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_RHEL_register.sh&gt;</span>
 registerRHEL <span class="o">()</span> <span class="o">{</span>
   sudo subscription-manager register --auto-attach <span class="c1"># register your system to an account and attach to a current subscription</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_RHEL_register.sh&gt;</span>
-</code></pre></div></p>
+</code></pre></div>
+
 <h2 id="14-rhel-enable-the-optional-repos-obsolete-in-v8">1.4/ <strong>[RHEL]</strong> Enable the optional repos (obsolete in v8)<a class="headerlink" href="#14-rhel-enable-the-optional-repos-obsolete-in-v8" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_RHEL8_SCL.sh&gt;</span>
 enableOptionalRHEL8 <span class="o">()</span> <span class="o">{</span>
@@ -1516,13 +1547,13 @@ enableREMI_f33 <span class="o">()</span> <span class="o">{</span>
 <p><a href="https://secure.php.net/supported-versions.php">PHP 5.6 and 7.0 aren't supported since December 2018</a>. Please update accordingly. In the future only PHP7 will be supported.</p>
 </div>
 <h2 id="201-install-some-base-system-dependencies">2.01/ Install some base system dependencies<a class="headerlink" href="#201-install-some-base-system-dependencies" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_yumInstallCoreDeps.sh&gt;</span>
-yumInstallCoreDeps <span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_yumInstallCoreDeps8.sh&gt;</span>
+yumInstallCoreDeps8 <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Install the dependencies:</span>
   <span class="nv">PHP_BASE</span><span class="o">=</span><span class="s2">&quot;/etc/&quot;</span>
   <span class="nv">PHP_INI</span><span class="o">=</span><span class="s2">&quot;/etc/php.ini&quot;</span>
   sudo dnf install @httpd -y
-  sudo dnf install gcc git zip <span class="se">\</span>
+  sudo dnf install gcc git zip unzip <span class="se">\</span>
                    httpd <span class="se">\</span>
                    mod_ssl <span class="se">\</span>
                    redis <span class="se">\</span>
@@ -1553,7 +1584,7 @@ yumInstallCoreDeps <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># cake has php baked in, thus we link to it if necessary.</span>
   <span class="o">[[</span> ! -e <span class="s2">&quot;/usr/bin/php&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo ln -s /usr/bin/php74 /usr/bin/php
 <span class="o">}</span>
-<span class="c1"># &lt;snippet-end 0_yumInstallCoreDeps.sh&gt;</span>
+<span class="c1"># &lt;snippet-end 0_yumInstallCoreDeps8.sh&gt;</span>
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_yumInstallHaveged.sh&gt;</span>
@@ -1577,7 +1608,7 @@ This guide installs PHP 7.4</p>
 
 <h3 id="3-misp-code">3/ MISP code<a class="headerlink" href="#3-misp-code" title="Permanent link">&para;</a></h3>
 <h2 id="301-download-misp-code-using-git-in-varwww-directory">3.01/ Download MISP code using git in /var/www/ directory<a class="headerlink" href="#301-download-misp-code-using-git-in-varwww-directory" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 1_mispCoreInstall_RHEL.sh&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 1_mispCoreInstall_RHEL8.sh&gt;</span>
 compileLiefRHEL8 <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts
   <span class="nv">$SUDO_WWW</span> git clone --branch master --single-branch https://github.com/lief-project/LIEF.git lief
@@ -1714,7 +1745,7 @@ installCoreRHEL8 <span class="o">()</span> <span class="o">{</span>
 
   sudo systemctl restart php-fpm.service
 <span class="o">}</span>
-<span class="c1"># &lt;snippet-end 1_mispCoreInstall_RHEL.sh&gt;</span>
+<span class="c1"># &lt;snippet-end 1_mispCoreInstall_RHEL8.sh&gt;</span>
 </code></pre></div>
 
 <h3 id="4-cakephp">4/ CakePHP<a class="headerlink" href="#4-cakephp" title="Permanent link">&para;</a></h3>
@@ -1724,17 +1755,12 @@ installCoreRHEL8 <span class="o">()</span> <span class="o">{</span>
 <p>CakePHP is now included as a submodule of MISP and has been fetch by a previous step.</p>
 </div>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 1_installCake_RHEL.sh&gt;</span>
-installCake_RHEL8 <span class="o">()</span>
+installCake_RHEL <span class="o">()</span>
 <span class="o">{</span>
   sudo chown -R <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> <span class="nv">$PATH_TO_MISP</span>
   sudo mkdir /usr/share/httpd/.composer
   sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /usr/share/httpd/.composer
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
-  <span class="c1"># Update composer.phar (optional)</span>
-  <span class="c1">#$SUDO_WWW php -r &quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</span>
-  <span class="c1">#$SUDO_WWW php -r &quot;if (hash_file(&#39;SHA384&#39;, &#39;composer-setup.php&#39;) === &#39;baf1608c33254d00611ac1705c1d9958c817a1a33bce370c0595974b342601bd80b92a3f46067da89e3b06bff421f182&#39;) { echo &#39;Installer verified&#39;; } else { echo &#39;Installer corrupt&#39;; unlink(&#39;composer-setup.php&#39;); } echo PHP_EOL;&quot;</span>
-  <span class="c1">#$SUDO_WWW php composer-setup.php</span>
-  <span class="c1">#$SUDO_WWW php -r &quot;unlink(&#39;composer-setup.php&#39;);&quot;</span>
   <span class="nv">$SUDO_WWW</span> php composer.phar install
 
   sudo dnf install php-pecl-redis php-pecl-ssdeep php-pecl-gnupg -y
@@ -1794,7 +1820,7 @@ permissions_RHEL8 <span class="o">()</span> <span class="o">{</span>
 <h3 id="6-create-database-and-user">6/ Create database and user<a class="headerlink" href="#6-create-database-and-user" title="Permanent link">&para;</a></h3>
 <h2 id="601-set-database-to-listen-on-localhost-only">6.01/ Set database to listen on localhost only<a class="headerlink" href="#601-set-database-to-listen-on-localhost-only" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 1_prepareDB_RHEL.sh&gt;</span>
-prepareDB_RHEL8 <span class="o">()</span> <span class="o">{</span>
+prepareDB_RHEL <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Enable, start and secure your mysql database server</span>
   sudo systemctl <span class="nb">enable</span> --now mariadb.service
   <span class="nb">echo</span> <span class="o">[</span>mysqld<span class="o">]</span> <span class="p">|</span>sudo tee /etc/my.cnf.d/bind-address.cnf
@@ -1834,7 +1860,7 @@ SELinux status:                 disabled
 </code></pre></div>
 If it is disabled, you can ignore the <strong>chcon/setsebool/semanage/checkmodule/semodule*</strong> commands.</p>
 </div>
-<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 1_apacheConfig_RHEL.sh&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 1_apacheConfig_RHEL8.sh&gt;</span>
 apacheConfig_RHEL8 <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Now configure your apache server with the DocumentRoot $PATH_TO_MISP/app/webroot/</span>
   <span class="c1"># A sample vhost can be found in $PATH_TO_MISP/INSTALL/apache.misp.centos7</span>
@@ -1883,7 +1909,7 @@ apacheConfig_RHEL8 <span class="o">()</span> <span class="o">{</span>
   sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/webroot/img/custom
   sudo chcon -R -t httpd_sys_rw_content_t <span class="nv">$PATH_TO_MISP</span>/app/files/scripts/mispzmq
 <span class="o">}</span>
-<span class="c1"># &lt;snippet-end 1_apacheConfig_RHEL.sh&gt;</span>
+<span class="c1"># &lt;snippet-end 1_apacheConfig_RHEL8.sh&gt;</span>
 </code></pre></div>
 
 <div class="admonition warning">
