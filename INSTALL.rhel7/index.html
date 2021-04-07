@@ -608,15 +608,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#11-lief-installation" class="md-nav__link">
-    11/ LIEF Installation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#12-known-issues" class="md-nav__link">
-    12/ Known Issues
+  <a href="#11-known-issues" class="md-nav__link">
+    11/ Known Issues
   </a>
   
 </li>
@@ -627,8 +620,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1201-workers-cannot-be-started-or-restarted-from-the-web-page" class="md-nav__link">
-    12.01/ Workers cannot be started or restarted from the web page
+  <a href="#1101-workers-cannot-be-started-or-restarted-from-the-web-page" class="md-nav__link">
+    11.01/ Workers cannot be started or restarted from the web page
   </a>
   
 </li>
@@ -1250,15 +1243,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#11-lief-installation" class="md-nav__link">
-    11/ LIEF Installation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#12-known-issues" class="md-nav__link">
-    12/ Known Issues
+  <a href="#11-known-issues" class="md-nav__link">
+    11/ Known Issues
   </a>
   
 </li>
@@ -1269,8 +1255,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1201-workers-cannot-be-started-or-restarted-from-the-web-page" class="md-nav__link">
-    12.01/ Workers cannot be started or restarted from the web page
+  <a href="#1101-workers-cannot-be-started-or-restarted-from-the-web-page" class="md-nav__link">
+    11.01/ Workers cannot be started or restarted from the web page
   </a>
   
 </li>
@@ -1367,7 +1353,6 @@ bash /tmp/INSTALL.sh -c
 
 </div>
 <p>This document details the steps to install MISP on Red Hat Enterprise Linux 7.x (RHEL 7.x) and CentOS 7.x.
-At time of this writing it was tested on versions 7.6 for both.
 This is a joint RHEL/CentOS install guide. The authors tried to make it contextually evident what applies to which flavor.</p>
 <p>The following assumptions with regard to this installation have been made.</p>
 <ul>
@@ -1536,38 +1521,39 @@ enableReposRHEL7 <span class="o">()</span> <span class="o">{</span>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_CentOS_EPEL.sh&gt;</span>
 centosEPEL <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># We need some packages from the Extra Packages for Enterprise Linux repository</span>
-  sudo yum install epel-release -y
+  sudo yum install dnf -y
+  sudo dnf install epel-release -y
 
   <span class="c1"># Since MISP 2.4 PHP 5.5 is a minimal requirement, so we need a newer version than CentOS base provides</span>
   <span class="c1"># Software Collections is a way do to this, see https://wiki.centos.org/AdditionalResources/Repositories/SCL</span>
-  sudo yum install centos-release-scl -y
-  sudo yum install yum-utils dnf -y
-  sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
+  sudo dnf install centos-release-scl -y
+  sudo dnf install yum-utils -y
+  sudo dnf install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
   sudo yum-config-manager --enable remi-php74
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_CentOS_EPEL.sh&gt;</span>
 </code></pre></div>
 
 <h2 id="15a-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates-optional">1.5a/ Install the deltarpm package to help reduce download size when installing updates (optional)<a class="headerlink" href="#15a-install-the-deltarpm-package-to-help-reduce-download-size-when-installing-updates-optional" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>sudo yum install deltarpm -y
+<div class="highlight"><pre><span></span><code>sudo dnf install deltarpm -y
 </code></pre></div>
 
 <h2 id="15b-install-vim-optional">1.5.b/ Install vim (optional)<a class="headerlink" href="#15b-install-vim-optional" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># Because (neo)vim is just so practical</span>
-sudo yum install neovim -y
-<span class="c1"># For RHEL, it&#39;s vim</span>
+sudo dnf install neovim -y
+<span class="c1"># For RHEL, it&#39;s vim and after enabling epel neovim is available too</span>
 </code></pre></div>
 
 <h2 id="15c-install-ntpdate-optional">1.5.c/ Install ntpdate (optional)<a class="headerlink" href="#15c-install-ntpdate-optional" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># In case you time is wrong, this will fix it.</span>
-sudo yum install ntpdate -y
+sudo dnf install ntpdate -y
 sudo ntpdate pool.ntp.org
 </code></pre></div>
 
 <h2 id="15-update-the-system-and-reboot">1.5/ Update the system and reboot<a class="headerlink" href="#15-update-the-system-and-reboot" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_yum-update.sh&gt;</span>
 yumUpdate <span class="o">()</span> <span class="o">{</span>
-  sudo yum update -y
+  sudo dnf update -y
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_yum-update.sh&gt;</span>
 </code></pre></div>
@@ -1575,9 +1561,10 @@ yumUpdate <span class="o">()</span> <span class="o">{</span>
 <h2 id="16-rhel-install-the-epel-and-remi-repo">1.6/ <strong>[RHEL]</strong> Install the EPEL and remi repo<a class="headerlink" href="#16-rhel-install-the-epel-and-remi-repo" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 0_RHEL7_EPEL.sh&gt;</span>
 enableEPEL <span class="o">()</span> <span class="o">{</span>
-  sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
-  sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
-  sudo yum install yum-utils -y
+  sudo yum install dnf -y
+  sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
+  sudo dnf install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
+  sudo dnf install yum-utils policycoreutils-python -y
   sudo yum-config-manager --enable remi-php74
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 0_RHEL7_EPEL.sh&gt;</span>
@@ -1586,7 +1573,7 @@ enableEPEL <span class="o">()</span> <span class="o">{</span>
 <h3 id="2-dependencies">2/ Dependencies<a class="headerlink" href="#2-dependencies" title="Permanent link">&para;</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This guide installs PHP 7.4 from Remi's Repo</p>
+<p>This guide installs PHP 7.4 from Remi's repo</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1598,7 +1585,7 @@ yumInstallCoreDeps7 <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># Install the dependencies:</span>
   <span class="nv">PHP_BASE</span><span class="o">=</span><span class="s2">&quot;/etc/&quot;</span>
   <span class="nv">PHP_INI</span><span class="o">=</span><span class="s2">&quot;/etc/php.ini&quot;</span>
-  sudo yum install gcc git zip unzip <span class="se">\</span>
+  sudo dnf install gcc git zip unzip <span class="se">\</span>
                    mod_ssl <span class="se">\</span>
                    redis <span class="se">\</span>
                    libxslt-devel zlib-devel ssdeep-devel -y
@@ -1607,15 +1594,12 @@ yumInstallCoreDeps7 <span class="o">()</span> <span class="o">{</span>
   sudo systemctl <span class="nb">enable</span> --now redis.service
 
   <span class="c1"># Install MariaDB</span>
-  sudo yum install wget -y
-  wget https://downloads.mariadb.com/MariaDB/mariadb_repo_setup
-  chmod +x mariadb_repo_setup
-  sudo ./mariadb_repo_setup
-  rm mariadb_repo_setup
-  sudo yum install MariaDB-server -y
+  sudo dnf install wget -y
+  wget https://downloads.mariadb.com/MariaDB/mariadb_repo_setup <span class="o">&amp;&amp;</span> chmod +x mariadb_repo_setup <span class="o">&amp;&amp;</span> sudo ./mariadb_repo_setup <span class="o">&amp;&amp;</span> rm mariadb_repo_setup
+  sudo dnf install MariaDB-server -y
 
   <span class="c1"># Install PHP 7.4 from Remi&#39;s repo, see https://rpms.remirepo.net/enterprise/7/php74/x86_64/repoview/</span>
-  sudo yum install php php-fpm php-devel <span class="se">\</span>
+  sudo dnf install php php-fpm php-devel <span class="se">\</span>
                    php-mysqlnd <span class="se">\</span>
                    php-mbstring <span class="se">\</span>
                    php-xml <span class="se">\</span>
@@ -1631,7 +1615,7 @@ yumInstallCoreDeps7 <span class="o">()</span> <span class="o">{</span>
   <span class="o">[[</span> ! -e <span class="s2">&quot;/usr/bin/php&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo ln -s /usr/bin/php74 /usr/bin/php
 
   <span class="c1"># Python 3.6 is now available in RHEL 7.7 base</span>
-  sudo yum install python3 python3-devel -y
+  sudo dnf install python3 python3-devel python3-virtualenv -y
 
   sudo systemctl <span class="nb">enable</span> --now php-fpm.service
 <span class="o">}</span>
@@ -1658,11 +1642,6 @@ installCoreRHEL7 <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> <span class="k">$(</span>dirname <span class="nv">$PATH_TO_MISP</span><span class="k">)</span>
   <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/MISP.git
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>
-  <span class="c1">##$SUDO_WWW git checkout tags/$(git describe --tags `git rev-list --tags --max-count=1`)</span>
-  <span class="c1"># if the last shortcut doesn&#39;t work, specify the latest version manually</span>
-  <span class="c1"># example: git checkout tags/v2.4.XY</span>
-  <span class="c1"># the message regarding a &quot;detached HEAD state&quot; is expected behaviour</span>
-  <span class="c1"># (you only have to create a new branch, if you want to change stuff and do a pull request for example)</span>
 
   <span class="c1"># Fetch submodules</span>
   <span class="nv">$SUDO_WWW</span> git submodule update --init --recursive
@@ -1672,7 +1651,8 @@ installCoreRHEL7 <span class="o">()</span> <span class="o">{</span>
   <span class="nv">$SUDO_WWW</span> git config core.filemode <span class="nb">false</span>
 
   <span class="c1"># Create a python3 virtualenv</span>
-  sudo pip3 install virtualenv
+  <span class="o">[[</span> -e <span class="k">$(</span>which virtualenv-3 <span class="m">2</span>&gt;/dev/null<span class="k">)</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_WWW</span> virtualenv-3 -p python3 <span class="nv">$PATH_TO_MISP</span>/venv
+  <span class="o">[[</span> -e <span class="k">$(</span>which virtualenv <span class="m">2</span>&gt;/dev/null<span class="k">)</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_WWW</span> virtualenv -p python3 <span class="nv">$PATH_TO_MISP</span>/venv
   <span class="nv">$SUDO_WWW</span> python3 -m venv <span class="nv">$PATH_TO_MISP</span>/venv
   sudo mkdir /usr/share/httpd/.cache
   sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /usr/share/httpd/.cache
@@ -1681,7 +1661,6 @@ installCoreRHEL7 <span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app/files/scripts
   <span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/python-cybox.git
   <span class="nv">$SUDO_WWW</span> git clone https://github.com/STIXProject/python-stix.git
-  <span class="c1">##$SUDO_WWW git clone --branch master --single-branch https://github.com/lief-project/LIEF.git lief</span>
   <span class="nv">$SUDO_WWW</span> git clone https://github.com/CybOXProject/mixbox.git
 
   <span class="c1"># If you umask is has been changed from the default, it is a good idea to reset it to 0022 before installing python modules</span>
@@ -1723,7 +1702,7 @@ installCoreRHEL7 <span class="o">()</span> <span class="o">{</span>
 
   <span class="c1"># FIXME: Remove libfaup etc once the egg has the library baked-in</span>
   <span class="c1"># BROKEN: This needs to be tested on RHEL/CentOS</span>
-  sudo yum install libcaca-devel cmake3 -y
+  sudo dnf install libcaca-devel cmake3 -y
   <span class="nb">cd</span> /tmp
   <span class="o">[[</span> ! -d <span class="s2">&quot;faup&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/stricaud/faup.git faup
   <span class="o">[[</span> ! -d <span class="s2">&quot;gtcaca&quot;</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/stricaud/gtcaca.git gtcaca
@@ -1767,7 +1746,7 @@ installCake_RHEL <span class="o">()</span>
   <span class="nb">cd</span> <span class="nv">$PATH_TO_MISP</span>/app
   <span class="nv">$SUDO_WWW</span> php composer.phar install
 
-  sudo yum install php-pecl-redis php-pecl-ssdeep php-pecl-gnupg -y
+  sudo dnf install php-pecl-redis php-pecl-ssdeep php-pecl-gnupg -y
 
   sudo systemctl restart php-fpm.service
 
@@ -2092,137 +2071,138 @@ configWorkersRHEL <span class="o">()</span> <span class="o">{</span>
 <h4 id="initialize-misp-configuration-and-set-some-defaults">Initialize MISP configuration and set some defaults<a class="headerlink" href="#initialize-misp-configuration-and-set-some-defaults" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 2_core-cake.sh&gt;</span>
 <span class="c1"># Core cake commands to tweak MISP and aleviate some of the configuration pains</span>
-<span class="c1"># The $RUN_PHP is ONLY set on RHEL/CentOS installs and can thus be ignored</span>
+<span class="c1"># The ${RUN_PHP} is ONLY set on RHEL/CentOS installs and can thus be ignored</span>
 <span class="c1"># This file is NOT an excuse to NOT read the settings and familiarize ourselves with them ;)</span>
 
 coreCAKE <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Running core Cake commands to set sane defaults for </span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
 
   <span class="c1"># IF you have logged in prior to running this, it will fail but the fail is NON-blocking</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> userInit -q
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> userInit -q
 
   <span class="c1"># This makes sure all Database upgrades are done, without logging in.</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin runUpdates
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin runUpdates
 
   <span class="c1"># The default install is Python &gt;=3.6 in a virtualenv, setting accordingly</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.python_bin&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/venv/bin/python&quot;</span>
 
   <span class="c1"># Set default role</span>
   <span class="c1"># TESTME: The following seem defunct, please test.</span>
-  <span class="c1"># $SUDO_WWW $RUN_PHP -- $CAKE setDefaultRole 3</span>
+  <span class="c1"># ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} setDefaultRole 3</span>
 
   <span class="c1"># Tune global time outs</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.autoRegenerate&quot;</span> <span class="m">0</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.timeout&quot;</span> <span class="m">600</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Session.cookieTimeout&quot;</span> <span class="m">3600</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Session.autoRegenerate&quot;</span> <span class="m">0</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Session.timeout&quot;</span> <span class="m">600</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Session.cookieTimeout&quot;</span> <span class="m">3600</span>
 
   <span class="c1"># Change base url, either with this CLI command or in the UI</span>
-  <span class="o">[[</span> ! -z <span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Baseurl <span class="nv">$MISP_BASEURL</span>
+  <span class="o">[[</span> ! -z <span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Baseurl <span class="nv">$MISP_BASEURL</span>
   <span class="c1"># example: &#39;baseurl&#39; =&gt; &#39;https://&lt;your.FQDN.here&gt;&#39;,</span>
   <span class="c1"># alternatively, you can leave this field empty if you would like to use relative pathing in MISP</span>
   <span class="c1"># &#39;baseurl&#39; =&gt; &#39;&#39;,</span>
   <span class="c1"># The base url of the application (in the format https://www.mymispinstance.com) as visible externally/by other MISPs.</span>
   <span class="c1"># MISP will encode this URL in sharing groups when including itself. If this value is not set, the baseurl is used as a fallback.</span>
-  <span class="o">[[</span> ! -z <span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.external_baseurl&quot;</span> <span class="nv">$MISP_BASEURL</span>
+  <span class="o">[[</span> ! -z <span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.external_baseurl&quot;</span> <span class="si">${</span><span class="nv">MISP_BASEURL</span><span class="si">}</span>
 
   <span class="c1"># Enable GnuPG</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.email&quot;</span> <span class="s2">&quot;</span><span class="nv">$GPG_EMAIL_ADDRESS</span><span class="s2">&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.homedir&quot;</span> <span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/.gnupg&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.password&quot;</span> <span class="s2">&quot;</span><span class="nv">$GPG_PASSPHRASE</span><span class="s2">&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.obscure_subject&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;GnuPG.email&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">GPG_EMAIL_ADDRESS</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;GnuPG.homedir&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/.gnupg&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;GnuPG.password&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">GPG_PASSPHRASE</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;GnuPG.obscure_subject&quot;</span> <span class="nb">true</span>
   <span class="c1"># FIXME: what if we have not gpg binary but a gpg2 one?</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;GnuPG.binary&quot;</span> <span class="s2">&quot;</span><span class="k">$(</span>which gpg<span class="k">)</span><span class="s2">&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;GnuPG.binary&quot;</span> <span class="s2">&quot;</span><span class="k">$(</span>which gpg<span class="k">)</span><span class="s2">&quot;</span>
 
   <span class="c1"># Enable installer org and tune some configurables</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.host_org_id&quot;</span> <span class="m">1</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.email&quot;</span> <span class="s2">&quot;info@admin.test&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.disable_emailing&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.contact&quot;</span> <span class="s2">&quot;info@admin.test&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.disablerestalert&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.showCorrelationsOnIndex&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.default_event_tag_collection&quot;</span> <span class="m">0</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.host_org_id&quot;</span> <span class="m">1</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.email&quot;</span> <span class="s2">&quot;info@admin.test&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.disable_emailing&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.contact&quot;</span> <span class="s2">&quot;info@admin.test&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.disablerestalert&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.showCorrelationsOnIndex&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.default_event_tag_collection&quot;</span> <span class="m">0</span>
 
   <span class="c1"># Provisional Cortex tunes</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_enable&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_port&quot;</span> <span class="m">9000</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_timeout&quot;</span> <span class="m">120</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_authkey&quot;</span> <span class="s2">&quot;&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_verify_peer&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_verify_host&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_allow_self_signed&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_enable&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_url&quot;</span> <span class="s2">&quot;http://127.0.0.1&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_services_port&quot;</span> <span class="m">9000</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_timeout&quot;</span> <span class="m">120</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_authkey&quot;</span> <span class="s2">&quot;&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_verify_peer&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_verify_host&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Cortex_ssl_allow_self_signed&quot;</span> <span class="nb">true</span>
 
   <span class="c1"># Various plugin sightings settings</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_policy&quot;</span> <span class="m">0</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_anonymise&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_anonymise_as&quot;</span> <span class="m">1</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_range&quot;</span> <span class="m">365</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_sighting_db_enable&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_policy&quot;</span> <span class="m">0</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_anonymise&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_anonymise_as&quot;</span> <span class="m">1</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_range&quot;</span> <span class="m">365</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Sightings_sighting_db_enable&quot;</span> <span class="nb">false</span>
 
+  <span class="c1"># TODO: Fix the below list</span>
   <span class="c1"># Set API_Required modules to false</span>
-  <span class="k">for</span> PLUG in <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;Plugin.Enrichment_cuckoo_submit_enabled</span>
-<span class="s2">                      Plugin.Enrichment_vmray_submit_enabled</span>
-<span class="s2">                      Plugin.Enrichment_circl_passivedns_enabled</span>
-<span class="s2">                      Plugin.Enrichment_circl_passivessl_enabled</span>
-<span class="s2">                      Plugin.Enrichment_domaintools_enabled</span>
-<span class="s2">                      Plugin.Enrichment_eupi_enabled</span>
-<span class="s2">                      Plugin.Enrichment_farsight_passivedns_enabled</span>
-<span class="s2">                      Plugin.Enrichment_passivetotal_enabled</span>
-<span class="s2">                      Plugin.Enrichment_passivetotal_enabled</span>
-<span class="s2">                      Plugin.Enrichment_virustotal_enabled</span>
-<span class="s2">                      Plugin.Enrichment_whois_enabled</span>
-<span class="s2">                      Plugin.Enrichment_shodan_enabled</span>
-<span class="s2">                      Plugin.Enrichment_geoip_asn_enabled</span>
-<span class="s2">                      Plugin.Enrichment_geoip_city_enabled</span>
-<span class="s2">                      Plugin.Enrichment_geoip_country_enabled</span>
-<span class="s2">                      Plugin.Enrichment_iprep_enabled</span>
-<span class="s2">                      Plugin.Enrichment_otx_enabled</span>
-<span class="s2">                      Plugin.Enrichment_vulndb_enabled</span>
-<span class="s2">                      Plugin.Enrichment_crowdstrike_falcon_enabled</span>
-<span class="s2">                      Plugin.Enrichment_onyphe_enabled</span>
-<span class="s2">                      Plugin.Enrichment_xforceexchange_enabled</span>
-<span class="s2">                      Plugin.Enrichment_vulners_enabled</span>
-<span class="s2">                      Plugin.Enrichment_macaddress_io_enabled</span>
-<span class="s2">                      Plugin.Enrichment_intel471_enabled</span>
-<span class="s2">                      Plugin.Enrichment_backscatter_io_enabled</span>
-<span class="s2">                      Plugin.Enrichment_hibp_enabled</span>
-<span class="s2">                      Plugin.Enrichment_greynoise_enabled</span>
-<span class="s2">                      Plugin.Enrichment_joesandbox_submit_enabled</span>
-<span class="s2">                      Plugin.Enrichment_virustotal_public_enabled</span>
-<span class="s2">                      Plugin.Enrichment_apiosintds_enabled</span>
-<span class="s2">                      Plugin.Enrichment_urlscan_enabled</span>
-<span class="s2">                      Plugin.Enrichment_securitytrails_enabled</span>
-<span class="s2">                      Plugin.Enrichment_apivoid_enabled</span>
-<span class="s2">                      Plugin.Enrichment_assemblyline_submit_enabled</span>
-<span class="s2">                      Plugin.Enrichment_assemblyline_query_enabled</span>
-<span class="s2">                      Plugin.Enrichment_ransomcoindb_enabled</span>
-<span class="s2">                      Plugin.Enrichment_lastline_query_enabled</span>
-<span class="s2">                      Plugin.Enrichment_sophoslabs_intelix_enabled</span>
-<span class="s2">                      Plugin.Enrichment_cytomic_orion_enabled</span>
-<span class="s2">                      Plugin.Enrichment_censys_enrich_enabled</span>
-<span class="s2">                      Plugin.Enrichment_trustar_enrich_enabled</span>
-<span class="s2">                      Plugin.Enrichment_recordedfuture_enabled</span>
-<span class="s2">                      Plugin.ElasticSearch_logging_enable</span>
-<span class="s2">                      Plugin.S3_enable&quot;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
-
+  <span class="nv">PLUGS</span><span class="o">=(</span>Plugin.Enrichment_cuckoo_submit_enabled
+         Plugin.Enrichment_vmray_submit_enabled
+         Plugin.Enrichment_circl_passivedns_enabled
+         Plugin.Enrichment_circl_passivessl_enabled
+         Plugin.Enrichment_domaintools_enabled
+         Plugin.Enrichment_eupi_enabled
+         Plugin.Enrichment_farsight_passivedns_enabled
+         Plugin.Enrichment_passivetotal_enabled
+         Plugin.Enrichment_passivetotal_enabled
+         Plugin.Enrichment_virustotal_enabled
+         Plugin.Enrichment_whois_enabled
+         Plugin.Enrichment_shodan_enabled
+         Plugin.Enrichment_geoip_asn_enabled
+         Plugin.Enrichment_geoip_city_enabled
+         Plugin.Enrichment_geoip_country_enabled
+         Plugin.Enrichment_iprep_enabled
+         Plugin.Enrichment_otx_enabled
+         Plugin.Enrichment_vulndb_enabled
+         Plugin.Enrichment_crowdstrike_falcon_enabled
+         Plugin.Enrichment_onyphe_enabled
+         Plugin.Enrichment_xforceexchange_enabled
+         Plugin.Enrichment_vulners_enabled
+         Plugin.Enrichment_macaddress_io_enabled
+         Plugin.Enrichment_intel471_enabled
+         Plugin.Enrichment_backscatter_io_enabled
+         Plugin.Enrichment_hibp_enabled
+         Plugin.Enrichment_greynoise_enabled
+         Plugin.Enrichment_joesandbox_submit_enabled
+         Plugin.Enrichment_virustotal_public_enabled
+         Plugin.Enrichment_apiosintds_enabled
+         Plugin.Enrichment_urlscan_enabled
+         Plugin.Enrichment_securitytrails_enabled
+         Plugin.Enrichment_apivoid_enabled
+         Plugin.Enrichment_assemblyline_submit_enabled
+         Plugin.Enrichment_assemblyline_query_enabled
+         Plugin.Enrichment_ransomcoindb_enabled
+         Plugin.Enrichment_lastline_query_enabled
+         Plugin.Enrichment_sophoslabs_intelix_enabled
+         Plugin.Enrichment_cytomic_orion_enabled
+         Plugin.Enrichment_censys_enrich_enabled
+         Plugin.Enrichment_trustar_enrich_enabled
+         Plugin.Enrichment_recordedfuture_enabled
+         Plugin.ElasticSearch_logging_enable
+         Plugin.S3_enable<span class="o">)</span>
+  <span class="k">for</span> PLUG in <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PLUGS</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span> <span class="k">do</span>
     <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="si">${</span><span class="nv">PLUG</span><span class="si">}</span> <span class="nb">false</span>
   <span class="k">done</span>
 
   <span class="c1"># Plugin CustomAuth tuneable</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.CustomAuth_disable_logout&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.CustomAuth_disable_logout&quot;</span> <span class="nb">false</span>
 
   <span class="c1"># RPZ Plugin settings</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_policy&quot;</span> <span class="s2">&quot;DROP&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_walled_garden&quot;</span> <span class="s2">&quot;127.0.0.1&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_serial&quot;</span> <span class="s2">&quot;\$date00&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_refresh&quot;</span> <span class="s2">&quot;2h&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_retry&quot;</span> <span class="s2">&quot;30m&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_expiry&quot;</span> <span class="s2">&quot;30d&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_minimum_ttl&quot;</span> <span class="s2">&quot;1h&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_ttl&quot;</span> <span class="s2">&quot;1w&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_ns&quot;</span> <span class="s2">&quot;localhost.&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_ns_alt&quot;</span> <span class="s2">&quot;&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_email&quot;</span> <span class="s2">&quot;root.localhost&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_policy&quot;</span> <span class="s2">&quot;DROP&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_walled_garden&quot;</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_serial&quot;</span> <span class="s2">&quot;\$date00&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_refresh&quot;</span> <span class="s2">&quot;2h&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_retry&quot;</span> <span class="s2">&quot;30m&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_expiry&quot;</span> <span class="s2">&quot;30d&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_minimum_ttl&quot;</span> <span class="s2">&quot;1h&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_ttl&quot;</span> <span class="s2">&quot;1w&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_ns&quot;</span> <span class="s2">&quot;localhost.&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_ns_alt&quot;</span> <span class="s2">&quot;&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.RPZ_email&quot;</span> <span class="s2">&quot;root.localhost&quot;</span>
 
   <span class="c1"># Kafka settings</span>
   <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.Kafka_enable&quot;</span> <span class="nb">false</span>
@@ -2271,98 +2251,98 @@ coreCAKE <span class="o">()</span> <span class="o">{</span>
   <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Plugin.ZeroMQ_tag_notifications_enable&quot;</span> <span class="nb">false</span>
 
   <span class="c1"># Force defaults to make MISP Server Settings less RED</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.language&quot;</span> <span class="s2">&quot;eng&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.proposals_block_attributes&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.language&quot;</span> <span class="s2">&quot;eng&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.proposals_block_attributes&quot;</span> <span class="nb">false</span>
 
   <span class="c1"># Redis block</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.redis_host&quot;</span> <span class="s2">&quot;127.0.0.1&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.redis_port&quot;</span> <span class="m">6379</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.redis_database&quot;</span> <span class="m">13</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.redis_password&quot;</span> <span class="s2">&quot;&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.redis_host&quot;</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.redis_port&quot;</span> <span class="m">6379</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.redis_database&quot;</span> <span class="m">13</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.redis_password&quot;</span> <span class="s2">&quot;&quot;</span>
 
   <span class="c1"># Force defaults to make MISP Server Settings less YELLOW</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.ssdeep_correlation_threshold&quot;</span> <span class="m">40</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.extended_alert_subject&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.default_event_threat_level&quot;</span> <span class="m">4</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.newUserText&quot;</span> <span class="s2">&quot;Dear new MISP user,\\n\\nWe would hereby like to welcome you to the \$org MISP community.\\n\\n Use the credentials below to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nPassword: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.passwordResetText&quot;</span> <span class="s2">&quot;Dear MISP user,\\n\\nA password reset has been triggered for your account. Use the below provided temporary password to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nYour temporary password: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.enableEventBlocklisting&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.enableOrgBlocklisting&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.log_client_ip&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.log_auth&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.log_user_ips&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.log_user_ips_authkeys&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.disableUserSelfManagement&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.disable_user_login_change&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.disable_user_password_change&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.disable_user_add&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_event_alert&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_event_alert_tag&quot;</span> <span class="s2">&quot;no-alerts=\&quot;true\&quot;&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert_age&quot;</span> <span class="s2">&quot;&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert_by_date&quot;</span> <span class="s2">&quot;&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.incoming_tags_disabled_by_default&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.maintenance_message&quot;</span> <span class="s2">&quot;Great things are happening! MISP is undergoing maintenance, but will return shortly. You can contact the administration at \$email.&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.footermidleft&quot;</span> <span class="s2">&quot;This is an initial install&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.footermidright&quot;</span> <span class="s2">&quot;Please configure and harden accordingly&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.welcome_text_top&quot;</span> <span class="s2">&quot;Initial Install, please configure&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.ssdeep_correlation_threshold&quot;</span> <span class="m">40</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.extended_alert_subject&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.default_event_threat_level&quot;</span> <span class="m">4</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.newUserText&quot;</span> <span class="s2">&quot;Dear new MISP user,\\n\\nWe would hereby like to welcome you to the \$org MISP community.\\n\\n Use the credentials below to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nPassword: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.passwordResetText&quot;</span> <span class="s2">&quot;Dear MISP user,\\n\\nA password reset has been triggered for your account. Use the below provided temporary password to log into MISP at \$misp, where you will be prompted to manually change your password to something of your own choice.\\n\\nUsername: \$username\\nYour temporary password: \$password\\n\\nIf you have any questions, don&#39;t hesitate to contact us at: \$contact.\\n\\nBest regards,\\nYour \$org MISP support team&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.enableEventBlocklisting&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.enableOrgBlocklisting&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.log_client_ip&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.log_auth&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.log_user_ips&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.log_user_ips_authkeys&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.disableUserSelfManagement&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.disable_user_login_change&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.disable_user_password_change&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.disable_user_add&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.block_event_alert&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.block_event_alert_tag&quot;</span> <span class="s2">&quot;no-alerts=\&quot;true\&quot;&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert_age&quot;</span> <span class="s2">&quot;&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.block_old_event_alert_by_date&quot;</span> <span class="s2">&quot;&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.incoming_tags_disabled_by_default&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.maintenance_message&quot;</span> <span class="s2">&quot;Great things are happening! MISP is undergoing maintenance, but will return shortly. You can contact the administration at \$email.&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.footermidleft&quot;</span> <span class="s2">&quot;This is an initial install&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.footermidright&quot;</span> <span class="s2">&quot;Please configure and harden accordingly&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.welcome_text_top&quot;</span> <span class="s2">&quot;Initial Install, please configure&quot;</span>
   <span class="c1"># TODO: Make sure $FLAVOUR is correct</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.welcome_text_bottom&quot;</span> <span class="s2">&quot;Welcome to MISP on </span><span class="nv">$FLAVOUR</span><span class="s2">, change this message in MISP Settings&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.attachments_dir&quot;</span> <span class="s2">&quot;</span><span class="nv">$PATH_TO_MISP</span><span class="s2">/app/files&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.download_attachments_on_load&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.event_alert_metadata_only&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.title_text&quot;</span> <span class="s2">&quot;MISP&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.terms_download&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.showorgalternate&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;MISP.event_view_filter_fields&quot;</span> <span class="s2">&quot;id, uuid, value, comment, type, category, Tag.name&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.welcome_text_bottom&quot;</span> <span class="s2">&quot;Welcome to MISP on </span><span class="si">${</span><span class="nv">FLAVOUR</span><span class="si">}</span><span class="s2">, change this message in MISP Settings&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.attachments_dir&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span><span class="s2">/app/files&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.download_attachments_on_load&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.event_alert_metadata_only&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.title_text&quot;</span> <span class="s2">&quot;MISP&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.terms_download&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.showorgalternate&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;MISP.event_view_filter_fields&quot;</span> <span class="s2">&quot;id, uuid, value, comment, type, category, Tag.name&quot;</span>
 
   <span class="c1"># Force defaults to make MISP Server Settings less GREEN</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;debug&quot;</span> <span class="m">0</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.auth_enforced&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.log_each_individual_auth_fail&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.rest_client_baseurl&quot;</span> <span class="s2">&quot;&quot;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.advanced_authkeys&quot;</span> <span class="nb">false</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.password_policy_length&quot;</span> <span class="m">12</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.password_policy_complexity&quot;</span> <span class="s1">&#39;/^((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$|.{16,}/&#39;</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.self_registration_message&quot;</span> <span class="s2">&quot;If you would like to send us a registration request, please fill out the form below. Make sure you fill out as much information as possible in order to ease the task of the administrators.&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;debug&quot;</span> <span class="m">0</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.auth_enforced&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.log_each_individual_auth_fail&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.rest_client_baseurl&quot;</span> <span class="s2">&quot;&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.advanced_authkeys&quot;</span> <span class="nb">false</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.password_policy_length&quot;</span> <span class="m">12</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.password_policy_complexity&quot;</span> <span class="s1">&#39;/^((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$|.{16,}/&#39;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.self_registration_message&quot;</span> <span class="s2">&quot;If you would like to send us a registration request, please fill out the form below. Make sure you fill out as much information as possible in order to ease the task of the administrators.&quot;</span>
 
   <span class="c1"># Appease the security audit, #hardening</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.disable_browser_cache&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.check_sec_fetch_site_header&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.csp_enforce&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.advanced_authkeys&quot;</span> <span class="nb">true</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.do_not_log_authkeys&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.disable_browser_cache&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.check_sec_fetch_site_header&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.csp_enforce&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.advanced_authkeys&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.do_not_log_authkeys&quot;</span> <span class="nb">true</span>
 
   <span class="c1"># Appease the security audit, #loggin</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin setSetting <span class="s2">&quot;Security.username_in_response_header&quot;</span> <span class="nb">true</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin setSetting <span class="s2">&quot;Security.username_in_response_header&quot;</span> <span class="nb">true</span>
 
   <span class="c1"># It is possible to updateMISP too, only here for reference how to to that on the CLI.</span>
-  <span class="c1">## $SUDO_WWW $RUN_PHP -- $CAKE Admin updateMISP</span>
+  <span class="c1">## ${SUDO_WWW} ${RUN_PHP} -- ${CAKE} Admin updateMISP</span>
 
   <span class="c1"># Set MISP Live</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Live <span class="nv">$MISP_LIVE</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Live <span class="si">${</span><span class="nv">MISP_LIVE</span><span class="si">}</span>
 <span class="o">}</span>
 
 <span class="c1"># This updates Galaxies, ObjectTemplates, Warninglists, Noticelists, Templates</span>
 updateGOWNT <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># AUTH_KEY Place holder in case we need to **curl** somehing in the future</span>
   <span class="c1"># </span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_MYSQL</span> -- mysql -h <span class="nv">$DBHOST</span> -u <span class="nv">$DBUSER_MISP</span> -p<span class="nv">$DBPASSWORD_MISP</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1 &gt; /tmp/auth.key
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_MYSQL</span><span class="si">}</span> -- mysql -h <span class="si">${</span><span class="nv">DBHOST</span><span class="si">}</span> -u <span class="si">${</span><span class="nv">DBUSER_MISP</span><span class="si">}</span> -p<span class="si">${</span><span class="nv">DBPASSWORD_MISP</span><span class="si">}</span> misp -e <span class="s2">&quot;SELECT authkey FROM users;&quot;</span> <span class="p">|</span> tail -1 &gt; /tmp/auth.key
   <span class="nv">AUTH_KEY</span><span class="o">=</span><span class="k">$(</span>cat /tmp/auth.key<span class="k">)</span>
   rm /tmp/auth.key
 
   debug <span class="s2">&quot;Updating Galaxies, ObjectTemplates, Warninglists, Noticelists and Templates&quot;</span>
   <span class="c1"># Update the galaxies…</span>
   <span class="c1"># TODO: Fix updateGalaxies</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin updateGalaxies
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin updateGalaxies
   <span class="c1"># Updating the taxonomies…</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin updateTaxonomies
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin updateTaxonomies
   <span class="c1"># Updating the warning lists…</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin updateWarningLists
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin updateWarningLists
   <span class="c1"># Updating the notice lists…</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin updateNoticeLists
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin updateNoticeLists
   <span class="c1"># Updating the object templates…</span>
-  <span class="nv">$SUDO_WWW</span> <span class="nv">$RUN_PHP</span> -- <span class="nv">$CAKE</span> Admin updateObjectTemplates <span class="s2">&quot;1337&quot;</span>
+  <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">RUN_PHP</span><span class="si">}</span> -- <span class="si">${</span><span class="nv">CAKE</span><span class="si">}</span> Admin updateObjectTemplates <span class="s2">&quot;1337&quot;</span>
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 2_core-cake.sh&gt;</span>
 </code></pre></div>
@@ -2371,10 +2351,10 @@ updateGOWNT <span class="o">()</span> <span class="o">{</span>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 3_misp-modules_RHEL.sh&gt;</span>
 mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="c1"># some misp-modules dependencies for RHEL&lt;8</span>
-  <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install openjpeg-devel gcc-c++ poppler-cpp-devel pkgconfig python3-devel redhat-rpm-config -y
+  <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo dnf install openjpeg-devel gcc-c++ poppler-cpp-devel pkgconfig python3-devel redhat-rpm-config -y
 
   <span class="c1"># some misp-modules dependencies for RHEL8</span>
-  <span class="o">([[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora33&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]])</span> <span class="o">&amp;&amp;</span> sudo yum install openjpeg2-devel gcc-c++ poppler-cpp-devel pkgconfig python3-devel redhat-rpm-config -y
+  <span class="o">([[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora33&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]])</span> <span class="o">&amp;&amp;</span> sudo dnf install openjpeg2-devel gcc-c++ poppler-cpp-devel pkgconfig python3-devel redhat-rpm-config -y
 
   sudo chmod <span class="m">2777</span> /usr/local/src
   sudo chown root:users /usr/local/src
@@ -2386,9 +2366,9 @@ mispmodulesRHEL <span class="o">()</span> <span class="o">{</span>
   <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install -U .
   <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> <span class="si">${</span><span class="nv">PATH_TO_MISP</span><span class="si">}</span>/venv/bin/pip install pyfaup censys
   <span class="c1"># some misp-modules dependencies for RHEL&lt;8</span>
-  <span class="o">([[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora33&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]])</span> <span class="o">&amp;&amp;</span> sudo yum install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-devel -y
+  <span class="o">([[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora33&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]])</span> <span class="o">&amp;&amp;</span> sudo dnf install rubygem-rouge rubygem-asciidoctor zbar-devel opencv-devel -y
   <span class="c1"># some misp-modules dependencies for RHEL8</span>
-  <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo dnf install https://packages.endpoint.com/rhel/8/main/x86_64/endpoint-repo-8-1.ep8.noarch.rpm -y <span class="o">&amp;&amp;</span> sudo yum install zbar-devel opencv-devel -y
+  <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo dnf install https://packages.endpoint.com/rhel/8/main/x86_64/endpoint-repo-8-1.ep8.noarch.rpm -y <span class="o">&amp;&amp;</span> sudo dnf install zbar-devel opencv-devel -y
 
   <span class="nb">echo</span> <span class="s2">&quot;[Unit]</span>
 <span class="s2">  Description=MISP modules</span>
@@ -2495,20 +2475,20 @@ modulesCAKE <span class="o">()</span> <span class="o">{</span>
 <div class="highlight"><pre><span></span><code><span class="c1"># &lt;snippet-begin 4_misp-dashboardRHEL.sh&gt;</span>
 <span class="c1"># Main MISP Dashboard install function</span>
 mispDashboard <span class="o">()</span> <span class="o">{</span>
-  sudo yum install wget screen -y
+  sudo dnf install wget screen -y
   sudo mkdir /var/www/misp-dashboard
-  sudo chown <span class="nv">$WWW_USER</span>:<span class="nv">$WWW_USER</span> /var/www/misp-dashboard
-  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_WWW</span> git clone https://github.com/MISP/misp-dashboard.git /var/www/misp-dashboard<span class="p">;</span> <span class="k">done</span>
+  sudo chown <span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">WWW_USER</span><span class="si">}</span> /var/www/misp-dashboard
+  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="si">${</span><span class="nv">SUDO_WWW</span><span class="si">}</span> git clone https://github.com/MISP/misp-dashboard.git /var/www/misp-dashboard<span class="p">;</span> <span class="k">done</span>
   <span class="nb">cd</span> /var/www/misp-dashboard
   sudo sed -i -E <span class="s1">&#39;s/sudo apt/#sudo apt/&#39;</span> install_dependencies.sh
   sudo -H /var/www/misp-dashboard/install_dependencies.sh
   sudo sed -i <span class="s2">&quot;s/^host\ =\ localhost/host\ =\ 0.0.0.0/g&quot;</span> /var/www/misp-dashboard/config/config.cfg
   sudo sed -i <span class="s1">&#39;/Listen 80/a Listen 0.0.0.0:8001&#39;</span> /etc/httpd/conf/httpd.conf
   <span class="c1"># TODO: Check if this works on 7.x</span>
-  <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo yum install rh-python36-mod_wsgi -y
+  <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo dnf install rh-python36-mod_wsgi -y
   <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo cp /opt/rh/httpd24/root/usr/lib64/httpd/modules/mod_rh-python36-wsgi.so /etc/httpd/modules/
   <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">7</span><span class="o">]</span>.* <span class="o">]]</span> <span class="o">&amp;&amp;</span> sudo cp /opt/rh/httpd24/root/etc/httpd/conf.modules.d/10-rh-python36-wsgi.conf /etc/httpd/conf.modules.d/
-  <span class="o">([[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora33&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]])</span> <span class="o">&amp;&amp;</span> sudo yum install python3-mod_wsgi -y
+  <span class="o">([[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DISTRI</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;fedora33&quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DIST_VER</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span>~ ^<span class="o">[</span><span class="m">8</span><span class="o">]</span>.* <span class="o">]])</span> <span class="o">&amp;&amp;</span> sudo dnf install python3-mod_wsgi -y
 
   <span class="nb">echo</span> <span class="s2">&quot;&lt;VirtualHost *:8001&gt;</span>
 <span class="s2">      ServerAdmin admin@misp.local</span>
@@ -2635,11 +2615,8 @@ chown -R www-data:www-data <span class="si">${</span><span class="nv">PATH_TO_MI
 <li>Keep your software up2date (MISP, CakePHP and everything else)</li>
 <li>Log and audit</li>
 </ul>
-<h3 id="11-lief-installation">11/ LIEF Installation<a class="headerlink" href="#11-lief-installation" title="Permanent link">&para;</a></h3>
-<p><em>lief</em> is required for the Advanced Attachment Handler and requires manual compilation</p>
-<p>The installation is explained in section <strong><a href="https://misp.github.io/MISP/INSTALL.rhel7/#301-download-misp-code-using-git-in-varwww-directory">3.01</a></strong></p>
-<h3 id="12-known-issues">12/ Known Issues<a class="headerlink" href="#12-known-issues" title="Permanent link">&para;</a></h3>
-<h2 id="1201-workers-cannot-be-started-or-restarted-from-the-web-page">12.01/ Workers cannot be started or restarted from the web page<a class="headerlink" href="#1201-workers-cannot-be-started-or-restarted-from-the-web-page" title="Permanent link">&para;</a></h2>
+<h3 id="11-known-issues">11/ Known Issues<a class="headerlink" href="#11-known-issues" title="Permanent link">&para;</a></h3>
+<h2 id="1101-workers-cannot-be-started-or-restarted-from-the-web-page">11.01/ Workers cannot be started or restarted from the web page<a class="headerlink" href="#1101-workers-cannot-be-started-or-restarted-from-the-web-page" title="Permanent link">&para;</a></h2>
 <p>Possible also due to package being installed via SCL, attempting to start workers through the web page will result in error. Worker's can be restarted via the CLI using the following command.
 <div class="highlight"><pre><span></span><code>systemctl restart misp-workers.service
 </code></pre></div></p>
@@ -2698,7 +2675,8 @@ index f9f69d4..2e8fd78 100644
 <p><a href="https://weakdh.org/sysadmin.html">Weak Diffie-Hellman and the Logjam Attack</a></p>
 <p><a href="https://wiki.debian.org/Hardening">Debian Wiki Hardening</a></p>
 <p><a href="https://wiki.centos.org/HowTos/OS_Protection">CentOS Hardening</a></p>
-<p><a href="https://www.cyberciti.biz/tips/linux-security.html">Some Linux hardening tips</a></p>
+<p><a href="https://www.cyberciti.biz/tips/linux-security.html">Some Linux hardening tips</a>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               </p>
                 
                   
                 

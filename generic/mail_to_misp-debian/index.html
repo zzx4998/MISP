@@ -662,29 +662,29 @@ mail2misp <span class="o">()</span> <span class="o">{</span>
   debug <span class="s2">&quot;Installing Mail2</span><span class="si">${</span><span class="nv">LBLUE</span><span class="si">}</span><span class="s2">MISP</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
   <span class="nb">cd</span> /usr/local/src/
   sudo apt-get install cmake libcaca-dev liblua5.3-dev -y
-  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="nv">$SUDO_CMD</span> git clone https://github.com/MISP/mail_to_misp.git<span class="p">;</span> <span class="k">done</span>
+  false<span class="p">;</span> <span class="k">while</span> <span class="o">[[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span> <span class="si">${</span><span class="nv">SUDO_CMD</span><span class="si">}</span> git clone https://github.com/MISP/mail_to_misp.git<span class="p">;</span> <span class="k">done</span>
   <span class="c1">## TODO: The below fails miserably (obviously) if faup/gtcac dirs exist, let&#39;s just make the dangerous assumption (for the sake of the installer, that they exist)</span>
-  <span class="c1">##[[ ! -d &quot;faup&quot; ]] &amp;&amp; false; while [[ $? -ne 0 ]]; do $SUDO_CMD git clone https://github.com/stricaud/faup.git faup; done</span>
-  <span class="c1">##[[ ! -d &quot;gtcaca&quot; ]] &amp;&amp; false; while [[ $? -ne 0 ]]; do $SUDO_CMD git clone https://github.com/stricaud/gtcaca.git gtcaca; done</span>
+  <span class="c1">##[[ ! -d &quot;faup&quot; ]] &amp;&amp; false; while [[ $? -ne 0 ]]; do ${SUDO_CMD} git clone https://github.com/stricaud/faup.git faup; done</span>
+  <span class="c1">##[[ ! -d &quot;gtcaca&quot; ]] &amp;&amp; false; while [[ $? -ne 0 ]]; do ${SUDO_CMD} git clone https://github.com/stricaud/gtcaca.git gtcaca; done</span>
   sudo chown -R <span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span>:<span class="si">${</span><span class="nv">MISP_USER</span><span class="si">}</span> faup mail_to_misp gtcaca
   <span class="nb">cd</span> gtcaca
-  <span class="nv">$SUDO_CMD</span> mkdir -p build
+  <span class="si">${</span><span class="nv">SUDO_CMD</span><span class="si">}</span> mkdir -p build
   <span class="nb">cd</span> build
-  <span class="nv">$SUDO_CMD</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> make
+  <span class="si">${</span><span class="nv">SUDO_CMD</span><span class="si">}</span> cmake .. <span class="o">&amp;&amp;</span> <span class="si">${</span><span class="nv">SUDO_CMD</span><span class="si">}</span> make
   sudo make install
   <span class="nb">cd</span> ../../faup
-  <span class="nv">$SUDO_CMD</span> mkdir -p build
+  <span class="si">${</span><span class="nv">SUDO_CMD</span><span class="si">}</span> mkdir -p build
   <span class="nb">cd</span> build
-  <span class="nv">$SUDO_CMD</span> cmake .. <span class="o">&amp;&amp;</span> <span class="nv">$SUDO_CMD</span> make
+  <span class="si">${</span><span class="nv">SUDO_CMD</span><span class="si">}</span> cmake .. <span class="o">&amp;&amp;</span> <span class="si">${</span><span class="nv">SUDO_CMD</span><span class="si">}</span> make
   sudo make install
   sudo ldconfig
   <span class="nb">cd</span> ../../mail_to_misp
-  <span class="nv">$SUDO_CMD</span> virtualenv -p python3 venv
-  <span class="nv">$SUDO_CMD</span> ./venv/bin/pip install -r requirements.txt
-  <span class="nv">$SUDO_CMD</span> cp mail_to_misp_config.py-example mail_to_misp_config.py
+  <span class="si">${</span><span class="nv">SUDO_CMD</span><span class="si">}</span> virtualenv -p python3 venv
+  <span class="si">${</span><span class="nv">SUDO_CMD</span><span class="si">}</span> ./venv/bin/pip install -r requirements.txt
+  <span class="si">${</span><span class="nv">SUDO_CMD</span><span class="si">}</span> cp mail_to_misp_config.py-example mail_to_misp_config.py
   <span class="c1">##$SUDO cp mail_to_misp_config.py-example mail_to_misp_config.py</span>
-  <span class="nv">$SUDO_CMD</span> sed -i <span class="s2">&quot;s/^misp_url\ =\ &#39;YOUR_MISP_URL&#39;/misp_url\ =\ &#39;https:\/\/localhost&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
-  <span class="nv">$SUDO_CMD</span> sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+  <span class="si">${</span><span class="nv">SUDO_CMD</span><span class="si">}</span> sed -i <span class="s2">&quot;s/^misp_url\ =\ &#39;YOUR_MISP_URL&#39;/misp_url\ =\ &#39;https:\/\/localhost&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
+  <span class="si">${</span><span class="nv">SUDO_CMD</span><span class="si">}</span> sed -i <span class="s2">&quot;s/^misp_key\ =\ &#39;YOUR_KEY_HERE&#39;/misp_key\ =\ &#39;</span><span class="si">${</span><span class="nv">AUTH_KEY</span><span class="si">}</span><span class="s2">&#39;/g&quot;</span> /usr/local/src/mail_to_misp/mail_to_misp_config.py
 <span class="o">}</span>
 <span class="c1"># &lt;snippet-end 5_mail_to_misp.sh&gt;</span>
 </code></pre></div>
